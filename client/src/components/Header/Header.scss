@@ -1,0 +1,200 @@
+
+.Header {// my header scss
+  min-height:4vw;
+
+  .SiteName {
+    width:calc(20% - 1vw);
+    
+    .Logo {
+      padding:0.5vw;
+    }
+
+    .Name {
+      font-size:250%;
+      opacity: 1;
+      animation: fade 2s ease-in-out infinite;
+      @keyframes fade {
+        0% {opacity: 1;}
+        25% {opacity: 1;}
+        90% {opacity: 0;}
+        95% {opacity: 0;}
+        100% {opacity: 1;}
+      }
+    }
+  }
+
+  .NavPannel {
+    width:70%;
+
+    .NavBtn {
+      position:relative;
+      width:12%;
+
+      .activeNavBtn {
+        width:100%;
+        margin:0 0 0.5vw 0;
+        text-align:center;
+        font-size:110%;
+        font-weight:bold;
+        color:#f60;
+        border-bottom:1px solid #444;
+      }
+    }
+
+    .SubMenu {
+      position:absolute;
+      top:1.25vw;
+      width:100%;
+      padding:0.5vw;
+      background-color:#333;
+
+      .SubNavBtn {
+        width:100%;
+        margin:0.25vw 0;
+        &:hover a {
+          color:#191;
+        }
+
+        .activeSubNavBtn {
+          color:#fd0;
+          font-size:110%;
+          font-weight:bold;
+        }
+      }
+    }
+  }
+
+  .UserPannel {
+    position:relative;
+    width:calc(10% - 1vw);
+    z-index:99;
+    
+    .Ava {
+      position:absolute;
+      border:1px solid #aaa;
+      border-radius:50%;
+      margin:0.5vw;
+    }
+
+    .Online {
+      position:absolute;
+      opacity: 1;
+      animation: fader 1s ease-in-out infinite;
+      @keyframes fader {
+        0% {opacity: 1;}
+        70% {opacity: 1;}
+        80% {opacity: 0;}
+        90% {opacity: 0;}
+        100% {opacity: 1;}
+      }
+    }
+  }
+
+  .FullScreenPannel {
+
+    .BlurPannel {
+      position:absolute;
+      top:0;
+      right:0;
+      width:100%;
+      min-height:100%;
+      z-index:55;
+    }
+      
+    .SidePannel {
+      position:absolute;
+      top:0;
+      right:0;
+      width:30%;
+      min-height:100%;
+      background-color:#111;
+      z-index:66;
+
+      .SidePannelTop {
+        width:100%;
+        height:4vw;
+        border-image: linear-gradient(90deg, #9991, #999) 1;
+        border-bottom: 1px solid;
+      }
+
+      .AuthPanel {
+        width:100%;
+        margin:1vw 0;
+        
+        .Title {
+          font-weight: bold;
+        }
+
+        .FormPannel {
+          width:100%;
+        
+          .Input {
+            width: 90%;
+            margin-top: 0.5vw;
+            padding:0.2vw;
+            border:1px solid #999;
+            border-radius:0.5vw;
+            
+            &:focus {
+              border-color:#f60;
+            }
+
+            legend {
+              font-size:80%;
+              color:#999;
+              margin:0 1vw;
+              padding:0 0.5vw;
+            }
+
+            input {
+              margin:0;
+              padding:0 0.5vw;
+              width:calc(100% - 1vw);
+              background-color:transparent;
+              border:none;
+              border-radius:0.25vw;
+            }
+
+            img {
+              display:none;
+            }
+          }
+          .Input:focus-within {
+            border-color: #f60;
+          }
+        }
+
+        .EnotherButtons {
+          width:100%;
+        }
+
+        .Button {
+          margin-top: 1vw;
+          padding: 0.5vw;
+          width: calc(90% + 0.5vw);
+          color:#fff;
+          border: 1px solid #191;
+          border-radius: 0.5vw;
+          background-color:#1711;
+          cursor: pointer;
+          
+          &:hover {
+            background-color: #1715;
+          }
+        }
+          
+        .Link {
+          width:40%;
+          margin:0.5vw 0 0 0;
+
+          a {
+            color: #007bff;
+            text-decoration: none;
+            
+            &:hover {text-decoration: underline;}
+          }
+        }
+      }
+    }
+  }
+}

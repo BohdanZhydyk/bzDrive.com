@@ -1,0 +1,53 @@
+
+.SiteIcon {
+  width:100%;
+  height:100%;
+  position:relative;
+
+  .transistor-icon svg {
+    position:absolute;
+    left:10%;
+    bottom:10%;
+    width:39%;
+  }
+  
+  .GearIconMain svg {
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:66%;
+    height:66%;
+    color:#f60;
+    animation: rotateR linear infinite;
+  }
+  
+  .GearIcon1 svg {
+    position:absolute;
+    top:0;
+    right:27%;
+    width:41%;
+    height:41%;
+    color:#f60;
+    animation: rotateL linear infinite;
+  }
+  
+  .GearIcon2 svg {
+    position:absolute;
+    top:42%;
+    right:0;
+    width:37%;
+    height:37%;
+    color:#f60;
+    animation: rotateL linear infinite;
+  }
+  
+  @keyframes rotateR {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+  }
+
+  @keyframes rotateL {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(-360deg);}
+  }
+}
