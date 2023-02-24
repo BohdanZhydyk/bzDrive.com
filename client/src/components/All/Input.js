@@ -1,14 +1,29 @@
-import React from "react"
+import React, { useState } from "react"
 
 
-export function Input({ props:{legend, type, plhol, val} }) {
+export function Input({ props:{legend, type, plhol, val, sanit, cb} }) {
+
+  const [value, setValue] = useState('')
+  const [err, setErr] = useState(false)
+
+  value === '' && val && setValue(val)
+
+  const ON_CHANGE = (e) => {
+    let sanitizedValue = sanit(e.target.value)
+    setValue( sanitizedValue.sanText )
+    cb( sanitizedValue.sanText )
+    setErr(sanitizedValue.sanErr)
+  }
+
   return (
     <fieldset className="Input">
 
-      <legend>{legend}</legend>
+      <legend>
+        <span>{legend}</span>
+        <span className="txtOrg">{`${err ? ` - ${err}` : ``}`}</span>
+      </legend>
 
-      <input type={type} placeholder={plhol} value={val}
-        // onChange={ (e)=> ON_CHANGE(e) }
+      <input type={type} placeholder={plhol} value={value} onChange={ (e)=> ON_CHANGE(e) }
         // onKeyUp={ (e)=> e.key === "Enter" && ON_KEYUP_IMG(e) }
       />
 
