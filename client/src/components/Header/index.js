@@ -1,10 +1,10 @@
 import React from "react"
-import { FullScreenPannel } from "./FullScreenPannel"
 
 import "./Header.scss"
 import { NavPannel } from "./NavPannel"
 import { SiteName } from "./SiteName"
 import { UserPannel } from "./UserPannel"
+import { FullScreenPannel } from "./FullScreenPannel"
 
 
 function Header({ props:{state, blur, BLUR} }) {
@@ -21,7 +21,7 @@ function Header({ props:{state, blur, BLUR} }) {
 
       <UserPannel props={{blur, BLUR}}/>
 
-      <FullScreenPannel props={{blur, BLUR}}/>
+      { blur && <FullScreenPannel props={{blur, BLUR}}/> }
 
     </header>
   )

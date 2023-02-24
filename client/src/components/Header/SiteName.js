@@ -9,6 +9,8 @@ export function SiteName({ props: {info, blur, BLUR} }) {
 
   let cl = `Name flex bold ${isAnimating ? "animate" : ""}`
 
+  const link = info?.link
+
   return (
     <div className={`SiteName flex start ${blur ? `blur` : ``}`}>
 
@@ -17,7 +19,7 @@ export function SiteName({ props: {info, blur, BLUR} }) {
       </div>
 
       <div className={cl} onAnimationEnd={() => setIsAnimating(false)} >
-        <ColorSiteName props={{ link: info?.link }} />
+        <ColorSiteName props={{link}} />
       </div>
 
     </div>

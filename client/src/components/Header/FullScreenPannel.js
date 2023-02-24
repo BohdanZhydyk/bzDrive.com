@@ -1,7 +1,26 @@
 import React from "react"
 
+import { Input } from './../All/Input'
+
 
 export function FullScreenPannel({ props:{blur, BLUR} }) {
+
+  const propsEmail = {
+    legend: `email`,
+    type:`email`,
+    plhol:`wprowadź dane...`,
+    val:``
+  }
+  const propsPassword = {
+    legend: `password`,
+    type:`password`,
+    plhol:`wprowadź dane...`,
+    val:``
+  }
+
+  const authLinks = [`Zaloguj się`, `Zarejestruj się`, `Resetowanie hasła`]
+  const actLinks = [`Log In`, `Sign Up`, `Forgot Password?`, `Privacy Policy`]
+
   return (
     <div className="FullScreenPannel">
 
@@ -15,56 +34,24 @@ export function FullScreenPannel({ props:{blur, BLUR} }) {
 
           <div className="AuthPanel flex column">
 
-            <div className="Title">Zaloguj się</div>
-            {/* <div className="Title">Zarejestruj się</div>
-            <div className="Title">Resetowanie hasła</div> */}
+            <div className="Title">{authLinks[0]}</div>
 
             <form className="FormPannel flex column">
 
-              <fieldset className="Input">
+              <Input props={propsEmail}/>
 
-                <legend>{`email`}</legend>
+              <Input props={propsPassword}/>
 
-                <input type="email" placeholder={`wprowadź dane...`} value={``}
-                  // onChange={ (e)=> ON_CHANGE(e) }
-                  // onKeyUp={ (e)=> e.key === "Enter" && ON_KEYUP_IMG(e) }
-                />
-
-                <img className="ImgBtnSmall"
-                  src={`https://bzdrive.com/files/ico/icoSearch.png`}
-                  // onClick={ ()=> ON_KEYUP_IMG({ target:{value:val}, key:"Enter" }) }
-                  alt={`search`}
-                />
-
-              </fieldset>
-
-              <fieldset className="Input">
-
-                <legend>{`password`}</legend>
-
-                <input type="password" placeholder={`wprowadź dane...`} value={``}
-                  // onChange={ (e)=> ON_CHANGE(e) }
-                  // onKeyUp={ (e)=> e.key === "Enter" && ON_KEYUP_IMG(e) }
-                />
-
-                <img className="ImgBtnSmall"
-                  src={`https://bzdrive.com/files/ico/icoSearch.png`}
-                  // onClick={ ()=> ON_KEYUP_IMG({ target:{value:val}, key:"Enter" }) }
-                  alt={`search`}
-                />
-
-              </fieldset>
-
-              <button className="Button" type="submit">Log In</button>
+              <button className="Button" type="submit">{actLinks[0]}</button>
               
             </form>
 
             <div className="EnotherButtons flex">
-              <div className="Link flex"><a href="/privacy">Sign Up</a></div>
-              <div className="Link flex"><a href="/privacy">Forgot Password?</a></div>
+              <div className="Link flex"><a href="/privacy">{actLinks[1]}</a></div>
+              <div className="Link flex"><a href="/privacy">{actLinks[2]}</a></div>
             </div>
 
-            <div className="Link flex"><a href="/privacy">Privacy Policy</a></div>
+            <div className="Link flex"><a href="/privacy">{actLinks[3]}</a></div>
             
           </div>
 
