@@ -1,6 +1,8 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
+import './Main.scss'
+import SiteIcon from '../All/SiteIcon'
 import Workshop from './Workshop'
 import News from './News'
 import Apps from './Apps'
@@ -16,6 +18,11 @@ function Main({ props:{nav, blur, BLUR} }) {
   return (
     <main className={`${blur ? `blur` : ``}`}>
 
+    {
+      !nav
+      ?
+      <div className="DownloadIcon flex"><SiteIcon props={{speed:4}} /></div>
+      :
       <Routes>
 
         <Route path="/"           exact element={<Workshop props={{sub:subNav("/")}}/>} />
@@ -26,6 +33,7 @@ function Main({ props:{nav, blur, BLUR} }) {
         <Route path="/profile"          element={<Profile props={{sub:subNav("/profile")}}/>} />
 
       </Routes>
+    }
 
     </main>
   )

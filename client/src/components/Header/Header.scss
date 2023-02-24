@@ -1,9 +1,9 @@
 
-.Header {// my header scss
-  min-height:4vw;
+.Header {
+  min-height:5vw;
 
   .SiteName {
-    width:calc(20% - 1vw);
+    width:calc(25% - 1vw);
     
     .Logo {
       padding:0.5vw;
@@ -24,7 +24,7 @@
   }
 
   .NavPannel {
-    width:70%;
+    width:65%;
 
     .NavBtn {
       position:relative;

@@ -17,9 +17,9 @@ function Header({ props:{state, blur, BLUR} }) {
 
       { info && <SiteName props={{info, blur, BLUR}} /> }
 
-      <NavPannel props={{info, nav, blur, BLUR}}/>
+      { nav && <NavPannel props={{info, nav, blur, BLUR}}/> }
 
-      <UserPannel props={{blur, BLUR}}/>
+      { info && <UserPannel props={{blur, BLUR}}/> }
 
       { blur && <FullScreenPannel props={{blur, BLUR}}/> }
 
