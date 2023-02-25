@@ -1,7 +1,7 @@
 import axios from 'axios'
 import cookies from 'js-cookie'
 
-
+// functions that work with cookies
 export const RemToken   = ()=> cookies.remove('bzToken')
 export const RemUser    = ()=> cookies.remove('bzUser')
 export const RemCookie  = ()=> cookies.remove('bzCookie')
@@ -12,33 +12,74 @@ export const SetToken   = (bzToken)=> cookies.set('bzToken', bzToken )
 export const SetUser    = (user)=> cookies.set( 'bzUser', JSON.stringify(user) )
 export const SetCookie  = ()=> cookies.set('bzCookie', true)
 
-export const bzCalc = (operation, a, b) => {
+// my calculator function
+export const bzCalc = (operation, a, b)=>{
+  const errors = {
+    a:"Invalid input. Please enter two numbers!",
+    b:"Invalid input. Cannot divide by zero!",
+    c:"Invalid input. Please enter a valid arithmetic operation (+, -, *, /)!"
+  }
   const x = parseFloat(a)
   const y = parseFloat(b)
-  // check if a and b are numbers
-  if (isNaN(x) || isNaN(y)) throw new Error("Invalid input. Please enter two numbers!")
-
+  if (isNaN(x) || isNaN(y)) throw new Error(errors.a) // check if a and b are numbers
   switch (operation) {
-    case "+":
-      // add a and b and round the result to 2 decimal places
-      return (x + y).toFixed(2)
-    case "-":
-      // subtract b from a and round the result to 2 decimal places
-      return (x - y).toFixed(2)
-    case "*":
-      // multiply a and b and round the result to 2 decimal places
-      return (x * y).toFixed(2)
+    case "+": return (x + y).toFixed(2) // add a and b and round the result to 2 decimal places
+    case "-": return (x - y).toFixed(2) // subtract b from a and round the result to 2 decimal places
+    case "*": return (x * y).toFixed(2) // multiply a and b and round the result to 2 decimal places
     case "/":
-      // check if b is 0 and throw an error if it is
-      if(y === 0) throw new Error("Invalid input. Cannot divide by zero!")
-      // divide a by b and round the result to 2 decimal places
-      return (x / y).toFixed(2)
+      if(y === 0) throw new Error(errors.b) // check if b is 0 and throw an error if it is
+      return (x / y).toFixed(2) // divide a by b and round the result to 2 decimal places
     default:
-      // throw an error if the operation is not one of the expected values
-      throw new Error("Invalid input. Please enter a valid arithmetic operation (+, -, *, /)!");
+      throw new Error(errors.c) // throw an error if the operation is not one of the expected values
   }
 }
 
+// sanitization function
+export const sanitizeTxt = (txt, name)=>{
+  switch(name){
+    case "login": return sanitizeLogin(txt)
+    case "email": return sanitizeEmail(txt)
+    case "pass": return sanitizePassword(txt)
+    default: return txt
+  }
+  function sanitizeLogin(txt) {
+    const min = 4
+    const max = 8
+    let sanErr = false
+    let sanText = txt ? txt.replace(/[^a-zA-Z0-9]/g, '').trim().slice(0, max) : ''
+    if(sanText.length < min) sanErr = `must contain from ${min} to ${max} characters!`
+    if(sanText.length < 1) sanErr = `this field cannot be empty!`
+    return {sanText, sanErr}
+  }
+  function sanitizeEmail(txt) {
+    const max = 64
+    let sanErr = false
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    let sanText = txt ? txt.trim().toLowerCase().slice(0, max) : ''
+    if(!re.test(sanText)) sanErr = `wrong e-mail is entered!`
+    if(sanText.length < 1) sanErr = `this field cannot be empty!`
+    return {sanText, sanErr}
+  }
+  function sanitizePassword(txt) {
+    const min = 8
+    const max = 20
+    let sanErr = false
+    const regExDigit = /\d/
+    const regExLowercase = /[a-z]/
+    const regExUppercase = /[A-Z]/
+    const regExSpecialChar = /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/
+    let sanText = txt ? txt.trim().slice(0, max) : ''
+    // if(!regExSpecialChar.test(sanText)) sanErr = "must contain at least one special character!"
+    if(!regExLowercase.test(sanText)) sanErr = "must contain at least one lowercase letter!"
+    if(!regExDigit.test(sanText)) sanErr = "must contain at least one digit!"
+    if(!regExUppercase.test(sanText)) sanErr = "must contain at least one uppercase letter!"
+    if(sanText.length < min) sanErr = `must contain from ${min} to ${max} characters!`
+    if(sanText.length < 1) sanErr = "this field cannot be empty!"
+    return {sanText, sanErr}
+  }
+}
+
+// function for sending a POST request to the server and receiving a response from it
 export const PostToApi = async (link, object, callback)=>{
   // Set up the API link to use based on the environment (local or remote)
   const localLink = 'http://localhost:2000/API'

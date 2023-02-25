@@ -23,14 +23,19 @@ export function Input({ props:{legend, type, plhol, val, sanit, cb} }) {
         <span className="txtOrg">{`${err ? ` - ${err}` : ``}`}</span>
       </legend>
 
-      <input type={type} placeholder={plhol} value={value} onChange={ (e)=> ON_CHANGE(e) }
+      <input
+        value={value}
+        type={type}
+        placeholder={plhol}
+        onChange={ (e)=> ON_CHANGE(e) }
+        autoComplete="off"
         // onKeyUp={ (e)=> e.key === "Enter" && ON_KEYUP_IMG(e) }
       />
 
       <img className="ImgBtnSmall"
         src={`https://bzdrive.com/files/ico/icoSearch.png`}
-        // onClick={ ()=> ON_KEYUP_IMG({ target:{value:val}, key:"Enter" }) }
         alt={`search`}
+        // onClick={ ()=> ON_KEYUP_IMG({ target:{value:val}, key:"Enter" }) }
       />
 
     </fieldset>

@@ -1,6 +1,4 @@
-const mongo = require('mongodb')
-const mongoClient = mongo.MongoClient
-const ObjectID = mongo.ObjectID
+const { MongoClient, ObjectId } = require('mongodb')
 
 const { url, dbName, generateToken } = require('./../safe/safe')
 const { unixToDateTimeConverter } = require('./../functions')
@@ -19,24 +17,52 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
   let bzToken =   req?.body?.bzToken  ? req.body.bzToken  : generateToken()
   let IP =        req?.body?.IP       ? req.body.IP       : false
   let user =      req?.body?.user     ? req.body.user     : false
-  
-  mongoClient.connect( url, { useUnifiedTopology: true }, (error, client)=>{
 
-    const ERR = (bzToken, IP, user, error)=> {
-      callback({bzToken, IP, user, object:{result:false, errors:error}})
-      // client.close()
-    }
-    const OK = (bzToken, IP, user, result)=> {
-      callback({bzToken, IP, user, object:{result:result, errors:false}})
-      // client.close()
-    }
+  const client = new MongoClient(url, { useUnifiedTopology: true })
+  
+  const ERR = (bzToken, IP, user, error)=> {
+    callback({bzToken, IP, user, object:{result:false, errors:error}})
+    // client.close()
+  }
+  const OK = (bzToken, IP, user, result)=> {
+    callback({bzToken, IP, user, object:{result:result, errors:false}})
+    // client.close()
+  }
+
+  client.connect( (error) => {
 
     error && ERR(bzToken, IP, user, error)
+
+    CheckToken(bzToken, (ChekTokenData)=>{
+
+      const Done = (bzToken, IP, user)=>{
+        Queries(bzToken, IP, user)
+        Statistic(bzToken, IP, user)
+      }
+  
+      if(!ChekTokenData){ Done(generateToken(), IP, false); return; }
+      
+      CheckRole(user?.login, (CheckRoleData)=>{
+        if(!CheckRoleData){ Done(bzToken, IP, user); return; }
+        Done(bzToken, IP, CheckRoleData)
+      })
+
+    })
 
     function Queries(bzToken, IP, user){
 
       const CB = (error, result)=> error ? ERR(bzToken, IP, user, error) : OK(bzToken, IP, user, result)
-
+      
+      switch(act){
+        case "FIND":          FIND();         break
+        case "FIND_ONE":      FIND_ONE();     break
+        case "INSERT_ONE":    INSERT_ONE();   break
+        case "UPDATE_ONE":    UPDATE_ONE();   break
+        case "DELETE_ONE":    DELETE_ONE();   break
+        case "DELETE_MANY":   DELETE_MANY();  break
+        default: break
+      }
+      
       function FIND(){
         client.db(dbName).collection(col).find(query).sort(sort).limit(lim).toArray( (e,r)=> CB(e,r) )
       }
@@ -56,26 +82,7 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
       function DELETE_MANY(){
         client.db(dbName).collection(col).deleteMany( query, (e,r)=> CB(e,r) )
       }
-      
-      switch(act){
-        case "FIND":          FIND();         break
-        case "FIND_ONE":      FIND_ONE();     break
-        case "INSERT_ONE":    INSERT_ONE();   break
-        case "UPDATE_ONE":    UPDATE_ONE();   break
-        case "DELETE_ONE":    DELETE_ONE();   break
-        case "DELETE_MANY":   DELETE_MANY();  break
-        default: break
-      }
 
-    }
-
-    function Statistic(bzToken, IP, user){
-      let date = { unix: Date.now(), dateTime: unixToDateTimeConverter() }
-      client.db(dbName)
-        .collection('bzStatistic')
-        .insertOne( {user:user.login, IP, date, bzToken}, (error, result)=>{
-          error && ERR(bzToken, IP, user, error)
-      })
     }
 
     function CheckToken(bzToken, CheckTokenCallback){
@@ -104,27 +111,14 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
       })
     }
 
-    CheckToken(bzToken, (ChekTokenData)=>{
-
-      const Done = (bzToken, IP, user)=>{
-        Queries(bzToken, IP, user)
-        Statistic(bzToken, IP, user)
-      }
-  
-      if(!ChekTokenData){
-        Done(generateToken(), IP, false)
-        return
-      }
-      
-      CheckRole(user?.login, (CheckRoleCallback)=>{
-        if(!CheckRoleCallback){
-          Done(bzToken, IP, user)
-          return
-        }
-        Done(bzToken, IP, CheckRoleCallback)
+    function Statistic(bzToken, IP, user){
+      let date = { unix: Date.now(), dateTime: unixToDateTimeConverter() }
+      client.db(dbName)
+        .collection('bzStatistic')
+        .insertOne( {user:user.login, IP, date, bzToken}, (error, result)=>{
+          error && ERR(bzToken, IP, user, error)
       })
-
-    })
+    }
 
   })
   

@@ -1,6 +1,6 @@
 import React from "react"
 
-import { AuthPanel } from "./AuthPannel"
+import AuthPanel from "./AuthPannel"
 
 
 export function FullScreenPannel({ props:{blur, BLUR} }) {
