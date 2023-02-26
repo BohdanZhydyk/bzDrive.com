@@ -34,12 +34,24 @@ body {
   .blur {filter:blur(5px);}
   
   .ImgBtn {
-    width:3vw;
-    height:3vw;
+    width:2vw;
+    height:2vw;
+    margin:0.25vw 0.75vw;
+    &:hover {
+      width:2.5vw;
+      height:2.5vw;
+      margin:0 0.5vw;
+    }
   }
   .ImgBtnSmall {
     width:1.5vw;
     height:1.5vw;
+    margin:0.25vw 0.75vw;
+    &:hover {
+      width:2vw;
+      height:2vw;
+      margin:0 0.5vw;
+    }
   }
 
   a {text-decoration:none; color:#fff;}

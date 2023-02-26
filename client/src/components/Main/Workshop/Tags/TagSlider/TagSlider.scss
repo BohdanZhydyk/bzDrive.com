@@ -1,0 +1,120 @@
+
+.TagSlider {
+  position:relative;
+  width:100%;
+
+  .Slider{
+    margin:0.5vw 0 0 0;
+
+    .sliderTxt {
+      position:absolute;
+      top:2vw;
+      left:5vw;
+      min-height:3vw;
+      background-color:#0008;
+      padding:0 3vw;
+      font-size:200%;
+      border:1px solid #999;
+      border-radius:0.5vw;
+      @media (max-width: 767px) {
+        left:2vw; font-size:150%;
+      }
+    }
+      
+    .sliderImgBtn {
+      position:absolute;
+      min-height:100%;
+      border-radius:0.5vw;
+    }
+
+    .L, .R {
+      opacity:0.5;
+
+      img {
+        width:4vw;
+        padding:0.5vw;
+        opacity:0.5;
+        @media (max-width: 767px) {width:6vw;}
+      }
+
+      &:hover {
+        opacity:1;
+        transition: opacity 0.25s;
+
+        img {
+          width:5vw;
+          padding:0;
+          opacity:1;
+          transition: width 0.25s, padding 0.25s, opacity 0.25s;
+          @media (max-width: 767px) {width:7vw;}
+        }
+      }
+    }
+
+    .L {
+      left:0;
+      background-image:linear-gradient(90deg, #000e,#0001);
+    }
+    .R {
+      right:0;
+      background-image:linear-gradient(90deg, #0001,#000e);
+    }
+
+    .Image {
+      width:98vw;
+      border-radius:0.5vw;
+    }
+
+    // .EditBtn{
+    //   position:absolute;
+    //   bottom:2vw;
+    //   right:0vw;
+    // }
+  }
+
+  // .SliderEdit{
+  //   width:100%;
+  //   background-color:#f601;
+  //   border-top:1px dashed #f60;
+  //   border-bottom:1px dashed #f60;
+
+  //   .SliderEditInfo{
+  //     font-size:120%;
+  //   }
+
+  //   .SliderEditInput{
+  //     width:20%;
+  //     margin:0 0.25vw;
+  //     border:1px solid #999;
+  //     border-radius:0.25vw;
+
+  //     input{
+  //       width:100%;
+  //       background-color:#0000;
+  //       border:none;
+  //     }
+  //   }
+
+  //   .SliderEditImg{
+  //     position:relative;
+  //     width:23%;
+  //     margin:0.5vw 1%;
+
+  //     .EditedImg{
+  //       width:100%;
+  //     }
+
+  //     .btnsLine{
+  //       position:absolute;
+  //       bottom:0;
+  //       width:100%;
+  //       background-color:#1115;
+
+  //       img{
+  //         opacity:0.5;
+  //         &:hover{opacity:1;}
+  //       }
+  //     }
+  //   }
+  // }
+}

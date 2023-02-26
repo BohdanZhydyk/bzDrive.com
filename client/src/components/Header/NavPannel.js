@@ -8,7 +8,7 @@ export function NavPannel({ props:{info, nav, blur, BLUR} }){
   const [actSubNavBtn, setActSubNavBtn] = useState('')
   const [actSubMenu, setActSubMenu] = useState('')
   
-  const TITLE = (name)=> document.title = `${info.link.join("")} | ${name}`
+  const TITLE = (name)=> document.title = `${info?.link.join("")} | ${name}`
 
   const NavBtnClick = (name) => {
     setActNavBtn(name)

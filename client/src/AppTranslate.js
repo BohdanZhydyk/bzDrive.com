@@ -77,6 +77,11 @@ export const tr = (txt, lang)=>{
       ua: "введено неправильний пароль!",
       pl: "wprowadzono nieprawidłowe hasło!"
     },
+    AppAuthor: {
+      en: `Web application author:`,
+      ua: `Автор веб-додатку:`,
+      pl: `Autor aplikacji webowej:`,
+    },
     NewTranslate:{en:``, ua:``, pl:``}
   }
 

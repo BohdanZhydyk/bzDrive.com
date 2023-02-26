@@ -1,16 +1,12 @@
 
 .Header {
-  min-height:5vw;
+  min-height:4vw;
 
   .SiteName {
     width:calc(25% - 1vw);
-    
-    .Logo {
-      padding:0.5vw;
-    }
 
     .Name {
-      font-size:250%;
+      font-size:200%;
       opacity: 1;
       animation: fade 2s ease-in-out infinite;
       @keyframes fade {
@@ -72,7 +68,6 @@
       position:absolute;
       border:1px solid #aaa;
       border-radius:50%;
-      margin:0.5vw;
     }
 
     .Online {
@@ -111,7 +106,7 @@
 
       .SidePannelTop {
         width:calc(100% - 2vw);
-        height:5vw;
+        height:4vw;
         padding:0 1vw;
         border-image: linear-gradient(90deg, #9991, #999) 1;
         border-bottom: 1px solid;

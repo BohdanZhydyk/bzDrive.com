@@ -13,8 +13,8 @@ export function UserPannel({ props:{blur, BLUR} }) {
   return (
     <div className="UserPannel flex end">
 
-      <img className="ImgBtn Ava" src={AvaImg} onClick={()=>BLUR()} alt="ava" />
       { ava && <img className="ImgBtn Online" src={OnlineImg} onClick={()=>BLUR()} alt="online" /> }
+      <img className="ImgBtn Ava" src={AvaImg} onClick={()=>BLUR()} alt="ava" />
 
     </div>
   )

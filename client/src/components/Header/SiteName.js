@@ -14,7 +14,7 @@ export function SiteName({ props: {info, blur, BLUR} }) {
   return (
     <div className={`SiteName flex start ${blur ? `blur` : ``}`}>
 
-      <div className="Logo ImgBtn flex">
+      <div className="ImgBtn flex">
         <SiteIcon props={{speed:4}} />
       </div>
 

@@ -1,4 +1,4 @@
-import { PostToApi } from "./AppFunctions";
+import { PostToApi } from "./AppFunctions"
 
 
 export const AppReducer = (action, state, setState)=>{
