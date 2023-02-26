@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 
-export function Input({ props:{legend, type, plhol, val, sanit, cb} }) {
+export function Input({ props:{legend, type, plhol, val, sanit, cb, setServErr} }) {
 
   const [value, setValue] = useState('')
   const [err, setErr] = useState(false)
@@ -13,6 +13,7 @@ export function Input({ props:{legend, type, plhol, val, sanit, cb} }) {
     setValue( sanitizedValue.sanText )
     cb( sanitizedValue.sanText )
     setErr(sanitizedValue.sanErr)
+    setServErr(false)
   }
 
   return (

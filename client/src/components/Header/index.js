@@ -7,7 +7,7 @@ import { UserPannel } from "./UserPannel"
 import { FullScreenPannel } from "./FullScreenPannel"
 
 
-function Header({ props:{state, blur, BLUR} }) {
+function Header({ props:{state, blur, BLUR, AppReload} }) {
 
   const info = state.info
   const nav = state.nav
@@ -21,7 +21,7 @@ function Header({ props:{state, blur, BLUR} }) {
 
       { info && <UserPannel props={{blur, BLUR}}/> }
 
-      { blur && <FullScreenPannel props={{blur, BLUR}}/> }
+      { blur && <FullScreenPannel props={{blur, BLUR, AppReload}}/> }
 
     </header>
   )

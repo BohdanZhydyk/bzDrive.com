@@ -12,13 +12,15 @@ function App() {
   const [state, setState] = useState(false)
 
   const [blur, setBlur] = useState(false)
-  const BLUR = ()=>{
-    setBlur(!blur)
+  const BLUR = ()=> setBlur(!blur)
+
+  const AppReload = ()=>{
+    setState(false)
+    setBlur(false)
+    AppReducer( { type:"GET_STATE" }, state, setState )
   }
 
-  useEffect( ()=>{
-    !state && AppReducer( { type:"GET_STATE" }, state, setState )
-  }, [])
+  useEffect( ()=>{ !state && AppReducer( { type:"GET_STATE" }, state, setState ) }, [])
 
   // console.log("state", state)
 
@@ -27,7 +29,7 @@ function App() {
       
       <BrowserRouter>
 
-        <Header props={{state, blur, BLUR}}/>
+        <Header props={{state, blur, BLUR, AppReload}}/>
 
         <Main props={{nav:state.nav, blur, BLUR}}/>
 

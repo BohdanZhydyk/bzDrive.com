@@ -1,5 +1,6 @@
 import axios from 'axios'
 import cookies from 'js-cookie'
+import { tr } from './AppTranslate'
 
 // functions that work with cookies
 export const RemToken   = ()=> cookies.remove('bzToken')
@@ -36,6 +37,7 @@ export const bzCalc = (operation, a, b)=>{
 
 // sanitization function
 export const sanitizeTxt = (txt, name)=>{
+  const lang = GetUser().lang
   switch(name){
     case "login": return sanitizeLogin(txt)
     case "email": return sanitizeEmail(txt)
@@ -47,17 +49,17 @@ export const sanitizeTxt = (txt, name)=>{
     const max = 8
     let sanErr = false
     let sanText = txt ? txt.replace(/[^a-zA-Z0-9]/g, '').trim().slice(0, max) : ''
-    if(sanText.length < min) sanErr = `must contain from ${min} to ${max} characters!`
-    if(sanText.length < 1) sanErr = `this field cannot be empty!`
+    if(sanText.length < min) sanErr = tr(`Err_2`,lang)
+    if(sanText.length < 1) sanErr = tr(`Err_1`,lang)
     return {sanText, sanErr}
   }
   function sanitizeEmail(txt) {
     const max = 64
     let sanErr = false
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     let sanText = txt ? txt.trim().toLowerCase().slice(0, max) : ''
-    if(!re.test(sanText)) sanErr = `wrong e-mail is entered!`
-    if(sanText.length < 1) sanErr = `this field cannot be empty!`
+    if(!re.test(sanText)) sanErr = tr(`Err_3`,lang)
+    if(sanText.length < 1) sanErr = tr(`Err_1`,lang)
     return {sanText, sanErr}
   }
   function sanitizePassword(txt) {
@@ -67,14 +69,14 @@ export const sanitizeTxt = (txt, name)=>{
     const regExDigit = /\d/
     const regExLowercase = /[a-z]/
     const regExUppercase = /[A-Z]/
-    const regExSpecialChar = /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/
+    // const regExSpecialChar = /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/
     let sanText = txt ? txt.trim().slice(0, max) : ''
-    // if(!regExSpecialChar.test(sanText)) sanErr = "must contain at least one special character!"
-    if(!regExLowercase.test(sanText)) sanErr = "must contain at least one lowercase letter!"
-    if(!regExDigit.test(sanText)) sanErr = "must contain at least one digit!"
-    if(!regExUppercase.test(sanText)) sanErr = "must contain at least one uppercase letter!"
-    if(sanText.length < min) sanErr = `must contain from ${min} to ${max} characters!`
-    if(sanText.length < 1) sanErr = "this field cannot be empty!"
+    // if(!regExSpecialChar.test(sanText)) sanErr = tr(`Err_4`,lang)
+    if(!regExLowercase.test(sanText)) sanErr = tr(`Err_5`,lang)
+    if(!regExDigit.test(sanText)) sanErr = tr(`Err_6`,lang)
+    if(!regExUppercase.test(sanText)) sanErr = tr(`Err_7`,lang)
+    if(sanText.length < min) sanErr = tr(`Err_8`,lang)
+    if(sanText.length < 1) sanErr = tr(`Err_1`,lang)
     return {sanText, sanErr}
   }
 }
@@ -108,7 +110,7 @@ export const PostToApi = async (link, object, callback)=>{
     return false
   })
 
-  const reqData = { bzToken:GetToken(), object, IP }
+  const reqData = { bzToken:GetToken(), IP, user:GetUser(), object }
 
   // Send the request to the server with the required data and get response
   axios.post( API + link, reqData ).then( (resData)=>{

@@ -2,7 +2,8 @@ const express = require('express')
 const Router = express.Router()
 
 
-const { getState }			= require('./getState')
+const { getState }	= require('./getState')
+const { getAuth }		= require('./getAuth')
 // const { getWorkshop }		= require('./getWorkshop')
 // const { getOffice }			= require('./getOffice')
 // const { getTraffic }		= require('./getTraffic')
@@ -14,9 +15,9 @@ const { getState }			= require('./getState')
 // const { getProfile }		= require('./getProfile')
 // const { uploadFile }		= require('./uploadFile')
 // const { deleteFile }		= require('./deleteFile')
-// const { auth }					= require('./auth/auth')
 
-Router.post('/getState', 		(req, res)=> getState(req, res) 		)
+Router.post('/getState', 		(req, res)=> getState(req, res) )
+Router.post('/getAuth',     (req, res)=> getAuth(req, res)  )
 // Router.post('/getWorkshop', (req, res)=> getWorkshop(req, res) 	)
 // Router.post('/getOffice', 	(req, res)=> getOffice(req, res) 		)
 // Router.post('/getTraffic', 	(req, res)=> getTraffic(req, res) 	)
@@ -29,6 +30,5 @@ Router.post('/getState', 		(req, res)=> getState(req, res) 		)
 // Router.post('/uploadFile', 	(req, res)=> uploadFile(req, res) 	)
 // Router.post('/deleteFile', 	(req, res)=> deleteFile(req, res) 	)
 
-// Router.post('/auth', (req, res)=> auth(req, res) )
 
 module.exports = Router

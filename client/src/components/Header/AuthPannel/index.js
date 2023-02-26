@@ -2,54 +2,56 @@ import React, { useState } from "react"
 
 import './AuthPannel.scss'
 import { GetUser } from "../../../AppFunctions"
+import { AuthReducer } from "./AuthReducer"
 import { tr } from "../../../AppTranslate"
 import { AuthProps } from "./AuthProps"
-import { Input } from '../../All/Input'
+import { UserInfo } from "./UserInfo"
+import { SecurityPannel } from "./SecurityPannel"
 
 
-function AuthPanel({ props:{} }) {
+function AuthPanel({ props:{AppReload} }) {
 
-  const lang = GetUser().lang
+  const user = GetUser()
+  const lang = user.lang
+  const login = user.login
+  const icoLogOut = `https://bzdrive.com/files/ico/icoLogOut.png`
 
   const [formData, setFormData] = useState({})
   const [act, setAct] = useState([`login`, `LogIn`, `SignUp`, `Forgot`])
+  const [servErr, setServErr] = useState(false)
 
-  const propses = ()=> AuthProps(formData, setFormData, lang)
+  const propses = ()=> AuthProps(formData, setFormData, lang, setServErr)
 
   const CHG_ACT = (act)=>{
+    setFormData({})
+    setServErr(false)
     switch(act){
-      case "LogIn":   setAct([`login`, `LogIn`, `SignUp`, `Forgot`]);   setFormData({}); return;
-      case "SignUp":  setAct([`signup`, `SignUp`, `LogIn`, `Forgot`]);  setFormData({}); return;
-      case "Forgot":  setAct([`forgot`, `Forgot`, `LogIn`, `SignUp`]);  setFormData({}); return;
-      default:        setAct([`login`, `LogIn`, `SignUp`, `Forgot`]);   setFormData({}); return;
+      case "LogIn":   setAct([`login`, `LogIn`, `SignUp`, `Forgot`]);  return;
+      case "SignUp":  setAct([`signup`, `SignUp`, `LogIn`, `Forgot`]); return;
+      case "Forgot":  setAct([`forgot`, `Forgot`, `LogIn`, `SignUp`]); return;
+      default:        setAct([`login`, `LogIn`, `SignUp`, `Forgot`]);  return;
     }
   }
+
+  const SUBMIT = ()=> AuthReducer( { type:"SUBMIT", act:act[0], formData }, setServErr, AppReload )
+  const LOGOUT = ()=> AuthReducer( { type:"LOGOUT", act:act[0], formData }, setServErr, AppReload )
 
   return (
     <div className="AuthPanel flex column">
 
-      <form className="FormPannel flex column">
+    {
+      login
+      ? <UserInfo props={{user}}/>
+      : <SecurityPannel props={{lang, act, servErr, propses, CHG_ACT, SUBMIT}}/>
+    }
 
-        { ['login', 'signup'].includes(act[0]) && <Input props={ propses().login }/> }
-
-        { ['signup', 'forgot'].includes(act[0]) && <Input props={ propses().email }/> }
-
-        { ['login', 'signup', 'forgot'].includes(act[0]) && <Input props={ propses().pass }/> }
-
-        { ['signup', 'forgot'].includes(act[0]) && <Input props={ propses().verify }/> }
-
-        { ['confirm'].includes(act[0]) && <Input props={ propses().confirm }/> }
-
-        <div className="Button flex" onClick={()=>CHG_ACT(act[1])}>{tr(`${act[1]}Btn`,lang)}</div>
-        
-      </form>
-
-      <div className="EnotherButtons flex">
-        <div className="Button flex" onClick={()=>CHG_ACT(act[2])}>{tr(`${act[2]}Btn`,lang)}</div>
-        <div className="Button flex" onClick={()=>CHG_ACT(act[3])}>{tr(`${act[3]}Btn`,lang)}</div>
-      </div>
-
-      <div className="Link flex"><a href="/privacy">{tr(`PrivacyBtn`,lang)}</a></div>
+      {
+        login &&
+        <div className="Logout flex between" onClick={ ()=>LOGOUT() }>
+          <span className="txtRed">{tr(`LogOutBtn`,lang)}</span>
+          <img className="ImgBtnSmall" src={icoLogOut} alt="logout" />
+        </div>
+      }
             
     </div>
   )

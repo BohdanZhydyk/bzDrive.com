@@ -8,9 +8,9 @@ export const AppReducer = (action, state, setState)=>{
     default: break;
   }
 
-  // function GET_STATE(){ cb({...state, user:"bz"}) }
   function GET_STATE(){
-    PostToApi( '/getState', {myObj:true}, (data)=> setState(data) )
+    const query = {}
+    PostToApi( '/getState', query, (data)=> setState(data) )
   }
 
 }
