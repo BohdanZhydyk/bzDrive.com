@@ -36,13 +36,23 @@ export const bzCalc = (operation, a, b)=>{
 }
 
 // sanitization function
-export const sanitizeTxt = (txt, name)=>{
+export const sanitizeTxt = (txt, name = "default")=>{
   const lang = GetUser().lang
   switch(name){
-    case "login": return sanitizeLogin(txt)
-    case "email": return sanitizeEmail(txt)
-    case "pass": return sanitizePassword(txt)
-    default: return txt
+    case "login":             return sanitizeLogin(txt)
+    case "email":             return sanitizeEmail(txt)
+    case "pass":              return sanitizePassword(txt)
+    case "CompanyNameShort":  return sanitizeCompanyNameShort(txt)
+    case "CompanyName":       return sanitizeCompanyName(txt)
+    case "VIN":               return sanitizeVIN(txt)
+    case "NIP":               return sanitizeNIP(txt)
+    case "ZIP":               return sanitizeZIP(txt)
+    case "town":              return sanitizeTown(txt)
+    case "StreetName":        return sanitizeStreetName(txt)
+    case "ACC":               return sanitizeBankAccount(txt)
+    case "tel":               return sanitizePhone(txt)
+    case "www":               return sanitizeWebsite(txt)
+    default: return {sanText:txt, sanErr:false}
   }
   function sanitizeLogin(txt) {
     const min = 4
@@ -70,7 +80,7 @@ export const sanitizeTxt = (txt, name)=>{
     const regExLowercase = /[a-z]/
     const regExUppercase = /[A-Z]/
     // const regExSpecialChar = /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/
-    let sanText = txt ? txt.trim().slice(0, max) : ''
+    let sanText = txt ? txt.replace(/[^a-zA-Z0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/g, '').trim().slice(0, max) : ''
     // if(!regExSpecialChar.test(sanText)) sanErr = tr(`Err_4`,lang)
     if(!regExLowercase.test(sanText)) sanErr = tr(`Err_5`,lang)
     if(!regExDigit.test(sanText)) sanErr = tr(`Err_6`,lang)
@@ -78,6 +88,149 @@ export const sanitizeTxt = (txt, name)=>{
     if(sanText.length < min) sanErr = tr(`Err_8`,lang)
     if(sanText.length < 1) sanErr = tr(`Err_1`,lang)
     return {sanText, sanErr}
+  }
+  function sanitizeCompanyNameShort(txt) {
+    const min = 1
+    const max = 32
+    let sanErr = false
+    const regEx = /^[a-zA-Z0-9\s\-\_\.\,]*$/
+    let sanText = txt ? txt.trim().slice(0, max) : ''
+    if(sanText.length < min) sanErr = tr('Err_10', lang)
+    if(!regEx.test(sanText)) sanErr = tr('Err_11', lang)
+    if(!sanErr && !/[a-zA-Z]/.test(sanText)) sanErr = tr('Err_12', lang)
+    if(!sanErr && !/\d/.test(sanText)) sanErr = tr('Err_13', lang)
+    if(!sanErr && sanText.trim().length === 0) sanErr = tr('Err_14', lang)
+    return { sanText, sanErr }
+  }
+  function sanitizeCompanyName(txt) {
+    const min = 1
+    const max = 64
+    let sanErr = false
+    const regEx = /^[a-zA-Z0-9\s\-\_\.\,]*$/
+    let sanText = txt ? txt.trim().slice(0, max) : ''
+    if(sanText.length < min) sanErr = tr('Err_10', lang)
+    if(!regEx.test(sanText)) sanErr = tr('Err_11', lang)
+    if(!sanErr && !/[a-zA-Z]/.test(sanText)) sanErr = tr('Err_12', lang)
+    if(!sanErr && !/\d/.test(sanText)) sanErr = tr('Err_13', lang)
+    if(!sanErr && sanText.trim().length === 0) sanErr = tr('Err_14', lang)
+    return { sanText, sanErr }
+  }
+  function sanitizeVIN(txt) {
+    const min = 17
+    const max = 17
+    let sanErr = false
+    let sanText = txt ? txt.replace(/[^a-zA-Z0-9]/g, '').trim().toUpperCase().slice(0, max) : ''
+    if(sanText.length !== max) sanErr = 'VIN musi składać się z 17 znaków.'
+    return { sanText, sanErr }
+  }
+  function sanitizeNIP(txt) {
+    const min = 10
+    const max = 10
+    let sanErr = false
+    const regEx = /^[0-9]+$/
+    function formatNIP(nip) {
+      const formattedNIP = nip.replace(/-/g, '').slice(0, 10)
+      return [
+        formattedNIP.slice(0, 3),
+        formattedNIP.slice(3, 6),
+        formattedNIP.slice(6, 8),
+        formattedNIP.slice(8),
+      ].filter(s => s).join('-')
+    }
+    let sanText = txt ? txt.replace(/[^0-9]/g, '').trim().slice(0, max) : ''
+    if(!regEx.test(sanText)) sanErr = tr('Err_8', lang)
+    if(sanText.length < min) sanErr = tr('Err_9', lang)
+    sanText = formatNIP(sanText)
+    return { sanText, sanErr }
+  }
+  function sanitizeZIP(txt) {
+    const min = 5
+    const max = 6
+    let sanErr = false
+    const regEx = /^[0-9-]+$/
+    function formatZIP(zip) {
+      const formattedZIP = zip.replace(/-/g, '').slice(0, 5)
+      return [
+        formattedZIP.slice(0, 2),
+        formattedZIP.slice(2)
+      ].filter(s => s).join('-')
+    }
+    let sanText = txt ? txt.replace(/[^0-9-]/g, '').trim().slice(0, max) : ''
+    if (!regEx.test(sanText)) sanErr = tr('Err_8', lang)
+    if (sanText.length < min) sanErr = tr('Err_9', lang)
+    sanText = formatZIP(sanText);
+    return { sanText, sanErr }
+  }
+  function sanitizeTown(txt) {
+    const max = 32
+    let sanErr = false
+    const sanText = txt ? txt.slice(0, max) : ''
+    return {sanText, sanErr}
+  }
+  function sanitizeStreetName(txt) {
+    const max = 64
+    let sanErr = false
+    function formatStreetName(name) {
+      if(!name.startsWith("ul. ")) return "ul. " + name
+      return name
+    }
+    let sanText = txt ? txt.slice(0, max) : ''
+    sanText = formatStreetName(sanText)
+    return {sanText, sanErr}
+  }
+  function sanitizeBankAccount(txt) {
+    const min = 26
+    const max = 26
+    let sanErr = false
+    const regEx = /^[0-9\s]+$/
+    function formatBankAccount(acc) {
+      const formattedAcc = acc.replace(/ /g, '').slice(0, 26)
+      return [
+        formattedAcc.slice(0, 2),
+        formattedAcc.slice(2, 6),
+        formattedAcc.slice(6, 10),
+        formattedAcc.slice(10, 14),
+        formattedAcc.slice(14, 18),
+        formattedAcc.slice(18, 22),
+        formattedAcc.slice(22),
+      ].filter(s => s).join(' ')
+    }
+    let sanText = txt ? txt.replace(/[^0-9\s]/g, '').trim().slice(0, max) : ''
+    if(!regEx.test(sanText)) sanErr = tr('Err_10', lang)
+    if(sanText.length < min) sanErr = tr('Err_11', lang)
+    sanText = formatBankAccount(sanText)
+    return { sanText, sanErr }
+  }
+  function sanitizePhone(txt) {
+    const regEx = /^[0-9]+$/
+    const max = 13
+    let sanErr = false
+    function formatPhone(phone) {
+      const formattedPhone = phone.replace(/-/g, '').slice(0, 9)
+      return [
+        formattedPhone.slice(0, 3),
+        formattedPhone.slice(3, 6),
+        formattedPhone.slice(6)
+      ].filter(s => s).join('-')
+    }
+    let sanText = txt ? txt.replace(/[^0-9]/g, '').trim().slice(0, max) : ''
+    if (!regEx.test(sanText)) sanErr = tr('Err_10', lang)
+    sanText = formatPhone(sanText)
+    return { sanText, sanErr }
+  }
+  function sanitizeWebsite(txt) {
+    const max = 128
+    let sanErr = false
+    const regEx = /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ;,./?%&=]*)?$/
+    function formatWebsite(url) {
+      if(!url.startsWith("https")) return "https://" + url
+      return url
+    }
+    let sanText = txt ? txt.trim().slice(0, max) : ''
+    if(sanText && !regEx.test(sanText)) sanErr = tr('Err_11', lang)
+    if(sanText.length > 50) sanErr = tr('Err_10', lang)
+    sanText = formatWebsite(sanText)
+    return { sanText, sanErr }
   }
 }
 
@@ -110,13 +263,11 @@ export const PostToApi = async (link, object, callback)=>{
     return false
   })
 
-  const reqData = { bzToken:GetToken(), IP, user:GetUser(), object }
-
   // Send the request to the server with the required data and get response
-  axios.post( API + link, reqData ).then( (resData)=>{
+  axios.post( API + link, { bzToken:GetToken(), IP, object } ).then( (resData)=>{
 
     const Data = resData.data
-    
+
     // Set the user language based on the IP country code if not already set
     const lang = () => {
       const language = Data?.IP?.country_code?.toLowerCase()
@@ -126,19 +277,19 @@ export const PostToApi = async (link, object, callback)=>{
         : ["en", "ua", "pl"].includes(language) ? language : "en"
       )
     }
-
-    // Set the new token and user data in local storage
+    
+    // Set the token and user data in local storage
     SetToken(Data?.bzToken)
-    SetUser({ ...Data?.user, lang: lang() })
+    SetUser({...Data?.user, lang: lang()})
 
     // Run the callback function with the response data (if provided)
-    if(typeof callback === "function") callback(Data?.object?.result)
+    if(typeof callback === "function") callback(Data?.result)
 
     // Log the response data if running locally
-    if(localHost) console.log("resData", Data)
+    if(localHost) console.log(`resData_${link}`, Data?.result)
 
     // Log any errors from the server response
-    const errorsData = Data?.object?.errors || []
+    const errorsData = Data?.errors || []
     errorsData.forEach( (err) => console.error("errors", err) )
 
   })

@@ -17,14 +17,14 @@ function AuthPanel({ props:{AppReload} }) {
   const icoLogOut = `https://bzdrive.com/files/ico/icoLogOut.png`
 
   const [formData, setFormData] = useState({})
+  const [formErr, setFormErr] = useState({})
   const [act, setAct] = useState([`login`, `LogIn`, `SignUp`, `Forgot`])
-  const [servErr, setServErr] = useState(false)
 
-  const propses = ()=> AuthProps(formData, setFormData, lang, setServErr)
+  const propses = ()=> AuthProps(lang, formData, setFormData, formErr, setFormErr)
 
   const CHG_ACT = (act)=>{
     setFormData({})
-    setServErr(false)
+    setFormErr(false)
     switch(act){
       case "LogIn":   setAct([`login`, `LogIn`, `SignUp`, `Forgot`]);  return;
       case "SignUp":  setAct([`signup`, `SignUp`, `LogIn`, `Forgot`]); return;
@@ -33,17 +33,17 @@ function AuthPanel({ props:{AppReload} }) {
     }
   }
 
-  const SUBMIT = ()=> AuthReducer( { type:"SUBMIT", act:act[0], formData }, setServErr, AppReload )
-  const LOGOUT = ()=> AuthReducer( { type:"LOGOUT", act:act[0], formData }, setServErr, AppReload )
+  const SUBMIT = ()=> AuthReducer( { type:"SUBMIT", act:act[0], formData }, setFormErr, AppReload )
+  const LOGOUT = ()=> AuthReducer( { type:"LOGOUT", act:act[0], formData }, setFormErr, AppReload )
 
   return (
     <div className="AuthPanel flex column">
 
-    {
-      login
-      ? <UserInfo props={{user}}/>
-      : <SecurityPannel props={{lang, act, servErr, propses, CHG_ACT, SUBMIT}}/>
-    }
+      {
+        login
+        ? <UserInfo props={{user}}/>
+        : <SecurityPannel props={{lang, act, formErr, propses, CHG_ACT, SUBMIT}}/>
+      }
 
       {
         login &&

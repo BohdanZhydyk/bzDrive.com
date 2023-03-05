@@ -8,7 +8,7 @@ exports.getWorkshop = (req, res)=>{
     res.send({
       ...workshopData, object:{
         ...workshopData.object,
-        result: workshopData.object.result
+        result: workshopData.result
       }
     })
 

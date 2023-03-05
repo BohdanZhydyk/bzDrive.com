@@ -24,7 +24,7 @@ function TagSlider({ props:{el, lang} }){
     return () => clearInterval(int)
   }, [img])
 
-  console.log(slider)
+  // console.log(slider)
 
   return(
     <div className="TagSlider">

@@ -1,6 +1,7 @@
 import React from "react"
 import { GetUser, SetUser } from "../../AppFunctions"
 
+import ActionBtn from "../All/ActionBtn"
 import AuthPanel from "./AuthPannel"
 
 
@@ -10,10 +11,12 @@ export function FullScreenPannel({ props:{blur, BLUR, AppReload} }) {
   const lang = GetUser().lang
   const languages = ["en", "ua", "pl"]
 
-  const icoCancel = `https://bzdrive.com/files/ico/icoCancel.png`
   const icoLng = (lang)=> `https://bzdrive.com/files/ico/lng/lng${lang}.png`
 
-  const LNG_CHG = (lang)=> SetUser( {...user, lang} )
+  const LNG_CHG = (lang)=>{
+    SetUser( {...user, lang} )
+    BLUR()
+  }
 
   return (
     <div className="FullScreenPannel">
@@ -24,7 +27,7 @@ export function FullScreenPannel({ props:{blur, BLUR, AppReload} }) {
         blur &&
         <div className="SidePannel">
 
-          <div className="SidePannelTop flex end" onClick={()=>BLUR()}>
+          <div className="SidePannelTop flex end">
 
             <div className="LangPannel flex">
             {
@@ -38,7 +41,7 @@ export function FullScreenPannel({ props:{blur, BLUR, AppReload} }) {
             }
             </div>
 
-            <img className="ImgBtn" src={icoCancel} alt="cancel" />
+            <ActionBtn props={{name:`cancel`, click:BLUR}} />
 
           </div>
 

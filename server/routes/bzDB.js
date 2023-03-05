@@ -20,18 +20,12 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
 
   const client = new MongoClient(url, { useUnifiedTopology: true })
   
-  const ERR = (bzToken, IP, user, error)=> {
-    callback({bzToken, IP, user, object:{result:false, errors:error}})
-    // client.close()
-  }
-  const OK = (bzToken, IP, user, result)=> {
-    callback({bzToken, IP, user, object:{result:result, errors:false}})
-    // client.close()
-  }
+  const ERR = (bzToken, IP, user, errors)=> callback({bzToken, IP, user, errors}) // client.close()
+  const OK = (bzToken, IP, user, result)=> callback({bzToken, IP, user, result}) // client.close()
 
-  client.connect( (error) => {
+  client.connect( (errors) => {
 
-    error && ERR(bzToken, IP, user, error)
+    errors && ERR(bzToken, IP, user, errors)
 
     CheckToken(bzToken, (ChekTokenData)=>{
 
@@ -40,18 +34,21 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
         Statistic(bzToken, IP, user)
       }
   
-      if(!ChekTokenData){ Done(generateToken(), IP, false); return; }
-      
-      CheckRole(user?.login, (CheckRoleData)=>{
-        if(!CheckRoleData){ Done(bzToken, IP, user); return; }
-        Done(bzToken, IP, CheckRoleData)
-      })
+      if(!ChekTokenData){ Done(bzToken, IP, false); return; }
+
+      // if the token is older than "tokenLifetime", generate a new one
+      const tokenLifetime = 86400000
+      const bzTokenTime = ObjectId(ChekTokenData?._id).getTimestamp().getTime()
+      const currentTime = new Date().getTime()
+      if(currentTime - bzTokenTime > tokenLifetime){ Done(generateToken(), IP, false); return; }
+
+      Done(bzToken, IP, ChekTokenData?.user)
 
     })
 
     function Queries(bzToken, IP, user){
 
-      const CB = (error, result)=> error ? ERR(bzToken, IP, user, error) : OK(bzToken, IP, user, result)
+      const CB = (errors, result)=> errors ? ERR(bzToken, IP, user, errors) : OK(bzToken, IP, user, result)
       
       switch(act){
         case "FIND":          FIND();         break
@@ -87,27 +84,10 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
 
     function CheckToken(bzToken, CheckTokenCallback){
       client.db(dbName)
-        .collection('bzStatistic')
-        .findOne( {bzToken}, (error, result)=>{
-          error && ERR(bzToken, IP, user, error)
+        .collection('bzTokens')
+        .findOne( {bzToken}, (errors, result)=>{
+          errors && ERR(bzToken, IP, user, errors)
           CheckTokenCallback(result)
-      })
-    }
-
-    function CheckRole(login, CheckRoleCallback){
-      client.db(dbName)
-        .collection('bzUsers')
-        .findOne( {login}, (error, result)=>{
-          let userResult = {
-            login:  result?.login,
-            role:   result?.role,
-            email:  result?.email,
-            lang:   result?.lang,
-            sex:    result?.sex,
-            ava:    result?.ava
-          }
-          error && ERR(bzToken, IP, userResult, error)
-          CheckRoleCallback(userResult)
       })
     }
 
@@ -115,8 +95,8 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
       let date = { unix: Date.now(), dateTime: unixToDateTimeConverter() }
       client.db(dbName)
         .collection('bzStatistic')
-        .insertOne( {user:user.login, IP, date, bzToken}, (error, result)=>{
-          error && ERR(bzToken, IP, user, error)
+        .insertOne( {user:user.login, IP, date, bzToken}, (errors, result)=>{
+          errors && ERR(bzToken, IP, user, errors)
       })
     }
 

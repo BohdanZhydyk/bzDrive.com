@@ -10,7 +10,7 @@ exports.getAuth = (req, res)=>{
     case "signup": return
     case "forgot": return
     default:
-      res.send( {...req.body, object:{result:false, errors:'ERR: server app.js!!!'} } )
+      res.send( {...req.body, result:false, errors:'ERR: server app.js!!!'} )
       break
   }
 
@@ -23,48 +23,47 @@ exports.getAuth = (req, res)=>{
   
     bzDB( { req, res, col:'bzUsers', act:"FIND_ONE", query:{login} }, (dbData)=>{
   
-      if(!dbData?.object?.result){
+      if(!dbData?.result){
         res.send({
           ...req?.body,
-          object:{
-            result:{
-              ...formData,
-              errors: {login:"UserNotPresent"}
-            },
+          result:{
+            ...formData,
+            errors: {login:"UserNotPresent"}
           }
         })
         return
       }
 
-      const dbPass = dbData.object.result.pass
+      const dbPass = dbData.result.pass
         
       bzPassCompare( pass, dbPass, (isPass)=>{
 
         if(!isPass){
           res.send({
             ...req?.body,
-            object:{
-              result:{
-                ...formData,
-                errors: {pass:"WrongPass"}
-              }
+            result:{
+              ...formData,
+              errors: {pass:"WrongPass"}
             }
           })
           return
         }
-  
-        res.send({
-          ...req?.body,
-          object:{
-            result:{
-              role: dbData.object.result.role,
-              login: dbData.object.result.login,
-              email: dbData.object.result.email,
-              lang: dbData.object.result.lang,
-              sex: dbData.object.result.sex,
-              ava: dbData.object.result.ava
-            }
-          }
+
+        let result = {
+          login: dbData.result.login,
+          role: dbData.result.role,
+          email: dbData.result.email,
+          lang: dbData.result.lang,
+          sex: dbData.result.sex,
+          ava: dbData.result.ava
+        }
+
+        let query = {user:result, bzToken:req?.body?.bzToken}
+
+        bzDB( { req, res, col:'bzTokens', act:"INSERT_ONE", query }, (dbData)=>{
+
+          res.send( {bzToken: req?.body?.bzToken, result} )
+
         })
   
       })

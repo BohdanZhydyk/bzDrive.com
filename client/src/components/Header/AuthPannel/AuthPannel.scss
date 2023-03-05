@@ -36,45 +36,11 @@
   
   .SecurityPannel {
     width:100%;
-
+    
     .FormPannel {
       width:100%;
-    
-      .Input {
-        width: 90%;
-        margin-top: 0.5vw;
-        padding:0.4vw 0.2vw 0.2vw 0.2vw;
-        border:1px solid #999;
-        border-radius:0.5vw;
-        
-        &:focus {
-          border-color:#f60;
-        }
-  
-        legend {
-          font-size:80%;
-          color:#fff;
-          margin:0 1vw;
-          padding:0 0.5vw;
-        }
-  
-        input {
-          margin:0;
-          padding:0.25vw 0.5vw;
-          width:calc(100% - 1vw);
-          color:#fff;
-          background-color:transparent;
-          border:none;
-          border-radius:0.25vw;
-        }
-  
-        img {
-          display:none;
-        }
-      }
-      .Input:focus-within {
-        border-color: #f60;
-      }
+
+      .Input {width:90%;}
     }
 
     .EnotherButtons {
@@ -93,24 +59,25 @@
       padding: 0.5vw;
       width: calc(90% - 0.5vw);
       color:#fff;
-      border: 1px solid #191;
       border-radius: 0.5vw;
-      background-color:#1711;
       cursor: pointer;
+    }
+
+    .ColorBtnGrn {
+      border: 1px solid #191;
+      background-color:#1711;
       
       &:hover {
         background-color: #1715;
       }
     }
-  
-    .ButtonOrg {
-      margin-top: 1vw;
-      padding: 0.5vw;
-      width: calc(90% - 0.5vw);
-      color:#f60;
-      border: 1px solid transparent;
-      border-radius: 0.5vw;
-      background-color:transparent;
+    .ColorBtnRed {
+      border: 1px solid #911;
+      background-color:#7111;
+      
+      &:hover {
+        background-color: #7115;
+      }
     }
       
     .Link {
