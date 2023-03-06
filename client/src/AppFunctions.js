@@ -35,6 +35,16 @@ export const bzCalc = (operation, a, b)=>{
   }
 }
 
+export const getRandomColor = (dark = 10, light = 240)=>{
+  const getRandomInt = (min, max)=>{
+    //The maximum is exclusive and the minimum is inclusive
+    let minimum = Math.ceil(min)
+    let maximum = Math.floor(max)
+    return ( Math.floor(Math.random() * (maximum - minimum) + minimum) ).toString()
+  }
+  return `rgb(${getRandomInt(dark, light)}, ${getRandomInt(dark, light)}, ${getRandomInt(dark, light)})`
+}
+
 // sanitization function
 export const sanitizeTxt = (txt, name = "default")=>{
   const lang = GetUser().lang

@@ -1,0 +1,11 @@
+
+.TextArea {
+  width: calc(100% - 3vw - 2px);
+  min-height:10vw;
+  padding:1vw;
+  border:none;
+  resize:vertical;
+  font-size:1vw;
+  color:#fff;
+  background-color:#0000;
+}

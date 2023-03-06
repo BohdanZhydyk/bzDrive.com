@@ -11,6 +11,7 @@ function ActionBtn({ props:{name, click} }){
       case "check":       return `${link}icoCheck.png`
       case "save":        return `${link}icoSave.png`
       case "edit":        return `${link}icoEdit.png`
+      case "print":       return `${link}icoPrint.png`
       case "settings":    return `${link}icoSettings.png`
       case "cancel":      return `${link}icoCancel.png`
       case "delete":      return `${link}icoDelete.png`

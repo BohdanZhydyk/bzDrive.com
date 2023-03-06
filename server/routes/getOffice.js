@@ -40,6 +40,20 @@ exports.getOffice = (req, res)=>{
       })
     }
 
+    // getting information about orders
+    if(object?.getOrders){
+
+      const query = object?.query
+      bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (userData)=>{
+
+        res.send({
+          ...userData,
+          result: userData?.result
+        })
+
+      })
+    }
+
   })
 
 }
