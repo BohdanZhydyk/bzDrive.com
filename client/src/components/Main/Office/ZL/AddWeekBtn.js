@@ -1,10 +1,12 @@
 import React from "react"
 
+import { tr } from "../../../../AppTranslate"
 
-export function AddWeekBtn({ props:{act, calendar, setCalendar, more, setMore, ZLreducer} }){
+
+export function AddWeekBtn({ props:{act, lang, calendar, setCalendar, more, setMore, ZLreducer} }){
 
   const ADD_WEEK = ()=>{
-    ZLreducer( {type:act, calendar, setCalendar} )
+    ZLreducer( {type:act, calendar}, (data)=>setCalendar(data) )
     setMore(!more)
   }
 
@@ -12,7 +14,7 @@ export function AddWeekBtn({ props:{act, calendar, setCalendar, more, setMore, Z
     <div className="DaysNamePannel flex stretch">
       <div className="LeftLine flex"></div>
       <div className="RightLine flex">
-        <div className="AddWeekBtn flex" onClick={ADD_WEEK}>{act}</div>
+        <div className="AddWeekBtn flex" onClick={ADD_WEEK}>{tr(`AddWeekBtn_${act}`,lang)}</div>
       </div>
     </div>
   )

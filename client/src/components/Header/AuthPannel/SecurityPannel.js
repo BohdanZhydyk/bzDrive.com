@@ -11,6 +11,12 @@ export function SecurityPannel({ props:{lang, act, formErr, propses, CHG_ACT, SU
   const SUBMIT_CLICK = ()=> !anyErr && SUBMIT()
   const colorBtn = `Button ColorBtn${anyErr ? `Red` : `Grn`} flex`
 
+  const txt = {
+    login: tr("SecurityPannelTxtLogin", lang),
+    signup: tr("SecurityPannelTxtSignup", lang),
+    forgot: tr("SecurityPannelTxtForgot", lang)
+  }
+
   return (
     <div className="SecurityPannel flex column">
 
@@ -38,6 +44,10 @@ export function SecurityPannel({ props:{lang, act, formErr, propses, CHG_ACT, SU
       </div>
 
       <div className="Link flex"><a href="/privacy">{tr(`PrivacyBtn`,lang)}</a></div>
+
+      <div className="Description flex start">
+        <p>{ txt[act[0]] }</p>
+      </div>
 
     </div>
   )

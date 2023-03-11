@@ -5,35 +5,28 @@ import './Input.scss'
 
 function Input({ props:{legend, type, plhol, val, err, cbVal, cbErr} }) {
 
-  // {
-  //   legend: tr(`translateName`,lang),
-  //   type: `text`,
-  //   plhol: tr(`PlaceHolder`,lang),
-  //   val: formData?.login ?? '',
-  //   err: formErr?.login ?? '',
-  //   cbVal: (val)=> setFormData( (prev) => ({
-  //     ...prev, login:sanitizeTxt(val, `login`).sanText
-  //   })),
-  //   cbErr: (val)=> setFormErr( (prev) => ({
-  //     ...prev, login:sanitizeTxt(val, `login`).sanErr
-  //   }))
-  // }
+  const dateForInput = (date)=> `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`
+  const dateForDiv = (date)=> `${date.slice(6,8)}.${date.slice(4,6)}.${date.slice(0,4)}`
+
+  const Val = type === "date" ? dateForInput(val.toString()) : val
 
   const onChange = (e) => {
-    cbVal(e?.target?.value ?? '')
-    cbErr(e?.target?.value ?? '')
+    const V = e?.target?.value
+    const sendVal = type === "date" ? parseInt( V ? V.split("-").join("") : "" ) : (V ?? '')
+    cbVal(sendVal)
+    cbErr(sendVal)
   }
 
   return (
     <fieldset className="Input">
 
-      <legend>
+      <legend className={err ? `txtOrg` : ``}>
         <span>{legend}</span>
-        <span className="txtOrg">{`${err ? ` - ${err}` : ``}`}</span>
+        <span>{`${err ? ` - ${err}` : ``}`}</span>
       </legend>
 
       <input
-        value={val}
+        value={Val}
         type={type}
         placeholder={plhol}
         onChange={onChange}
@@ -50,5 +43,15 @@ function Input({ props:{legend, type, plhol, val, err, cbVal, cbErr} }) {
     </fieldset>
   )
 }
+
+// {
+//   legend: tr(`translateName`,lang),
+//   type: `text`,
+//   plhol: tr(`PlaceHolder`,lang),
+//   val: Data?.login ?? '',
+//   err: Err?.login ?? '',
+//   cbVal: (val)=> setData( (prev) => ({...prev, login:sanitizeTxt(val, `login`).sanText})),
+//   cbErr: (val)=> setErr( (prev) => ({...prev, login:sanitizeTxt(val, `login`).sanErr}))
+// }
 
 export default Input

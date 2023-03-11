@@ -1,8 +1,12 @@
 import React from "react"
 
+import { GetUser } from "../../../AppFunctions"
+import { tr } from "../../../AppTranslate"
+
 
 function ActionBtn({ props:{name, click} }){
 
+  const lang = GetUser().lang
   const link = `https://bzdrive.com/files/ico/`
 
   const ImgName = ()=>{
@@ -20,7 +24,12 @@ function ActionBtn({ props:{name, click} }){
   }
 
   return(
-    <img className="ImgBtn" src={ ImgName() } onClick={click} alt={name} />
+    <img
+      className="ImgBtn"
+      src={ ImgName() }
+      title={ tr(`ImgBtn_${name}`,lang) }
+      onClick={click} alt={name}
+    />
   )
 }
 

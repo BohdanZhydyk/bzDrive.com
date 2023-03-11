@@ -35,14 +35,11 @@ export const bzCalc = (operation, a, b)=>{
   }
 }
 
-export const getRandomColor = (dark = 10, light = 240)=>{
-  const getRandomInt = (min, max)=>{
-    //The maximum is exclusive and the minimum is inclusive
-    let minimum = Math.ceil(min)
-    let maximum = Math.floor(max)
-    return ( Math.floor(Math.random() * (maximum - minimum) + minimum) ).toString()
-  }
-  return `rgb(${getRandomInt(dark, light)}, ${getRandomInt(dark, light)}, ${getRandomInt(dark, light)})`
+export const getRandomColor = () => {
+  const hex = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"]
+  let color = "#"
+  for(let i = 0; i < 6; i++){ color += hex[Math.floor(Math.random() * 16)] }
+  return color
 }
 
 // sanitization function
@@ -62,6 +59,8 @@ export const sanitizeTxt = (txt, name = "default")=>{
     case "ACC":               return sanitizeBankAccount(txt)
     case "tel":               return sanitizePhone(txt)
     case "www":               return sanitizeWebsite(txt)
+    case "carNumbers":        return sanitizeCarNumbers(txt)
+    
     default: return {sanText:txt, sanErr:false}
   }
   function sanitizeLogin(txt) {
@@ -116,13 +115,8 @@ export const sanitizeTxt = (txt, name = "default")=>{
     const min = 1
     const max = 64
     let sanErr = false
-    const regEx = /^[a-zA-Z0-9\s\-\_\.\,]*$/
-    let sanText = txt ? txt.trim().slice(0, max) : ''
-    if(sanText.length < min) sanErr = tr('Err_10', lang)
-    if(!regEx.test(sanText)) sanErr = tr('Err_11', lang)
-    if(!sanErr && !/[a-zA-Z]/.test(sanText)) sanErr = tr('Err_12', lang)
-    if(!sanErr && !/\d/.test(sanText)) sanErr = tr('Err_13', lang)
-    if(!sanErr && sanText.trim().length === 0) sanErr = tr('Err_14', lang)
+    let sanText = txt ? txt.replace(/[^a-zA-Z0-9\\&()+-_.,]/g, '').trim().slice(0, max) : ''
+    if(sanText.length < min) sanErr = tr('Err_0', lang)
     return { sanText, sanErr }
   }
   function sanitizeVIN(txt) {
@@ -130,7 +124,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     const max = 17
     let sanErr = false
     let sanText = txt ? txt.replace(/[^a-zA-Z0-9]/g, '').trim().toUpperCase().slice(0, max) : ''
-    if(sanText.length !== max) sanErr = 'VIN musi składać się z 17 znaków.'
+    if(sanText.length !== max) sanErr = 'VIN musi składać się z 17 znaków'
     return { sanText, sanErr }
   }
   function sanitizeNIP(txt) {
@@ -148,8 +142,8 @@ export const sanitizeTxt = (txt, name = "default")=>{
       ].filter(s => s).join('-')
     }
     let sanText = txt ? txt.replace(/[^0-9]/g, '').trim().slice(0, max) : ''
-    if(!regEx.test(sanText)) sanErr = tr('Err_8', lang)
-    if(sanText.length < min) sanErr = tr('Err_9', lang)
+    if(!regEx.test(sanText)) sanErr = tr('Err_0', lang)
+    if(sanText.length < min) sanErr = tr('Err_0', lang)
     sanText = formatNIP(sanText)
     return { sanText, sanErr }
   }
@@ -189,10 +183,10 @@ export const sanitizeTxt = (txt, name = "default")=>{
     return {sanText, sanErr}
   }
   function sanitizeBankAccount(txt) {
-    const min = 26
-    const max = 26
+    const len = 32
     let sanErr = false
-    const regEx = /^[0-9\s]+$/
+    let sanText = txt ? txt.replace(/[^0-9\s]/g, '').trim().slice(0, len) : ''
+    if(sanText.length < len) sanErr = tr('Err_0', lang)
     function formatBankAccount(acc) {
       const formattedAcc = acc.replace(/ /g, '').slice(0, 26)
       return [
@@ -205,9 +199,6 @@ export const sanitizeTxt = (txt, name = "default")=>{
         formattedAcc.slice(22),
       ].filter(s => s).join(' ')
     }
-    let sanText = txt ? txt.replace(/[^0-9\s]/g, '').trim().slice(0, max) : ''
-    if(!regEx.test(sanText)) sanErr = tr('Err_10', lang)
-    if(sanText.length < min) sanErr = tr('Err_11', lang)
     sanText = formatBankAccount(sanText)
     return { sanText, sanErr }
   }
@@ -216,12 +207,12 @@ export const sanitizeTxt = (txt, name = "default")=>{
     const max = 13
     let sanErr = false
     function formatPhone(phone) {
-      const formattedPhone = phone.replace(/-/g, '').slice(0, 9)
+      const formattedPhone = phone.replace(/ /g, '').slice(0, 9)
       return [
         formattedPhone.slice(0, 3),
         formattedPhone.slice(3, 6),
         formattedPhone.slice(6)
-      ].filter(s => s).join('-')
+      ].filter(s => s).join(' ')
     }
     let sanText = txt ? txt.replace(/[^0-9]/g, '').trim().slice(0, max) : ''
     if (!regEx.test(sanText)) sanErr = tr('Err_10', lang)
@@ -240,6 +231,14 @@ export const sanitizeTxt = (txt, name = "default")=>{
     if(sanText && !regEx.test(sanText)) sanErr = tr('Err_11', lang)
     if(sanText.length > 50) sanErr = tr('Err_10', lang)
     sanText = formatWebsite(sanText)
+    return { sanText, sanErr }
+  }
+  function sanitizeCarNumbers(txt) {
+    const min = 2
+    const max = 10
+    let sanErr = false
+    let sanText = txt ? txt.replace(/[^a-zA-Z0-9]/g, '').trim().toUpperCase().slice(0, max) : ''
+    if(sanText.length < min) sanErr = '*'
     return { sanText, sanErr }
   }
 }

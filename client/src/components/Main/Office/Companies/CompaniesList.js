@@ -1,5 +1,6 @@
 import React from "react"
 
+import { tr } from "../../../../AppTranslate"
 import ActionBtn from "../../../All/ActionBtn"
 
 
@@ -23,7 +24,7 @@ export function CompaniesList({ props:{user, def, companies, CHK_COMPANY} }) {
               }
 
               <div className="CompanyName flex start">
-                {`${com?.shortName ?? `add new`}`}
+                {`${com?.shortName ?? tr(`AddNewCompanyBtn`,user.lang)}`}
               </div>
 
               <ActionBtn props={{name:(i === def) ? `check` : `empty`}} />

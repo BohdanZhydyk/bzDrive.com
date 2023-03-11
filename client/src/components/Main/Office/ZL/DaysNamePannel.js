@@ -1,9 +1,11 @@
 import React from "react"
 
+import { tr } from "../../../../AppTranslate"
 
-export function DaysNamePannel({ props:{} }) {
 
-  const dayNames = ['mo','tu','we','th','fr','sa','su']
+export function DaysNamePannel({ props:{lang} }) {
+
+  const dayNames = tr(`DayNames`,lang)
 
   return(
     <div className="DaysNamePannel flex stretch">

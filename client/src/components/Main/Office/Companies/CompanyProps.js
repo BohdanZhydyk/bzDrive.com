@@ -5,7 +5,7 @@ import { sanitizeTxt } from "../../../../AppFunctions"
 export const CompanyProps = (lang, company, setCompany)=>{
   return {
     shortName: {
-      legend: "Short Name",
+      legend: tr(`ShortName`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
       val: company?.shortName ? sanitizeTxt(company.shortName, `CompanyNameShort`).sanText : '',
@@ -15,7 +15,7 @@ export const CompanyProps = (lang, company, setCompany)=>{
       cbErr: ()=>{}
     },
     name: {
-      legend: "Name",
+      legend: tr(`NameLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
       val: company?.name ? sanitizeTxt(company.name, 'CompanyName').sanText : '',
@@ -25,7 +25,7 @@ export const CompanyProps = (lang, company, setCompany)=>{
       cbErr: ()=>{}
     },
     nip: {
-      legend: "NIP",
+      legend: tr(`NipLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
       val: company?.nip ? sanitizeTxt(company.nip, 'NIP').sanText : '',
@@ -35,7 +35,7 @@ export const CompanyProps = (lang, company, setCompany)=>{
       cbErr: ()=>{}
     },
     account: {
-      legend: "Account",
+      legend: tr(`AccountLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
       val: company?.account ? sanitizeTxt(company.account, 'ACC').sanText : '',
@@ -45,7 +45,7 @@ export const CompanyProps = (lang, company, setCompany)=>{
       cbErr: ()=>{}
     },
     zip: {
-      legend: "ZIP",
+      legend: tr(`ZipLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
       val: company?.addr?.zip ? sanitizeTxt(company.addr.zip, 'ZIP').sanText : '',
@@ -55,7 +55,7 @@ export const CompanyProps = (lang, company, setCompany)=>{
       cbErr: ()=>{}
     },
     town: {
-      legend: "town",
+      legend: tr(`TownLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
       val: company?.addr?.town ? sanitizeTxt(company.addr.town, 'town').sanText : '',
@@ -65,7 +65,7 @@ export const CompanyProps = (lang, company, setCompany)=>{
       cbErr: ()=>{}
     },
     streetName: {
-      legend: "streetName",
+      legend: tr(`StreetLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
       val: company?.addr?.street?.name ? sanitizeTxt(company.addr.street.name, 'StreetName').sanText : '',
@@ -75,7 +75,7 @@ export const CompanyProps = (lang, company, setCompany)=>{
       cbErr: ()=>{}
     },
     streetNr: {
-      legend: "streetNr",
+      legend: tr(`StreetNrLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
       val: company?.addr?.street?.nr ? sanitizeTxt(company.addr.street.nr, 'town').sanText : '',
@@ -85,7 +85,7 @@ export const CompanyProps = (lang, company, setCompany)=>{
       cbErr: ()=>{}
     },
     tel: {
-      legend: "tel",
+      legend: tr(`TelLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
       val: company?.contacts?.tel ? sanitizeTxt(company.contacts.tel, 'tel').sanText : '',
@@ -95,7 +95,7 @@ export const CompanyProps = (lang, company, setCompany)=>{
       cbErr: ()=>{}
     },
     www: {
-      legend: "www",
+      legend: tr(`WwwLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
       val: company?.contacts?.www ? sanitizeTxt(company.contacts.www, 'www').sanText : '',

@@ -3,10 +3,32 @@
   width:99%;
 
   .LeftLine {
+    position:relative;
     width:calc(70% - 0.5% - 1px);
     min-height:1vw;
     padding:0.5vw 0.5% 0 0;
     border-right:1px solid #999;
+
+    .NewOrderBtn {
+      width:25%;
+      min-height:2vw;
+      margin-left:2vw;
+      background-color:#f60;
+      border:1px solid#fff;
+      border-radius:0.25vw;
+      &:hover {
+        font-size:110%;
+        cursor:pointer;
+        background-image:linear-gradient(0deg, #1111, #1115 40% 60%, #1111);
+      }
+    }
+
+    .StatusLine {
+      position:absolute;
+      top:1.5vw;
+      width:calc(100% - 1vw);
+      min-height:2px;
+    }
   }
 
   .RightLine {
@@ -37,9 +59,16 @@
       border-radius:0.5vw;
     }
 
-    .HolyDay {background-color:#f002;}
-    .Today {background-color:#f60;}
     .SameMonth {opacity:0.4;}
+    .HolyDay {background-color:#f002;}
+    .Today {
+      background-color:#f60;
+      border-color:#fff;
+      &:hover {
+        cursor:pointer;
+        background-image:linear-gradient(0deg, #1111, #1115 40% 60%, #1111);
+      }
+    }
   }
   
   .DaysNamePannel {
@@ -50,23 +79,60 @@
     width:100%;
   }
 
-  .OrderLine {
+  .OrdersLine {
     width:100%;
 
     .Order {
       width:100%;
 
-      .OrderNr {
-        width:15%;
+      .OrderCell {
+        padding:0 0.5vw;
         min-height:2vw;
+        border-right:1px solid #999;
+        border-radius:0.25vw;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
       }
-      .OrderElse {
-        width:85%;
+      .OrderAva {
+        width:calc(5% - 1vw - 1px);
       }
+      .OrderNr {width:calc(15% - 1vw - 1px);}
+      .OrderCar {width:calc(40% - 1vw - 1px);}
+      .OrderTel {width:calc(25% - 1vw - 1px);}
+      .OrderElse {width:calc(15% - 1vw - 1px);}
+
       .OrderR {
-        width:100%;
+        position:relative;
+
+        .OrderBody {
+          width:calc(100% - 0.5vw - 2px);
+          padding:0.1vw 0.5vw 0.1vw 0;
+          min-height:2vw;
+          border-left:1px solid #999;
+          border-right:1px solid #999;
+          border-radius:0.5vw;
+        }
+
+        .StatusLine {
+          position:absolute;
+          top:1vw;
+          width:calc(100% - 0.5vw);
+          min-height:2px;
+        }
+      }
+
+      .AvaImg {
+        width:2vw;
         min-height:2vw;
+        margin:0.1vw 0;
+        background-color:#0005;
       }
     }
   }
+
+  .StatusLineColor_open {background-color:transparent;}
+  .StatusLineColor_repair {background-color:transparent;}
+  .StatusLineColor_close {background-color:#fd07;}
+  .StatusLineColor_delete {background-color:#f007;}
 }

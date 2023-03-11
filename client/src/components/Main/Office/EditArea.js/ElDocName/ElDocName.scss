@@ -1,0 +1,28 @@
+
+.ElDocName {
+  width:100%;
+  
+  .DocTitle {
+    width:100%;
+    font-size:150%;
+
+    .DocName {
+      width:calc(79% - 2vw);
+      padding:0 1vw;
+    }
+
+    .DocNr {
+      width:calc(20% - 2px);
+      min-height:2vw;
+      padding:0.25vw 0;
+      border:1px solid #999;
+      border-radius:0.5vw;
+    }
+  }
+
+  .DocSign {
+    width:99%;
+
+    .Input {width:20%;}
+  }
+}

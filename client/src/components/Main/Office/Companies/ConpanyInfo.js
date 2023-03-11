@@ -1,5 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 
+import { tr } from "../../../../AppTranslate"
 import { CompanyProps } from "./CompanyProps"
 import ActionBtn from "../../../All/ActionBtn"
 import Input from '../../../All/Input'
@@ -54,15 +55,15 @@ export function ConpanyInfo({ props:{lang, company, setCompany} }) {
 
         <div className="Personnel flex stretch between">
           <div className="Range">
-            <div className="RangeName">{`director:`}</div>
+            <div className="RangeName">{`${tr(`DirectorsList`,lang)}:`}</div>
             <div>{`${company?.director}`}</div>
           </div>
           <div className="Range">
-            <div className="RangeName">{`accountants:`}</div>
+            <div className="RangeName">{`${tr(`AccountantsList`,lang)}:`}</div>
             <div>{company?.personnel?.accountants && company.personnel.accountants.join(", ")}</div>
           </div>
           <div className="Range">
-            <div className="RangeName">{`workers:`}</div>
+            <div className="RangeName">{`${tr(`WorkersList`,lang)}:`}</div>
             <div>{company?.personnel?.workers && company.personnel.workers.join(", ")}</div>
           </div>
         </div>

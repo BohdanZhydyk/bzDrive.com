@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { NavLink } from 'react-router-dom'
 
+import { tr } from "../../AppTranslate"
+import { GetUser } from "../../AppFunctions"
+
 
 export function NavPannel({ props:{info, nav, blur, BLUR} }){
+
+  const lang = GetUser().lang
 
   const [actNavBtn, setActNavBtn] = useState('')
   const [actSubNavBtn, setActSubNavBtn] = useState('')
@@ -58,10 +63,10 @@ export function NavPannel({ props:{info, nav, blur, BLUR} }){
             {
               link.subnav
               ?
-              <div className={act} onClick={()=> NavBtnClick(name)}>{name}</div>
+              <div className={act} onClick={()=> NavBtnClick(name)}>{tr(`Nav_${name}`,lang)}</div>
               :
               <NavLink className={act} to={to} onClick={()=> NavBtnClick(name)}>
-                {name}
+                {tr(`Nav_${name}`,lang)}
               </NavLink>
             }
             {
@@ -77,7 +82,7 @@ export function NavPannel({ props:{info, nav, blur, BLUR} }){
                   return(
                     <div className="SubNavBtn flex start" key={subKey}>
                       <NavLink className={cl} to={subTo} onClick={()=> SubNavBtnClick(subName)}>
-                        {`${act ? "- " : ""}${subName}`}
+                        {`${act ? "- " : ""}${tr(`Nav_${subName}`,lang)}`}
                       </NavLink>
                     </div>
                   )

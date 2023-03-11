@@ -91,6 +91,19 @@
         &:hover {text-decoration: underline;}
       }
     }
+
+    .Description {
+      width:calc(90% - 2vw - 2px);
+      margin:1vw 0 0 0;
+      padding:0 1vw;
+      border:1px dashed #f60;
+      border-radius:0.5vw;
+
+      p {
+        text-indent:1vw;
+        text-align:justify;
+      }
+    }
   }
 
   .Logout {
