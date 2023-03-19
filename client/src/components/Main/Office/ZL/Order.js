@@ -14,7 +14,7 @@ export function Order({ props:{company, mode, order, setCalendar, today, firstDa
     ? `${order.client.name}`
     : (order?.client?.contacts?.tel ? `${order.client.contacts.tel}` : ``)
 
-  const opacity = ["close", "delete"].includes(order?.status) ? 0.3 : 1
+  const opacity = ["close", "delete"].includes(order?.status) ? 0.4 : 1
   const repairStatus = order?.status === "repair"
 
   let from = YYYYMMDD_ToWeekDay(order?.nr?.from)

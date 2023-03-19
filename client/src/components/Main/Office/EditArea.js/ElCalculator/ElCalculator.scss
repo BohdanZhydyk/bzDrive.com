@@ -1,0 +1,65 @@
+
+.ElCalculator {
+  width:calc(99% - 2px);
+  margin:0 0 1vw 0;
+  border:1px solid #999;
+  border-radius:0.5vw;
+  padding-bottom:1vw;
+
+  .CalculatorPannelTop {
+    width:100%;
+    background-color:#111;
+    border-radius:0.5vw 0.5vw 0 0;
+  }
+
+  .CalculatorPannelBottom {
+    width:100%;
+  }
+
+  .CalcLine {
+    width:99%;
+
+    .TableCell {
+      min-height:3vw;
+      border-bottom:1px solid #444;
+    }
+    .TableCellTop {
+      min-height:3vw;
+    }
+    .TableCellBottom {
+      min-height:3vw;
+      margin:1vw 0 0 0;
+    }
+    .TableTOT {
+      width:calc(15% - 4vw);
+      padding:0 2vw;
+      text-align:right;
+      background-color:#111;
+    }
+    .TableNUM {width:3%; text-align:center;}
+    .TableART {width:62%; text-align:center;}
+    .TablePRI {width:5%; text-align:center;}
+    .TableQUA {width:5%; text-align:center;}
+    .TableVAT {width:5%; text-align:center;}
+    .TableNET {width:5%; text-align:center;}
+    .TablePRV {width:5%; text-align:center;}
+    .TableSUM {width:5%; text-align:center;}
+    .TableBTN {width:5%; margin:0;}
+
+    input {
+      width:100%;
+      min-height:2vw;
+      color:#fff;
+      background-color:transparent;
+      border:1px solid transparent;
+      border-radius:0.25vw;
+      &:hover {
+        border:1px solid #f60;
+      }
+      &:focus {
+        border:1px solid #171;
+        background-color:#1712;
+      }
+    }
+  }
+}

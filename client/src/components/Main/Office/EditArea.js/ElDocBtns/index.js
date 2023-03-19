@@ -23,7 +23,7 @@ function ElDocBtns({ props:
   const isSameUser = order?.user === user.login
 
   return(
-    <div className="ElDocBtns flex">
+    <section className="ElDocBtns flex">
 
       <div className="ActionBtns flex start">
 
@@ -43,7 +43,7 @@ function ElDocBtns({ props:
         
       </div>
 
-    </div>
+    </section>
   )
 }
 

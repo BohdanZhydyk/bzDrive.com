@@ -12,7 +12,7 @@ function ElInfo({ props:{user, mode, car, setCar, client, setClient, setSave, ed
   const lang = user.lang
 
   return(
-    <div className="ElInfo flex between stretch wrap">
+    <section className="ElInfo flex between stretch wrap">
 
       {
         mode === "ZL" &&
@@ -30,7 +30,7 @@ function ElInfo({ props:{user, mode, car, setCar, client, setClient, setSave, ed
         </>
       }
 
-    </div>
+    </section>
   )
 }
 

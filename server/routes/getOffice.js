@@ -89,7 +89,7 @@ exports.getOffice = (req, res)=>{
     // save orders
     if(object?.saveOrder){
 
-      let _id = object?.id ? ObjectId(object?.id) : ""
+      const _id = object?.id ? ObjectId(object?.id) : ""
 
       const orderData = {
         company:  object?.orderData?.orderCompany,
@@ -141,6 +141,27 @@ exports.getOffice = (req, res)=>{
         })
 
       })
+    }
+
+    // save orders
+    if(object?.updateDocFiles){
+
+      const _id = ObjectId(object?.order?._id)
+      const order = object?.order
+
+      bzDB( { req, res, col:'bzDocuments', act:"UPDATE_ONE", query:{...order, _id} }, (updateOrderData)=>{
+
+        bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{_id} }, (orderData)=>{
+  
+          res.send({
+            ...orderData,
+            result: orderData?.result
+          })
+
+        })
+
+      })
+
     }
 
   })

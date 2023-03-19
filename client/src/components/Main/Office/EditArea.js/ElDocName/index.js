@@ -10,13 +10,13 @@ function ElDocName({ props:{user, mode, nr, setNr, setSave, editErr, setEditErr}
   const lang = user.lang
 
   return(
-    <div className="ElDocName flex column">
+    <section className="ElDocName flex column">
 
       <DocTitle props={{lang, mode, nr}} />
 
       <DocSign props={{lang, nr, setNr, setSave, editErr, setEditErr}} />
 
-    </div>
+    </section>
   )
 }
 

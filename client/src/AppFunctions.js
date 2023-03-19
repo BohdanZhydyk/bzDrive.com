@@ -13,12 +13,20 @@ export const SetToken   = (bzToken)=> cookies.set('bzToken', bzToken )
 export const SetUser    = (user)=> cookies.set( 'bzUser', JSON.stringify(user) )
 export const SetCookie  = ()=> cookies.set('bzCookie', true)
 
+// my filesize calculator function
+export const bzBytesCalc = (Bytes)=>{
+  if(Bytes > 1073741824) return {num:(parseFloat(Bytes) / parseFloat(1073741824)).toFixed(1), unit:"GB"}
+  if(Bytes > 1048576) return {num:(parseFloat(Bytes) / parseFloat(1048576)).toFixed(1), unit:"MB"}
+  if(Bytes > 1024) return {num:(parseFloat(Bytes) / parseFloat(1024)).toFixed(1), unit:"kB"}
+  else return {num:Bytes, unit:"B"}
+}
+
 // my calculator function
 export const bzCalc = (operation, a, b)=>{
   const errors = {
-    a:"Invalid input. Please enter two numbers!",
-    b:"Invalid input. Cannot divide by zero!",
-    c:"Invalid input. Please enter a valid arithmetic operation (+, -, *, /)!"
+    a:"bzCalc Error: Please enter two numbers!",
+    b:"bzCalc Error: Cannot divide by zero!",
+    c:"bzCalc Error: Please enter a valid arithmetic operation (+, -, *, /)!"
   }
   const x = parseFloat(a)
   const y = parseFloat(b)
@@ -35,6 +43,10 @@ export const bzCalc = (operation, a, b)=>{
   }
 }
 
+export const SumArray = (arr, sum = "0.00") => {
+  return arr ? arr?.reduce((acc, value) => bzCalc("+", acc, value), sum) : sum
+}
+
 export const getRandomColor = () => {
   const hex = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"]
   let color = "#"
@@ -42,7 +54,7 @@ export const getRandomColor = () => {
   return color
 }
 
-// sanitization function
+// sanitization functions
 export const sanitizeTxt = (txt, name = "default")=>{
   const lang = GetUser().lang
   switch(name){
@@ -60,7 +72,6 @@ export const sanitizeTxt = (txt, name = "default")=>{
     case "tel":               return sanitizePhone(txt)
     case "www":               return sanitizeWebsite(txt)
     case "carNumbers":        return sanitizeCarNumbers(txt)
-    
     default: return {sanText:txt, sanErr:false}
   }
   function sanitizeLogin(txt) {
@@ -100,27 +111,23 @@ export const sanitizeTxt = (txt, name = "default")=>{
   }
   function sanitizeCompanyNameShort(txt) {
     const min = 1
-    const max = 32
+    const max = 24
     let sanErr = false
-    const regEx = /^[a-zA-Z0-9\s\-\_\.\,]*$/
-    let sanText = txt ? txt.trim().slice(0, max) : ''
-    if(sanText.length < min) sanErr = tr('Err_10', lang)
-    if(!regEx.test(sanText)) sanErr = tr('Err_11', lang)
-    if(!sanErr && !/[a-zA-Z]/.test(sanText)) sanErr = tr('Err_12', lang)
-    if(!sanErr && !/\d/.test(sanText)) sanErr = tr('Err_13', lang)
-    if(!sanErr && sanText.trim().length === 0) sanErr = tr('Err_14', lang)
+    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃ]/g
+    let sanText = txt ? txt.replace(allowedChars, '').slice(0, max) : ''
+    if(sanText.length < min) sanErr = tr('Err_0', lang)
     return { sanText, sanErr }
   }
   function sanitizeCompanyName(txt) {
     const min = 1
     const max = 64
     let sanErr = false
-    let sanText = txt ? txt.replace(/[^a-zA-Z0-9\\&()+-_.,]/g, '').trim().slice(0, max) : ''
+    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃ]/g
+    let sanText = txt ? txt.replace(allowedChars, '').slice(0, max) : ''
     if(sanText.length < min) sanErr = tr('Err_0', lang)
     return { sanText, sanErr }
   }
   function sanitizeVIN(txt) {
-    const min = 17
     const max = 17
     let sanErr = false
     let sanText = txt ? txt.replace(/[^a-zA-Z0-9]/g, '').trim().toUpperCase().slice(0, max) : ''
@@ -128,10 +135,8 @@ export const sanitizeTxt = (txt, name = "default")=>{
     return { sanText, sanErr }
   }
   function sanitizeNIP(txt) {
-    const min = 10
     const max = 10
     let sanErr = false
-    const regEx = /^[0-9]+$/
     function formatNIP(nip) {
       const formattedNIP = nip.replace(/-/g, '').slice(0, 10)
       return [
@@ -141,17 +146,14 @@ export const sanitizeTxt = (txt, name = "default")=>{
         formattedNIP.slice(8),
       ].filter(s => s).join('-')
     }
-    let sanText = txt ? txt.replace(/[^0-9]/g, '').trim().slice(0, max) : ''
-    if(!regEx.test(sanText)) sanErr = tr('Err_0', lang)
-    if(sanText.length < min) sanErr = tr('Err_0', lang)
+    let sanText = txt ? txt.replace(/[^0-9-]/g, '').trim().slice(0, max) : ''
+    if(sanText.length < max) sanErr = tr('Err_0', lang)
     sanText = formatNIP(sanText)
     return { sanText, sanErr }
   }
   function sanitizeZIP(txt) {
-    const min = 5
     const max = 6
     let sanErr = false
-    const regEx = /^[0-9-]+$/
     function formatZIP(zip) {
       const formattedZIP = zip.replace(/-/g, '').slice(0, 5)
       return [
@@ -160,33 +162,36 @@ export const sanitizeTxt = (txt, name = "default")=>{
       ].filter(s => s).join('-')
     }
     let sanText = txt ? txt.replace(/[^0-9-]/g, '').trim().slice(0, max) : ''
-    if (!regEx.test(sanText)) sanErr = tr('Err_8', lang)
-    if (sanText.length < min) sanErr = tr('Err_9', lang)
+    if (sanText.length < max) sanErr = tr('Err_0', lang)
     sanText = formatZIP(sanText);
     return { sanText, sanErr }
   }
   function sanitizeTown(txt) {
-    const max = 32
+    const min = 1
+    const max = 24
     let sanErr = false
-    const sanText = txt ? txt.slice(0, max) : ''
+    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃ]/g
+    let sanText = txt ? txt.replace(allowedChars, '').slice(0, max) : ''
+    if(sanText.length < min) sanErr = tr('Err_0', lang)
     return {sanText, sanErr}
   }
   function sanitizeStreetName(txt) {
+    const min = 1
     const max = 64
     let sanErr = false
+    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃ]/g
+    let sanText = txt ? txt.replace(allowedChars, '').slice(0, max) : ''
     function formatStreetName(name) {
       if(!name.startsWith("ul. ")) return "ul. " + name
       return name
     }
-    let sanText = txt ? txt.slice(0, max) : ''
+    if(sanText.length < min) sanErr = tr('Err_0', lang)
     sanText = formatStreetName(sanText)
     return {sanText, sanErr}
   }
   function sanitizeBankAccount(txt) {
     const len = 32
     let sanErr = false
-    let sanText = txt ? txt.replace(/[^0-9\s]/g, '').trim().slice(0, len) : ''
-    if(sanText.length < len) sanErr = tr('Err_0', lang)
     function formatBankAccount(acc) {
       const formattedAcc = acc.replace(/ /g, '').slice(0, 26)
       return [
@@ -199,11 +204,12 @@ export const sanitizeTxt = (txt, name = "default")=>{
         formattedAcc.slice(22),
       ].filter(s => s).join(' ')
     }
+    let sanText = txt ? txt.replace(/[^0-9\s]/g, '').trim().slice(0, len) : ''
+    if(sanText.length < len) sanErr = tr('Err_0', lang)
     sanText = formatBankAccount(sanText)
     return { sanText, sanErr }
   }
   function sanitizePhone(txt) {
-    const regEx = /^[0-9]+$/
     const max = 13
     let sanErr = false
     function formatPhone(phone) {
@@ -214,8 +220,8 @@ export const sanitizeTxt = (txt, name = "default")=>{
         formattedPhone.slice(6)
       ].filter(s => s).join(' ')
     }
-    let sanText = txt ? txt.replace(/[^0-9]/g, '').trim().slice(0, max) : ''
-    if (!regEx.test(sanText)) sanErr = tr('Err_10', lang)
+    let sanText = txt ? txt.replace(/[^0-9\s]/g, '').trim().slice(0, max) : ''
+    if(sanText.length < max) sanErr = tr('Err_0', lang)
     sanText = formatPhone(sanText)
     return { sanText, sanErr }
   }
@@ -228,19 +234,94 @@ export const sanitizeTxt = (txt, name = "default")=>{
       return url
     }
     let sanText = txt ? txt.trim().slice(0, max) : ''
-    if(sanText && !regEx.test(sanText)) sanErr = tr('Err_11', lang)
-    if(sanText.length > 50) sanErr = tr('Err_10', lang)
+    if(sanText && !regEx.test(sanText)) sanErr = tr('Err_0', lang)
+    if(sanText.length > 50) sanErr = tr('Err_0', lang)
     sanText = formatWebsite(sanText)
     return { sanText, sanErr }
   }
   function sanitizeCarNumbers(txt) {
-    const min = 2
+    const min = 4
     const max = 10
     let sanErr = false
-    let sanText = txt ? txt.replace(/[^a-zA-Z0-9]/g, '').trim().toUpperCase().slice(0, max) : ''
-    if(sanText.length < min) sanErr = '*'
+    let sanText = txt ? txt.toUpperCase().replace(/[^A-Z0-9\s]/g, '').trim().toUpperCase().slice(0, max) : ''
+    if(sanText.length < min) sanErr = tr('Err_0', lang)
     return { sanText, sanErr }
   }
+}
+
+export const bzUploadFile = (file, fileAddr, fileName, cb)=>{
+
+  const formData = new FormData()
+
+  formData.append('file', file)
+  formData.append('fileName', fileName)
+  formData.append('fileAddr', fileAddr)
+
+  const config = { headers: {'content-type': 'multipart/form-data'} }
+
+  // let link = 'https://bzdrive.com/uploadFile'
+  let link = 'http://localhost:2000/API/uploadFile'
+  
+  axios.post( link, formData, config ).then( (res)=> cb(res) )
+
+}
+
+export const bzDeleteFile = (fileAddr, fileName, cb)=>{
+  
+  let query = { fileAddr, fileName }
+
+  // let link = 'https://bzdrive.com/deleteFile'
+  let link = 'http://localhost:2000/API/deleteFile'
+
+  axios.post( link, query).then( (res)=> cb(res) )
+
+}
+
+export const bzPriceToWord = (price)=>{
+
+  if(!price) price = "0.00"
+
+  let liczba = parseInt( price.split('.')[0] )
+  let grosze = price.split('.')[1]
+
+  let jednosci = ["","jeden","dwa","trzy","cztery","pięć","sześć","siedem","osiem","dziewięć"]
+  let nascie = ["","jedenaście","dwanaście","trzynaście","czternaście","piętnaście","szesnaście","siedemnaście","osiemnaście","dziewietnaście"]
+  let dziesiatki = ["","dziesięć","dwadzieścia","trzydzieści","czterdzieści","pięćdziesiąt","sześćdziesiąt","siedemdziesiąt","osiemdziesiąt","dziewięćdziesiąt"]
+  let setki = ["","sto","dwieście","trzysta","czterysta","pięćset","sześćset","siedemset","osiemset","dziewięćset"]
+  let grupy = [
+    ["" ,"" ,""],
+    ["tysiąc" ,"tysiące" ,"tysięcy"],
+    ["milion" ,"miliony" ,"milionów"],
+    ["miliard","miliardy","miliardów"],
+    ["bilion" ,"biliony" ,"bilionów"],
+    ["biliard","biliardy","biliardów"],
+    ["trylion","tryliony","trylionów"]
+  ]
+    
+  let wynik = '', znak = ''
+
+  if( liczba === 0 ){ wynik = "zero" }
+  if( liczba < 0 ){ znak = "minus"; liczba = -liczba; }
+          
+  let g = 0
+  while( liczba > 0 ){
+    let s = Math.floor((liczba % 1000)/100)
+    let n = 0
+    let d = Math.floor((liczba % 100)/10)
+    let j = Math.floor(liczba % 10)
+          
+    if( d === 1 && j>0 ){ n = j; d = 0; j = 0; }
+
+    let k = 2
+    if( j === 1 && s+d+n === 0 ){ k = 0 }
+    if( j === 2 || j === 3 || j === 4 ){ k = 1 }
+    if( s+d+n+j > 0 ){ wynik = `${setki[s]} ${dziesiatki[d]} ${nascie[n]} ${jednosci[j]} ${grupy[g][k]} ${wynik}` }
+
+    g++
+    liczba = Math.floor(liczba/1000)
+  }
+
+  return(`${znak} ${wynik} zł ${grosze}/100 gr` );
 }
 
 // function for sending a POST request to the server and receiving a response from it

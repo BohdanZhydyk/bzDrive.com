@@ -1,0 +1,36 @@
+
+.ElSummary {
+  width:99%;
+  margin:0 0 1vw 0;
+
+  .SumLine {
+    width:100%;
+    margin:0 0 0.5vw 0;
+
+    .SumEmpty {
+      width:20%;
+      min-height:3vw;
+    }
+    .SumName {
+      width:calc(20% - 4vw);
+      padding:0 2vw;
+    }
+    .SumValue {
+      width:calc(60% - 2vw);
+      padding:0 0 0 2vw;
+    }
+
+    .TopCell {
+      font-size:150%;
+      min-height:4vw;
+      background-color:#111;
+    }
+
+    .LinesCell {
+      width:calc(60% - 8vw);
+      margin:0 6vw 0 2vw;
+      border-top:1px dashed #999;
+      border-bottom:1px dashed #999;
+    }
+  }
+}

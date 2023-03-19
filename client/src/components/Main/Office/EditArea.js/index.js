@@ -2,13 +2,16 @@ import React, { useState } from "react"
 
 import './EditArea.scss'
 import { GetUser } from "../../../../AppFunctions"
-import { TimeTo_YYYYMMDD, ZLreducer } from "../ZL/ZLfunctions"
+import { ZLreducer } from "../ZL/ZLfunctions"
 import ElDocBtns from "./ElDocBtns"
 import ElDocName from "./ElDocName"
 import ElInfo from "./ElInfo"
+import ElCalculator from "./ElCalculator"
 import { ElFaults } from "./ElFaults"
 import { ElComments } from "./ElComments"
 import { ElSignatures } from "./ElSignatures"
+import ElFiles from "./ElFiles"
+import ElSummary from "./ElSummary"
 
 
 function EditArea({ props:{company, mode, order, edit, setEdit, setCalendar} }) {
@@ -32,6 +35,10 @@ function EditArea({ props:{company, mode, order, edit, setEdit, setCalendar} }) 
   const [car, setCar] = useState( order?.car )
 
   const [client, setClient] = useState( order?.client )
+
+  const [articles, setArticles] = useState( order?.articles )
+
+  const [files, setFiles] = useState( order?.files ?? [] )
 
   function ACTION_BTN(act){
     const orderData = {orderCompany, orderUser, status, nr, car, client}
@@ -58,11 +65,19 @@ function EditArea({ props:{company, mode, order, edit, setEdit, setCalendar} }) 
 
       <ElInfo props={{user, mode, car, setCar, client, setClient, setSave, editErr, setEditErr}}/>
 
-      <ElFaults props={{user, car, setCar}}/>
+      <ElFaults props={{user, car, setCar, setSave}}/>
 
-      <ElComments props={{user, car, setCar}}/>
+      <ElCalculator props={{user, articles, setArticles, setSave}} />
+
+      <ElSummary props={{nr, articles}} />
+
+      <ElComments props={{user, car, setCar, setSave}}/>
+
+      <ElFiles props={{order, user, nr, files, setFiles}} />
 
       <ElSignatures props={{user}}/>
+
+      <ElDocBtns props={{user, order, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}}/>
 
     </div>
   )

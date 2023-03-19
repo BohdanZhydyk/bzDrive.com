@@ -1,0 +1,47 @@
+
+.ElFiles {
+  width:99%;
+  margin:0 0 1vw 0;
+  border:1px solid #999;
+  border-radius:0.5vw;
+
+  .ElFilesTop {
+    width:calc(100% - 4vw);
+    min-height:2vw;
+    padding:0.5vw 2vw;
+    font-size:150%;
+    background-color:#111;
+    border-radius:0.5vw 0.5vw 0 0;
+  }
+
+  .FileLine {
+    width:99%;
+    min-height:3vw;
+    border-bottom:1px solid #444;
+    &:hover {
+      color:#fd0;
+      background-color:#1115;
+    }
+
+    .FileCell {
+
+    }
+    .FileName {
+      width:85%;
+      &:hover {
+        color:#fd0;
+      }
+    }
+    .FileSize {
+      width:5%;
+      .num {width:60%;}
+      .unit {width:40%;}
+    }
+    .FileAct {width:10%;}
+  }
+
+  .UploadNewFile {
+    width:calc(50% - 2vw);
+    padding:1vw;
+  }
+}

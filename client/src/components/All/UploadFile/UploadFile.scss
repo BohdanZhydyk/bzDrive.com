@@ -1,0 +1,43 @@
+
+.UploadFile {
+  width:calc(100% - 1vw);
+  padding:1vw 0.5vw;
+  border:1px dashed #171;
+  &:hover {
+    border-color:#191;
+    background-color:#1711;
+  }
+
+  .InputTag {
+    width:100%;
+
+    .FileName {
+      width:calc(100% - 1vw - 6px);
+      padding:0.25vw 0.5vw;
+      color:#fff;
+      background-color:transparent;
+      border:1px solid #999;
+      border-radius:0.5vw;
+    }
+  }
+
+  .UplBtns {
+    width:100%;
+  
+    .UplBtn {
+      width:calc(50% - 2px);
+      margin:0.25vw 0;
+      min-height:2vw;
+      color:#fff;
+      border:1px solid #999;
+      border-radius:0.5vw;
+      &:hover {
+        font-weight:bold;
+        font-size:120%;
+      }
+    }
+
+    .redBtn {background-color:#511;}
+    .grnBtn {background-color:#151;}
+  }
+}

@@ -18,7 +18,10 @@ function ActionBtn({ props:{name, click} }){
       case "print":       return `${link}icoPrint.png`
       case "settings":    return `${link}icoSettings.png`
       case "cancel":      return `${link}icoCancel.png`
+      case "plus":        return `${link}icoPlus.png`
       case "delete":      return `${link}icoDelete.png`
+      case "upload":      return `${link}icoUpload.png`
+      case "download":    return `${link}icoDownload.png`
       default:            break
     }
   }

@@ -15,6 +15,7 @@
 
     .FaultsTop, .CommentsTop {
       width:calc(100% - 4vw);
+      min-height:2vw;
       padding:0.5vw 2vw;
       font-size:150%;
       background-color:#111;

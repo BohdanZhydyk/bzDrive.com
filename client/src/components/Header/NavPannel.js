@@ -52,40 +52,49 @@ export function NavPannel({ props:{info, nav, blur, BLUR} }){
   return(
     <nav className={`NavPannel flex end ${blur ? `blur` : ``}`}>
     {
-      nav && nav.map((link, n) => {
+      nav && nav.map((link, n)=> {
+
         const key = `NavBtn${link.to}${n}`
         const to = link.to
         const name = link.name
-        const act = (actNavBtn === name) ? 'activeNavBtn' : ''
-        const actSub = (actSubMenu === name)
+        const cl = (actNavBtn === name) ? 'activeNavBtn' : ''
+        const act = (actSubMenu === name)
+        const linkName = tr(`Nav_${name}`,lang)
+
         return(
           <div className="NavBtn flex column" key={key}>
             {
               link.subnav
               ?
-              <div className={act} onClick={()=> NavBtnClick(name)}>{tr(`Nav_${name}`,lang)}</div>
+              <div className={cl} onClick={()=> NavBtnClick(name)}>{tr(`Nav_${name}`,lang)}</div>
               :
-              <NavLink className={act} to={to} onClick={()=> NavBtnClick(name)}>
-                {tr(`Nav_${name}`,lang)}
+              <NavLink className={cl} to={to} onClick={()=> NavBtnClick(name)}>
+                {linkName}
               </NavLink>
             }
             {
-              (actSub && link.subnav) &&
+              (act && link.subnav) &&
               <div className={`SubMenu flex column`}>
               {
-                link.subnav.map((sub, k) => {
+                link?.subnav && link.subnav.map((sub, k)=> {
+
                   const subKey = `SubNavBtn${link.to}${sub.to}${k}`
                   const subTo = `${link.to}${sub.to}`
                   const subName = sub.name
-                  const act = (actSubNavBtn === subName)
-                  const cl = act ? 'activeSubNavBtn' : ''
+                  const subAct = (actSubNavBtn === subName)
+                  const subCl = subAct ? 'activeSubNavBtn' : ''
+                  const subLinkName = `${subAct ? "- " : ""}${tr(`Nav_${subName}`,lang)}`
+
                   return(
                     <div className="SubNavBtn flex start" key={subKey}>
-                      <NavLink className={cl} to={subTo} onClick={()=> SubNavBtnClick(subName)}>
-                        {`${act ? "- " : ""}${tr(`Nav_${subName}`,lang)}`}
+
+                      <NavLink className={subCl} to={subTo} onClick={()=>SubNavBtnClick(subName)}>
+                        {subLinkName}
                       </NavLink>
+
                     </div>
                   )
+
                 })
               }
               </div>

@@ -8,7 +8,7 @@ export function ElSignatures({ props:{user} }){
   const sign = [ tr(`IssuePerson`,user.lang), tr(`ReceivePerson`,user.lang) ]
 
   return(
-    <div className="ElSignatures flex wrap">
+    <section className="ElSignatures flex wrap">
 
       {
         sign.map( (sig, i)=>{
@@ -25,6 +25,6 @@ export function ElSignatures({ props:{user} }){
         })
       }
       
-    </div>
+    </section>
   )
 }

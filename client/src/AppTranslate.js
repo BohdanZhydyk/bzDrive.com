@@ -68,7 +68,11 @@ export const tr = (txt, lang)=>{
     ImgBtn_print:{en:"print", ua:"друкувати", pl:"drukować"},
     ImgBtn_settings:{en:"settings", ua:"налаштування", pl:"ustawienia"},
     ImgBtn_cancel:{en:"cancel", ua:"скасувати", pl:"anulować"},
+    ImgBtn_plus:{en:"add", ua:"додати", pl:"dodać"},
     ImgBtn_delete:{en:"delete", ua:"видалити", pl:"usunąć"},
+    ImgBtn_upload:{en:"upload", ua:"вивантажити", pl:"wgrać"},
+    ImgBtn_download:{en:"download", ua:"завантажити", pl:"pobrać"},
+    AddFileArea:{en:"Add file...", ua:"Додати файл...", pl:"Dodać plik..."},
     DayNames:{
       en:['mo','tu','we','th','fr','sa','su'],
       ua:['пн','вт','ср','чт','пт','сб','нд'],
@@ -177,10 +181,21 @@ export const tr = (txt, lang)=>{
     InfoPannelClient:{en:"Customer information", ua:"Інформація про клієнта", pl:"Informacja o kliencie"},
     FaultsTop:{en:"Description and scope of damage", ua:"Опис та обсяг пошкодження", pl:"Opis i zakres uszkodzenia"},
     CommentsTop:{en:"Comment", ua:"Коментар", pl:"Komentarz"},
+    FilesTop:{en:"Files", ua:"Файли", pl:"Pliki"},
     IssuePerson:{en:"Authorized person to issue", ua:"Особа, уповноважена на видачу", pl:"Osoba upoważniona do wystawienia"},
     ReceivePerson:{en:"Authorized person to receive", ua:"Особа, уповноважена на отримання", pl:"Osoba upoważniona do odbioru"},
     AddWeekBtn_MINUS_WEEK:{en:"last week...", ua:"попередній тиждень...", pl:"poprzedni tydzień..."},
     AddWeekBtn_PLUS_WEEK:{en:"next week...", ua:"наступний тиждень...", pl:"następny tydzień..."},
+    TableNUM:{en:"Nr.", ua:"№", pl:"Lp."},
+    TableART:{en:"Product / service name", ua:"Назва товару / послуги", pl:"Nazwa towaru / usługi"},
+    TablePRI:{en:"Price", ua:"Ціна", pl:"Cena"},
+    TableQUA:{en:"Qty", ua:"К-сть", pl:"Ilość"},
+    TableVAT:{en:"VAT", ua:"ПДВ", pl:"VAT"},
+    TableNET:{en:"Amount netto", ua:"Сума netto", pl:"Kwota netto"},
+    TablePRV:{en:"Amount VAT", ua:"Сума VAT", pl:"Kwota VAT"},
+    TableSUM:{en:"Gross amount", ua:"Вартість brutto", pl:"Wartość brutto"},
+    TableTOT:{en:"Total", ua:"Разом", pl:"Razem"},
+    UploadFileTitle:{en:"select file", ua:"вибери файл", pl:"wybierz plik"},
     NewTranslate:{en:"", ua:"", pl:""}
   }
 
