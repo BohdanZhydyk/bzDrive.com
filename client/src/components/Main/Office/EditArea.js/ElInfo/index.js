@@ -11,22 +11,17 @@ function ElInfo({ props:{user, mode, car, setCar, client, setClient, setSave, ed
 
   const lang = user.lang
 
+  const CarPr = CarPropses(tr, lang, car, setCar, editErr, setEditErr, setSave, sanitizeTxt)
+  const ClientPr = ClientPropses(tr, lang, client, setClient, editErr, setEditErr, setSave, sanitizeTxt)
+
   return(
     <section className="ElInfo flex between stretch wrap">
 
       {
         mode === "ZL" &&
         <>
-          <InfoPannel props={{
-            lang,
-            title:`InfoPannelCar`,
-            InfoProps:CarPropses(tr, lang, car, setCar, editErr, setEditErr, setSave, sanitizeTxt)
-          }} />
-          <InfoPannel props={{
-            lang,
-            title:`InfoPannelClient`,
-            InfoProps:ClientPropses(tr, lang, client, setClient, editErr, setEditErr, setSave, sanitizeTxt)
-          }} />
+          <InfoPannel props={{lang, title:`InfoPannelCar`, InfoProps: CarPr}} />
+          <InfoPannel props={{lang, title:`InfoPannelClient`, InfoProps: ClientPr}} />
         </>
       }
 

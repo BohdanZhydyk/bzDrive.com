@@ -8,18 +8,20 @@ export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, S
   const Top = CLA === "TableCellTop"
   const Bottom = CLA === "TableCellBottom"
 
+  const propsesART = { val:ART, align:"left", onChange:(data)=>FN("ART", data) }
+  const propsesPRI = { val:PRI, align:"center", onChange:(data)=>FN("PRI", data) }
+  const propsesQUA = { val:QUA, align:"center", onChange:(data)=>FN("QUA", data) }
+
   return(
     <div className="CalcLine flex">
 
-      <span className={`TableNUM ${CLA} flex`}>
-        { NUM }
-      </span>
+      <span className={`TableNUM ${CLA} flex`}>{ NUM }</span>
 
       <span className={`TableART ${CLA} flex start`}>
       {
         Top
         ? <span>{ART}</span>
-        : !Bottom ? <ArtInput props={{ val:ART, align:"left", onChange:(data)=>FN("ART", data) }} /> : <span></span>
+        : !Bottom ? <ArtInput props={propsesART} /> : <span></span>
       }
       </span>
 
@@ -31,7 +33,7 @@ export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, S
         {
           Top
           ? <span>{PRI}</span>
-          : <ArtInput props={{ val:PRI, align:"center", onChange:(data)=>FN("PRI", data) }} />
+          : <ArtInput props={propsesPRI} />
         }
         </span>
       }
@@ -42,7 +44,7 @@ export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, S
         {
           Top
           ? <span>{QUA}</span>
-          : <ArtInput props={{ val:QUA, align:"center", onChange:(data)=>FN("QUA", data) }} />
+          : <ArtInput props={propsesQUA} />
         }
         </span>
       }
@@ -82,7 +84,7 @@ export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, S
       }
       </span>
 
-      <span className={`TableBTN ${CLA} ImgBtn flex`}> { BTN }  </span>
+      <span className={`TableBTN ${CLA} ImgBtn flex`}>{ BTN }</span>
 
     </div>
   )

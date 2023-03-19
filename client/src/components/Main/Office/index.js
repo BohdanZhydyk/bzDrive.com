@@ -7,6 +7,7 @@ import { OfficeReducer } from "./OfficeReducer"
 import SiteIcon from "../../All/SiteIcon"
 import Companies from "./Companies"
 import ZL from "./ZL"
+import FS from "./FS"
 
 
 function Office({ props:{sub} }) {
@@ -46,6 +47,7 @@ function Office({ props:{sub} }) {
           
           <Routes>
             <Route path="/zl" element={<ZL props={{company}}/>} />
+            <Route path="/fs" element={<FS props={{company}}/>} />
           </Routes>
 
         </>

@@ -30,18 +30,12 @@ export function WeekPannel({ props:{mode, company, line, l, lang, setCalendar} }
     return `WeekDayName${Holyday}${Day}${Month} txtWht flex`
   }
 
-  const order = {
-    nr:{
-      mode,
-      from:TimeTo_YYYYMMDD( Date.now() ),
-      to:TimeTo_YYYYMMDD( Date.now() ),
-      sign: "",
-      place:company?.addr?.town,
-      method:1
-    },
-    car:{
-      color:getRandomColor()
-    }
+  const today = TimeTo_YYYYMMDD( Date.now() )
+  const place = company?.addr?.town
+
+  const newOrder = {
+    nr:{ mode, from:today, to:today, sign:"", place, method:0 },
+    car:{ color:getRandomColor() }
   }
 
   return(
@@ -78,7 +72,7 @@ export function WeekPannel({ props:{mode, company, line, l, lang, setCalendar} }
       }
       </div>
 
-      {edit && <EditArea props={{company, mode, order, edit, setEdit, setCalendar}} /> }
+      {edit && <EditArea props={{company, mode, order:newOrder, edit, setEdit, setCalendar}} /> }
 
     </div>
   )

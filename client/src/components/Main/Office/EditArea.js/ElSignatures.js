@@ -12,7 +12,6 @@ export function ElSignatures({ props:{user} }){
 
       {
         sign.map( (sig, i)=>{
-
           return(
             <div className="Signature flex column" key={`SignLine${i}`}>
 

@@ -16,6 +16,10 @@ function ZL({ props:{company} }) {
   const [calendar, setCalendar] = useState( false )
   const [more, setMore] = useState( true )
 
+  const AddWeekBtnMinusProps = {act:'MINUS_WEEK', lang, calendar, setCalendar, more, setMore, ZLreducer}
+  const AddWeekBtnPlusProps = {act:'PLUS_WEEK', lang, calendar, setCalendar, more, setMore, ZLreducer}
+  const WeekProps = (line, l)=> ({line, l, lang, mode, company, setCalendar, ZLreducer})
+
   useEffect( ()=>{ !calendar && ZLreducer({type:"GET_CALENDAR"}, (data)=>setCalendar(data)) },[])
 
   // console.log("cal", calendar)
@@ -23,7 +27,7 @@ function ZL({ props:{company} }) {
   return(
     <div className="ZL flex column">
 
-      <AddWeekBtn props={{act:'MINUS_WEEK', lang, calendar, setCalendar, more, setMore, ZLreducer}}/>
+      <AddWeekBtn props={AddWeekBtnMinusProps}/>
 
       <DaysNamePannel props={{lang}} />
 
@@ -31,12 +35,12 @@ function ZL({ props:{company} }) {
         calendar && calendar.map( (line, l)=>{
           const key = `WeekSection${l}${line?.week[0]}`
           return(
-            <Week props={{line, l, lang, mode, company, setCalendar, ZLreducer}} key={key} />
+            <Week props={ WeekProps(line, l) } key={key} />
           )
         })
       }
 
-      <AddWeekBtn props={{act:'PLUS_WEEK', lang, calendar, setCalendar, more, setMore, ZLreducer}}/>
+      <AddWeekBtn props={AddWeekBtnPlusProps}/>
 
     </div>
   )

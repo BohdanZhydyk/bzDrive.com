@@ -12,10 +12,13 @@ export function AddWeekBtn({ props:{act, lang, calendar, setCalendar, more, setM
 
   return(
     <div className="DaysNamePannel flex stretch">
+
       <div className="LeftLine flex"></div>
+      
       <div className="RightLine flex">
         <div className="AddWeekBtn flex" onClick={ADD_WEEK}>{tr(`AddWeekBtn_${act}`,lang)}</div>
       </div>
+
     </div>
   )
 }

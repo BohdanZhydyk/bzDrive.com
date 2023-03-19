@@ -13,10 +13,12 @@ export function ElComments({ props:{user, car, setCar, setSave} }) {
     cbErr: (val)=> {}
   }
 
+  const title = tr(`CommentsTop`,user.lang)
+
   return(
     <section className="ElComments flex column">
 
-      <div className="CommentsTop bold flex start">{tr(`CommentsTop`,user.lang)}</div>
+      <div className="CommentsTop bold flex start">{title}</div>
 
       <div className="TextAreaSection flex">
         <TextArea props={TextAreaProps}/>

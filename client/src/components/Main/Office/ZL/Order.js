@@ -43,30 +43,49 @@ export function Order({ props:{company, mode, order, setCalendar, today, firstDa
     ? `https://bzdrive.com/files/ico/icoCheck.png`
     : `https://bzdrive.com/files/dealers/${company?.img}`
 
+  const leftLine = [
+    {
+      cl: `OrderAva`,
+      clk: ()=>setEdit(!edit),
+      com: <img className="AvaImg flex" src={checkImg} alt="check" />
+    },
+    {
+      cl: `OrderNr`,
+      clk: ()=>setEdit(!edit),
+      com: <span>{number}</span>
+    },
+    {
+      cl: `OrderCar start`,
+      clk: ()=>setEdit(!edit),
+      com: <span>{carName}</span>
+    },
+    {
+      cl: `OrderTel start`,
+      clk: ()=>{},
+      com: <a href={`tel: ${tel}`}>{tel}</a>
+    },
+    {
+      cl: `OrderElse`,
+      clk: ()=>setEdit(!edit),
+      com: <span></span>
+    }
+  ]
+
   return(
     <div className="Order flex wrap">
 
       <div className="LeftLine flex stretch">
 
-        <span className="OrderAva OrderCell flex" style={styles} onClick={()=>setEdit(!edit)}>
-          <img className="AvaImg flex" src={checkImg} alt="check" />
-        </span>
-
-        <span className="OrderNr OrderCell flex" style={styles} onClick={()=>setEdit(!edit)}>
-          <span>{number}</span>
-        </span>
-
-        <span className="OrderCar OrderCell flex start" style={styles} onClick={()=>setEdit(!edit)}>
-          <span>{carName}</span>
-        </span>
-
-        <a className="OrderTel OrderCell flex start" href={`tel: ${tel}`} style={styles}>
-          <span>{tel}</span>
-        </a>
-        
-        <span className="OrderElse OrderCell flex" style={styles} onClick={()=>setEdit(!edit)}>
-          <span></span>
-        </span>
+        {
+          leftLine.map( (cell, c)=>{
+            const key = `OrderLeftLine${c}`
+            return(
+              <span className={`OrderCell flex ${cell.cl}`} style={styles} onClick={cell.clk} key={key} >
+                {cell.com}
+              </span>
+            )
+          })
+        }
 
         <div className={`StatusLine StatusLineColor_${order?.status} flex`}></div>
 

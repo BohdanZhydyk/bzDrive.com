@@ -9,7 +9,9 @@ export function DaysNamePannel({ props:{lang} }) {
 
   return(
     <div className="DaysNamePannel flex stretch">
+
       <div className="LeftLine flex"></div>
+
       <div className="RightLine flex">
       {
         dayNames.map( (day, d)=>{
@@ -19,6 +21,7 @@ export function DaysNamePannel({ props:{lang} }) {
         })
       }
       </div>
+      
     </div>
   )
 }

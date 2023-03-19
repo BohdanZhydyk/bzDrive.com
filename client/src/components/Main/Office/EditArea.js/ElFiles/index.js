@@ -69,30 +69,42 @@ function ElFiles({ props:{order, user, nr, files, setFiles} }){
 
       {
         files && files.map( (file, f)=>{
+
           const key = `FileLine${f}${file?.fileID}`
           const href = `https://bzdrive.com/${file.fileAddr}${file.fileName}`
+          const src = FileTypeToIco(file?.fileType)?.ico
+          const alt = FileTypeToIco(file?.fileType)?.type
+          const num = bzBytesCalc(file?.fileSize)?.num
+          const unit = bzBytesCalc(file?.fileSize)?.unit
+          const downloadPropses = {name:"download", click:()=>{}}
+          const deletePropses = {name:"delete", click:()=>DELETE_FILE(file)}
+
           return(
             <div className="FileLine flex" key={key}>
 
               <a className="FileName FileCell flex start" href={href} target="_blank" rel="noreferrer" >
-                <img className="ImgBtn" src={FileTypeToIco(file?.fileType)?.ico} alt={FileTypeToIco(file?.fileType)?.type} />
+                <img className="ImgBtn" src={src} alt={alt} />
                 <span>{file?.fileName}</span>
               </a>
 
               <div className="FileSize FileCell flex end">
-                <span className="num flex end">{bzBytesCalc(file?.fileSize)?.num}</span>
-                <span className="unit flex end">{bzBytesCalc(file?.fileSize)?.unit}</span>
+                <span className="num flex end">{num}</span>
+                <span className="unit flex end">{unit}</span>
               </div>
 
               <span className="FileAct FileCell flex end">
+
                 <a className="flex" href={href} download={file?.fileName} target="_blank" rel="noreferrer" >
-                  <ActionBtn props={{name:"download", click:()=>{}}} />
+                  <ActionBtn props={downloadPropses} />
                 </a>
-                <ActionBtn props={{name:"delete", click:()=>DELETE_FILE(file)}} />
+
+                <ActionBtn props={deletePropses} />
+
               </span>
 
             </div>
           )
+          
         })
       }
 

@@ -1,7 +1,7 @@
 import React from 'react'
-import { bzPriceToWord, SumArray } from '../../../../../AppFunctions'
 
 import "./ElSummary.scss"
+import { bzPriceToWord, SumArray } from '../../../../../AppFunctions'
 
 
 function ElSummary({ props:{nr, articles} }){

@@ -56,28 +56,29 @@ function EditArea({ props:{company, mode, order, edit, setEdit, setCalendar} }) 
     }
   }
 
+  const ElDocBtnsProps = {user, order, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}
+  const ElDocNameProps = {user, mode, nr, setNr, setSave, editErr, setEditErr}
+  const ElInfoProps = {user, mode, car, setCar, client, setClient, setSave, editErr, setEditErr}
+  const ElFaultsProps = {user, car, setCar, setSave}
+  const ElCalculatorProps = {user, articles, setArticles, setSave}
+  const ElSummaryProps = {nr, articles}
+  const ElCommentsProps = {user, car, setCar, setSave}
+  const ElFilesProps = {order, user, nr, files, setFiles}
+  const ElSignaturesProps = {user}
+
   return(
     <div className="EditArea flex column start">
 
-      <ElDocBtns props={{user, order, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}}/>
-
-      <ElDocName props={{user, mode, nr, setNr, setSave, editErr, setEditErr}}/>
-
-      <ElInfo props={{user, mode, car, setCar, client, setClient, setSave, editErr, setEditErr}}/>
-
-      <ElFaults props={{user, car, setCar, setSave}}/>
-
-      <ElCalculator props={{user, articles, setArticles, setSave}} />
-
-      <ElSummary props={{nr, articles}} />
-
-      <ElComments props={{user, car, setCar, setSave}}/>
-
-      <ElFiles props={{order, user, nr, files, setFiles}} />
-
-      <ElSignatures props={{user}}/>
-
-      <ElDocBtns props={{user, order, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}}/>
+      <ElDocBtns props={ElDocBtnsProps}/>
+      <ElDocName props={ElDocNameProps}/>
+      <ElInfo props={ElInfoProps}/>
+      <ElFaults props={ElFaultsProps}/>
+      <ElCalculator props={ElCalculatorProps} />
+      <ElSummary props={ElSummaryProps} />
+      <ElComments props={ElCommentsProps}/>
+      <ElFiles props={ElFilesProps} />
+      <ElSignatures props={ElSignaturesProps}/>
+      <ElDocBtns props={ElDocBtnsProps}/>
 
     </div>
   )

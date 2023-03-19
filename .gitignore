@@ -11,6 +11,7 @@
 /client/.pnp.js
 
 /server/safe/
+/server/public/
 /serverMail/vars.php
 
 

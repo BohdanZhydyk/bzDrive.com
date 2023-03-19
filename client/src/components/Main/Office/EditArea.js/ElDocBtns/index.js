@@ -22,24 +22,30 @@ function ElDocBtns({ props:
 
   const isSameUser = order?.user === user.login
 
+  const actPannelPropses = {tr, lang, setSave, status, setStatus}
+  const colorBtnPropses = {tr, lang, setSave, car, setCar}
+  const savePrintBtnPropses = {name:SavePrintBtn, click:()=>ACTION_BTN(SavePrintBtn)}
+  const deleteBtnPropses = {name:'delete', click:()=>ACTION_BTN('delete')}
+  const cancelBtnPropses = {name:'cancel', click:EDIT_CHG}
+
   return(
     <section className="ElDocBtns flex">
 
       <div className="ActionBtns flex start">
 
-        <ActionBtnsPannel props={{tr, lang, setSave, status, setStatus}} />
+        <ActionBtnsPannel props={actPannelPropses} />
 
-        <ColorBtn props={{tr, lang, setSave, car, setCar}} />
+        <ColorBtn props={colorBtnPropses} />
 
       </div>
 
       <div className="DocBtns flex end">
 
-        <ActionBtn props={{name:SavePrintBtn, click:()=>ACTION_BTN(SavePrintBtn)}} />
+        <ActionBtn props={savePrintBtnPropses} />
 
-        { isSameUser && <ActionBtn props={{name:'delete', click:()=>ACTION_BTN('delete')}} />}
+        { isSameUser && <ActionBtn props={deleteBtnPropses} />}
 
-        <ActionBtn props={{name:'cancel', click:EDIT_CHG}} />
+        <ActionBtn props={cancelBtnPropses} />
         
       </div>
 
