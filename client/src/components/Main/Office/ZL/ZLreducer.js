@@ -1,40 +1,5 @@
-import { PostToApi } from "../../../../AppFunctions"
+import { PostToApi, TimeToWeekDay } from "../../../../AppFunctions"
 
-
-export function TimeToObject(time){
-  const year = new Date(time).getFullYear().toString().padStart(4, '0')
-  const month = (new Date(time).getMonth() + 1).toString().padStart(2, '0')
-  const day = new Date(time).getDate().toString().padStart(2, '0')
-  return {year, month, day}
-}
-export function TimeTo_YYYYMMDD(time){
-  const year = new Date(time).getFullYear().toString().padStart(4, '0')
-  const month = (new Date(time).getMonth() + 1).toString().padStart(2, '0')
-  const day = new Date(time).getDate().toString().padStart(2, '0')
-  return parseInt(`${year}${month}${day}`)
-}
-export function TimeTo_YYYYMM(time){
-  const year = new Date(time).getFullYear().toString().padStart(4, '0')
-  const month = (new Date(time).getMonth() + 1).toString().padStart(2, '0')
-  return parseInt(`${year}${month}`)
-}
-export function YYYYMMDD_ToWeekDay(date){
-  const str = date.toString()
-  const dateStr = new Date(`${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}`)
-  return dateStr.getDay() !== 0 ? dateStr.getDay() : 7
-}
-
-export function TimeToDayName(time){
-}
-
-export function TimeToWeekDay(time){
-  return new Date(time).getDay() !== 0 ? new Date(time).getDay() : 7
-}
-
-export function DocNameNormalize(nr){
-  return `${nr?.mode}/${nr?.from.toString().slice(0, 4)}/${nr?.from.toString().slice(4, 6)}/${nr?.sign.toString().padStart(4, '0')}`
-          
-}
 
 export const ZLreducer = (action, callback)=>{
 
@@ -43,7 +8,7 @@ export const ZLreducer = (action, callback)=>{
     case "PLUS_WEEK":     PLUS_WEEK();    break;
     case "GET_ORDERS":    GET_ORDERS();   break;
     case "GET_CALENDAR":  GET_CALENDAR(); break;
-    case "SAVE_ORDER":    SAVE_ORDER();   break;
+    case "SAVE_DOC":      SAVE_DOC();     break;
     default: break;
   }
 
@@ -68,9 +33,7 @@ export const ZLreducer = (action, callback)=>{
 
   function GET_ORDERS(){
     const query = {getOrders:true, query:action?.query}
-    PostToApi( '/getOffice', query, (data)=>{
-      callback(data)
-    })
+    PostToApi( '/getOffice', query, (data)=> callback(data) )
   }
 
   function GET_CALENDAR(){
@@ -98,12 +61,12 @@ export const ZLreducer = (action, callback)=>{
 
   }
 
-  function SAVE_ORDER(){
+  function SAVE_DOC(){
 
     const id = action?.id
-    const orderData = action?.orderData
+    const docData = action?.docData
 
-    const query = {saveOrder:true, id, orderData}
+    const query = {saveDoc:true, id, docData}
     PostToApi( '/getOffice', query, (data)=> GET_CALENDAR() )
 
   }

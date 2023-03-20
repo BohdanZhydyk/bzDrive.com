@@ -14,7 +14,7 @@ function ElDocName({ props:{user, mode, nr, setNr, setSave, editErr, setEditErr}
 
       <DocTitle props={{lang, mode, nr}} />
 
-      <DocSign props={{lang, nr, setNr, setSave, editErr, setEditErr}} />
+      <DocSign props={{lang, mode, nr, setNr, setSave, editErr, setEditErr}} />
 
     </section>
   )

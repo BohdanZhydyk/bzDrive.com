@@ -119,6 +119,139 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
   }
 ]
 
+export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, setSave, sanitizeTxt)=> [
+  {
+    classes:"name",
+    legend: tr(`NameLegend`,lang),
+    type: `text`,
+    plhol: tr(`PlaceHolder`,lang),
+    val: dealer?.name ?? '',
+    err: editErr?.dealerName ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, name:sanitizeTxt(val, `CompanyName`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerName:sanitizeTxt(val, `CompanyName`).sanErr}))
+  },
+  {
+    classes:"nip",
+    legend: tr(`NipLegend`,lang),
+    type: `text`,
+    plhol: tr(`PlaceHolder`,lang),
+    val: dealer?.nip ?? '',
+    err: editErr?.dealerNIP ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, nip:sanitizeTxt(val, `NIP`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerNIP:sanitizeTxt(val, `NIP`).sanErr}))
+  },
+  {
+    classes:"account",
+    legend: tr(`AccountLegend`,lang),
+    type: `text`,
+    plhol: tr(`PlaceHolder`,lang),
+    val: dealer?.account ?? '',
+    err: editErr?.dealerACC ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, account:sanitizeTxt(val, `ACC`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerACC:sanitizeTxt(val, `ACC`).sanErr}))
+  },
+  {
+    classes:"zip",
+    legend: tr(`ZipLegend`,lang),
+    type: `text`,
+    plhol: tr(`PlaceHolder`,lang),
+    val: dealer?.addr?.zip ?? '',
+    err: editErr?.dealerAddrZIP ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, zip:sanitizeTxt(val, `ZIP`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrZIP:sanitizeTxt(val, `ZIP`).sanErr}))
+  },
+  {
+    classes:"town",
+    legend: tr(`TownLegend`,lang),
+    type: `text`,
+    plhol: tr(`PlaceHolder`,lang),
+    val: dealer?.addr?.town ?? '',
+    err: editErr?.dealerAddrTown ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, town:sanitizeTxt(val, `town`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrTown:sanitizeTxt(val, `town`).sanErr}))
+  },
+  {
+    classes:"street",
+    legend: tr(`StreetLegend`,lang),
+    type: `text`,
+    plhol: tr(`PlaceHolder`,lang),
+    val: dealer?.addr?.street ?? '',
+    err: editErr?.dealerAddrStreet ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, street:sanitizeTxt(val, `StreetName`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrStreet:sanitizeTxt(val, `StreetName`).sanErr}))
+  },
+  {
+    classes:"nr",
+    legend: tr(`StreetNrLegend`,lang),
+    type: `text`,
+    plhol: tr(`PlaceHolder`,lang),
+    val: dealer?.addr?.nr ?? '',
+    err: editErr?.dealerAddrNr ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, nr:sanitizeTxt(val, `default`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrNr:sanitizeTxt(val, `default`).sanErr}))
+  },
+  {
+    classes:"tel",
+    legend: tr(`TelLegend`,lang),
+    type: `text`,
+    plhol: tr(`PlaceHolder`,lang),
+    val: dealer?.contacts?.tel ?? '',
+    err: editErr?.dealerContTel ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, tel:sanitizeTxt(val, `tel`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerContTel:sanitizeTxt(val, `tel`).sanErr}))
+  },
+  {
+    classes:"www",
+    legend: tr(`WwwLegend`,lang),
+    type: `text`,
+    plhol: tr(`PlaceHolder`,lang),
+    val: dealer?.contacts?.www ?? '',
+    err: editErr?.dealerContWWW ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, www:sanitizeTxt(val, `www`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerContWWW:sanitizeTxt(val, `www`).sanErr}))
+  },
+  {
+    classes:"email",
+    legend: tr(`EmailLegend`,lang),
+    type: `text`,
+    plhol: tr(`PlaceHolder`,lang),
+    val: dealer?.contacts?.email ?? '',
+    err: editErr?.dealerContEmail ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, email:sanitizeTxt(val, `email`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerContEmail:sanitizeTxt(val, `email`).sanErr}))
+  }
+]
+
 export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, setSave, sanitizeTxt)=> [
   {
     classes:"name",
@@ -165,12 +298,12 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     type: `text`,
     plhol: tr(`PlaceHolder`,lang),
     val: client?.addr?.zip ?? '',
-    err: editErr?.addrZIP ?? '',
+    err: editErr?.clientAddrZIP ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, addr:{...prev?.addr, zip:sanitizeTxt(val, `ZIP`).sanText}}))
       setSave(true)
     },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, addrZIP:sanitizeTxt(val, `ZIP`).sanErr}))
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, clientAddrZIP:sanitizeTxt(val, `ZIP`).sanErr}))
   },
   {
     classes:"town",
@@ -178,12 +311,12 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     type: `text`,
     plhol: tr(`PlaceHolder`,lang),
     val: client?.addr?.town ?? '',
-    err: editErr?.addrTown ?? '',
+    err: editErr?.clientAddrTown ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, addr:{...prev?.addr, town:sanitizeTxt(val, `town`).sanText}}))
       setSave(true)
     },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, addrTown:sanitizeTxt(val, `town`).sanErr}))
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, clientAddrTown:sanitizeTxt(val, `town`).sanErr}))
   },
   {
     classes:"street",
@@ -191,12 +324,12 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     type: `text`,
     plhol: tr(`PlaceHolder`,lang),
     val: client?.addr?.street ?? '',
-    err: editErr?.addrStreet ?? '',
+    err: editErr?.clientAddrStreet ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, addr:{...prev?.addr, street:sanitizeTxt(val, `StreetName`).sanText}}))
       setSave(true)
     },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, addrStreet:sanitizeTxt(val, `StreetName`).sanErr}))
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, clientAddrStreet:sanitizeTxt(val, `StreetName`).sanErr}))
   },
   {
     classes:"nr",
@@ -204,12 +337,12 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     type: `text`,
     plhol: tr(`PlaceHolder`,lang),
     val: client?.addr?.nr ?? '',
-    err: editErr?.addrNr ?? '',
+    err: editErr?.clientAddrNr ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, addr:{...prev?.addr, nr:sanitizeTxt(val, `default`).sanText}}))
       setSave(true)
     },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, addrNr:sanitizeTxt(val, `default`).sanErr}))
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, clientAddrNr:sanitizeTxt(val, `default`).sanErr}))
   },
   {
     classes:"tel",
@@ -217,12 +350,12 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     type: `text`,
     plhol: tr(`PlaceHolder`,lang),
     val: client?.contacts?.tel ?? '',
-    err: editErr?.contactsTel ?? '',
+    err: editErr?.clientContTel ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, contacts:{...prev?.contacts, tel:sanitizeTxt(val, `tel`).sanText}}))
       setSave(true)
     },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, contactsTel:sanitizeTxt(val, `tel`).sanErr}))
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, clientContTel:sanitizeTxt(val, `tel`).sanErr}))
   },
   {
     classes:"www",
@@ -230,12 +363,12 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     type: `text`,
     plhol: tr(`PlaceHolder`,lang),
     val: client?.contacts?.www ?? '',
-    err: editErr?.contactsWWW ?? '',
+    err: editErr?.clientContWWW ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, contacts:{...prev?.contacts, www:sanitizeTxt(val, `www`).sanText}}))
       setSave(true)
     },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, contactsWWW:sanitizeTxt(val, `www`).sanErr}))
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, clientContWWW:sanitizeTxt(val, `www`).sanErr}))
   },
   {
     classes:"email",
@@ -243,11 +376,11 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     type: `text`,
     plhol: tr(`PlaceHolder`,lang),
     val: client?.contacts?.email ?? '',
-    err: editErr?.contactsEmail ?? '',
+    err: editErr?.clientContEmail ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, contacts:{...prev?.contacts, email:sanitizeTxt(val, `email`).sanText}}))
       setSave(true)
     },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, contactsEmail:sanitizeTxt(val, `email`).sanErr}))
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, clientContEmail:sanitizeTxt(val, `email`).sanErr}))
   }
 ]

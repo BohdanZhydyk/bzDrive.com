@@ -1,16 +1,12 @@
 import React, { useState } from "react"
 
-import {
-  TimeTo_YYYYMMDD,
-  TimeTo_YYYYMM,
-  TimeToObject
-} from "./ZLfunctions"
+import { TimeTo_YYYYMMDD, TimeTo_YYYYMM, TimeToObject } from "../../../../AppFunctions"
 import { getRandomColor } from "../../../../AppFunctions"
 import { tr } from "../../../../AppTranslate"
-import EditArea from "../EditArea.js"
+import EditArea from "../EditArea"
 
 
-export function WeekPannel({ props:{mode, company, line, l, lang, setCalendar} }) {
+export function WeekPannel({ props:{mode, company, line, l, lang, SAVE_DOC} }) {
 
   const [edit, setEdit] = useState(false)
 
@@ -33,7 +29,7 @@ export function WeekPannel({ props:{mode, company, line, l, lang, setCalendar} }
   const today = TimeTo_YYYYMMDD( Date.now() )
   const place = company?.addr?.town
 
-  const newOrder = {
+  const order = {// newOrder
     nr:{ mode, from:today, to:today, sign:"", place, method:0 },
     car:{ color:getRandomColor() }
   }
@@ -72,7 +68,7 @@ export function WeekPannel({ props:{mode, company, line, l, lang, setCalendar} }
       }
       </div>
 
-      {edit && <EditArea props={{company, mode, order:newOrder, edit, setEdit, setCalendar}} /> }
+      {edit && <EditArea props={{company, mode, doc:order, edit, setEdit, SAVE_DOC}} /> }
 
     </div>
   )

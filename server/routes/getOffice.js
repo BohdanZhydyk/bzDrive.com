@@ -68,7 +68,7 @@ exports.getOffice = (req, res)=>{
           ]
         }
       
-      bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (documentsData)=>{
+      bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (ordersData)=>{
 
         let to = (zl)=> 
           ( ( zl.status === "open" ) || ( zl.status === "repair" ) ) && ( zl.nr.to < today )
@@ -76,8 +76,8 @@ exports.getOffice = (req, res)=>{
           : zl.nr.to
 
         res.send({
-          ...documentsData,
-          result: documentsData?.result.map( (zl)=> ({ ...zl, nr:{...zl.nr, to: to(zl)} }) )
+          ...ordersData,
+          result: ordersData?.result.map( (zl)=> ({ ...zl, nr:{...zl.nr, to: to(zl)} }) )
             .sort( (a, b)=> parseInt(a.nr.sign) - parseInt(b.nr.sign) ) // sort by sign
             .sort( (a, b)=> parseInt(b.nr.to - b.nr.from) - parseInt(a.nr.to - a.nr.from) ) // sort by length
             .sort( (a, b)=> parseInt(a.nr.from) - parseInt(b.nr.from) ) // sort by date
@@ -86,55 +86,92 @@ exports.getOffice = (req, res)=>{
       })
     }
 
+    // getting information about invoices
+    if(object?.getInvoices){
+
+      const mode = object?.query?.mode
+      const company = object?.query?.companyName
+      const from = object?.query["nr.from"]
+
+      const query = {"nr.mode":mode, company, "nr.from":from}
+
+      bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (invoicesData)=>{
+        res.send({
+          ...invoicesData,
+          result: invoicesData?.result
+            .sort( (a, b)=> parseInt(b.nr.sign) - parseInt(a.nr.sign) ) // sort by date
+        })
+      })
+
+    }
+
+    // getting document by ID
+    if(object?.getDocument){
+
+      const _id = object?.docID ? ObjectId(object?.docID) : ""
+      const query = {_id}
+
+      bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query }, (docData)=>{
+        res.send({
+          ...docData,
+          result: docData?.result
+        })
+      })
+
+    }
+
     // save orders
-    if(object?.saveOrder){
+    if(object?.saveDoc){
 
       const _id = object?.id ? ObjectId(object?.id) : ""
 
-      const orderData = {
-        company:  object?.orderData?.orderCompany,
-        user:     object?.orderData?.orderUser,
-        status:   object?.orderData?.status,
-        nr:       object?.orderData?.nr,
-        car:      object?.orderData?.car,
-        client:   object?.orderData?.client
+      const docData = {
+        company:  object?.docData?.docCompany,
+        user:     object?.docData?.docUser,
+        status:   object?.docData?.status,
+        nr:       object?.docData?.nr,
+        car:      object?.docData?.car,
+        client:   object?.docData?.client,
+        dealer:   object?.docData?.dealer,
+        articles: object?.docData?.articles,
+        files:    object?.docData?.files
       }
 
-      const fromThatMonth = parseInt( `${parseInt(orderData.nr.from / 100)}00` )
+      const fromThatMonth = parseInt( `${parseInt(docData.nr.from / 100)}00` )
 
       const lastSignQuery = {
         $and:[
-          { "company": orderData?.company },
-          { "nr.mode": orderData?.nr?.mode },
+          { "company": docData?.company },
+          { "nr.mode": docData?.nr?.mode },
           { "nr.from": { $gte:fromThatMonth } }
         ]
       }
 
-      bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{_id} }, (isOrderData)=>{
+      bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{_id} }, (isDocData)=>{
 
-        isOrderData?.result
+        isDocData?.result
         ?
-        bzDB( { req, res, col:'bzDocuments', act:"UPDATE_ONE", query:{...orderData, _id} }, (orderData)=>{
+        bzDB( { req, res, col:'bzDocuments', act:"UPDATE_ONE", query:{...docData, _id} }, (documentData)=>{
   
           res.send({
-            ...orderData,
-            result: orderData?.result
+            ...documentData,
+            result: documentData?.result
           })
   
         })
         :
-        bzDB( { req, res, col:'bzDocuments', act:"FIND", query:lastSignQuery }, (isOrderData)=>{
+        bzDB( { req, res, col:'bzDocuments', act:"FIND", query:lastSignQuery }, (isDocData)=>{
 
-          const lastDocSign = isOrderData?.result[0]?.nr?.sign
+          const lastDocSign = isDocData?.result[0]?.nr?.sign
 
           const newDocSign = lastDocSign ? (lastDocSign + 1) : 1
-          const query = { ...orderData, nr:{...orderData.nr, sign:newDocSign} }
+          const query = { ...docData, nr:{...docData.nr, sign:newDocSign} }
 
-          bzDB( { req, res, col:'bzDocuments', act:"INSERT_ONE", query }, (orderData)=>{
+          bzDB( { req, res, col:'bzDocuments', act:"INSERT_ONE", query }, (documentData)=>{
     
             res.send({
-              ...orderData,
-              result: orderData?.result
+              ...documentData,
+              result: documentData?.result
             })
     
           })
@@ -146,16 +183,16 @@ exports.getOffice = (req, res)=>{
     // save orders
     if(object?.updateDocFiles){
 
-      const _id = ObjectId(object?.order?._id)
-      const order = object?.order
+      const _id = ObjectId(object?.doc?._id)
+      const doc = object?.doc
 
-      bzDB( { req, res, col:'bzDocuments', act:"UPDATE_ONE", query:{...order, _id} }, (updateOrderData)=>{
+      bzDB( { req, res, col:'bzDocuments', act:"UPDATE_ONE", query:{...doc, _id} }, (updateDocData)=>{
 
-        bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{_id} }, (orderData)=>{
+        bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{_id} }, (docData)=>{
   
           res.send({
-            ...orderData,
-            result: orderData?.result
+            ...docData,
+            result: docData?.result
           })
 
         })

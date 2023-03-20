@@ -1,15 +1,16 @@
 import React, { useState } from "react"
 
-import { DocNameNormalize, YYYYMMDD_ToWeekDay } from "./ZLfunctions"
-import EditArea from "../EditArea.js"
+import { DocNameNormalize, SumArray, YYYYMMDD_ToWeekDay } from "../../../../AppFunctions"
+import EditArea from "../EditArea"
 
 
-export function Order({ props:{company, mode, order, setCalendar, today, firstDay, lastDay} }) {
+export function Order({ props:{company, mode, order, firstDay, lastDay, SAVE_DOC} }) {
 
   const [edit, setEdit] = useState(false)
   
   const number = DocNameNormalize(order?.nr)
   const carName = `${order?.car?.brand} - ${order?.car?.model}`
+  const sum = SumArray( order?.articles?.map( (el)=> el.SUM ) )
   const tel = order?.client?.name
     ? `${order.client.name}`
     : (order?.client?.contacts?.tel ? `${order.client.contacts.tel}` : ``)
@@ -65,9 +66,9 @@ export function Order({ props:{company, mode, order, setCalendar, today, firstDa
       com: <a href={`tel: ${tel}`}>{tel}</a>
     },
     {
-      cl: `OrderElse`,
+      cl: `OrderSUM`,
       clk: ()=>setEdit(!edit),
-      com: <span></span>
+      com: <span>{sum}</span>
     }
   ]
 
@@ -91,11 +92,11 @@ export function Order({ props:{company, mode, order, setCalendar, today, firstDa
 
       </div>
 
-      <div className="RightLine flex stretch start" onClick={()=>setEdit(!edit)}>
+      <div className="RightLine flex stretch start">
 
         <span className="BeforeOrder flex" style={beforeOrderStyles}></span>
 
-        <span className="OrderR flex" style={orderStyles}>
+        <span className="OrderR flex" style={orderStyles} onClick={()=>setEdit(!edit)}>
           <div className="OrderBody flex end" style={styles}>
             { repairStatus && <img className="AvaImg flex" src={checkImg} alt="check" /> }
           </div>
@@ -105,7 +106,7 @@ export function Order({ props:{company, mode, order, setCalendar, today, firstDa
 
       </div>
 
-      {edit && <EditArea props={{company, mode, order, edit, setEdit, setCalendar}} /> }
+      {edit && <EditArea props={{company, mode, doc:order, edit, setEdit, SAVE_DOC}} /> }
 
     </div>
   )

@@ -7,7 +7,7 @@ import { UploadFile } from "../../../../All/UploadFile"
 import "./ElFiles.scss"
 import ActionBtn from "../../../../All/ActionBtn"
 
-function ElFiles({ props:{order, user, nr, files, setFiles} }){
+function ElFiles({ props:{doc, user, nr, files, setFiles} }){
   
   const FileTypeToIco = (type)=>{
     switch(type){
@@ -34,7 +34,7 @@ function ElFiles({ props:{order, user, nr, files, setFiles} }){
       if(data?.status === 200){
         const query = {
           updateDocFiles:true,
-          order:{ ...order, files:files.filter( F=> F?.fileID !== fileID ) }
+          doc:{ ...doc, files:files.filter( F=> F?.fileID !== fileID ) }
         }
         PostToApi( '/getOffice', query, (data)=> data?.files && setFiles(data.files) )
       }
@@ -51,7 +51,7 @@ function ElFiles({ props:{order, user, nr, files, setFiles} }){
     }
     const query = {
       updateDocFiles:true,
-      order:{ ...order, files:[...files, file] }
+      doc:{ ...doc, files:[...files, file] }
     }
     PostToApi( '/getOffice', query, (data)=> data?.files && setFiles(data.files) )
   }

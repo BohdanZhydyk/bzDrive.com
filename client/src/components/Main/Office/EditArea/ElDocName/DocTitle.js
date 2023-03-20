@@ -1,7 +1,7 @@
 import React from "react"
 
 import { tr } from "../../../../../AppTranslate"
-import { DocNameNormalize} from "../../ZL/ZLfunctions"
+import { DocNameNormalize } from "../../../../../AppFunctions"
 
 
 export function DocTitle({ props:{lang, mode, nr} }) {

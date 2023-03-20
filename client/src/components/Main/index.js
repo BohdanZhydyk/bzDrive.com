@@ -9,6 +9,7 @@ import Apps from './Apps'
 import Office from './Office'
 import Statistic from './Statistic'
 import Profile from './Profile'
+import Document from './Document'
 
 
 function Main({ props:{nav, blur, BLUR} }) {
@@ -30,6 +31,7 @@ function Main({ props:{nav, blur, BLUR} }) {
         <Route path="/office/*"         element={<Office props={{sub:subNav("/office")}}/>} />
         <Route path="/statistic"        element={<Statistic props={{sub:subNav("/statistic")}}/>} />
         <Route path="/profile"          element={<Profile props={{sub:subNav("/profile")}}/>} />
+        <Route path="/document/*"       element={<Document />} />
       </Routes>
     }
 

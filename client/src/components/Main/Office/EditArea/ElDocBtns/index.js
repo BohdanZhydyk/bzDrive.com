@@ -8,7 +8,7 @@ import { ActionBtnsPannel } from "./ActionBtnsPannel"
 
 
 function ElDocBtns({ props:
-  {user, order, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}
+  {user, mode, doc, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}
 }) {
 
   const lang = user.lang
@@ -18,13 +18,14 @@ function ElDocBtns({ props:
     setEdit(!edit)
   }
 
-  const SavePrintBtn = save || order?.nr?.sign === "" ? 'save' : 'print'
+  const isSave = save || doc?.nr?.sign === ""
 
-  const isSameUser = order?.user === user.login
+  const isSameUser = doc?.user === user.login
 
-  const actPannelPropses = {tr, lang, setSave, status, setStatus}
+  const actPannelPropses = {tr, mode, lang, setSave, status, setStatus}
   const colorBtnPropses = {tr, lang, setSave, car, setCar}
-  const savePrintBtnPropses = {name:SavePrintBtn, click:()=>ACTION_BTN(SavePrintBtn)}
+  const printBtnPropses = {name:'print', click:()=>setEdit(false)}
+  const saveBtnPropses = {name:'save', click:()=>ACTION_BTN('save')}
   const deleteBtnPropses = {name:'delete', click:()=>ACTION_BTN('delete')}
   const cancelBtnPropses = {name:'cancel', click:EDIT_CHG}
 
@@ -35,15 +36,23 @@ function ElDocBtns({ props:
 
         <ActionBtnsPannel props={actPannelPropses} />
 
-        <ColorBtn props={colorBtnPropses} />
+        { ["ZL"].includes(mode) && <ColorBtn props={colorBtnPropses} /> }
 
       </div>
 
       <div className="DocBtns flex end">
 
-        <ActionBtn props={savePrintBtnPropses} />
+        {
+          isSave
+          ?
+          <ActionBtn props={saveBtnPropses} />
+          :
+          <a className="flex" href={`/document/${doc?._id}`} target="_blank" rel="noreferrer" >
+            <ActionBtn props={printBtnPropses} />
+          </a>
+        }
 
-        { isSameUser && <ActionBtn props={deleteBtnPropses} />}
+        { isSameUser && (status !== "delete") && <ActionBtn props={deleteBtnPropses} />}
 
         <ActionBtn props={cancelBtnPropses} />
         

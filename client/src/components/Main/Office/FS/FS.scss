@@ -1,4 +1,34 @@
 
 .FS {
   width:99%;
+
+  .Title {
+    font-size:150%;
+    margin:0 0 1vw 0;
+  }
+
+  .InvLine {
+    width:100%;
+
+    .TopCell {
+      text-align:center;
+      background-color:#111;
+    }
+    .Cell {
+      min-height:3vw;
+      margin:0 0 0.5vw 0;
+      padding:0 0.5vw;
+      border-top:1px solid #444;
+      border-bottom:1px solid #444;
+    }
+    .InvNr {width:calc(13% - 1vw);}
+    .InvSel {width:calc(15% - 1vw);}
+    .InvCli {width:calc(50% - 1vw);}
+    .InvNIP {width:calc(10% - 1vw);}
+    .InvSUM {width:calc(7% - 1vw);}
+    .InvBtns {width:calc(5% - 1vw);}
+  }
+
+  .ColorStat_open {background-color:#1911;}
+  .ColorStat_delete {background-color:#f001;}
 }

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 
-import { TimeTo_YYYYMMDD } from "./ZLfunctions"
+import { TimeTo_YYYYMMDD } from "../../../../AppFunctions.js"
 import { Order } from "./Order.js"
 
 
-export function OrdersLine({ props:{line, l, mode, company, setCalendar, ZLreducer} }) {
-
+export function OrdersLine({ props:{line, l, mode, company, ZLreducer, SAVE_DOC} }) {
+  
   const [orders, setOrders] = useState(line?.orders ?? false)
 
   const companyName = company?.shortName
@@ -14,7 +14,6 @@ export function OrdersLine({ props:{line, l, mode, company, setCalendar, ZLreduc
   const lastDay = TimeTo_YYYYMMDD(line.week[line.week.length - 1])
 
   let query = {mode, companyName, today, firstDay, lastDay}
-
   useEffect( ()=>{ !orders && ZLreducer( {type:"GET_ORDERS", query}, (data)=>setOrders(data) ) },[])
 
   // console.log(`orders-${l}`,orders)
@@ -27,7 +26,7 @@ export function OrdersLine({ props:{line, l, mode, company, setCalendar, ZLreduc
 
           const key = `OrderLine${o}${order?._id}`
 
-          return <Order props={{company, mode, order, setCalendar, today, firstDay, lastDay}} key={key} />
+          return <Order props={{company, mode, order, firstDay, lastDay, SAVE_DOC}} key={key} />
 
         })
       }

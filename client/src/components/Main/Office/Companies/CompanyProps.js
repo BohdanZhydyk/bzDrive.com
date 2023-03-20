@@ -68,9 +68,9 @@ export const CompanyProps = (lang, company, setCompany)=>{
       legend: tr(`StreetLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
-      val: company?.addr?.street?.name ? sanitizeTxt(company.addr.street.name, 'StreetName').sanText : '',
+      val: company?.addr?.street ? sanitizeTxt(company.addr.street, 'StreetName').sanText : '',
       cbVal: (val)=> setCompany( (prev) => ({
-        ...prev, addr:{...prev.addr, street:{...prev.addr.street, name:val}}
+        ...prev, addr:{...prev.addr, street:val}
       })),
       cbErr: ()=>{}
     },
@@ -78,9 +78,9 @@ export const CompanyProps = (lang, company, setCompany)=>{
       legend: tr(`StreetNrLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
-      val: company?.addr?.street?.nr ? sanitizeTxt(company.addr.street.nr, 'town').sanText : '',
+      val: company?.addr?.nr ? sanitizeTxt(company.addr.nr, 'town').sanText : '',
       cbVal: (val)=> setCompany( (prev) => ({
-        ...prev, addr:{...prev.addr, street:{...prev.addr.street, nr:val}}
+        ...prev, addr:{...prev.addr, nr:val}
       })),
       cbErr: ()=>{}
     },

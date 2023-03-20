@@ -13,6 +13,36 @@ export const SetToken   = (bzToken)=> cookies.set('bzToken', bzToken )
 export const SetUser    = (user)=> cookies.set( 'bzUser', JSON.stringify(user) )
 export const SetCookie  = ()=> cookies.set('bzCookie', true)
 
+// time functions
+export function TimeToObject(time){
+  const year = new Date(time).getFullYear().toString().padStart(4, '0')
+  const month = (new Date(time).getMonth() + 1).toString().padStart(2, '0')
+  const day = new Date(time).getDate().toString().padStart(2, '0')
+  return {year, month, day}
+}
+export function TimeTo_YYYYMMDD(time){
+  const year = new Date(time).getFullYear().toString().padStart(4, '0')
+  const month = (new Date(time).getMonth() + 1).toString().padStart(2, '0')
+  const day = new Date(time).getDate().toString().padStart(2, '0')
+  return parseInt(`${year}${month}${day}`)
+}
+export function TimeTo_YYYYMM(time){
+  const year = new Date(time).getFullYear().toString().padStart(4, '0')
+  const month = (new Date(time).getMonth() + 1).toString().padStart(2, '0')
+  return parseInt(`${year}${month}`)
+}
+export function YYYYMMDD_ToWeekDay(date){
+  const str = date.toString()
+  const dateStr = new Date(`${str.slice(0, 4)}-${str.slice(4, 6)}-${str.slice(6, 8)}`)
+  return dateStr.getDay() !== 0 ? dateStr.getDay() : 7
+}
+export function TimeToWeekDay(time){
+  return new Date(time).getDay() !== 0 ? new Date(time).getDay() : 7
+}
+export function DocNameNormalize(nr){
+  return `${nr?.mode}/${nr?.from.toString().slice(0, 4)}/${nr?.from.toString().slice(4, 6)}/${nr?.sign.toString().padStart(4, '0')}`
+}
+
 // my filesize calculator function
 export const bzBytesCalc = (Bytes)=>{
   if(Bytes > 1073741824) return {num:(parseFloat(Bytes) / parseFloat(1073741824)).toFixed(1), unit:"GB"}
@@ -135,7 +165,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     return { sanText, sanErr }
   }
   function sanitizeNIP(txt) {
-    const max = 10
+    const max = 13
     let sanErr = false
     function formatNIP(nip) {
       const formattedNIP = nip.replace(/-/g, '').slice(0, 10)
