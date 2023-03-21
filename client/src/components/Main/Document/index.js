@@ -32,14 +32,14 @@ function Document(){
   // console.log("doc", doc)
 
   return(
-    <div className="Document flex column" ref={componentRef} >
+    <div className="Document flex column start" ref={componentRef} >
 
       <div className="PrintBtn flex end">
         <ActionBtn props={{ name:'print', click:()=>handlePrint() }} />
       </div>
       
 
-      {doc && <EditArea props={{mode, doc, edit, setEdit, printMode, SAVE_DOC}} /> }
+      {doc && <EditArea props={{mode, doc, edit, setEdit, SAVE_DOC, printMode}} /> }
 
     </div>
   )

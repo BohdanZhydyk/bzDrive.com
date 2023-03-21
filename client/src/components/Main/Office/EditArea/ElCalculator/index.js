@@ -8,7 +8,7 @@ import ActionBtn from '../../../../All/ActionBtn'
 import { CalcLine } from './CalcLine'
 
 
-function ElCalculator({ props:{user, articles, setArticles, setSave} }){
+function ElCalculator({ props:{user, articles, setArticles, setSave, printMode} }){
 
   const lang = user.lang
 
@@ -43,7 +43,8 @@ function ElCalculator({ props:{user, articles, setArticles, setSave} }){
     NET: `${tr(`TableNET`,lang)}, zł`,
     PRV: `${tr(`TablePRV`,lang)}, zł`,
     SUM: `${tr(`TableSUM`,lang)}, zł`,
-    BTN: <ActionBtn props={{ name:`plus`, click:()=>PLUS_ART_FIRST() }} />
+    BTN: <ActionBtn props={{ name:`plus`, click:()=>PLUS_ART_FIRST() }} />,
+    printMode
   }]
 
   const artLine = (art, a)=> ({
@@ -57,7 +58,8 @@ function ElCalculator({ props:{user, articles, setArticles, setSave} }){
     PRV: SanQuates(art.PRV),
     SUM: SanQuates(art.SUM),
     FN: (name, val)=>CHG_ART(name, val, a),
-    BTN: <ActionBtn props={{ name:`delete`, click:()=>DEL_ART(a) }} />
+    BTN: <ActionBtn props={{ name:`delete`, click:()=>DEL_ART(a) }} />,
+    printMode
   })
 
   const bottomLine = ()=> [{
@@ -68,7 +70,8 @@ function ElCalculator({ props:{user, articles, setArticles, setSave} }){
     NET: SumArray(articles.map(el=> el.NET)),
     PRV: SumArray(articles.map(el=> el.PRV)),
     SUM: SumArray(articles.map(el=> el.SUM)),
-    BTN: <ActionBtn props={{ name:`plus`, click:()=>PLUS_ART_LAST() }} />
+    BTN: <ActionBtn props={{ name:`plus`, click:()=>PLUS_ART_LAST() }} />,
+    printMode
   }]
 
   return(

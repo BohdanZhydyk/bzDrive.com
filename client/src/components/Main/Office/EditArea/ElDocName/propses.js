@@ -1,9 +1,8 @@
 
 export const placeProps = (tr, lang, nr, setNr, editErr, setEditErr, setSave, sanitizeTxt)=> ({
-  legend: tr(`PlaceLegend`,lang),
+  legend: tr(`PlaceLegendTop`,lang),
   type: `text`,
-  plhol: tr(`PlaceHolder`,lang),
-  val: nr?.place ?? '',
+  val: nr?.place ? sanitizeTxt(nr.place, `town`).sanText : '',
   err: editErr?.nrPlace ?? '',
   cbVal: (val)=>{
     setNr( (prev)=> ({...prev, place:sanitizeTxt(val, `town`).sanText}))
@@ -17,7 +16,6 @@ export const placeProps = (tr, lang, nr, setNr, editErr, setEditErr, setSave, sa
 export const fromProps = (tr, lang, nr, setNr, setSave)=> ({
   legend: tr(`FromLegend`,lang),
   type: `date`,
-  plhol: tr(`PlaceHolder`,lang),
   val: nr?.from ?? '',
   cbVal: (val)=>{
     setNr( (prev)=> ( val <= prev.to ? {...prev, from:val} : {...prev, from:val, to:val} ))
@@ -29,7 +27,6 @@ export const fromProps = (tr, lang, nr, setNr, setSave)=> ({
 export const toProps = (tr, lang, nr, setNr, setSave)=> ({
   legend: tr(`ToLegend`,lang),
   type: `date`,
-  plhol: tr(`PlaceHolder`,lang),
   val: nr?.to ?? '',
   cbVal: (val)=>{
     setNr( (prev)=> ( val >= prev.from ? {...prev, to:val} : {...prev, from:val, to:val} ))

@@ -17,6 +17,7 @@ body {
   .txtGrn {color:#1a1;}
   .txtRed {color:#f00;}
   .txtBlk {color:#000;}
+  .txtGry {color:#999;}
 
   .bold	{font-weight:bold;}
 
@@ -63,3 +64,23 @@ body {
     min-height: 100vh;
   }
 }
+
+
+// 320px (dla bardzo małych urządzeń mobilnych)
+// 480px (dla urządzeń mobilnych)
+// 768px (dla tabletów i mniejszych laptopów)
+// 992px (dla większych laptopów i komputerów stacjonarnych)
+// 1200px (dla dużych monitorów)
+
+// @media (max-width: 480px) {
+//   /* Your styles for mobile devices */
+// }
+// @media (min-width: 481px) and (max-width: 768px) {
+//   /* Your styles for tablets and smaller laptops */
+// }
+// @media (min-width: 769px) {
+//   /* Your styles for large monitors */
+// }
+// @media print {
+//   /* Your styles for printing */
+// }

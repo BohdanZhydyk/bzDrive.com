@@ -390,12 +390,16 @@ export const PostToApi = async (link, object, callback)=>{
 
     // Set the user language based on the IP country code if not already set
     const lang = () => {
+
+      if(GetUser().lang) return GetUser().lang
+
       const language = Data?.IP?.country_code?.toLowerCase()
       return(
         Data?.user?.lang
         ? Data.user.lang
         : ["en", "ua", "pl"].includes(language) ? language : "en"
       )
+
     }
     
     // Set the token and user data in local storage

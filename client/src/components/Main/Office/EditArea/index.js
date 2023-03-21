@@ -19,8 +19,6 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, SAVE_DO
 
   const [save, setSave] = useState(false)
 
-  const [print, setPrint] = useState(false)
-
   const [editErr, setEditErr] = useState({})
 
   const [id, setId] = useState( doc?._id ?? false )
@@ -53,12 +51,12 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, SAVE_DO
   }
 
   const ElDocBtnsProps = {user, mode, doc, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}
-  const ElDocNameProps = {user, mode, nr, setNr, setSave, editErr, setEditErr}
+  const ElDocNameProps = {user, mode, dealer, nr, setNr, setSave, editErr, setEditErr, printMode}
   const ElInfoProps = {user, mode, car, setCar, client, setClient, dealer, setDealer, setSave, editErr, setEditErr}
-  const ElFaultsProps = {user, car, setCar, setSave}
-  const ElCalculatorProps = {user, articles, setArticles, setSave}
-  const ElSummaryProps = {nr, articles}
-  const ElCommentsProps = {user, car, setCar, setSave}
+  const ElFaultsProps = {user, car, setCar, setSave, printMode}
+  const ElCalculatorProps = {user, articles, setArticles, setSave, printMode}
+  const ElSummaryProps = {nr, setNr, setSave, articles, printMode}
+  const ElCommentsProps = {user, car, setCar, setSave, printMode}
   const ElFilesProps = {doc, user, nr, files, setFiles}
   const ElSignaturesProps = {user}
 
@@ -77,11 +75,11 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, SAVE_DO
 
       { ["FS"].includes(mode) && <ElSummary props={ElSummaryProps} /> }
 
-      <ElComments props={ElCommentsProps}/>
+      { ["FS"].includes(mode) && <ElComments props={ElCommentsProps}/> }
 
-      { ["ZL"].includes(mode) && <ElFiles props={ElFilesProps} /> }
+      { ["ZL"].includes(mode) && !printMode && <ElFiles props={ElFilesProps} /> }
 
-      { print && <ElSignatures props={ElSignaturesProps}/> }
+      { printMode && <ElSignatures props={ElSignaturesProps}/> }
 
       { !printMode && <ElDocBtns props={ElDocBtnsProps}/> }
 

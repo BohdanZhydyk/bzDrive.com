@@ -8,7 +8,7 @@ export const AuthProps = (lang, formData, setFormData, formErr, setFormErr)=>{
       legend: tr(`LogInLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
-      val: formData?.login ?? '',
+      val: formData?.login ? sanitizeTxt(formData.login, `login`).sanText : '',
       err: formErr?.login ?? '',
       cbVal: (val)=> setFormData( (prev) => ({
         ...prev, login:sanitizeTxt(val, `login`).sanText
@@ -21,7 +21,7 @@ export const AuthProps = (lang, formData, setFormData, formErr, setFormErr)=>{
       legend: tr(`EmailLegend`,lang),
       type: `email`,
       plhol: tr(`PlaceHolder`,lang),
-      val: formData?.email ?? '',
+      val: formData?.email ? sanitizeTxt(formData.email, `email`).sanText : '',
       err: formErr?.email ?? '',
       cbVal: (val)=> setFormData( (prev) => ({
         ...prev, email:sanitizeTxt(val, `email`).sanText
@@ -34,7 +34,7 @@ export const AuthProps = (lang, formData, setFormData, formErr, setFormErr)=>{
       legend: tr(`PassLegend`,lang),
       type: `password`,
       plhol: tr(`PlaceHolder`,lang),
-      val: formData?.pass ?? '',
+      val: formData?.pass ? sanitizeTxt(formData.pass, `pass`).sanText : '',
       err: formErr?.pass ?? '',
       cbVal: (val)=> setFormData( (prev) => ({
         ...prev, pass:sanitizeTxt(val, `pass`).sanText
@@ -47,7 +47,7 @@ export const AuthProps = (lang, formData, setFormData, formErr, setFormErr)=>{
       legend: tr(`VerifyLegend`,lang),
       type: `password`,
       plhol: tr(`PlaceHolder`,lang),
-      val: formData?.verify ?? '',
+      val: formData?.verify ? sanitizeTxt(formData.verify, `verify`).sanText : '',
       err: formErr?.verify ?? '',
       cbVal: (val)=> setFormData( (prev) => ({
         ...prev, verify:sanitizeTxt(val, `verify`).sanText
@@ -60,7 +60,7 @@ export const AuthProps = (lang, formData, setFormData, formErr, setFormErr)=>{
       legend: tr(`ConfirmLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
-      val: formData?.confirm ?? '',
+      val: formData?.confirm ? sanitizeTxt(formData.confirm, `confirm`).sanText : '',
       err: formErr?.confirm ?? '',
       cbVal: (val)=> setFormData( (prev) => ({
         ...prev, confirm:sanitizeTxt(val, `confirm`).sanText

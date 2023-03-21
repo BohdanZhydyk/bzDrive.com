@@ -10,6 +10,7 @@
     width:100%;
     background-color:#111;
     border-radius:0.5vw 0.5vw 0 0;
+    @media print {background-color:#ddd;}
   }
 
   .CalculatorPannelBottom {
@@ -22,6 +23,7 @@
     .TableCell {
       min-height:3vw;
       border-bottom:1px solid #444;
+      @media print {border-bottom:1px solid #ddd;}
     }
     .TableCellTop {
       min-height:3vw;
@@ -35,19 +37,22 @@
       padding:0 2vw;
       text-align:right;
       background-color:#111;
+      @media print {background-color:#ddd;}
     }
     .TableNUM {width:3%; text-align:center;}
-    .TableART {width:62%; text-align:center;}
+    .TableART_short {width:60%; text-align:center;}
+    .TableART {width:65%; text-align:center;}
     .TablePRI {width:5%; text-align:center;}
     .TableQUA {width:5%; text-align:center;}
     .TableVAT {width:5%; text-align:center;}
     .TableNET {width:5%; text-align:center;}
     .TablePRV {width:5%; text-align:center;}
-    .TableSUM {width:5%; text-align:center;}
+    .TableSUM {width:6%; text-align:center;}
     .TableBTN {width:5%; margin:0;}
 
     input {
       width:100%;
+      font-size:1vw;
       min-height:2vw;
       color:#fff;
       background-color:transparent;
@@ -60,6 +65,7 @@
         border:1px solid #171;
         background-color:#1712;
       }
+      @media print {color:#000;}
     }
   }
 }

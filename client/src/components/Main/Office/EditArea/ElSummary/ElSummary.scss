@@ -24,6 +24,7 @@
       font-size:150%;
       min-height:4vw;
       background-color:#111;
+      @media print {background-color:#ddd;}
     }
 
     .LinesCell {
@@ -31,6 +32,9 @@
       margin:0 6vw 0 2vw;
       border-top:1px dashed #999;
       border-bottom:1px dashed #999;
+      @media print {border-color:#ddd;}
     }
+
+    .Input, .RadioInput {width:30%;}
   }
 }

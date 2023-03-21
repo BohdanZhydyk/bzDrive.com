@@ -5,16 +5,31 @@ import { DocTitle } from "./DocTitle"
 import { DocSign } from "./DocSign"
 
 
-function ElDocName({ props:{user, mode, nr, setNr, setSave, editErr, setEditErr} }) {
+function ElDocName({ props:{user, mode, dealer, nr, setNr, setSave, editErr, setEditErr, printMode} }) {
 
   const lang = user.lang
 
+  const logoImg = `https://bzdrive.com/files/dealers/${dealer?.img ?? ''}`
+  const logoName = dealer?.shortName ?? ''
+
   return(
-    <section className="ElDocName flex column">
+    <section className="ElDocName flex end stretch">
 
-      <DocTitle props={{lang, mode, nr}} />
+      {
+        printMode &&
+        <div className="ElDocNameLogo flex start">
+          <img src={logoImg} alt={logoName} />
+          <span>{logoName}</span>
+        </div>
+      }
 
-      <DocSign props={{lang, mode, nr, setNr, setSave, editErr, setEditErr}} />
+      <div className="ElDocNameData flex column start">
+
+        <DocTitle props={{lang, mode, nr}} />
+
+        <DocSign props={{lang, mode, nr, setNr, setSave, editErr, setEditErr, printMode}} />
+
+      </div>
 
     </section>
   )

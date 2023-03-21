@@ -3,7 +3,7 @@ import React from 'react'
 import { ArtInput } from './ArtInput'
 
 
-export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, SUM, FN, BTN} }){
+export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, SUM, FN, BTN, printMode} }){
 
   const Top = CLA === "TableCellTop"
   const Bottom = CLA === "TableCellBottom"
@@ -17,7 +17,7 @@ export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, S
 
       <span className={`TableNUM ${CLA} flex`}>{ NUM }</span>
 
-      <span className={`TableART ${CLA} flex start`}>
+      <span className={`TableART${!printMode ? `_short` : ``} ${CLA} flex start`}>
       {
         Top
         ? <span>{ART}</span>
@@ -84,7 +84,11 @@ export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, S
       }
       </span>
 
-      <span className={`TableBTN ${CLA} ImgBtn flex`}>{ BTN }</span>
+      {/* <span className={`TableBTN ${CLA} ImgBtn flex`}>{ BTN }</span> */}
+      {
+        !printMode &&
+        <span className={`TableBTN ${CLA} ImgBtn flex`}>{ BTN }</span>
+      }
 
     </div>
   )

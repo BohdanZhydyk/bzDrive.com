@@ -1,28 +1,63 @@
 
 .ElDocName {
   width:100%;
-  
-  .DocTitle {
-    width:100%;
-    font-size:150%;
 
-    .DocName {
-      width:calc(79% - 2vw);
-      padding:0 1vw;
+  .ElDocNameLogo {
+    width:50%;
+    min-height:10vw;
+
+    img {
+      width:5vw;
+      margin:0 2vw;
     }
 
-    .DocNr {
-      width:calc(20% - 2px);
-      min-height:2vw;
-      padding:0.25vw 0;
-      border:1px solid #999;
-      border-radius:0.5vw;
+    span {
+      font-size:400%;
+      font-weight:bold;
+      @media print {color:#999;}
     }
   }
 
-  .DocSign {
-    width:99%;
+  .ElDocNameData {
+    width:50%;
+    
+    .DocTitle {
+      width:100%;
+      font-size:150%;
+  
+      .DocName {
+        width:calc(60% - 2vw);
+        padding:0 1vw;
+      }
+  
+      .DocNr {
+        width:calc(39% - 2px);
+        min-height:2vw;
+        padding:0.25vw 0;
+        border:1px solid #999;
+        border-radius:0.5vw;
+      }
+    }
+  
+    .DocSign {
+      width:99%;
 
-    .Input {width:20%;}
+      .QRCodeArea {width:20%;}
+  
+      .SignArea {
+        width:calc(60% - 2vw);
+        padding:0.5vw 1vw;
+  
+        .SignLine {
+          width:100%;
+          min-height:2vw;
+  
+          .SignName {width:60%;}
+          .SignData {width:40%;}
+        }
+      }
+  
+      .Input {width:30%;}
+    }
   }
 }

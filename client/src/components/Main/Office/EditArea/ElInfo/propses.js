@@ -4,8 +4,7 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
     classes:"brand",
     legend: tr(`BrandLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: car?.brand ?? '',
+    val: car?.brand ? sanitizeTxt(car.brand, `default`).sanText : '',
     err: editErr?.carBrand ?? '',
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, brand:sanitizeTxt(val, `default`).sanText}))
@@ -17,8 +16,7 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
     classes:"model",
     legend: tr(`ModelLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: car?.model ?? '',
+    val: car?.model ? sanitizeTxt(car.model, `default`).sanText : '',
     err: editErr?.carModel ?? '',
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, model:sanitizeTxt(val, `default`).sanText}))
@@ -30,8 +28,7 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
     classes:"numbers",
     legend: tr(`NumbersLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: car?.numbers ?? '',
+    val: car?.numbers ? sanitizeTxt(car.numbers, `carNumbers`).sanText : '',
     err: editErr?.carNumbers ?? '',
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, numbers:sanitizeTxt(val, `carNumbers`).sanText}))
@@ -43,8 +40,7 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
     classes:"vin",
     legend: tr(`VinLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: car?.vin ?? '',
+    val: car?.vin ? sanitizeTxt(car.vin, `VIN`).sanText : '',
     err: editErr?.carVIN ?? '',
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, vin:sanitizeTxt(val, `VIN`).sanText}))
@@ -56,8 +52,7 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
     classes:"engine",
     legend: tr(`EngineLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: car?.engine ?? '',
+    val: car?.engine ? sanitizeTxt(car.engine, `default`).sanText : '',
     err: editErr?.carEngine ?? '',
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, engine:sanitizeTxt(val, `default`).sanText}))
@@ -69,8 +64,7 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
     classes:"prod",
     legend: tr(`ProdLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: car?.prod ?? '',
+    val: car?.prod ? sanitizeTxt(car.prod, `default`).sanText : '',
     err: editErr?.carProd ?? '',
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, prod:sanitizeTxt(val, `default`).sanText}))
@@ -82,8 +76,7 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
     classes:"fuel",
     legend: tr(`FuelLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: car?.fuel ?? '',
+    val: car?.fuel ? sanitizeTxt(car.fuel, `default`).sanText : '',
     err: editErr?.carFuel ?? '',
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, fuel:sanitizeTxt(val, `default`).sanText}))
@@ -95,8 +88,7 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
     classes:"odo",
     legend: tr(`OdoLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: car?.odo ?? '',
+    val: car?.odo ? sanitizeTxt(car.odo, `default`).sanText : '',
     err: editErr?.carOdo ?? '',
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, odo:sanitizeTxt(val, `default`).sanText}))
@@ -108,8 +100,7 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
     classes:"agree",
     legend: tr(`AgreeLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: car?.agree ?? '',
+    val: car?.agree ? sanitizeTxt(car.agree, `default`).sanText : '',
     err: editErr?.carAgree ?? '',
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, agree:sanitizeTxt(val, `default`).sanText}))
@@ -124,8 +115,7 @@ export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, 
     classes:"name",
     legend: tr(`NameLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: dealer?.name ?? '',
+    val: dealer?.name ? sanitizeTxt(dealer.name, `CompanyName`).sanText : '',
     err: editErr?.dealerName ?? '',
     cbVal: (val)=>{
       setDealer( (prev)=> ({...prev, name:sanitizeTxt(val, `CompanyName`).sanText}))
@@ -137,8 +127,7 @@ export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, 
     classes:"nip",
     legend: tr(`NipLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: dealer?.nip ?? '',
+    val: dealer?.nip ? sanitizeTxt(dealer.nip, `NIP`).sanText : '',
     err: editErr?.dealerNIP ?? '',
     cbVal: (val)=>{
       setDealer( (prev)=> ({...prev, nip:sanitizeTxt(val, `NIP`).sanText}))
@@ -150,8 +139,7 @@ export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, 
     classes:"account",
     legend: tr(`AccountLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: dealer?.account ?? '',
+    val: dealer?.account ? sanitizeTxt(dealer.account, `ACC`).sanText : '',
     err: editErr?.dealerACC ?? '',
     cbVal: (val)=>{
       setDealer( (prev)=> ({...prev, account:sanitizeTxt(val, `ACC`).sanText}))
@@ -163,8 +151,7 @@ export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, 
     classes:"zip",
     legend: tr(`ZipLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: dealer?.addr?.zip ?? '',
+    val: dealer?.addr?.zip ? sanitizeTxt(dealer.addr.zip, `ZIP`).sanText : '',
     err: editErr?.dealerAddrZIP ?? '',
     cbVal: (val)=>{
       setDealer( (prev)=> ({...prev, addr:{...prev?.addr, zip:sanitizeTxt(val, `ZIP`).sanText}}))
@@ -176,8 +163,7 @@ export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, 
     classes:"town",
     legend: tr(`TownLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: dealer?.addr?.town ?? '',
+    val: dealer?.addr?.town ? sanitizeTxt(dealer.addr.town, `town`).sanText : '',
     err: editErr?.dealerAddrTown ?? '',
     cbVal: (val)=>{
       setDealer( (prev)=> ({...prev, addr:{...prev?.addr, town:sanitizeTxt(val, `town`).sanText}}))
@@ -189,8 +175,7 @@ export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, 
     classes:"street",
     legend: tr(`StreetLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: dealer?.addr?.street ?? '',
+    val: dealer?.addr?.street ? sanitizeTxt(dealer.addr.street, `StreetName`).sanText : '',
     err: editErr?.dealerAddrStreet ?? '',
     cbVal: (val)=>{
       setDealer( (prev)=> ({...prev, addr:{...prev?.addr, street:sanitizeTxt(val, `StreetName`).sanText}}))
@@ -202,8 +187,7 @@ export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, 
     classes:"nr",
     legend: tr(`StreetNrLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: dealer?.addr?.nr ?? '',
+    val: dealer?.addr?.nr ? sanitizeTxt(dealer.addr.nr, `default`).sanText : '',
     err: editErr?.dealerAddrNr ?? '',
     cbVal: (val)=>{
       setDealer( (prev)=> ({...prev, addr:{...prev?.addr, nr:sanitizeTxt(val, `default`).sanText}}))
@@ -215,8 +199,7 @@ export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, 
     classes:"tel",
     legend: tr(`TelLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: dealer?.contacts?.tel ?? '',
+    val: dealer?.contacts?.tel ? sanitizeTxt(dealer.contacts.tel, `tel`).sanText : '',
     err: editErr?.dealerContTel ?? '',
     cbVal: (val)=>{
       setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, tel:sanitizeTxt(val, `tel`).sanText}}))
@@ -228,8 +211,7 @@ export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, 
     classes:"www",
     legend: tr(`WwwLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: dealer?.contacts?.www ?? '',
+    val: dealer?.contacts?.www ? sanitizeTxt(dealer.contacts.www, `www`).sanText : '',
     err: editErr?.dealerContWWW ?? '',
     cbVal: (val)=>{
       setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, www:sanitizeTxt(val, `www`).sanText}}))
@@ -241,8 +223,7 @@ export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, 
     classes:"email",
     legend: tr(`EmailLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: dealer?.contacts?.email ?? '',
+    val: dealer?.contacts?.email ? sanitizeTxt(dealer.contacts.email, `email`).sanText : '',
     err: editErr?.dealerContEmail ?? '',
     cbVal: (val)=>{
       setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, email:sanitizeTxt(val, `email`).sanText}}))
@@ -257,8 +238,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     classes:"name",
     legend: tr(`NameLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: client?.name ?? '',
+    val: client?.name ? sanitizeTxt(client.name, `CompanyName`).sanText : '',
     err: editErr?.clientName ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, name:sanitizeTxt(val, `CompanyName`).sanText}))
@@ -270,8 +250,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     classes:"nip",
     legend: tr(`NipLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: client?.nip ?? '',
+    val: client?.nip ? sanitizeTxt(client.nip, `NIP`).sanText : '',
     err: editErr?.clientNIP ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, nip:sanitizeTxt(val, `NIP`).sanText}))
@@ -283,8 +262,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     classes:"account",
     legend: tr(`AccountLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: client?.account ?? '',
+    val: client?.account ? sanitizeTxt(client.account, `ACC`).sanText : '',
     err: editErr?.clientACC ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, account:sanitizeTxt(val, `ACC`).sanText}))
@@ -296,8 +274,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     classes:"zip",
     legend: tr(`ZipLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: client?.addr?.zip ?? '',
+    val: client?.addr?.zip ? sanitizeTxt(client.addr.zip, `ZIP`).sanText : '',
     err: editErr?.clientAddrZIP ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, addr:{...prev?.addr, zip:sanitizeTxt(val, `ZIP`).sanText}}))
@@ -309,8 +286,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     classes:"town",
     legend: tr(`TownLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: client?.addr?.town ?? '',
+    val: client?.addr?.town ? sanitizeTxt(client.addr.town, `town`).sanText : '',
     err: editErr?.clientAddrTown ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, addr:{...prev?.addr, town:sanitizeTxt(val, `town`).sanText}}))
@@ -322,8 +298,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     classes:"street",
     legend: tr(`StreetLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: client?.addr?.street ?? '',
+    val: client?.addr?.street ? sanitizeTxt(client.addr.street, `StreetName`).sanText : '',
     err: editErr?.clientAddrStreet ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, addr:{...prev?.addr, street:sanitizeTxt(val, `StreetName`).sanText}}))
@@ -335,8 +310,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     classes:"nr",
     legend: tr(`StreetNrLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: client?.addr?.nr ?? '',
+    val: client?.addr?.nr ? sanitizeTxt(client.addr.nr, `default`).sanText : '',
     err: editErr?.clientAddrNr ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, addr:{...prev?.addr, nr:sanitizeTxt(val, `default`).sanText}}))
@@ -348,8 +322,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     classes:"tel",
     legend: tr(`TelLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: client?.contacts?.tel ?? '',
+    val: client?.contacts?.tel ? sanitizeTxt(client.contacts.tel, `tel`).sanText : '',
     err: editErr?.clientContTel ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, contacts:{...prev?.contacts, tel:sanitizeTxt(val, `tel`).sanText}}))
@@ -361,8 +334,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     classes:"www",
     legend: tr(`WwwLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: client?.contacts?.www ?? '',
+    val: client?.contacts?.www ? sanitizeTxt(client.contacts.www, `www`).sanText : '',
     err: editErr?.clientContWWW ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, contacts:{...prev?.contacts, www:sanitizeTxt(val, `www`).sanText}}))
@@ -374,8 +346,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     classes:"email",
     legend: tr(`EmailLegend`,lang),
     type: `text`,
-    plhol: tr(`PlaceHolder`,lang),
-    val: client?.contacts?.email ?? '',
+    val: client?.contacts?.email ? sanitizeTxt(client.contacts.email, `email`).sanText : '',
     err: editErr?.clientContEmail ?? '',
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, contacts:{...prev?.contacts, email:sanitizeTxt(val, `email`).sanText}}))

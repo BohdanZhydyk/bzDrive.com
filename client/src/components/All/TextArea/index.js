@@ -22,8 +22,13 @@ function TextArea({ props:{plhol, val, cbVal, cbErr} }) {
   }
 
   return (
-    <textarea className="TextArea" placeholder={plhol} value={val} onChange={onChange} ></textarea>
-    // onKeyUp={ (e)=> e.key === "Enter" && ON_KEYUP_IMG(e) }
+    <textarea
+      className="TextArea"
+      placeholder={plhol}
+      value={val}
+      onChange={onChange}
+      // onKeyUp={ (e)=> e.key === "Enter" && ON_KEYUP_IMG(e) }
+    ></textarea>
   )
 }
 

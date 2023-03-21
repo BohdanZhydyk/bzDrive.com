@@ -20,7 +20,7 @@ function Input({ props:{legend, type, plhol, val, err, cbVal, cbErr} }) {
   return (
     <fieldset className="Input">
 
-      <legend className={err ? `txtOrg` : ``}>
+      <legend className={err ? `txtOrg` : `txtGry`}>
         <span>{legend}</span>
         <span>{`${err ? ` - ${err}` : ``}`}</span>
       </legend>

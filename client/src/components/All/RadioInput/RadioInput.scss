@@ -1,0 +1,11 @@
+
+.RadioInput {
+  width:100%;
+
+  .RadioBtn{
+
+    input:checked {accent-color:#f60;}
+
+    label {margin:0 0.5vw;}
+  }
+}

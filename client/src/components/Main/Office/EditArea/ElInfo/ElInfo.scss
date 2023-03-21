@@ -15,6 +15,7 @@
       font-size:150%;
       background-color:#111;
       border-radius:0.5vw 0.5vw 0 0;
+      @media print {background-color:#ddd;}
     }
 
     .InputsPannel {
@@ -40,6 +41,19 @@
       .Input_tel {width:20%;}
       .Input_www {width:40%;}
       .Input_email {width:40%;}
+    }
+  }
+
+  .Input {
+    @media print {border:1px solid #ddd;}
+
+    legend {
+      @media print {color:#222;}
+    }
+
+    input {
+      font-size:1vw;
+      @media print {color:#000;}
     }
   }
 }
