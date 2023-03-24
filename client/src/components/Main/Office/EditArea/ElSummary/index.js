@@ -12,7 +12,7 @@ function ElSummary({ props:{nr, setNr, setSave, articles, printMode} }){
   const lang = GetUser().lang
 
   const sum = SumArray(articles?.map( (el)=> el.SUM ) )
-  const word = bzPriceToWord(sum)
+  const word = bzPriceToWord(sum, lang)
   const toStr = nr?.to.toString()
   const to = `${toStr.slice(6,8)}.${toStr.slice(4,6)}.${toStr.slice(0,4)}`
 

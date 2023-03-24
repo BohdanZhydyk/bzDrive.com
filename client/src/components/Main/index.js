@@ -27,7 +27,7 @@ function Main({ props:{nav, blur, BLUR} }) {
       <Routes>
         <Route path="/"           exact element={<Workshop props={{sub:subNav("/")}}/>} />
         <Route path="/news"             element={<News props={{sub:subNav("/news")}}/>} />
-        <Route path="/apps"             element={<Apps props={{sub:subNav("/apps")}}/>} />
+        <Route path="/apps/*"           element={<Apps props={{sub:subNav("/apps")}}/>} />
         <Route path="/office/*"         element={<Office props={{sub:subNav("/office")}}/>} />
         <Route path="/statistic"        element={<Statistic props={{sub:subNav("/statistic")}}/>} />
         <Route path="/profile"          element={<Profile props={{sub:subNav("/profile")}}/>} />

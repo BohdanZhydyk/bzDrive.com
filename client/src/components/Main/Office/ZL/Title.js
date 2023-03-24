@@ -4,7 +4,7 @@ import { tr } from "../../../../AppTranslate"
 import { TimeToObject } from "../../../../AppFunctions"
 
 
-export function Title({ props:{lang, calendar} }){
+export function Title({ props:{mode, lang, calendar} }){
 
   const title = ()=>{
     const months = tr("MonthNames",lang)
@@ -20,7 +20,7 @@ export function Title({ props:{lang, calendar} }){
       ${months[parseInt(TimeToObject(timeTo).month) - 1]}
       ${TimeToObject(timeTo).year}
     `
-    return `Zlecenia: ${From} - ${To}`
+    return `${tr(`DocName_${mode}`,lang)[1]}: ${From} - ${To}`
   }
 
   return(

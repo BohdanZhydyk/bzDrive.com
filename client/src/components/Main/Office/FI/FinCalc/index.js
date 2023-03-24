@@ -1,0 +1,18 @@
+import React from "react"
+
+import { FinYearSummary } from "./FinYearSummary"
+
+
+function FinCalc({ props:{lang, finances, taxPrevYear, GET_YEAR} }){
+  return(
+    <div className="FinCalc flex stretch">
+
+      <FinYearSummary props={{lang, finances, taxPrevYear, GET_YEAR}} />
+
+      <div className="FinCalcAct">empty field...</div>
+
+    </div>
+  )
+}
+
+export default FinCalc

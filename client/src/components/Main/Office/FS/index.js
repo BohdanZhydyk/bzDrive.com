@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 
 import "./FS.scss"
 import { FSreducer } from "./FSreducer"
+import { tr } from "../../../../AppTranslate"
 import { GetUser, TimeTo_YYYYMM, TimeTo_YYYYMMDD } from "../../../../AppFunctions"
 import { InvLine } from "./InvLine"
 import { Title } from "./Title"
@@ -13,11 +14,11 @@ function FS({ props:{company} }){
   const lang = GetUser().lang
 
   const topLine = {
-    nr:"Faktura Nr.",
-    seller:"Sprzedawca",
-    client:"Nabywca",
-    nip:"NIP",
-    sum:"Wartość brutto, zł"
+    nr: `${tr(`DocName_${mode}`,lang)[0]} Nr`,
+    seller: tr(`TableSeller`,lang),
+    client: tr(`TableBuyer`,lang),
+    nip: "NIP",
+    sum: `${tr(`TableSUM`,lang)}, zł`
   }
 
   const [invoices, setInvoices] = useState(false)
@@ -31,14 +32,14 @@ function FS({ props:{company} }){
     FSreducer({type:"SAVE_DOC", id, docData, query}, (data)=>setInvoices(data))
   }
 
-  useEffect( ()=>{ !invoices && FSreducer({type:"GET_INVOICES", query}, (data)=>setInvoices(data)) },[])
+  useEffect( ()=>{ FSreducer({type:"GET_INVOICES", query}, (data)=>setInvoices(data)) },[company])
 
   // console.log("invoices", invoices)
 
   return(
     <div className="FS flex column">
 
-      { invoices && <Title props={{lang, firstDay, lastDay}} /> }
+      { invoices && <Title props={{mode, lang, firstDay, lastDay}} /> }
 
       {
         invoices && [topLine, ...invoices].map( (invoice, i)=>{

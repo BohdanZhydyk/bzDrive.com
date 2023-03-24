@@ -34,7 +34,7 @@ function AuthPanel({ props:{AppReload} }) {
   }
 
   const SUBMIT = ()=> AuthReducer( { type:"SUBMIT", act:act[0], formData }, setFormErr, AppReload )
-  const LOGOUT = ()=> AuthReducer( { type:"LOGOUT", act:act[0], formData }, setFormErr, AppReload )
+  const LOGOUT = ()=> AuthReducer( { type:"LOGOUT", act:"logout" }, setFormErr, AppReload )
 
   return (
     <div className="AuthPanel flex column">

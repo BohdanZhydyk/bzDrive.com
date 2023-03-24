@@ -23,14 +23,14 @@ function ZL({ props:{company} }) {
   const AddWeekBtnPlusProps = {act:'PLUS_WEEK', lang, calendar, setCalendar, more, setMore, ZLreducer}
   const WeekProps = (line, l)=> ({line, l, lang, mode, company, ZLreducer, SAVE_DOC})
 
-  useEffect( ()=>{ !calendar && ZLreducer({type:"GET_CALENDAR"}, (data)=>setCalendar(data)) },[])
+  useEffect( ()=>{ ZLreducer({type:"GET_CALENDAR"}, (data)=>setCalendar(data)) },[company])
 
   // console.log("cal", calendar)
 
   return(
     <div className="ZL flex column">
 
-      { calendar && <Title props={{lang, calendar}} /> }
+      { calendar && <Title props={{mode, lang, calendar}} /> }
 
       <AddWeekBtn props={AddWeekBtnMinusProps}/>
 

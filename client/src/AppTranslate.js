@@ -11,7 +11,7 @@ export const tr = (txt, lang)=>{
     Nav_CV:{en:"bzCV", ua:"bzРезюме", pl:"bzCV"},
     Nav_Unsplash:{en:"Unsplash", ua:"Unsplash", pl:"Unsplash"},
     Nav_Office:{en:"Office", ua:"Офіс", pl:"Biuro"},
-    Nav_FI:{en:"Finances", ua:"Фінанси", pl:"Finanse"},
+    Nav_FI:{en:"Accounting", ua:"Бухгалтерія", pl:"Księgowość"},
     Nav_ZL:{en:"Orders", ua:"Замовлення", pl:"Zlecenia"},
     Nav_FS:{en:"Invoices", ua:"Рахунки", pl:"Faktury"},
     Nav_FZ:{en:"Buy", ua:"Купівля", pl:"Zakup"},
@@ -78,7 +78,7 @@ export const tr = (txt, lang)=>{
     SummaryLineTop:{en:"To pay", ua:"До сплати", pl:"Do zapłaty"},
     SummaryAmount:{en:"Amount in words", ua:"Сума словами", pl:"Kwota słownie"},
     SummaryMethod:{en:"Payment method", ua:"Спосіб оплати", pl:"Sposób płatności"},
-    SummaryDeadline:{en:"Payment deadline", ua:"Термін сплати", pl:"Termin płatności"},
+    SummaryDeadline:{en:"Payment deadline", ua:"Термін оплати", pl:"Termin płatności"},
     DayNames:{
       en:['mo','tu','we','th','fr','sa','su'],
       ua:['пн','вт','ср','чт','пт','сб','нд'],
@@ -181,8 +181,9 @@ export const tr = (txt, lang)=>{
     ActionBtn_close:{en:"closed", ua:"закритий", pl:"zamknięty"},
     ActionBtn_delete:{en:"deleted", ua:"видалений", pl:"usunięty"},
     NewOrderBtn:{en:"Add new order", ua:"Додати нове замовлення", pl:"Dodac nowe zlecenie"},
-    DocName_ZL:{en:"Order", ua:"Замовлення", pl:"Zlecenie"},
-    DocName_FS:{en:"Invoice", ua:"Рахунок", pl:"Faktura"},
+    DocName_ZL:{en:["Order","Orders"], ua:["Замовлення","Замовлення"], pl:["Zlecenie","Zlecenia"]},
+    DocName_FS:{en:["Invoice","Invoics"], ua:["Рахунок","Рахунки"], pl:["Faktura","Faktury"]},
+    DocName_FI:{en:["Accounting","Accounting"], ua:["Бухгалтерія","Бухгалтерія"], pl:["Księgowość","Księgowość"]},
     InfoPannelCar:{en:"Information about car", ua:"Інформація про автомобіль", pl:"Informacja o samochodzie"},
     InfoPannelClient:{en:"Customer information", ua:"Інформація про клієнта", pl:"Informacja o kliencie"},
     InfoPannelDealer:{en:"Seller information", ua:"Інформація про продавця", pl:"Informacja o sprzedawce"},
@@ -202,6 +203,8 @@ export const tr = (txt, lang)=>{
     TablePRV:{en:"Amount VAT", ua:"Сума VAT", pl:"Kwota VAT"},
     TableSUM:{en:"Gross amount", ua:"Вартість brutto", pl:"Wartość brutto"},
     TableTOT:{en:"Total", ua:"Разом", pl:"Razem"},
+    TableSeller:{en:"Seller", ua:"Продавець", pl:"Sprzedawca"},
+    TableBuyer:{en:"Buyer", ua:"Покупець", pl:"Nabywca"},
     UploadFileTitle:{en:"select file", ua:"вибери файл", pl:"wybierz plik"},
     NewTranslate:{en:"", ua:"", pl:""}
   }

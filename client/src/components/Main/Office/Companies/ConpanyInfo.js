@@ -11,7 +11,7 @@ export function ConpanyInfo({ props:{lang, company, setCompany} }) {
 
   const propses = ()=> CompanyProps(lang, company, setCompany)
 
-  const compImg = `https://bzdrive.com/files/dealers/${company?.img}`
+  const compImg = `https://bzdrive.com/files/dealers/${company?.img ?? `empty.png`}`
 
   return(
     <div className="ConpanyInfo flex column">
@@ -19,11 +19,7 @@ export function ConpanyInfo({ props:{lang, company, setCompany} }) {
       <div className="Company flex wrap">
 
         <div className="CompanyAva flex">
-        {
-          company?.img
-          ? <img src={compImg} alt="CompImg" />
-          : <span>{`add Img Component here...`}</span>
-        }
+          <img src={compImg} alt="CompImg" />
         </div>
 
         <div className="CompanyWarning">

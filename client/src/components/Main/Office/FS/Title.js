@@ -3,7 +3,7 @@ import React from "react"
 import { tr } from "../../../../AppTranslate"
 
 
-export function Title({ props:{lang, firstDay, lastDay} }){
+export function Title({ props:{mode, lang, firstDay, lastDay} }){
 
   const title = ()=>{
     const months = tr("MonthNames",lang)
@@ -19,7 +19,7 @@ export function Title({ props:{lang, firstDay, lastDay} }){
     ${months[parseInt(timeTo.slice(4, 6)) - 1]}
     ${timeTo.slice(0, 4)}
     `
-    return `Faktury: ${From} - ${To}`
+    return `${tr(`DocName_${mode}`,lang)[1]}: ${From} - ${To}`
   }
 
   return(

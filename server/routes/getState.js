@@ -6,9 +6,10 @@ exports.getState = (req, res)=>{
   bzDB( { req, res, col:'bzState', act:"FIND_ONE", query:{id:"information"} }, (infoData)=>{
     bzDB( { req, res, col:'bzState', act:"FIND_ONE", query:{id:"navigation"} }, (navData)=>{
 
-      let nav = navData?.result?.nav
+      const nav = navData?.result?.nav
+      const role = navData?.user?.role
   
-      switch(navData?.user?.role){
+      switch(role){
         case "admin":   Filter( nav, 3 );     break
         case "master":  Filter( nav, 2 );     break
         case "user":    Filter( nav, 1 );     break

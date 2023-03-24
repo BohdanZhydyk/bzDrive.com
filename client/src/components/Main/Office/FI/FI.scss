@@ -1,0 +1,106 @@
+
+.FI {
+  width:100%;
+  margin:0 0 2vw 0;
+
+  .Title {
+    font-size:150%;
+    margin:0 0 1vw 0;
+  }
+
+  .FinCalc {
+    width:calc(99% - 1vw);
+    margin:0.5vw 0;
+
+    .FinYearSummary {
+      width:calc(30% - 2.5vw - 2px);
+      padding:0.5vw 1vw;
+      margin:0 0.25vw;
+      border:1px solid #444;
+
+      .FinYear {
+        width:100%;
+        min-height:2vw;
+
+        .YearNow {
+          width:30%;
+          min-height:1.5vw;
+          border-top:1px solid #f60;
+          border-bottom:1px solid #f60;
+        }
+
+        .YearBtn {
+          width:calc(30% - 2px);
+          min-height:1.5vw;
+          color:#999;
+          border-radius:0.5vw;
+          border:1px solid #444;
+        }
+
+        .GrnBtn {
+          color:#fff;
+          background-color:#171;
+          border:1px solid #171;
+          &:hover {
+            font-size:120%;
+            cursor: pointer;
+          }
+        }
+      }
+  
+      .FinYearInfo {
+        width:100%;
+        min-height:1.5vw;
+  
+        .FinYearInfoGroup {width:100%; margin-top:1vw;}
+        .FinYearInfoTxt {width:70%;}
+        .FinYearInfoVal {width:30%;}
+      }
+    }
+
+    .FinCalcAct {
+      width:calc(70% - 2.5vw - 2px);
+      padding:0.5vw 1vw;
+      margin:0 0.25vw;
+      border:1px solid #444;
+    }
+  }
+
+  .FinanceMonth {
+    width:99%;
+    margin:0 0 0.5vw 0;
+    padding:0 0 0.5vw 0;
+    border-top:1px solid #444;
+    border-bottom:1px solid #444;
+
+    .TopLine {
+      padding:0.5vw 1%;
+      background-image:linear-gradient(#000, #0001);
+    }
+    .Line {
+      width:98%;
+      min-height:1.5vw;
+
+      .LineDate {width:6%;}
+      .LineGroup {width:25%; margin-top:0.5vw;}
+      .LineName {width:15%;}
+      .LineVal {width:10%;}
+    }
+  }
+
+  .BottomLine {
+    width:100%;
+
+    .PrevBtn {
+      width:15%;
+      min-height:2vw;
+      margin:0 2vw;
+      background-color: #171;
+      border-radius:0.5vw;
+      &:hover {
+        font-size:120%;
+        cursor: pointer;
+      }
+    }
+  }
+}

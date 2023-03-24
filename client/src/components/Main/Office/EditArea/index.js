@@ -57,7 +57,7 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, SAVE_DO
   const ElCalculatorProps = {user, articles, setArticles, setSave, printMode}
   const ElSummaryProps = {nr, setNr, setSave, articles, printMode}
   const ElCommentsProps = {user, car, setCar, setSave, printMode}
-  const ElFilesProps = {doc, user, nr, files, setFiles}
+  const ElFilesProps = {doc, user, nr, setSave, files, setFiles}
   const ElSignaturesProps = {user}
 
   return(

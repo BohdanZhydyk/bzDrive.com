@@ -307,51 +307,106 @@ export const bzDeleteFile = (fileAddr, fileName, cb)=>{
 
 }
 
-export const bzPriceToWord = (price)=>{
+export const bzPriceToWord = (price, lang) => {
 
-  if(!price) price = "0.00"
+  if (!price) price = "0.00"
 
-  let liczba = parseInt( price.split('.')[0] )
-  let grosze = price.split('.')[1]
-
-  let jednosci = ["","jeden","dwa","trzy","cztery","pięć","sześć","siedem","osiem","dziewięć"]
-  let nascie = ["","jedenaście","dwanaście","trzynaście","czternaście","piętnaście","szesnaście","siedemnaście","osiemnaście","dziewietnaście"]
-  let dziesiatki = ["","dziesięć","dwadzieścia","trzydzieści","czterdzieści","pięćdziesiąt","sześćdziesiąt","siedemdziesiąt","osiemdziesiąt","dziewięćdziesiąt"]
-  let setki = ["","sto","dwieście","trzysta","czterysta","pięćset","sześćset","siedemset","osiemset","dziewięćset"]
-  let grupy = [
-    ["" ,"" ,""],
-    ["tysiąc" ,"tysiące" ,"tysięcy"],
-    ["milion" ,"miliony" ,"milionów"],
-    ["miliard","miliardy","miliardów"],
-    ["bilion" ,"biliony" ,"bilionów"],
-    ["biliard","biliardy","biliardów"],
-    ["trylion","tryliony","trylionów"]
-  ]
-    
-  let wynik = '', znak = ''
-
-  if( liczba === 0 ){ wynik = "zero" }
-  if( liczba < 0 ){ znak = "minus"; liczba = -liczba; }
-          
-  let g = 0
-  while( liczba > 0 ){
-    let s = Math.floor((liczba % 1000)/100)
-    let n = 0
-    let d = Math.floor((liczba % 100)/10)
-    let j = Math.floor(liczba % 10)
-          
-    if( d === 1 && j>0 ){ n = j; d = 0; j = 0; }
-
-    let k = 2
-    if( j === 1 && s+d+n === 0 ){ k = 0 }
-    if( j === 2 || j === 3 || j === 4 ){ k = 1 }
-    if( s+d+n+j > 0 ){ wynik = `${setki[s]} ${dziesiatki[d]} ${nascie[n]} ${jednosci[j]} ${grupy[g][k]} ${wynik}` }
-
-    g++
-    liczba = Math.floor(liczba/1000)
+  const zero = {en:"zero",pl:"zero",ua:"нуль"}
+  const minus = {en:"minus",pl:"minus",ua:"мінус"}
+  const ones = {
+    en:["","one","two","three","four","five","six","seven","eight","nine"],
+    pl:["","jeden","dwa","trzy","cztery","pięć","sześć","siedem","osiem","dziewięć"],
+    ua:["","один","два","три","чотири","п'ять","шість","сім","вісім","дев'ять"]
+  }
+  const teens = {
+    en:["","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"],
+    pl:["","jedenaście","dwanaście","trzynaście","czternaście","piętnaście","szesnaście","siedemnaście","osiemnaście","dziewietnaście"],
+    ua:["","одинадцять","дванадцять","тринадцять","чотирнадцять","п'ятнадцять","шістнадцять","сімнадцять","вісімнадцять","дев'ятнадцять"]
+  }
+  const tens = {
+    en:["","ten","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"],
+    pl:["","dziesięć","dwadzieścia","trzydzieści","czterdzieści","pięćdziesiąt","sześćdziesiąt","siedemdziesiąt","osiemdziesiąt","dziewięćdziesiąt"],
+    ua:["","десять","двадцять","тридцять","сорок","п'ятдесят","шістдесят","сімдесят","вісімдесят","дев'яносто"]
+  }
+  const hundreds = {
+    en:["","one hundred","two hundred","three hundred","four hundred","five hundred","six hundred","seven hundred","eight hundred","nine hundred"],
+    pl:["","sto","dwieście","trzysta","czterysta","pięćset","sześćset","siedemset","osiemset","dziewięćset"],
+    ua:["","сто","двісті","триста","чотириста","п'ятсот","шістсот","сімсот","вісімсот","дев'ятсот"]
+  }
+  const groups = {
+    en:[
+      ["","",""],
+      ["thousand","thousands","thousand"],
+      ["million","millions","million"],
+      ["billion","billions","billion"],
+      ["trillion","trillions","trillion"],
+      ["quadrillion","quadrillions","quadrillion"],
+      ["quintillion","quintillions","quintillion"]
+    ],
+    pl:[
+      ["","",""],
+      ["tysiąc","tysiące","tysięcy"],
+      ["milion","miliony","milionów"],
+      ["miliard","miliardy","miliardów"],
+      ["bilion","biliony","bilionów"],
+      ["biliard","biliardy","biliardów"],
+      ["trylion","tryliony","trylionów"]
+    ],
+    ua:[
+      ["","",""],
+      ["тисяча","тисячі","тисяч"],
+      ["мільйон","мільйони","мільйонів"],
+      ["мільярд","мільярди","мільярдів"],
+      ["більйон","більйони","більйонів"],
+      ["білліон","білліони","білліонів"],
+      ["трильйон","трильйони","трильйонів"]
+      ]
   }
 
-  return(`${znak} ${wynik} zł ${grosze}/100 gr` );
+  let number = parseInt(price.split('.')[0])
+  let cents = price.split('.')[1]
+
+  let result = '', sign = ''
+
+  if (number === 0) { result = zero[lang] }
+  if (number < 0) { sign = minus[lang]; number = -number; }
+
+  let groupIndex = 0
+  while (number > 0) {
+    let hundredsDigit = Math.floor((number % 1000) / 100)
+    let onesDigit = 0
+    let tensDigit = Math.floor((number % 100) / 10)
+    let unitDigit = Math.floor(number % 10)
+
+    if (tensDigit === 1 && unitDigit > 0) {
+      onesDigit = unitDigit
+      tensDigit = 0
+      unitDigit = 0
+    }
+
+    let groupKey = 2
+    if (unitDigit === 1 && hundredsDigit + tensDigit + onesDigit === 0) {
+      groupKey = 0
+    } else if (unitDigit === 2 || unitDigit === 3 || unitDigit === 4) {
+      groupKey = 1
+    }
+
+    if (hundredsDigit + tensDigit + onesDigit + unitDigit > 0) {
+      result = `
+        ${hundreds[lang][hundredsDigit]}
+        ${tens[lang][tensDigit]}
+        ${teens[lang][onesDigit]}
+        ${ones[lang][unitDigit]}
+        ${groups[lang][groupIndex][groupKey]}
+        ${result}
+      `
+    }
+
+    groupIndex++
+    number = Math.floor(number / 1000)
+  }
+
+  return(`${sign} ${result} zł ${cents}/100 gr`);
 }
 
 // function for sending a POST request to the server and receiving a response from it

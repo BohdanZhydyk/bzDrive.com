@@ -6,7 +6,7 @@ import { DocNameNormalize } from "../../../../../AppFunctions"
 
 export function DocTitle({ props:{lang, mode, nr} }) {
 
-  const docName = `${tr(`DocName_${mode}`,lang)} Nr`
+  const docName = `${tr(`DocName_${mode}`,lang)[0]} Nr`
   const docNr = DocNameNormalize(nr)
 
   return(

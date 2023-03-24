@@ -9,6 +9,7 @@ exports.getAuth = (req, res)=>{
     case "login": ActionLogin(req, res); return
     case "signup": return
     case "forgot": return
+    case "logout": ActionLogout(req, res); return
     default:
       res.send( {...req.body, result:false, errors:'ERR: server app.js!!!'} )
       break
@@ -16,10 +17,11 @@ exports.getAuth = (req, res)=>{
 
   function ActionLogin(req, res){
 
-    let formData = req?.body?.object?.formData
+    const formData = req?.body?.object?.formData
   
-    let login = formData.login
-    let pass = formData.pass
+    const bzToken = req?.body?.bzToken
+    const login = formData.login
+    const pass = formData.pass
   
     bzDB( { req, res, col:'bzUsers', act:"FIND_ONE", query:{login} }, (dbData)=>{
   
@@ -49,7 +51,7 @@ exports.getAuth = (req, res)=>{
           return
         }
 
-        let result = {
+        const user = {
           login: dbData.result.login,
           role: dbData.result.role,
           email: dbData.result.email,
@@ -58,18 +60,33 @@ exports.getAuth = (req, res)=>{
           ava: dbData.result.ava
         }
 
-        let query = {user:result, bzToken:req?.body?.bzToken}
-
+        const query = {time:Date.now(), user, bzToken}
         bzDB( { req, res, col:'bzTokens', act:"INSERT_ONE", query }, (dbData)=>{
-
-          res.send( {bzToken: req?.body?.bzToken, result} )
-
+          res.send( {bzToken, result:user} )
         })
   
       })
   
     })
   
+  }
+
+  function ActionLogout(req, res){
+
+    const bzToken = req?.body?.bzToken
+    const login = req?.body?.object?.login
+    const tokenLifetime = (3600000 * 24)
+    const query = {
+      $or:[
+        { "user.login":login },
+        { "time":{$lt:(Date.now() - tokenLifetime)} }
+      ]
+    }
+
+    bzDB( { req, res, col:'bzTokens', act:"DELETE_MANY", query }, (dbData)=>{
+      res.send( {bzToken, result:dbData?.result} )
+    })
+
   }
 
 }

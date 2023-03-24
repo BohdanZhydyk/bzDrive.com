@@ -42,7 +42,7 @@ export function Order({ props:{company, mode, order, firstDay, lastDay, SAVE_DOC
 
   const checkImg = repairStatus
     ? `https://bzdrive.com/files/ico/icoCheck.png`
-    : `https://bzdrive.com/files/dealers/${company?.img}`
+    : `https://bzdrive.com/files/dealers/${company?.img ?? `empty.png`}`
 
   const leftLine = [
     {

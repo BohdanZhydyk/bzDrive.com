@@ -14,10 +14,10 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
   // lim        limit of results
   // callback   callback function
 
-  let bzToken =   req?.body?.bzToken  ? req.body.bzToken  : generateToken()
-  let IP =        req?.body?.IP       ? req.body.IP       : false
-  let user =      req?.body?.user     ? req.body.user     : false
-
+  let bzToken = req?.body?.bzToken  ? req.body.bzToken  : generateToken()
+  let IP =      req?.body?.IP       ? req.body.IP       : false
+  let user =    req?.body?.user     ? req.body.user     : false
+  
   const client = new MongoClient(url, { useUnifiedTopology: true })
   
   const ERR = (bzToken, IP, user, errors)=> callback({bzToken, IP, user, errors}) // client.close()
@@ -37,10 +37,8 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
       if(!ChekTokenData){ Done(bzToken, IP, false); return; }
 
       // if the token is older than "tokenLifetime", generate a new one
-      const tokenLifetime = 86400000
-      const bzTokenTime = ObjectId(ChekTokenData?._id).getTimestamp().getTime()
-      const currentTime = new Date().getTime()
-      if(currentTime - bzTokenTime > tokenLifetime){ Done(generateToken(), IP, false); return; }
+      const tokenLifetime = (3600000 * 24)
+      if(Date.now() - ChekTokenData?.time > tokenLifetime){ Done(generateToken(), IP, false); return; }
 
       Done(bzToken, IP, ChekTokenData?.user)
 

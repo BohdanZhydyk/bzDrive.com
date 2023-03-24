@@ -40,9 +40,14 @@ export const AuthReducer = (action, setFormErr, AppReload)=>{
   }
 
   function LOGOUT(){
+
+    const query = {act:action.act, login:GetUser().login}
+    PostToApi( '/getAuth', query, (logoutData)=>{})
+
     RemUser()
     RemToken()
     AppReload()
+
   }
 
 }

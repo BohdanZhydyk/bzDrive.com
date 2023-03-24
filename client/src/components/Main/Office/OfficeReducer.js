@@ -12,9 +12,9 @@ export const OfficeReducer = (action, user, setDef, setCompanies, setCompany)=>{
 
     const query = {getCompany:true}
     PostToApi( '/getOffice', query, (data)=>{
-      const newID = new Date().getTime()
-      const newCompany = {"id": newID, "director": user?.login ?? `ID_${newID}`}
-      const companies = [newCompany, ...data]
+      const newID = Date.now()
+      const newCompany = {"id":newID, shortName:`MyFirm_${newID}`, "director":data?.userLogin ?? `ID_${newID}`}
+      const companies = [newCompany, ...data?.companiesData]
       const def = companies.length > 1 ? 1 : 0
       setDef(def)
       setCompanies(companies)
