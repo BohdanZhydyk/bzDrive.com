@@ -2,7 +2,7 @@ import { bzCalc } from "../../../../../AppFunctions"
 
 export function SanQuates(val) {
   if(val === ""){val = "0.00"}
-  const regex = /[^0-9.]/g
+  const regex = /[^0-9.-]/g
   const sanitized = val.replace(regex, "")
   return parseFloat(sanitized).toFixed(2)
 }

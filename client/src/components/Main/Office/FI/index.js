@@ -5,7 +5,7 @@ import { FIreducer } from "./FIreducer"
 import { GetUser, TimeTo_YYYYMM } from "../../../../AppFunctions"
 import { Title } from "./Title"
 import FinCalc from "./FinCalc"
-import { FinanceMonth } from "./FinanceMonth"
+import FinanceMonth from "./FinanceMonth"
 import { prepareFinances } from "./FinLogic"
 
 
@@ -16,7 +16,7 @@ function FI({ props:{company} }){
 
   const [finances, setFinances] = useState(false)
 
-  const [count, setCount] = useState(10)
+  const [count, setCount] = useState(1)
 
   const [taxYear, setTaxYear] = useState( parseInt(TimeTo_YYYYMM( Date.now() ).toString().slice(0,4)) )
 
@@ -24,14 +24,20 @@ function FI({ props:{company} }){
 
   const isLastMonth = count === finances?.length
 
-  const SAVE_DOC = (id, docData)=>{
+  const SAVE_MONTH = (obj)=>{
+    const query = {companyName:company?.shortName, newMonth:obj?.newMonth, taxYear:obj?.year, month:obj?.month}
+    setCount(1)
     setFinances(false)
-    const query = {companyName:company?.shortName, taxYear}
-    FIreducer({type:"SAVE_DOC", id, docData, query}, (data)=>setFinances(data))
+    FIreducer({type:"SAVE_MONTH", query}, (data)=>{
+      setFinances( prepareFinances(data) )
+      data?.isPrevTaxYear && setTaxPrevYear(true)
+    })
   }
+
   const GET_YEAR = (year)=>{
     const query = {companyName:company?.shortName, taxYear:year}
     setCount(1)
+    setFinances(false)
     setTaxPrevYear(false)
     FIreducer({type:"GET_FINANCES", query}, (data)=>{
       setFinances( prepareFinances(data) )
@@ -52,7 +58,7 @@ function FI({ props:{company} }){
 
       {
         finances && finances.slice(0,count).map( (fi, i)=>{
-          return <FinanceMonth props={{fi}} key={`FinanceMonth${i}`} />
+          return <FinanceMonth props={{fi, taxYear, SAVE_MONTH}} key={`FinanceMonth${i}`} />
         })
       }
 

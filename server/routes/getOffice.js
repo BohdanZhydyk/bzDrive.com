@@ -118,7 +118,7 @@ exports.getOffice = (req, res)=>{
       }
 
       // getting information about finances
-      if(object?.getFinances){//console.log(object)
+      if(object?.getFinances){
 
         const company = object?.query?.companyName
         const taxYear = object?.query?.taxYear
@@ -143,6 +143,59 @@ exports.getOffice = (req, res)=>{
           res.send({
             ...financesData,
             result: {taxYearArr, isPrevTaxYear}
+          })
+
+        })
+
+      }
+
+      // save month in finances
+      if(object?.saveMonth){
+
+        const company = object?.query?.companyName
+        const taxYear = object?.query?.taxYear
+        const newMonth = object?.query?.newMonth
+        const month = object?.query?.month
+
+        if( !myCompanies.includes(company) ){
+          res.send({...compData, result: []})
+          return
+        }
+
+        const query = {company}
+
+        bzDB( { req, res, col:'bzFinances', act:"FIND_ONE", query }, (financesData)=>{
+
+          const _id = ObjectId(financesData?.result?._id)
+          const date = object?.query?.month?.date
+          const finances = newMonth
+            ? [month, ...financesData?.result?.finances]
+            : financesData?.result?.finances.map(
+              (month)=> month?.date === date ? object?.query?.month : month
+            )
+
+          const query = {...financesData?.result, finances, _id}
+
+          bzDB( { req, res, col:'bzFinances', act:"UPDATE_ONE", query }, (updatedFinData)=>{
+            
+            const query = {company}
+            bzDB( { req, res, col:'bzFinances', act:"FIND_ONE", query }, (financesData)=>{
+
+              const finances = financesData?.result?.finances
+              const taxYearArr = finances.filter(
+                month=> parseInt(month?.date / 100) === taxYear
+              )
+              const isPrevTaxYear = finances.filter(
+                month=> parseInt(month?.date / 100) === taxYear - 1
+              )?.length > 0
+    
+              res.send({
+                ...financesData,
+                result: {taxYearArr, isPrevTaxYear}
+              })
+
+            })
+
           })
 
         })

@@ -11,9 +11,9 @@ export function FinYearSummary({ props:{lang, finances, taxPrevYear, GET_YEAR} }
   const finYear = parseInt( finances[0]?.date.toString().slice(0,4) )
   const isNowYear = nowYear === finYear
 
-  // grossRevenue - przychód netto
+  // netRevenue - przychód netto
   const netRevenue = SumArray(finances.map( el=> el?.col_9))
-  // grossCosts - wydatki netto
+  // netCosts - wydatki netto
   const netCosts = SumArray(finances.map( el=> bzCalc("+", el?.col_10, el?.col_14) ))
   // Składki zdrowotne ZUS
   const taxZUS = SumArray(finances.map( el=> el?.ZUS))
@@ -32,7 +32,7 @@ export function FinYearSummary({ props:{lang, finances, taxPrevYear, GET_YEAR} }
   )
 
   const finInfo = [
-    {grp:`Forma opodatkowania`, cl:`underline bold`},
+    {grp:`Forma opodatkowania - "na zasadach ogólnych"`, cl:`underline bold`},
     {txt:`Próg podatkowy:`, val:`${incomeTaxThreshold} zł`},
     {txt:`Kwota zmniejszająca podatek:`, val:`${taxReductionAmount} zł`},
     {txt:`Stawka podatku poniżej progu:`, val:`${incomeTaxRate1} %`},
@@ -43,7 +43,10 @@ export function FinYearSummary({ props:{lang, finances, taxPrevYear, GET_YEAR} }
     {txt:`Podatek VAT:`, val:`${calkulatedData.vat} zł`},
     {txt:`Składki zdrowotne ZUS:`, val:`${taxZUS} zł`},
     {txt:`Podatek dochodowy:`, val:`${calkulatedData.tax} zł`},
-    {txt:`Dochód (netto) :`, val:`${calkulatedData.profit} zł`, cl:parseFloat(calkulatedData.profit) >=0 ? `txtGrn` : `txtRed`},
+    {
+      txt:`Dochód (netto) :`, val:`${calkulatedData.profit} zł`,
+      cl:parseFloat(calkulatedData.profit) >=0 ? `txtGrn bold` : `txtRed bold`
+    },
   ]
 
   const prevBtnCl = taxPrevYear ? `GrnBtn bold` : ``

@@ -13,10 +13,11 @@
     margin:0.5vw 0;
 
     .FinYearSummary {
-      width:calc(30% - 2.5vw - 2px);
+      width:calc(30% - 2.5vw - 4px);
       padding:0.5vw 1vw;
       margin:0 0.25vw;
       border:1px solid #444;
+      border-radius:0.5vw;
 
       .FinYear {
         width:100%;
@@ -58,33 +59,106 @@
       }
     }
 
-    .FinCalcAct {
-      width:calc(70% - 2.5vw - 2px);
+    .FinCalcSection {
+      width:calc(70% - 2.5vw - 4px);
       padding:0.5vw 1vw;
       margin:0 0.25vw;
       border:1px solid #444;
+      border-radius:0.5vw;
     }
   }
 
   .FinanceMonth {
-    width:99%;
-    margin:0 0 0.5vw 0;
-    padding:0 0 0.5vw 0;
-    border-top:1px solid #444;
-    border-bottom:1px solid #444;
+    width:calc(99% - 1vw);
+    margin:0.5vw 0;
 
-    .TopLine {
-      padding:0.5vw 1%;
-      background-image:linear-gradient(#000, #0001);
+    .FinMonthSummary {
+      width:calc(30% - 0.5vw - 4px);
+      margin:0 0.25vw;
+      padding:0 0 0.5vw 0;
+      border:1px solid #444;
+      border-radius:0.5vw;
+
+      .TopLine {
+        background-image:linear-gradient(#000, #0001);
+        border-radius:0.5vw 0.5vw 0 0;
+      }
+      .Line {
+        width:calc(100% - 1vw);
+        padding:0 0.5vw;
+        min-height:1.5vw;
+  
+        .LineDate {width:20%; padding:0.7vw 0;}
+        .LineBtn {width:80%;}
+        .LineGroup {width:100%;}
+        .LineName {width:70%;}
+        .LineVal {
+          width:30%;
+  
+          input {
+            width:60%;
+            min-height:calc(1.2vw - 2px);
+            text-align:end;
+            color:#fff;
+            background-color:transparent;
+            border:1px solid #999;
+            border-radius:0.25vw;
+            &:focus {
+              background-color:#1711;
+            }
+          }
+        }
+      }
+
     }
-    .Line {
-      width:98%;
-      min-height:1.5vw;
 
-      .LineDate {width:6%;}
-      .LineGroup {width:25%; margin-top:0.5vw;}
-      .LineName {width:15%;}
-      .LineVal {width:10%;}
+    .FinMonthSection {
+      width:calc(70% - 2.5vw - 4px);
+      padding:0.5vw 1vw;
+      margin:0 0.25vw;
+      border:1px solid #444;
+      border-radius:0.5vw;
+
+      .FinWarning {
+        width:100%;
+
+        .WarningLine {
+          width:100%;
+        }
+      }
+
+      .ShowDocsBtn {
+        width:40%;
+        min-height:2vw;
+        background-color: #171;
+        border-radius:0.5vw;
+      }
+    }
+
+    .FinMonthDocs {
+      width:calc(100% - 2vw - 2px);
+      margin:0.5vw 0 0 0;
+      padding:0 0.5vw 0.5vw 0.5vw;
+      border:1px solid #444;
+      border-radius:0.5vw;
+
+      .FinDoscLineTop {
+        padding:0.5vw;
+        background-color: #111;
+        border-radius:0.5vw 0.5vw 0 0;
+      }
+      .FinDoscLine {
+        width:100%;
+        min-height:2vw;
+        border-bottom:1px solid #444;
+
+        .FinNum {width:5%;}
+        .FinNam {width:10%;}
+        .FinInf {width:68%;}
+        .FinNet {width:6%; text-align:center;}
+        .FinBru {width:6%; text-align:center;}
+        .FinBtn {width:5%; padding:0.25vw 0; text-align:center;}
+      }
     }
   }
 

@@ -15,9 +15,9 @@ export function prepareFinances(data){
     ? isNowYear
       ? isNowMonth
         ? data?.taxYearArr
-        : [{"indepMode":true, "date":nowDate, ...emptyFinMonths}, ...data?.taxYearArr]
+        : [{"newMonth":true, "date":nowDate, ...emptyFinMonths}, ...data?.taxYearArr]
       : data?.taxYearArr
-    : [{"indepMode":true, "date":nowDate, ...emptyFinMonths}]
+    : [{"newMonth":true, "date":nowDate, ...emptyFinMonths}]
 
   let prevMonthVAT = "0.00"
   let prevMonthZUS = "0.00"
@@ -47,10 +47,10 @@ export function prepareFinances(data){
     
   })
 
-  return newFin?.map( (el, i)=> ({
-    ...el,
-    pVAT:prevMonthVATarr[i+1] ?? (el?.pVAT ?? "0.00"),
-    pZUS:prevMonthZUSarr[i+1] ?? (el?.pZUS ?? "0.00")
+  return newFin?.map( (month, i)=> ({
+    ...month,
+    pVAT:prevMonthVATarr[i+1] ?? (month?.pVAT ?? "0.00"),
+    pZUS:prevMonthZUSarr[i+1] ?? (month?.pZUS ?? "0.00")
   }) )
 }
 

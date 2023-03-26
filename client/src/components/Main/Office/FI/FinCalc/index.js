@@ -9,7 +9,7 @@ function FinCalc({ props:{lang, finances, taxPrevYear, GET_YEAR} }){
 
       <FinYearSummary props={{lang, finances, taxPrevYear, GET_YEAR}} />
 
-      <div className="FinCalcAct">empty field...</div>
+      <div className="FinCalcSection">empty field...</div>
 
     </div>
   )

@@ -21,7 +21,7 @@
   }
 
   .NavPannel {
-    width:65%;
+    width:60%;
 
     .NavBtn {
       position:relative;
@@ -63,7 +63,15 @@
 
   .UserPannel {
     position:relative;
-    width:calc(10% - 1vw);
+    width:calc(15% - 1vw);
+
+    .LoginBtn {
+      margin:0 4vw 0 0;
+      &:hover {
+        cursor: pointer;
+        font-size:120%;
+      }
+    }
     
     .Ava {
       position:absolute;
