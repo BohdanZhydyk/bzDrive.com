@@ -1,7 +1,13 @@
 import React from "react"
 
 
-export function FinMonthSection({ props:{newMonth, edit, editDocs, setEditDocs} }){
+export function FinMonthSection({ props:{newMonth, edit, setEdit, editDocs, setEditDocs} }){
+
+  const ON_CLICK = ()=>{
+    setEditDocs(!editDocs)
+    setEdit(newMonth ? !edit : false)
+  }
+
   return(
     <div className="FinMonthSection flex column start">
 
@@ -10,7 +16,7 @@ export function FinMonthSection({ props:{newMonth, edit, editDocs, setEditDocs} 
         {
           editDocs
           ?
-          <span className="WarningLine txtOrg bold flex start">{`- Informacja na podstawie documentow!`}</span>
+          <span className="WarningLine txtOrg bold flex start">{`- Informacja na podstawie dokumentow!`}</span>
           :
           <>
           {
@@ -28,7 +34,7 @@ export function FinMonthSection({ props:{newMonth, edit, editDocs, setEditDocs} 
 
       </div>
 
-      <div className="ShowDocsBtn flex" onClick={()=>setEditDocs(!editDocs)}>
+      <div className="ShowDocsBtn flex" onClick={ON_CLICK}>
         {`Pokazać dokumenty za bieżący miesiąc`}
       </div>
 

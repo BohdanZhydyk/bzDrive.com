@@ -5,7 +5,7 @@ import ActionBtn from "../../../All/ActionBtn"
 import EditArea from "../EditArea"
 
 
-export function InvLine({ props:{company, mode, top, invoice, SAVE_DOC} }){
+export function InvLine({ props:{company, mode, top, invoice, RELOAD} }){
 
   const [edit, setEdit] = useState(false)
   
@@ -36,7 +36,7 @@ export function InvLine({ props:{company, mode, top, invoice, SAVE_DOC} }){
         <ActionBtn props={{name:top ? "plus" : "edit", click:ADD_EDIT_INV}}/>
       </span>
 
-      {edit && <EditArea props={{company, mode, doc, edit, setEdit, SAVE_DOC}} /> }
+      {edit && <EditArea props={{company, mode, doc, edit, setEdit, RELOAD}} /> }
 
     </div>
   )

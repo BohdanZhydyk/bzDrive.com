@@ -10,8 +10,12 @@ export function ActionBtnsPannel({ props:{tr, mode, lang, setSave, status, setSt
 
   const btns = ()=>{
     switch (mode) {
-      case "ZL": return ['open', 'repair', 'close', 'delete']
+      case "ZU": return ['open', 'delete']
       case "FS": return ['open', 'delete']
+      case "FZ": return ['open', 'delete']
+      case "PS": return ['open', 'delete']
+      case "PZ": return ['open', 'delete']
+      case "ZL": return ['open', 'repair', 'close', 'delete']
       default: return []
     }
   }

@@ -4,11 +4,11 @@ import { OrdersLine } from "./OrdersLine"
 import { WeekPannel } from "./WeekPannel"
 
 
-export function Week({ props:{line, l, lang, mode, company, ZLreducer, SAVE_DOC} }) {
+export function Week({ props:{line, l, lang, mode, company, ZLreducer, RELOAD} }) {
   return(
     <>
-      <WeekPannel props={{mode, company, line, l, lang, SAVE_DOC}} />
-      <OrdersLine props={{line, l, mode, company, ZLreducer, SAVE_DOC}} />
+      <WeekPannel props={{mode, company, line, l, lang, RELOAD}} />
+      <OrdersLine props={{line, l, mode, company, ZLreducer, RELOAD}} />
     </>
   )
 }

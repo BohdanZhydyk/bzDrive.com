@@ -22,6 +22,9 @@ function ActionBtn({ props:{name, click} }){
       case "delete":      return `${link}icoDelete.png`
       case "upload":      return `${link}icoUpload.png`
       case "download":    return `${link}icoDownload.png`
+      case "show":        return `${link}icoShow.png`
+      case "hide":        return `${link}icoHide.png`
+      case "link":        return `${link}newTab.png`
       default:            break
     }
   }

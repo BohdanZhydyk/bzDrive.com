@@ -76,7 +76,7 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles} }){
         files && files.map( (file, f)=>{
 
           const key = `FileLine${f}${file?.fileID}`
-          const href = `https://bzdrive.com/${file.fileAddr}${file.fileName}`
+          const href = `https://bzdrive.com/${file.fileAddr}/${file.fileName}`
           const src = FileTypeToIco(file?.fileType)?.ico
           const alt = FileTypeToIco(file?.fileType)?.type
           const num = bzBytesCalc(file?.fileSize)?.num

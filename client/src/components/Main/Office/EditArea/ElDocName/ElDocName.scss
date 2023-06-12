@@ -42,7 +42,10 @@
     .DocSign {
       width:99%;
 
-      .QRCodeArea {width:20%;}
+      .QRCodeArea {
+        width:20%;
+        margin:0.25vw 0;
+      }
   
       .SignArea {
         width:calc(60% - 2vw);

@@ -26,13 +26,13 @@ function FS({ props:{company} }){
   const [firstDay, setFirstDay] = useState( parseInt(`${TimeTo_YYYYMM( Date.now() )}01`) )
   const [lastDay, setLastDay] = useState( parseInt(`${TimeTo_YYYYMMDD( Date.now() )}`) )
 
-  const query = {mode, companyName:company?.shortName, "nr.from":{ $gte:firstDay, $lte:lastDay }}
-  const SAVE_DOC = (id, docData)=>{
+  const RELOAD = ()=>{
     setInvoices(false)
-    FSreducer({type:"SAVE_DOC", id, docData, query}, (data)=>setInvoices(data))
+    const query = {mode, companyName:company?.shortName, "nr.from":{ $gte:firstDay, $lte:lastDay }}
+    FSreducer({type:"GET_INVOICES", query}, (data)=>setInvoices(data))
   }
 
-  useEffect( ()=>{ FSreducer({type:"GET_INVOICES", query}, (data)=>setInvoices(data)) },[company])
+  useEffect( ()=>{ RELOAD() },[company])
 
   // console.log("invoices", invoices)
 
@@ -48,7 +48,7 @@ function FS({ props:{company} }){
           const top = i === 0
 
           return(
-            <InvLine props={{company, mode, top, invoice, SAVE_DOC}} key={key} />
+            <InvLine props={{company, mode, top, invoice, RELOAD}} key={key} />
           )
         })
       }

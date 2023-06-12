@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 import './EditArea.scss'
-import { GetUser } from "../../../../AppFunctions"
+import { GetUser, PostToApi } from "../../../../AppFunctions"
 import ElDocBtns from "./ElDocBtns"
 import ElDocName from "./ElDocName"
 import ElInfo from "./ElInfo"
@@ -13,7 +13,7 @@ import ElFiles from "./ElFiles"
 import ElSummary from "./ElSummary"
 
 
-function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, SAVE_DOC} }) {
+function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD} }) {
 
   const user = GetUser()
 
@@ -37,22 +37,34 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, SAVE_DO
 
   const [dealer, setDealer] = useState( doc?.dealer ?? company )
 
+  const [buyer, setBuyer] = useState( doc?.buyer )
+
+  const [seller, setSeller] = useState( doc?.seller )
+
   const [articles, setArticles] = useState( doc?.articles )
 
   const [files, setFiles] = useState( doc?.files ?? [] )
 
   function ACTION_BTN(act){
-    const docData = {docCompany, docUser, status, nr, car, client, dealer, articles, files}
+
+    function SAVE_DOC(id, docData){
+      const query = {saveDoc:true, id, docData}
+      PostToApi( '/getOffice', query, (data)=> RELOAD(data) )
+    }
+
+    const docData = {docCompany, docUser, status, nr, car, client, seller, dealer, articles, files}
+
     switch (act) {
       case "save":    SAVE_DOC( id, docData );                   setEdit(!edit); break;
       case "delete":  SAVE_DOC( id, {...docData, status:act} );  setEdit(!edit); break;
       default: break;
     }
+
   }
 
   const ElDocBtnsProps = {user, mode, doc, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}
   const ElDocNameProps = {user, mode, dealer, nr, setNr, setSave, editErr, setEditErr, printMode}
-  const ElInfoProps = {user, mode, car, setCar, client, setClient, dealer, setDealer, setSave, editErr, setEditErr}
+  const ElInfoProps = {user, mode, car, setCar, client, setClient, buyer, setBuyer, seller, setSeller, dealer, setDealer, setSave, editErr, setEditErr}
   const ElFaultsProps = {user, car, setCar, setSave, printMode}
   const ElCalculatorProps = {user, articles, setArticles, setSave, printMode}
   const ElSummaryProps = {nr, setNr, setSave, articles, printMode}
@@ -73,11 +85,11 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, SAVE_DO
 
       <ElCalculator props={ElCalculatorProps} />
 
-      { ["FS"].includes(mode) && <ElSummary props={ElSummaryProps} /> }
+      { ["FS","FZ","PS","PZ","ZU"].includes(mode) && <ElSummary props={ElSummaryProps} /> }
 
-      { ["FS"].includes(mode) && <ElComments props={ElCommentsProps}/> }
+      { ["FS","FZ"].includes(mode) && <ElComments props={ElCommentsProps}/> }
 
-      { ["ZL"].includes(mode) && !printMode && <ElFiles props={ElFilesProps} /> }
+      { ["ZL","PS","PZ","ZU"].includes(mode) && !printMode && <ElFiles props={ElFilesProps} /> }
 
       { printMode && <ElSignatures props={ElSignaturesProps}/> }
 

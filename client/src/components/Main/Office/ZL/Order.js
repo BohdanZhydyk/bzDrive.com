@@ -4,7 +4,7 @@ import { DocNameNormalize, SumArray, YYYYMMDD_ToWeekDay } from "../../../../AppF
 import EditArea from "../EditArea"
 
 
-export function Order({ props:{company, mode, order, firstDay, lastDay, SAVE_DOC} }) {
+export function Order({ props:{company, mode, order, firstDay, lastDay, RELOAD} }) {
 
   const [edit, setEdit] = useState(false)
   
@@ -106,7 +106,7 @@ export function Order({ props:{company, mode, order, firstDay, lastDay, SAVE_DOC
 
       </div>
 
-      {edit && <EditArea props={{company, mode, doc:order, edit, setEdit, SAVE_DOC}} /> }
+      {edit && <EditArea props={{company, mode, doc:order, edit, setEdit, RELOAD}} /> }
 
     </div>
   )

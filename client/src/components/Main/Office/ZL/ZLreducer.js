@@ -8,7 +8,6 @@ export const ZLreducer = (action, callback)=>{
     case "PLUS_WEEK":     PLUS_WEEK();    break;
     case "GET_ORDERS":    GET_ORDERS();   break;
     case "GET_CALENDAR":  GET_CALENDAR(); break;
-    case "SAVE_DOC":      SAVE_DOC();     break;
     default: break;
   }
 
@@ -58,16 +57,6 @@ export const ZLreducer = (action, callback)=>{
     calendar = PlusWeek(calendar)
     
     callback(calendar)
-
-  }
-
-  function SAVE_DOC(){
-
-    const id = action?.id
-    const docData = action?.docData
-
-    const query = {saveDoc:true, id, docData}
-    PostToApi( '/getOffice', query, (data)=> GET_CALENDAR() )
 
   }
 

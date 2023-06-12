@@ -110,129 +110,6 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
   }
 ]
 
-export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, setSave, sanitizeTxt)=> [
-  {
-    classes:"name",
-    legend: tr(`NameLegend`,lang),
-    type: `text`,
-    val: dealer?.name ? sanitizeTxt(dealer.name, `CompanyName`).sanText : '',
-    err: editErr?.dealerName ?? '',
-    cbVal: (val)=>{
-      setDealer( (prev)=> ({...prev, name:sanitizeTxt(val, `CompanyName`).sanText}))
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerName:sanitizeTxt(val, `CompanyName`).sanErr}))
-  },
-  {
-    classes:"nip",
-    legend: tr(`NipLegend`,lang),
-    type: `text`,
-    val: dealer?.nip ? sanitizeTxt(dealer.nip, `NIP`).sanText : '',
-    err: editErr?.dealerNIP ?? '',
-    cbVal: (val)=>{
-      setDealer( (prev)=> ({...prev, nip:sanitizeTxt(val, `NIP`).sanText}))
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerNIP:sanitizeTxt(val, `NIP`).sanErr}))
-  },
-  {
-    classes:"account",
-    legend: tr(`AccountLegend`,lang),
-    type: `text`,
-    val: dealer?.account ? sanitizeTxt(dealer.account, `ACC`).sanText : '',
-    err: editErr?.dealerACC ?? '',
-    cbVal: (val)=>{
-      setDealer( (prev)=> ({...prev, account:sanitizeTxt(val, `ACC`).sanText}))
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerACC:sanitizeTxt(val, `ACC`).sanErr}))
-  },
-  {
-    classes:"zip",
-    legend: tr(`ZipLegend`,lang),
-    type: `text`,
-    val: dealer?.addr?.zip ? sanitizeTxt(dealer.addr.zip, `ZIP`).sanText : '',
-    err: editErr?.dealerAddrZIP ?? '',
-    cbVal: (val)=>{
-      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, zip:sanitizeTxt(val, `ZIP`).sanText}}))
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrZIP:sanitizeTxt(val, `ZIP`).sanErr}))
-  },
-  {
-    classes:"town",
-    legend: tr(`TownLegend`,lang),
-    type: `text`,
-    val: dealer?.addr?.town ? sanitizeTxt(dealer.addr.town, `town`).sanText : '',
-    err: editErr?.dealerAddrTown ?? '',
-    cbVal: (val)=>{
-      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, town:sanitizeTxt(val, `town`).sanText}}))
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrTown:sanitizeTxt(val, `town`).sanErr}))
-  },
-  {
-    classes:"street",
-    legend: tr(`StreetLegend`,lang),
-    type: `text`,
-    val: dealer?.addr?.street ? sanitizeTxt(dealer.addr.street, `StreetName`).sanText : '',
-    err: editErr?.dealerAddrStreet ?? '',
-    cbVal: (val)=>{
-      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, street:sanitizeTxt(val, `StreetName`).sanText}}))
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrStreet:sanitizeTxt(val, `StreetName`).sanErr}))
-  },
-  {
-    classes:"nr",
-    legend: tr(`StreetNrLegend`,lang),
-    type: `text`,
-    val: dealer?.addr?.nr ? sanitizeTxt(dealer.addr.nr, `default`).sanText : '',
-    err: editErr?.dealerAddrNr ?? '',
-    cbVal: (val)=>{
-      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, nr:sanitizeTxt(val, `default`).sanText}}))
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrNr:sanitizeTxt(val, `default`).sanErr}))
-  },
-  {
-    classes:"tel",
-    legend: tr(`TelLegend`,lang),
-    type: `text`,
-    val: dealer?.contacts?.tel ? sanitizeTxt(dealer.contacts.tel, `tel`).sanText : '',
-    err: editErr?.dealerContTel ?? '',
-    cbVal: (val)=>{
-      setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, tel:sanitizeTxt(val, `tel`).sanText}}))
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerContTel:sanitizeTxt(val, `tel`).sanErr}))
-  },
-  {
-    classes:"www",
-    legend: tr(`WwwLegend`,lang),
-    type: `text`,
-    val: dealer?.contacts?.www ? sanitizeTxt(dealer.contacts.www, `www`).sanText : '',
-    err: editErr?.dealerContWWW ?? '',
-    cbVal: (val)=>{
-      setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, www:sanitizeTxt(val, `www`).sanText}}))
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerContWWW:sanitizeTxt(val, `www`).sanErr}))
-  },
-  {
-    classes:"email",
-    legend: tr(`EmailLegend`,lang),
-    type: `text`,
-    val: dealer?.contacts?.email ? sanitizeTxt(dealer.contacts.email, `email`).sanText : '',
-    err: editErr?.dealerContEmail ?? '',
-    cbVal: (val)=>{
-      setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, email:sanitizeTxt(val, `email`).sanText}}))
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerContEmail:sanitizeTxt(val, `email`).sanErr}))
-  }
-]
-
 export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, setSave, sanitizeTxt)=> [
   {
     classes:"name",
@@ -353,5 +230,374 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
       setSave(true)
     },
     cbErr: (val)=> setEditErr( (prev)=> ({...prev, clientContEmail:sanitizeTxt(val, `email`).sanErr}))
+  }
+]
+
+export const SellerPropses = (tr, lang, seller, setSeller, editErr, setEditErr, setSave, sanitizeTxt)=> [
+  {
+    classes:"name",
+    legend: tr(`NameLegend`,lang),
+    type: `text`,
+    val: seller?.name ? sanitizeTxt(seller.name, `CompanyName`).sanText : '',
+    err: editErr?.sellerName ?? '',
+    cbVal: (val)=>{
+      setSeller( (prev)=> ({...prev, name:sanitizeTxt(val, `CompanyName`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, sellerName:sanitizeTxt(val, `CompanyName`).sanErr}))
+  },
+  {
+    classes:"nip",
+    legend: tr(`NipLegend`,lang),
+    type: `text`,
+    val: seller?.nip ? sanitizeTxt(seller.nip, `NIP`).sanText : '',
+    err: editErr?.sellerNIP ?? '',
+    cbVal: (val)=>{
+      setSeller( (prev)=> ({...prev, nip:sanitizeTxt(val, `NIP`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, sellerNIP:sanitizeTxt(val, `NIP`).sanErr}))
+  },
+  {
+    classes:"account",
+    legend: tr(`AccountLegend`,lang),
+    type: `text`,
+    val: seller?.account ? sanitizeTxt(seller.account, `ACC`).sanText : '',
+    err: editErr?.sellerACC ?? '',
+    cbVal: (val)=>{
+      setSeller( (prev)=> ({...prev, account:sanitizeTxt(val, `ACC`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, sellerACC:sanitizeTxt(val, `ACC`).sanErr}))
+  },
+  {
+    classes:"zip",
+    legend: tr(`ZipLegend`,lang),
+    type: `text`,
+    val: seller?.addr?.zip ? sanitizeTxt(seller.addr.zip, `ZIP`).sanText : '',
+    err: editErr?.sellerAddrZIP ?? '',
+    cbVal: (val)=>{
+      setSeller( (prev)=> ({...prev, addr:{...prev?.addr, zip:sanitizeTxt(val, `ZIP`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, sellerAddrZIP:sanitizeTxt(val, `ZIP`).sanErr}))
+  },
+  {
+    classes:"town",
+    legend: tr(`TownLegend`,lang),
+    type: `text`,
+    val: seller?.addr?.town ? sanitizeTxt(seller.addr.town, `town`).sanText : '',
+    err: editErr?.sellerAddrTown ?? '',
+    cbVal: (val)=>{
+      setSeller( (prev)=> ({...prev, addr:{...prev?.addr, town:sanitizeTxt(val, `town`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, sellerAddrTown:sanitizeTxt(val, `town`).sanErr}))
+  },
+  {
+    classes:"street",
+    legend: tr(`StreetLegend`,lang),
+    type: `text`,
+    val: seller?.addr?.street ? sanitizeTxt(seller.addr.street, `StreetName`).sanText : '',
+    err: editErr?.sellerAddrStreet ?? '',
+    cbVal: (val)=>{
+      setSeller( (prev)=> ({...prev, addr:{...prev?.addr, street:sanitizeTxt(val, `StreetName`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, sellerAddrStreet:sanitizeTxt(val, `StreetName`).sanErr}))
+  },
+  {
+    classes:"nr",
+    legend: tr(`StreetNrLegend`,lang),
+    type: `text`,
+    val: seller?.addr?.nr ? sanitizeTxt(seller.addr.nr, `default`).sanText : '',
+    err: editErr?.sellerAddrNr ?? '',
+    cbVal: (val)=>{
+      setSeller( (prev)=> ({...prev, addr:{...prev?.addr, nr:sanitizeTxt(val, `default`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, sellerAddrNr:sanitizeTxt(val, `default`).sanErr}))
+  },
+  {
+    classes:"tel",
+    legend: tr(`TelLegend`,lang),
+    type: `text`,
+    val: seller?.contacts?.tel ? sanitizeTxt(seller.contacts.tel, `tel`).sanText : '',
+    err: editErr?.sellerContTel ?? '',
+    cbVal: (val)=>{
+      setSeller( (prev)=> ({...prev, contacts:{...prev?.contacts, tel:sanitizeTxt(val, `tel`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, sellerContTel:sanitizeTxt(val, `tel`).sanErr}))
+  },
+  {
+    classes:"www",
+    legend: tr(`WwwLegend`,lang),
+    type: `text`,
+    val: seller?.contacts?.www ? sanitizeTxt(seller.contacts.www, `www`).sanText : '',
+    err: editErr?.sellerContWWW ?? '',
+    cbVal: (val)=>{
+      setSeller( (prev)=> ({...prev, contacts:{...prev?.contacts, www:sanitizeTxt(val, `www`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, sellerContWWW:sanitizeTxt(val, `www`).sanErr}))
+  },
+  {
+    classes:"email",
+    legend: tr(`EmailLegend`,lang),
+    type: `text`,
+    val: seller?.contacts?.email ? sanitizeTxt(seller.contacts.email, `email`).sanText : '',
+    err: editErr?.sellerContEmail ?? '',
+    cbVal: (val)=>{
+      setSeller( (prev)=> ({...prev, contacts:{...prev?.contacts, email:sanitizeTxt(val, `email`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, sellerContEmail:sanitizeTxt(val, `email`).sanErr}))
+  }
+]
+
+export const BuyerPropses = (tr, lang, buyer, setBuyer, editErr, setEditErr, setSave, sanitizeTxt)=> [
+  {
+    classes:"name",
+    legend: tr(`NameLegend`,lang),
+    type: `text`,
+    val: buyer?.name ? sanitizeTxt(buyer.name, `CompanyName`).sanText : '',
+    err: editErr?.buyerName ?? '',
+    cbVal: (val)=>{
+      setBuyer( (prev)=> ({...prev, name:sanitizeTxt(val, `CompanyName`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, buyerName:sanitizeTxt(val, `CompanyName`).sanErr}))
+  },
+  {
+    classes:"nip",
+    legend: tr(`NipLegend`,lang),
+    type: `text`,
+    val: buyer?.nip ? sanitizeTxt(buyer.nip, `NIP`).sanText : '',
+    err: editErr?.buyerNIP ?? '',
+    cbVal: (val)=>{
+      setBuyer( (prev)=> ({...prev, nip:sanitizeTxt(val, `NIP`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, buyerNIP:sanitizeTxt(val, `NIP`).sanErr}))
+  },
+  {
+    classes:"account",
+    legend: tr(`AccountLegend`,lang),
+    type: `text`,
+    val: buyer?.account ? sanitizeTxt(buyer.account, `ACC`).sanText : '',
+    err: editErr?.buyerACC ?? '',
+    cbVal: (val)=>{
+      setBuyer( (prev)=> ({...prev, account:sanitizeTxt(val, `ACC`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, buyerACC:sanitizeTxt(val, `ACC`).sanErr}))
+  },
+  {
+    classes:"zip",
+    legend: tr(`ZipLegend`,lang),
+    type: `text`,
+    val: buyer?.addr?.zip ? sanitizeTxt(buyer.addr.zip, `ZIP`).sanText : '',
+    err: editErr?.buyerAddrZIP ?? '',
+    cbVal: (val)=>{
+      setBuyer( (prev)=> ({...prev, addr:{...prev?.addr, zip:sanitizeTxt(val, `ZIP`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, buyerAddrZIP:sanitizeTxt(val, `ZIP`).sanErr}))
+  },
+  {
+    classes:"town",
+    legend: tr(`TownLegend`,lang),
+    type: `text`,
+    val: buyer?.addr?.town ? sanitizeTxt(buyer.addr.town, `town`).sanText : '',
+    err: editErr?.buyerAddrTown ?? '',
+    cbVal: (val)=>{
+      setBuyer( (prev)=> ({...prev, addr:{...prev?.addr, town:sanitizeTxt(val, `town`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, buyerAddrTown:sanitizeTxt(val, `town`).sanErr}))
+  },
+  {
+    classes:"street",
+    legend: tr(`StreetLegend`,lang),
+    type: `text`,
+    val: buyer?.addr?.street ? sanitizeTxt(buyer.addr.street, `StreetName`).sanText : '',
+    err: editErr?.buyerAddrStreet ?? '',
+    cbVal: (val)=>{
+      setBuyer( (prev)=> ({...prev, addr:{...prev?.addr, street:sanitizeTxt(val, `StreetName`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, buyerAddrStreet:sanitizeTxt(val, `StreetName`).sanErr}))
+  },
+  {
+    classes:"nr",
+    legend: tr(`StreetNrLegend`,lang),
+    type: `text`,
+    val: buyer?.addr?.nr ? sanitizeTxt(buyer.addr.nr, `default`).sanText : '',
+    err: editErr?.buyerAddrNr ?? '',
+    cbVal: (val)=>{
+      setBuyer( (prev)=> ({...prev, addr:{...prev?.addr, nr:sanitizeTxt(val, `default`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, buyerAddrNr:sanitizeTxt(val, `default`).sanErr}))
+  },
+  {
+    classes:"tel",
+    legend: tr(`TelLegend`,lang),
+    type: `text`,
+    val: buyer?.contacts?.tel ? sanitizeTxt(buyer.contacts.tel, `tel`).sanText : '',
+    err: editErr?.buyerContTel ?? '',
+    cbVal: (val)=>{
+      setBuyer( (prev)=> ({...prev, contacts:{...prev?.contacts, tel:sanitizeTxt(val, `tel`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, buyerContTel:sanitizeTxt(val, `tel`).sanErr}))
+  },
+  {
+    classes:"www",
+    legend: tr(`WwwLegend`,lang),
+    type: `text`,
+    val: buyer?.contacts?.www ? sanitizeTxt(buyer.contacts.www, `www`).sanText : '',
+    err: editErr?.buyerContWWW ?? '',
+    cbVal: (val)=>{
+      setBuyer( (prev)=> ({...prev, contacts:{...prev?.contacts, www:sanitizeTxt(val, `www`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, buyerContWWW:sanitizeTxt(val, `www`).sanErr}))
+  },
+  {
+    classes:"email",
+    legend: tr(`EmailLegend`,lang),
+    type: `text`,
+    val: buyer?.contacts?.email ? sanitizeTxt(buyer.contacts.email, `email`).sanText : '',
+    err: editErr?.buyerContEmail ?? '',
+    cbVal: (val)=>{
+      setBuyer( (prev)=> ({...prev, contacts:{...prev?.contacts, email:sanitizeTxt(val, `email`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, buyerContEmail:sanitizeTxt(val, `email`).sanErr}))
+  }
+]
+
+export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, setSave, sanitizeTxt)=> [
+  {
+    classes:"name",
+    legend: tr(`NameLegend`,lang),
+    type: `text`,
+    val: dealer?.name ? sanitizeTxt(dealer.name, `CompanyName`).sanText : '',
+    err: editErr?.dealerName ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, name:sanitizeTxt(val, `CompanyName`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerName:sanitizeTxt(val, `CompanyName`).sanErr}))
+  },
+  {
+    classes:"nip",
+    legend: tr(`NipLegend`,lang),
+    type: `text`,
+    val: dealer?.nip ? sanitizeTxt(dealer.nip, `NIP`).sanText : '',
+    err: editErr?.dealerNIP ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, nip:sanitizeTxt(val, `NIP`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerNIP:sanitizeTxt(val, `NIP`).sanErr}))
+  },
+  {
+    classes:"account",
+    legend: tr(`AccountLegend`,lang),
+    type: `text`,
+    val: dealer?.account ? sanitizeTxt(dealer.account, `ACC`).sanText : '',
+    err: editErr?.dealerACC ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, account:sanitizeTxt(val, `ACC`).sanText}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerACC:sanitizeTxt(val, `ACC`).sanErr}))
+  },
+  {
+    classes:"zip",
+    legend: tr(`ZipLegend`,lang),
+    type: `text`,
+    val: dealer?.addr?.zip ? sanitizeTxt(dealer.addr.zip, `ZIP`).sanText : '',
+    err: editErr?.dealerAddrZIP ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, zip:sanitizeTxt(val, `ZIP`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrZIP:sanitizeTxt(val, `ZIP`).sanErr}))
+  },
+  {
+    classes:"town",
+    legend: tr(`TownLegend`,lang),
+    type: `text`,
+    val: dealer?.addr?.town ? sanitizeTxt(dealer.addr.town, `town`).sanText : '',
+    err: editErr?.dealerAddrTown ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, town:sanitizeTxt(val, `town`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrTown:sanitizeTxt(val, `town`).sanErr}))
+  },
+  {
+    classes:"street",
+    legend: tr(`StreetLegend`,lang),
+    type: `text`,
+    val: dealer?.addr?.street ? sanitizeTxt(dealer.addr.street, `StreetName`).sanText : '',
+    err: editErr?.dealerAddrStreet ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, street:sanitizeTxt(val, `StreetName`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrStreet:sanitizeTxt(val, `StreetName`).sanErr}))
+  },
+  {
+    classes:"nr",
+    legend: tr(`StreetNrLegend`,lang),
+    type: `text`,
+    val: dealer?.addr?.nr ? sanitizeTxt(dealer.addr.nr, `default`).sanText : '',
+    err: editErr?.dealerAddrNr ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, addr:{...prev?.addr, nr:sanitizeTxt(val, `default`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerAddrNr:sanitizeTxt(val, `default`).sanErr}))
+  },
+  {
+    classes:"tel",
+    legend: tr(`TelLegend`,lang),
+    type: `text`,
+    val: dealer?.contacts?.tel ? sanitizeTxt(dealer.contacts.tel, `tel`).sanText : '',
+    err: editErr?.dealerContTel ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, tel:sanitizeTxt(val, `tel`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerContTel:sanitizeTxt(val, `tel`).sanErr}))
+  },
+  {
+    classes:"www",
+    legend: tr(`WwwLegend`,lang),
+    type: `text`,
+    val: dealer?.contacts?.www ? sanitizeTxt(dealer.contacts.www, `www`).sanText : '',
+    err: editErr?.dealerContWWW ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, www:sanitizeTxt(val, `www`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerContWWW:sanitizeTxt(val, `www`).sanErr}))
+  },
+  {
+    classes:"email",
+    legend: tr(`EmailLegend`,lang),
+    type: `text`,
+    val: dealer?.contacts?.email ? sanitizeTxt(dealer.contacts.email, `email`).sanText : '',
+    err: editErr?.dealerContEmail ?? '',
+    cbVal: (val)=>{
+      setDealer( (prev)=> ({...prev, contacts:{...prev?.contacts, email:sanitizeTxt(val, `email`).sanText}}))
+      setSave(true)
+    },
+    cbErr: (val)=> setEditErr( (prev)=> ({...prev, dealerContEmail:sanitizeTxt(val, `email`).sanErr}))
   }
 ]

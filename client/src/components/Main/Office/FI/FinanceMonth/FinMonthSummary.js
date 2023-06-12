@@ -66,7 +66,7 @@ export function FinMonthSummary({ props:{fi, newMonth, taxYear, edit, setEdit, e
         <span className="LineDate txtOrg bold">{date}</span>
 
         {
-          editDocs &&
+          !editDocs &&
           <span className="LineBtn flex end">
             {
               newMonth

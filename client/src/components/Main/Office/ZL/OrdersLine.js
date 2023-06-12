@@ -4,7 +4,7 @@ import { TimeTo_YYYYMMDD } from "../../../../AppFunctions.js"
 import { Order } from "./Order.js"
 
 
-export function OrdersLine({ props:{line, l, mode, company, ZLreducer, SAVE_DOC} }) {
+export function OrdersLine({ props:{line, l, mode, company, ZLreducer, RELOAD} }) {
   
   const [orders, setOrders] = useState(line?.orders ?? false)
 
@@ -26,7 +26,7 @@ export function OrdersLine({ props:{line, l, mode, company, ZLreducer, SAVE_DOC}
 
           const key = `OrderLine${o}${order?._id}`
 
-          return <Order props={{company, mode, order, firstDay, lastDay, SAVE_DOC}} key={key} />
+          return <Order props={{company, mode, order, firstDay, lastDay, RELOAD}} key={key} />
 
         })
       }

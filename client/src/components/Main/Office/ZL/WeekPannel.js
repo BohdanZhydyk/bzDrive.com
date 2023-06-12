@@ -6,7 +6,7 @@ import { tr } from "../../../../AppTranslate"
 import EditArea from "../EditArea"
 
 
-export function WeekPannel({ props:{mode, company, line, l, lang, SAVE_DOC} }) {
+export function WeekPannel({ props:{mode, company, line, l, lang, RELOAD} }) {
 
   const [edit, setEdit] = useState(false)
 
@@ -68,7 +68,7 @@ export function WeekPannel({ props:{mode, company, line, l, lang, SAVE_DOC} }) {
       }
       </div>
 
-      {edit && <EditArea props={{company, mode, doc:order, edit, setEdit, SAVE_DOC}} /> }
+      {edit && <EditArea props={{company, mode, doc:order, edit, setEdit, RELOAD}} /> }
 
     </div>
   )

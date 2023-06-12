@@ -17,13 +17,16 @@ function ZL({ props:{company} }) {
   const [calendar, setCalendar] = useState( false )
   const [more, setMore] = useState( true )
 
-  const SAVE_DOC = (id, docData)=> ZLreducer( {type:"SAVE_DOC", id, docData}, (data)=>{ setCalendar(data) })
+  const RELOAD = ()=>{
+    setCalendar(false)
+    ZLreducer({type:"GET_CALENDAR"}, (data)=>setCalendar(data))
+  }
 
   const AddWeekBtnMinusProps = {act:'MINUS_WEEK', lang, calendar, setCalendar, more, setMore, ZLreducer}
   const AddWeekBtnPlusProps = {act:'PLUS_WEEK', lang, calendar, setCalendar, more, setMore, ZLreducer}
-  const WeekProps = (line, l)=> ({line, l, lang, mode, company, ZLreducer, SAVE_DOC})
+  const WeekProps = (line, l)=> ({line, l, lang, mode, company, ZLreducer, RELOAD})
 
-  useEffect( ()=>{ ZLreducer({type:"GET_CALENDAR"}, (data)=>setCalendar(data)) },[company])
+  useEffect( ()=>{ RELOAD() },[company])
 
   // console.log("cal", calendar)
 

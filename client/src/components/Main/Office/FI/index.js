@@ -45,6 +45,12 @@ function FI({ props:{company} }){
     })
   }
 
+  const GET_DOCS = (date)=>{
+    FIreducer({type:"GET_DOCUMENTS", taxDate:date, company:company?.shortName}, (data)=>{
+      setFinances( finances?.map( month=> month?.date === date ? {...month, doc:data} : month ) )
+    })
+  }
+
   useEffect( ()=>{ GET_YEAR(taxYear) },[company])
 
   // console.log("finances", finances)
@@ -58,7 +64,8 @@ function FI({ props:{company} }){
 
       {
         finances && finances.slice(0,count).map( (fi, i)=>{
-          return <FinanceMonth props={{fi, taxYear, SAVE_MONTH}} key={`FinanceMonth${i}`} />
+          const key = `FinanceMonth${i}`
+          return <FinanceMonth props={{company, fi, taxYear, SAVE_MONTH, GET_DOCS}} key={key} />
         })
       }
 

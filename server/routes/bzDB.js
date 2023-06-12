@@ -52,6 +52,7 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
         case "FIND":          FIND();         break
         case "FIND_ONE":      FIND_ONE();     break
         case "INSERT_ONE":    INSERT_ONE();   break
+        case "INSERT_MANY":   INSERT_MANY();  break
         case "UPDATE_ONE":    UPDATE_ONE();   break
         case "DELETE_ONE":    DELETE_ONE();   break
         case "DELETE_MANY":   DELETE_MANY();  break
@@ -66,6 +67,9 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
       }
       function INSERT_ONE(){
         client.db(dbName).collection(col).insertOne( query, (e,r)=> CB(e,r) )
+      }
+      function INSERT_MANY() {
+        client.db(dbName).collection(col).insertMany( query, (e, r) => CB(e, r) );
       }
       function UPDATE_ONE(){
         let _id = query._id; let $set = query; let upsert = true

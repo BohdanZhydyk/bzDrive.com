@@ -133,10 +133,10 @@ exports.getOffice = (req, res)=>{
         bzDB( { req, res, col:'bzFinances', act:"FIND_ONE", query }, (financesData)=>{
 
           const finances = financesData?.result?.finances
-          const taxYearArr = finances.filter(
+          const taxYearArr = finances?.filter(
             month=> parseInt(month?.date / 100) === taxYear
           )
-          const isPrevTaxYear = finances.filter(
+          const isPrevTaxYear = finances?.filter(
             month=> parseInt(month?.date / 100) === taxYear - 1
           )?.length > 0
 
@@ -229,6 +229,7 @@ exports.getOffice = (req, res)=>{
           nr:       object?.docData?.nr,
           car:      object?.docData?.car,
           client:   object?.docData?.client,
+          seller:   object?.docData?.seller,
           dealer:   object?.docData?.dealer,
           articles: object?.docData?.articles,
           files:    object?.docData?.files
@@ -296,6 +297,49 @@ exports.getOffice = (req, res)=>{
 
         })
 
+      }
+
+      // getting information about documents
+      if(object?.getDocuments){
+
+        const company = object?.company
+
+        if( !myCompanies.includes(company) ){
+          res.send({...compData, result: []})
+          return
+        }
+
+        const date = object?.date
+
+        const to = { $gte: parseInt(`${date}00`), $lte: parseInt(`${date}31`) }
+        const from = { $gte: parseInt(`${date}00`), $lte: parseInt(`${date}31`) }
+
+        const query = {
+          $or: [
+              { $and:[{"company":company}, { "nr.mode":"ZU" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"FS" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"FZ" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"PS" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"PZ" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"ZL" }, {"nr.to":to}, {"status":"close"}] }
+          ]
+        }
+
+        bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (documentsData)=>{
+
+          const ZU = documentsData?.result.filter( el=> el?.nr?.mode === "ZU").reverse()
+          const FS = documentsData?.result.filter( el=> el?.nr?.mode === "FS").reverse()
+          const FZ = documentsData?.result.filter( el=> el?.nr?.mode === "FZ").reverse()
+          const PS = documentsData?.result.filter( el=> el?.nr?.mode === "PS").reverse()
+          const PZ = documentsData?.result.filter( el=> el?.nr?.mode === "PZ").reverse()
+          const ZL = documentsData?.result.filter( el=> el?.nr?.mode === "ZL").reverse()
+
+          res.send({
+            ...documentsData,
+            result: [...ZU, ...FS, ...FZ, ...PS, ...PZ, ...ZL]
+          })
+
+        })
       }
 
     })

@@ -289,8 +289,8 @@ export const bzUploadFile = (file, fileAddr, fileName, cb)=>{
 
   const config = { headers: {'content-type': 'multipart/form-data'} }
 
-  // let link = 'https://bzdrive.com/uploadFile'
-  let link = 'http://localhost:2000/API/uploadFile'
+  let link = 'https://bzdrive.com/API/uploadFile'
+  // let link = 'http://localhost:2000/API/uploadFile'
   
   axios.post( link, formData, config ).then( (res)=> cb(res) )
 
@@ -300,8 +300,8 @@ export const bzDeleteFile = (fileAddr, fileName, cb)=>{
   
   let query = { fileAddr, fileName }
 
-  // let link = 'https://bzdrive.com/deleteFile'
-  let link = 'http://localhost:2000/API/deleteFile'
+  let link = 'https://bzdrive.com/API/deleteFile'
+  // let link = 'http://localhost:2000/API/deleteFile'
 
   axios.post( link, query).then( (res)=> cb(res) )
 

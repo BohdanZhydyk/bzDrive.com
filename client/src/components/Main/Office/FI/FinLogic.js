@@ -5,19 +5,13 @@ export function prepareFinances(data){
 
   const emptyFinMonths = { "col_9":"0.00", "col_10":"0.00", "col_14":"0.00", "ZUS":"0.00" }
 
+  const firstElDate = parseInt( data?.taxYearArr[data?.taxYearArr?.length - 1]?.date )
+
   const nowDate = parseInt( TimeTo_YYYYMM(Date.now()) )
+  const nowYear = nowDate.toString().slice(0,4)
+  const finYear = firstElDate.toString().slice(0,4)
 
-  const taxYear = parseInt( data?.taxYearArr[0]?.date.toString().slice(0,4) )
-  const isNowYear = taxYear === parseInt( TimeTo_YYYYMM(Date.now()).toString().slice(0,4) )
-  const isNowMonth = nowDate === data?.taxYearArr[0]?.date
-
-  const newFin = data?.taxYearArr?.length > 0
-    ? isNowYear
-      ? isNowMonth
-        ? data?.taxYearArr
-        : [{"newMonth":true, "date":nowDate, ...emptyFinMonths}, ...data?.taxYearArr]
-      : data?.taxYearArr
-    : [{"newMonth":true, "date":nowDate, ...emptyFinMonths}]
+  const lastElDate = (finYear === nowYear) ? nowDate : parseInt( data?.taxYearArr[0]?.date )
 
   let prevMonthVAT = "0.00"
   let prevMonthZUS = "0.00"
@@ -25,33 +19,37 @@ export function prepareFinances(data){
   let prevMonthVATarr = []
   let prevMonthZUSarr = []
 
-  for (let i = newFin.length - 1; i >= 0; i--) { newFinances.push(newFin[i]) }
+  for (let i = firstElDate; i <= lastElDate; i++){
+    data?.taxYearArr?.find(o => o.date === i)
+    ? newFinances.push(data?.taxYearArr?.find(o => o.date === i))
+    : newFinances.push({"newMonth":true, "date":i, ...emptyFinMonths})
+  }
 
   newFinances.forEach( (el, i)=>{
-
+    
     const VAT = bzCalc("*", bzCalc("-", el?.col_9, bzCalc("+", el?.col_10, el?.col_14)), "0.23")
-
+    
     if(el?.pVAT){ prevMonthVAT = el?.pVAT }
     if(el?.pZUS){ prevMonthZUS = el?.pZUS }
 
     if(parseFloat(prevMonthVAT) <= 0){
       prevMonthVAT = bzCalc("+", prevMonthVAT, VAT)
-      prevMonthVATarr.unshift(prevMonthVAT)
+      prevMonthVATarr.push(prevMonthVAT)
     }
     else{
       prevMonthVAT = "0.00"
-      prevMonthVATarr.unshift(prevMonthVAT)
+      prevMonthVATarr.push(prevMonthVAT)
     }
     
-    prevMonthZUSarr.unshift(el?.ZUS)
+    prevMonthZUSarr.push(el?.ZUS)
     
   })
 
-  return newFin?.map( (month, i)=> ({
+  return newFinances?.map( (month, i)=> ({
     ...month,
-    pVAT:prevMonthVATarr[i+1] ?? (month?.pVAT ?? "0.00"),
-    pZUS:prevMonthZUSarr[i+1] ?? (month?.pZUS ?? "0.00")
-  }) )
+    pVAT:prevMonthVATarr[i-1] ?? (month?.pVAT ?? "0.00"),
+    pZUS:prevMonthZUSarr[i-1] ?? (month?.pZUS ?? "0.00")
+  }) ).reverse()
 }
 
 export function calcTaxProfit(
