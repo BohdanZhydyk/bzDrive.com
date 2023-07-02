@@ -50,7 +50,7 @@ function ZL({ props:{size, company} }) {
 
       { calendar && <Title props={{mode, lang, calendar}} /> }
 
-      <SearchArea props={{tr, lang, company, mode, RELOAD}} />
+      <SearchArea props={{tr, lang, company, mode, ZLreducer, RELOAD}} />
 
       <AddWeekBtn props={AddWeekBtnMinusProps}/>
 

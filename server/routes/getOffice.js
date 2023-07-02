@@ -47,18 +47,24 @@ exports.getOffice = (req, res)=>{
         const firstDay = object?.query?.firstDay
         const lastDay = object?.query?.lastDay
 
+        const searchMode = object?.query?.searchMode
+        const vin = object?.query?.vin
+        const car = object?.query?.car
+        const client = object?.query?.client
+        const tel = object?.query?.tel
+
         if( !myCompanies.includes(company) ){
           res.send({...compData, result: []})
           return
         }
 
-        const query = ( firstDay > today )
+        let query = ( firstDay > today )
           ?
           {
             $and:[
               { "nr.mode":mode },
               { "company":company },
-              {"nr.to":{ $gte:firstDay }}
+              { "nr.to":{ $gte:firstDay } }
             ]
           }
           :
@@ -74,6 +80,47 @@ exports.getOffice = (req, res)=>{
               }
             ]
           }
+
+        // query for searchPannel
+        if( searchMode && ((firstDay && lastDay) || vin || car || client || tel) ){
+          query = {
+            $and:[
+              { "nr.mode":mode },
+              { "company":company }
+            ]
+          }
+          if (firstDay && lastDay) {
+            query.$and.push(
+              { "nr.to": { $gte: firstDay } },
+              { "nr.from": { $lte: lastDay } }
+            )
+          }
+          if (vin && vin !== '') {
+            query.$and.push(
+              { "car.vin": { $regex: vin, $options: 'i' } }
+            )
+          }
+          if (car && car !== '') {
+            query.$and.push(
+              {
+                $or:[
+                  { "car.brand": { $regex: car, $options: 'i' } },
+                  { "car.model": { $regex: car, $options: 'i' } },
+                ]
+              }
+            )
+          }
+          if (client && client !== '') {
+            query.$and.push(
+              { "client.name": { $regex: client, $options: 'i' } }
+            )
+          }
+          if (tel && tel !== '') {
+            query.$and.push(
+              { "client.contacts.tel": { $regex: tel, $options: 'i' } }
+            )
+          }
+        }
 
         bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (ordersData)=>{
 

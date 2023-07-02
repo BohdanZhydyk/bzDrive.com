@@ -24,6 +24,12 @@
     }
   }
 
+  .TelNr {
+    width:15%;
+    font-size:120%;
+    @media (max-width: 767px) {width:40%;}
+  }
+
   .NavBurger {
     display:none;
     @media (min-width: 481px) and (max-width: 767px) {width:6vw; display:flex;}
@@ -42,7 +48,7 @@
   }
 
   .NavSection {
-    width:60%;
+    width:50%;
     @media (max-width: 767px) {display:none;}
 
     .NavPannel {
@@ -50,7 +56,7 @@
   
       .NavBtn {
         position:relative;
-        width:12%;
+        width:15%;
         cursor: pointer;
   
         .activeNavBtn {
@@ -136,15 +142,8 @@
 
   .UserPannel {
     position:relative;
-    width:calc(15% - 1vw);
-
-    .LoginBtn {
-      margin:0 4vw 0 0;
-      &:hover {
-        cursor: pointer;
-        font-size:120%;
-      }
-    }
+    width:calc(10% - 1vw);
+    @media (max-width: 767px) {width:calc(30% - 1vw);}
     
     .Ava {
       position:absolute;

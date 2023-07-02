@@ -40,3 +40,23 @@ export const clientProps = (search, setSearch)=>({
   },
   cbErr: ()=>{}
 })
+
+export const telProps = (search, setSearch)=>({
+  legend: `tel`,
+  type: `text`,
+  val: search?.tel ? sanitizeTxt(search.tel, `tel`).sanText : '',
+  cbVal: (val)=>{
+    setSearch( (prev)=> ({...prev, tel:sanitizeTxt(val, `tel`).sanText}))
+  },
+  cbErr: ()=>{}
+})
+
+export const vintProps = (search, setSearch)=>({
+  legend: `vin`,
+  type: `text`,
+  val: search?.vin ? sanitizeTxt(search.vin, `VIN`).sanText : '',
+  cbVal: (val)=>{
+    setSearch( (prev)=> ({...prev, vin:sanitizeTxt(val, `VIN`).sanText}))
+  },
+  cbErr: ()=>{}
+})
