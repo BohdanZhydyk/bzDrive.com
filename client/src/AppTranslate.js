@@ -75,6 +75,7 @@ export const tr = (txt, lang)=>{
     ImgBtn_download:{en:"download", ua:"завантажити", pl:"pobrać"},
     ImgBtn_show:{en:"show", ua:"показати", pl:"pokazać"},
     ImgBtn_hide:{en:"hide", ua:"сховати", pl:"schować"},
+    ImgBtn_search:{en:"search", ua:"пошук", pl:"szukać"},
     ImgBtn_link:{en:"navigate", ua:"навігувати", pl:"nawigować"},
     AddFileArea:{en:"Add file...", ua:"Додати файл...", pl:"Dodać plik..."},
     MethodRadioBtns:{en:['cash','transfer'], ua:['готівка','переказ'], pl:['gotówka','przelew']},

@@ -13,6 +13,7 @@
     
       .CompaniesList {
         width:40%;
+        @media (max-width: 767px) {width:98%;}
     
         .CompanyLine {
           width:calc(100% - 2vw);
@@ -40,6 +41,7 @@
     
       .ConpanyInfo {
         width:60%;
+        @media (max-width: 767px) {width:98%;}
     
         .Company {
           width:calc(100% - 2vw);
@@ -73,26 +75,59 @@
     
           .CompanyTitle {
             width:100%;
-            .TitleShortName {width:30%;}
-            .TitleName {width:80%;}
+            .TitleShortName {
+              width:30%;
+              @media (max-width: 767px) {width:100%;}
+            }
+            .TitleName {
+              width:70%;
+              @media (max-width: 767px) {width:100%;}
+            }
           }
           .Digits {
             width:100%;
-            .DigNip {width:20%;}
-            .DigAcc {width:80%;}
+            .DigNip {
+              width:20%;
+              @media (max-width: 767px) {width:30%;}
+            }
+            .DigAcc {
+              width:80%;
+              @media (max-width: 767px) {width:70%;}
+            }
           }
           .Address {
             width:100%;
-            .AddrZip {width:20%;}
-            .AddrTown {width:30%;}
-            .AddrStreet {width:35%;}
-            .AddrNr {width:15%;}
+            .AddrZip {
+              width:20%;
+              @media (max-width: 767px) {width:30%;}
+            }
+            .AddrTown {
+              width:30%;
+              @media (max-width: 767px) {width:70%;}
+            }
+            .AddrStreet {
+              width:35%;
+              @media (max-width: 767px) {width:85%;}
+            }
+            .AddrNr {
+              width:15%;
+              @media (max-width: 767px) {width:15%;}
+            }
           }
           .Contacts {
             width:100%;
-            .ContTel {width:20%;}
-            .ContWww {width:40%;}
-            .ContEmail {width:40%;}
+            .ContTel {
+              width:20%;
+              @media (max-width: 767px) {width:30%;}
+            }
+            .ContEmail {
+              width:40%;
+              @media (max-width: 767px) {width:70%;}
+            }
+            .ContWww {
+              width:40%;
+              @media (max-width: 767px) {width:100%;}
+            }
           }
     
           .Personnel {

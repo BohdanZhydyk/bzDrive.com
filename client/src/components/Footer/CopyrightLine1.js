@@ -9,7 +9,7 @@ export function CopyrightLine1({ props:{author} }) {
 
   const lang = GetUser().lang
   return (
-    <div className="flex end">
+    <div className="CopyrightLine flex end">
       <span className="Whitespace"></span>
       <span>{ tr(`AppAuthor`,lang) }</span>
       <span className="Whitespace"></span>

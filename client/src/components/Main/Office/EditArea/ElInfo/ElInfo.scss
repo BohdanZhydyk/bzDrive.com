@@ -7,6 +7,8 @@
     margin:1vw 0;
     border:1px solid #999;
     border-radius:0.5vw;
+    @media (max-width: 767px) {width:calc(100% - 0.5vw - 2px);}
+    @media print {width:calc(50% - 0.5vw - 2px);}
 
     .InfoPannelTop {
       width:calc(100% - 4vw);

@@ -1,14 +1,26 @@
 
-footer {
+.Footer {
   margin-top: auto;
   min-height:4vw;
   border-top: 1px solid #999;
+  @media (min-width: 481px) and (max-width: 767px) {min-height:6vw;}
+  @media (max-width: 481px) {min-height:8vw;}
   
   .Contacts {
     width:30%;
+    @media (max-width: 767px) {width:100%;}
   }
+
+  .Copyright {
+    width:70%;
+    @media (max-width: 767px) {width:100%;}
+
+    .CopyrightLine {
+      width:100%;
   
-  .Whitespace {
-    margin:0 0.25vw;
+      .Whitespace {
+        margin:0 0.25vw;
+      }
+    }
   }
 }

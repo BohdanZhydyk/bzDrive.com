@@ -32,7 +32,7 @@ function ElDocBtns({ props:
   return(
     <section className="ElDocBtns flex">
 
-      <div className="ActionBtns flex start">
+      <div className="ActionBtns flex start wrap">
 
         <ActionBtnsPannel props={actPannelPropses} />
 

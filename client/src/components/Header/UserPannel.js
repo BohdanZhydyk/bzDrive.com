@@ -16,13 +16,13 @@ export function UserPannel({ props:{blur, BLUR} }) {
 
       {
         !ava &&
-        <span className="LoginBtn txtOrg flex bold" onClick={()=>BLUR()}>
+        <span className="LoginBtn txtOrg flex bold" onClick={()=>BLUR("ava")}>
           {tr(`LogInBtn`,GetUser().lang)}
         </span>
       }
 
-      { ava && <img className="ImgBtn Online" src={OnlineImg} onClick={()=>BLUR()} alt="online" /> }
-      <img className="ImgBtn Ava" src={AvaImg} onClick={()=>BLUR()} alt="ava" />
+      { ava && <img className="ImgBtn Online" src={OnlineImg} onClick={()=>BLUR("ava")} alt="online" /> }
+      <img className="ImgBtn Ava" src={AvaImg} onClick={()=>BLUR("ava")} alt="ava" />
 
     </div>
   )

@@ -29,8 +29,13 @@
 
     .TextAreaSection {
       width:100%;
-      min-height:5vw;
       margin:0.5vw 0.25vw;
+
+      textarea {
+        min-height:4vw;
+        @media (min-width: 481px) and (max-width: 767px) {min-height:8vw;}
+        @media (max-width: 481px) {min-height:12vw;}
+      }
 
       .StrToLines {
         width:calc(100% - 2vw);

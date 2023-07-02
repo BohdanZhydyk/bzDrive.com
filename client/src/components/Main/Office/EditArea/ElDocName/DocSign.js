@@ -6,6 +6,8 @@ import { sanitizeTxt } from "../../../../../AppFunctions"
 import { placeProps, fromProps, toProps } from "./propses"
 import Input from "../../../../All/Input"
 
+import { useResizeDetector } from 'react-resize-detector'
+
 
 export function DocSign({ props:{lang, mode, nr, setNr, setSave, editErr, setEditErr, printMode} }) {
 
@@ -17,6 +19,15 @@ export function DocSign({ props:{lang, mode, nr, setNr, setSave, editErr, setEdi
     return `${day}.${month}.${year}`
   }
 
+  const { width, height, ref } = useResizeDetector()
+
+  let size = ()=>{
+    let digit = 20
+    if( width >= 481 ){ digit = 2 }
+    if( width >= 768 ){ digit = 5 }
+    return(digit)
+  }
+
   const url = `https://bzdrive.com${window.location.pathname}`
   const [QRsize, setQRsize] = useState(parseInt(window.innerWidth / 30))
   useEffect(() => {
@@ -26,7 +37,7 @@ export function DocSign({ props:{lang, mode, nr, setNr, setSave, editErr, setEdi
   }, [])
 
   return(
-    <div className="DocSign flex end">
+    <div className="DocSign flex end" ref={ref}>
 
     {
       !printMode

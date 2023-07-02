@@ -3,9 +3,10 @@ import { GetUser, SetUser } from "../../AppFunctions"
 
 import ActionBtn from "../All/ActionBtn"
 import AuthPanel from "./AuthPannel"
+import NavPannel from "./NavPannel"
 
 
-export function FullScreenPannel({ props:{blur, BLUR, AppReload} }) {
+export function FullScreenPannel({ props:{info, nav, blur, BLUR, AppReload} }) {
 
   const user = GetUser()
   const lang = GetUser().lang
@@ -45,7 +46,9 @@ export function FullScreenPannel({ props:{blur, BLUR, AppReload} }) {
 
           </div>
 
-          <AuthPanel props={{AppReload}} />
+          { blur === "ava" && <AuthPanel props={{AppReload}} /> }
+
+          { blur === "nav" && <NavPannel props={{info, nav, BLUR, burger:true}}/> }
 
         </div>
       }

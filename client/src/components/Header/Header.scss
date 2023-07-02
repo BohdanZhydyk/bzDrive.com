@@ -2,9 +2,13 @@
 .Header {
   min-height:4vw;
   z-index:99;
+  @media (min-width: 481px) and (max-width: 767px) {min-height:6vw;}
+  @media (max-width: 481px) {min-height:8vw;}
 
   .SiteName {
     width:calc(25% - 1vw);
+    @media (min-width: 481px) and (max-width: 767px) {width:calc(80% - 1vw)}
+    @media (max-width: 481px) {width:calc(75% - 1vw)}
 
     .Name {
       font-size:200%;
@@ -20,16 +24,82 @@
     }
   }
 
-  .NavPannel {
+  .NavBurger {
+    display:none;
+    @media (min-width: 481px) and (max-width: 767px) {width:6vw; display:flex;}
+    @media (max-width: 481px) {width:8vw; display:flex;}
+
+    .Burger {
+
+      .BurgerLine {
+        width:100%;
+        height:0.5vw;
+        margin:0.25vw;
+        background:#f60;
+        border-radius:0.25vw;
+      }
+    }
+  }
+
+  .NavSection {
     width:60%;
+    @media (max-width: 767px) {display:none;}
+
+    .NavPannel {
+      width:100%;
+  
+      .NavBtn {
+        position:relative;
+        width:12%;
+        cursor: pointer;
+  
+        .activeNavBtn {
+          width:100%;
+          margin:0 0 0.5vw 0;
+          text-align:center;
+          font-size:110%;
+          font-weight:bold;
+          color:#f60;
+          border-bottom:1px solid #444;
+        }
+      }
+  
+      .SubMenu {
+        position:absolute;
+        top:1.25vw;
+        width:100%;
+        padding:0.5vw;
+        background-color:#333;
+  
+        .SubNavBtn {
+          width:100%;
+          margin:0.25vw 0;
+          &:hover a {
+            color:#191;
+          }
+  
+          .activeSubNavBtn {
+            color:#fd0;
+            font-size:110%;
+            font-weight:bold;
+          }
+        }
+      }
+    }
+  }
+
+  .NavPannel {
+    width:100%;
 
     .NavBtn {
       position:relative;
-      width:12%;
+      width:70%;
+      margin:1vw 0;
+      cursor: pointer;
 
       .activeNavBtn {
         width:100%;
-        margin:0 0 0.5vw 0;
+        margin:1.5vw 0;
         text-align:center;
         font-size:110%;
         font-weight:bold;
@@ -40,14 +110,17 @@
 
     .SubMenu {
       position:absolute;
-      top:1.25vw;
-      width:100%;
+      top:3.5vw;
+      width:70%;
       padding:0.5vw;
       background-color:#333;
+      z-index:99;
+      @media (min-width: 481px) and (max-width: 767px) {top:5vw;}
+      @media (max-width: 481px) {top:7vw;}
 
       .SubNavBtn {
         width:100%;
-        margin:0.25vw 0;
+        margin:1vw 0;
         &:hover a {
           color:#191;
         }
@@ -109,16 +182,20 @@
       top:0;
       right:0;
       width:30%;
-      height:100%;
+      min-height:100%;
       background-color:#111;
       z-index:66;
+      @media (min-width: 481px) and (max-width: 767px) {width:50%;}
+      @media (max-width: 481px) {width:80%;}
 
       .SidePannelTop {
         width:calc(100% - 2vw);
-        height:4vw;
+        min-height:4vw;
         padding:0 1vw;
         border-image: linear-gradient(90deg, #9991, #999) 1;
         border-bottom: 1px solid;
+        @media (min-width: 481px) and (max-width: 767px) {min-height:6vw;}
+        @media (max-width: 481px) {min-height:8vw;}
 
         .LangPannel {
           width:40%;

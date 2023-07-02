@@ -34,11 +34,11 @@ function Input({ props:{legend, type, plhol, val, err, cbVal, cbErr} }) {
         // onKeyUp={ (e)=> e.key === "Enter" && ON_KEYUP_IMG(e) }
       />
 
-      <img className="ImgBtnSmall"
+      {/* <img className="ImgBtnSmall"
         src={`https://bzdrive.com/files/ico/icoSearch.png`}
         alt={`search`}
         // onClick={ ()=> ON_KEYUP_IMG({ target:{value:val}, key:"Enter" }) }
-      />
+      /> */}
 
     </fieldset>
   )

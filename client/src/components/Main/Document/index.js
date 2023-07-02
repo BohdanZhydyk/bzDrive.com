@@ -21,6 +21,11 @@ function Document(){
 
   const printMode = true
   const mode = doc?.nr?.mode
+  const year = doc?.nr?.from.toString().slice(0, 4)
+  const month = doc?.nr?.from.toString().slice(4, 6)
+  const sign = doc?.nr?.sign.toString().padStart(4, '0')
+
+  document.title = doc?.nr ? `${mode}/${year}/${month}/${sign}` : ''
 
   const [edit, setEdit] = useState(false)
 

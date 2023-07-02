@@ -6,7 +6,7 @@ import { tr } from "../../../../AppTranslate"
 import EditArea from "../EditArea"
 
 
-export function WeekPannel({ props:{mode, company, line, l, lang, RELOAD} }) {
+export function WeekPannel({ props:{line, l, mode, company, pannels, lang, RELOAD} }) {
 
   const [edit, setEdit] = useState(false)
 
@@ -35,9 +35,9 @@ export function WeekPannel({ props:{mode, company, line, l, lang, RELOAD} }) {
   }
 
   return(
-    <div className="WeekPannel flex stretch wrap">
+    <div className="WeekPannel MinHight flex stretch wrap">
 
-      <div className="LeftLine flex start">
+      <div className="LeftLine flex start" style={{display:pannels.LP}}>
       {
         line && line.week.map( (day, d)=>{
           const key = `NewOrderBtn${l}${d}`
@@ -54,7 +54,7 @@ export function WeekPannel({ props:{mode, company, line, l, lang, RELOAD} }) {
       }
       </div>
 
-      <div className="RightLine flex">
+      <div className="RightLine flex" style={{display:pannels.RP}}>
       {
         line && line.week.map( (day, d)=>{
           const NEW_ORDER = ()=> isSameDay(day) ? setEdit(!edit) : setEdit(false)

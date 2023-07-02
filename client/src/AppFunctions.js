@@ -40,7 +40,11 @@ export function TimeToWeekDay(time){
   return new Date(time).getDay() !== 0 ? new Date(time).getDay() : 7
 }
 export function DocNameNormalize(nr){
-  return `${nr?.mode}/${nr?.from.toString().slice(0, 4)}/${nr?.from.toString().slice(4, 6)}/${nr?.sign.toString().padStart(4, '0')}`
+  const mode = nr?.mode
+  const year = nr?.from.toString().slice(0, 4)
+  const month = nr?.from.toString().slice(4, 6)
+  const sign = nr?.sign.toString().padStart(4, '0')
+  return `${mode}/${year}/${month}/${sign}`
 }
 
 // my filesize calculator function
@@ -212,7 +216,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃ]/g
     let sanText = txt ? txt.replace(allowedChars, '').slice(0, max) : ''
     function formatStreetName(name) {
-      if(!name.startsWith("ul. ")) return "ul. " + name
+      // if(!name.startsWith("ul. ")) return "ul. " + name
       return name
     }
     if(sanText.length < min) sanErr = tr('Err_0', lang)

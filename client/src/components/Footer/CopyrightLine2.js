@@ -9,7 +9,7 @@ export function CopyrightLine2({ props:{link} }) {
   const years = `2018-${ TimeTo_YYYYMM( Date.now() ).toString().slice(0,4) }`
 
   return (
-    <div className="flex end">
+    <div className="CopyrightLine flex end">
       <span className="Whitespace"></span>
       <span>{`Copyright`}</span>
       <span className="Whitespace"></span>

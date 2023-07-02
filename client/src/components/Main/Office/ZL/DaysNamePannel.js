@@ -3,16 +3,16 @@ import React from "react"
 import { tr } from "../../../../AppTranslate"
 
 
-export function DaysNamePannel({ props:{lang} }) {
+export function DaysNamePannel({ props:{lang, pannels} }) {
 
   const dayNames = tr(`DayNames`,lang)
 
   return(
-    <div className="DaysNamePannel flex stretch">
+    <div className="DaysNamePannel MinHight flex stretch">
 
-      <div className="LeftLine flex"></div>
+      <div className="LeftLine flex" style={{display:pannels.LP}}></div>
 
-      <div className="RightLine flex">
+      <div className="RightLine flex" style={{display:pannels.RP}}>
       {
         dayNames.map( (day, d)=>{
           const key = `DayName${d}${day}`

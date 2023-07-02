@@ -26,7 +26,7 @@ export function ConpanyInfo({ props:{lang, company, setCompany} }) {
           <ActionBtn props={{name:"save", click:()=>alert("save")}} />
         </div>
 
-        <div className="CompanyTitle flex end">
+        <div className="CompanyTitle flex wrap">
           <div className="TitleShortName flex"><Input props={ propses().shortName } /></div>
           <div className="TitleName flex"><Input props={ propses().name } /></div>
         </div>
@@ -36,17 +36,17 @@ export function ConpanyInfo({ props:{lang, company, setCompany} }) {
           <div className="DigAcc flex"><Input props={ propses().account } /></div>
         </div>
 
-        <div className="Address flex">
+        <div className="Address flex wrap">
           <div className="AddrZip flex"><Input props={ propses().zip } /></div>
           <div className="AddrTown flex"><Input props={ propses().town } /></div>
           <div className="AddrStreet flex"><Input props={ propses().streetName } /></div>
           <div className="AddrNr flex"><Input props={ propses().streetNr } /></div>
         </div>
 
-        <div className="Contacts flex">
+        <div className="Contacts flex wrap">
           <div className="ContTel flex"><Input props={ propses().tel } /></div>
-          <div className="ContWww flex"><Input props={ propses().www } /></div>
           <div className="ContEmail flex"><Input props={ propses().email } /></div>
+          <div className="ContWww flex"><Input props={ propses().www } /></div>
         </div>
 
         <div className="Personnel flex stretch between">

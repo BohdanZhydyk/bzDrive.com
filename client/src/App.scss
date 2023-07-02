@@ -10,6 +10,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #222;
+  @media (min-width: 481px) and (max-width: 767px) {font-size: 2vw !important;}
+  @media (max-width: 481px) {font-size: 3vw !important;}
+  @media print {font-size: 8px !important; background-image:none;}
 
   .txtWht {color:#fff;}
   .txtOrg {color:#f60;}
@@ -36,23 +39,27 @@ body {
   .blur {filter:blur(5px);}
   
   .ImgBtn {
-    width:2vw;
-    height:2vw;
-    margin:0.25vw 0.75vw;
-    &:hover {
-      width:2.5vw;
-      height:2.5vw;
-      margin:0 0.5vw;
+    width:2vw; height:2vw; margin:0.25vw 0.75vw;
+    &:hover {width:2.5vw; height:2.5vw; margin:0 0.5vw;}
+    @media (min-width: 481px) and (max-width: 767px) {
+      width:4vw; height:4vw; margin:0.5vw 1vw;
+      &:hover {width:5vw; height:5vw; margin:0 0.5vw;}
+    }
+    @media (max-width: 481px) {
+      width:6vw; height:6vw; margin:0.5vw 1vw;
+      &:hover {width:7vw; height:7vw; margin:0 0.5vw;}
     }
   }
   .ImgBtnSmall {
-    width:1.5vw;
-    height:1.5vw;
-    margin:0.25vw 0.75vw;
-    &:hover {
-      width:2vw;
-      height:2vw;
-      margin:0 0.5vw;
+    width:1.5vw; height:1.5vw; margin:0.25vw 0.75vw;
+    &:hover {width:2vw; height:2vw; margin:0 0.5vw;}
+    @media (min-width: 481px) and (max-width: 767px) {
+      width:3vw; height:3vw; margin:0.5vw 1vw;
+      &:hover {width:4vw; height:4vw; margin:0 0.5vw;}
+    }
+    @media (max-width: 481px) {
+      width:4vw; height:4vw; margin:0.5vw 1vw;
+      &:hover {width:5vw; height:5vw; margin:0 0.5vw;}
     }
   }
 

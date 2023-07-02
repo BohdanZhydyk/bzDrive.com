@@ -13,7 +13,7 @@ function ElDocName({ props:{user, mode, dealer, nr, setNr, setSave, editErr, set
   const logoName = dealer?.shortName ?? ''
 
   return(
-    <section className="ElDocName flex end stretch">
+    <section className="ElDocName flex end stretch wrap">
 
       {
         printMode &&

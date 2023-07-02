@@ -24,6 +24,7 @@ function ActionBtn({ props:{name, click} }){
       case "download":    return `${link}icoDownload.png`
       case "show":        return `${link}icoShow.png`
       case "hide":        return `${link}icoHide.png`
+      case "search":      return `${link}icoSearch.png`
       case "link":        return `${link}newTab.png`
       default:            break
     }

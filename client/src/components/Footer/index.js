@@ -13,13 +13,13 @@ function Footer({ props:{state, blur, BLUR} }) {
   const link = state?.info?.link
 
   return (
-    <footer className={`flex between ${blur ? `blur` : ``}`}>
+    <footer className={`Footer flex between ${blur ? `blur` : ``} stretch wrap`}>
 
       { contacts && <Contacts props={{contacts}}/> }
 
       {
         (author && link) &&
-        <div>
+        <div className="Copyright flex wrap">
           <CopyrightLine1 props={{author}}/>
           <CopyrightLine2 props={{link}}/>
         </div>

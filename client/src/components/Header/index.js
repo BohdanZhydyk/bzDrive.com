@@ -1,9 +1,10 @@
 import React from "react"
 
 import "./Header.scss"
-import { NavPannel } from "./NavPannel"
 import { SiteName } from "./SiteName"
+import NavPannel from "./NavPannel"
 import { UserPannel } from "./UserPannel"
+import { BurgerPannel } from "./BurgerPannel"
 import { FullScreenPannel } from "./FullScreenPannel"
 
 
@@ -13,15 +14,22 @@ function Header({ props:{state, blur, BLUR, AppReload} }) {
   const nav = state.nav
 
   return (
-    <header className="Header flex evenly">
+    <header className="Header flex">
 
       { info && <SiteName props={{info, blur, BLUR}} /> }
 
-      { nav && <NavPannel props={{info, nav, blur, BLUR}}/> }
+      {
+        nav &&
+        <div className="NavSection flex">
+          <NavPannel props={{info, nav, BLUR}}/>
+        </div>
+      }
 
       { info && <UserPannel props={{blur, BLUR}}/> }
 
-      { blur && <FullScreenPannel props={{blur, BLUR, AppReload}}/> }
+      { nav && <BurgerPannel props={{info, nav, blur, BLUR}}/> }
+
+      { blur && <FullScreenPannel props={{info, nav, blur, BLUR, AppReload}}/> }
 
     </header>
   )

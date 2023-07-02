@@ -4,7 +4,10 @@
   padding:1vw;
   border:none;
   resize:vertical;
-  font-size:1vw;
   color:#fff;
   background-color:#0000;
+  font-size:1vw !important;
+  @media (min-width: 481px) and (max-width: 767px) {font-size: 2vw !important;}
+  @media (max-width: 481px) {font-size: 3vw !important;}
+  @media print {font-size: 8px !important;}
 }

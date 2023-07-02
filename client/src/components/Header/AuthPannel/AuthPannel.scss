@@ -107,15 +107,17 @@
   }
 
   .Logout {
-    width:30%;
-    position:absolute;
+    width:10%;
+    position:fixed;
     bottom:1vw;
     right:2vw;
     padding: 0.5vw 1vw;
     border: 1px solid #f00;
     border-radius: 0.5vw;
-    background-color:#f001;
+    background-color:#311;
     cursor: pointer;
+    @media (min-width: 481px) and (max-width: 767px) {width:20%;}
+    @media (max-width: 481px) {width:40%;}
     
     &:hover {
       background-color: #f003;

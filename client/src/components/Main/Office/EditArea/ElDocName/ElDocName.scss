@@ -5,21 +5,32 @@
   .ElDocNameLogo {
     width:50%;
     min-height:10vw;
+    @media (min-width: 481px) and (max-width: 767px) {width:100%;}
+    @media (max-width: 481px) {width:100%;}
+    @media print {width:50%;}
 
     img {
       width:5vw;
       margin:0 2vw;
+      @media (min-width: 481px) and (max-width: 767px) {width:5vw;}
+      @media (max-width: 481px) {width:7vw;}
+      @media print {width:5vw;}
     }
 
     span {
       font-size:400%;
       font-weight:bold;
-      @media print {color:#999;}
+      @media (min-width: 481px) and (max-width: 767px) {font-size:300%;}
+      @media (max-width: 481px) {font-size:250%;}
+      @media print {font-size:400%; color:#999;}
     }
   }
 
   .ElDocNameData {
     width:50%;
+    @media (min-width: 481px) and (max-width: 767px) {width:100%;}
+    @media (max-width: 481px) {width:100%;}
+    @media print {width:50%;}
     
     .DocTitle {
       width:100%;
@@ -28,6 +39,9 @@
       .DocName {
         width:calc(60% - 2vw);
         padding:0 1vw;
+        @media (min-width: 481px) and (max-width: 767px) {width:calc(50% - 2vw)}
+        @media (max-width: 481px) {width:calc(40% - 2vw)}
+        @media print {width:calc(60% - 2vw)}
       }
   
       .DocNr {
@@ -36,6 +50,9 @@
         padding:0.25vw 0;
         border:1px solid #999;
         border-radius:0.5vw;
+        @media (min-width: 481px) and (max-width: 767px) {width:calc(50% - 2px)}
+        @media (max-width: 481px) {width:calc(60% - 2px)}
+        @media print {width:calc(39% - 2px)}
       }
     }
   

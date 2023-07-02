@@ -1,21 +1,15 @@
 import React, { useState } from "react"
 
-import { DocNameNormalize, SumArray, YYYYMMDD_ToWeekDay } from "../../../../AppFunctions"
+import { SumArray, YYYYMMDD_ToWeekDay } from "../../../../AppFunctions"
+import { OrderLeftPart } from "./OrderLeftPart"
 import EditArea from "../EditArea"
+import { OrderRightPart } from "./OrderRightPart"
 
 
-export function Order({ props:{company, mode, order, firstDay, lastDay, RELOAD} }) {
+export function Order({ props:{leftMode, company, mode, order, firstDay, lastDay, pannels, RELOAD} }) {
 
   const [edit, setEdit] = useState(false)
-  
-  const number = DocNameNormalize(order?.nr)
-  const carName = `${order?.car?.brand} - ${order?.car?.model}`
-  const sum = SumArray( order?.articles?.map( (el)=> el.SUM ) )
-  const tel = order?.client?.name
-    ? `${order.client.name}`
-    : (order?.client?.contacts?.tel ? `${order.client.contacts.tel}` : ``)
 
-  const opacity = ["close", "delete"].includes(order?.status) ? 0.4 : 1
   const repairStatus = order?.status === "repair"
 
   let from = YYYYMMDD_ToWeekDay(order?.nr?.from)
@@ -27,84 +21,35 @@ export function Order({ props:{company, mode, order, firstDay, lastDay, RELOAD} 
   const beforeOrderLength = (from > 1) ? from - 1 : 0
   const orderLength = to - from + 1
 
-  const beforeOrderStyles = {
-    width:`calc(100% / 7 * ${beforeOrderLength})`,
-    minHeight: `2vw`
-  }
-  const orderStyles = {
-    width:`calc(100% / 7 * ${orderLength} - 2px)`
-  }
+  const color = order?.car?.color
+
   const styles = {
-    opacity,
-    backgroundColor:order?.car?.color,
-    backgroundImage:`linear-gradient(0deg, ${order?.car?.color}, #111a 30% 70%, ${order?.car?.color})`
+    beforeStyles:{width:`calc(100% / 7 * ${beforeOrderLength})`, minHeight: `2vw`},
+    orderStyles:{width:`calc(100% / 7 * ${orderLength} - 2px)`},
+    cellStyles:{backgroundColor:color, backgroundImage:`linear-gradient(0deg, ${color}, #111a 30% 70%, ${color})`}
   }
 
   const checkImg = repairStatus
     ? `https://bzdrive.com/files/ico/icoCheck.png`
     : `https://bzdrive.com/files/dealers/${company?.img ?? `empty.png`}`
 
-  const leftLine = [
-    {
-      cl: `OrderAva`,
-      clk: ()=>setEdit(!edit),
-      com: <img className="AvaImg flex" src={checkImg} alt="check" />
-    },
-    {
-      cl: `OrderNr`,
-      clk: ()=>setEdit(!edit),
-      com: <span>{number}</span>
-    },
-    {
-      cl: `OrderCar start`,
-      clk: ()=>setEdit(!edit),
-      com: <span>{carName}</span>
-    },
-    {
-      cl: `OrderTel start`,
-      clk: ()=>{},
-      com: <a href={`tel: ${tel}`}>{tel}</a>
-    },
-    {
-      cl: `OrderSUM`,
-      clk: ()=>setEdit(!edit),
-      com: <span>{sum}</span>
-    }
-  ]
+  let lines = `--------------------------------------------------`
+  let name = `${order?.client?.name ? `klient: ${order.client.name}\n` : ``}`
+  let telNr = `${order?.client?.contacts?.tel ? `tel: ${order.client.contacts.tel}\n` : ``}`
+  let faults = `\n${order?.car?.faults ? `${lines}\n${order.car.faults}\n${lines}\n` : ``}`
+  let brutto = `\n${order?.articles ? `brutto: ${SumArray(order.articles.map( el=> el.SUM ) )} zł` : ``}`
+  let title = `${name}${telNr}${faults}${brutto}`
 
   return(
-    <div className="Order flex wrap">
+    <div className="Order MinHight flex wrap">
 
-      <div className="LeftLine flex stretch">
+      <OrderLeftPart props={{order, title, styles, checkImg, pannels, edit, setEdit}}/>
 
-        {
-          leftLine.map( (cell, c)=>{
-            const key = `OrderLeftLine${c}`
-            return(
-              <span className={`OrderCell flex ${cell.cl}`} style={styles} onClick={cell.clk} key={key} >
-                {cell.com}
-              </span>
-            )
-          })
-        }
-
-        <div className={`StatusLine StatusLineColor_${order?.status} flex`}></div>
-
-      </div>
-
-      <div className="RightLine flex stretch start">
-
-        <span className="BeforeOrder flex" style={beforeOrderStyles}></span>
-
-        <span className="OrderR flex" style={orderStyles} onClick={()=>setEdit(!edit)}>
-          <div className="OrderBody flex end" style={styles}>
-            { repairStatus && <img className="AvaImg flex" src={checkImg} alt="check" /> }
-          </div>
-          <div className={`StatusLine StatusLineColor_${order?.status} flex`}></div>
-        </span>
-
-
-      </div>
+      {
+        leftMode
+        ? <div className="RightLine flex stretch start" style={{display:pannels.RP}}></div>
+        : <OrderRightPart props={{order, title, styles, checkImg, pannels, edit, setEdit}}/>
+      }
 
       {edit && <EditArea props={{company, mode, doc:order, edit, setEdit, RELOAD}} /> }
 

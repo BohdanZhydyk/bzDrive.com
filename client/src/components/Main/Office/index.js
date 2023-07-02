@@ -11,7 +11,7 @@ import ZL from "./ZL"
 import FS from "./FS"
 
 
-function Office({ props:{sub} }) {
+function Office({ props:{size, sub} }) {
   
   const user = GetUser()
 
@@ -48,7 +48,7 @@ function Office({ props:{sub} }) {
           
           <Routes>
             <Route path="/fi" element={<FI props={{company}}/>} />
-            <Route path="/zl" element={<ZL props={{company}}/>} />
+            <Route path="/zl" element={<ZL props={{size, company}}/>} />
             <Route path="/fs" element={<FS props={{company}}/>} />
           </Routes>
 
