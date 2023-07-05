@@ -19,6 +19,9 @@ function ZL({ props:{size, company} }) {
   const mobile = ( (size().device === `SD` || size().device === `ESD`) )
 
   const [calendar, setCalendar] = useState( false )
+  const [search, setSearch] = useState( {} )
+  const [orders, setOrders] = useState( [] )
+
   const [LPannel, setLPannel] = useState( true )
   const [RPannel, setRPannel] = useState( true )
   const LP = LPannel ? 'flex' : 'none'
@@ -29,6 +32,8 @@ function ZL({ props:{size, company} }) {
 
   const RELOAD = ()=>{
     setCalendar(false)
+    setSearch( {} )
+    setOrders( [] )
     ZLreducer({type:"GET_CALENDAR"}, (data)=>setCalendar(data))
   }
 
@@ -48,9 +53,9 @@ function ZL({ props:{size, company} }) {
   return(
     <div className="ZL flex column">
 
-      { calendar && <Title props={{mode, lang, calendar}} /> }
+      <SearchArea props={{tr, lang, company, mode, search, setSearch, orders, setOrders, ZLreducer, RELOAD}} />
 
-      <SearchArea props={{tr, lang, company, mode, ZLreducer, RELOAD}} />
+      { calendar && <Title props={{mode, lang, calendar}} /> }
 
       <AddWeekBtn props={AddWeekBtnMinusProps}/>
 

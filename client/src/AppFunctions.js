@@ -165,7 +165,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     const max = 17
     let sanErr = false
     let sanText = txt ? txt.replace(/[^a-zA-Z0-9]/g, '').trim().toUpperCase().slice(0, max) : ''
-    if(sanText.length !== max) sanErr = 'VIN musi składać się z 17 znaków'
+    if(sanText.length > 0 && sanText.length < max) sanErr = 'VIN musi składać się z 17 znaków'
     return { sanText, sanErr }
   }
   function sanitizeNIP(txt) {

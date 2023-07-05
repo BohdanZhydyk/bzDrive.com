@@ -10,11 +10,11 @@ export function OrderRightPart({ props:{order, title, styles, checkImg, pannels,
   const repairStatus = order?.status === "repair"
 
   return(
-    <div className="RightLine flex stretch start" style={{display:pannels.RP}} title={title}>
+    <div className="RightLine flex stretch start" style={{display:pannels.RP}}>
 
       <span className="BeforeOrder flex" style={beforeSt}></span>
 
-      <span className="OrderR flex" style={orderSt} onClick={()=>setEdit(!edit)}>
+      <span className="OrderR flex" style={orderSt} onClick={()=>setEdit(!edit)} title={title}>
         <div className="OrderBody flex end" style={cellSt}>
           <div className="ImgBtn flex">
           { repairStatus && <img className="ImgBtn flex" src={checkImg} alt="check" /> }

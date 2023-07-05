@@ -7,6 +7,16 @@ exports.getOffice = (req, res)=>{
   const bzToken = req?.body?.bzToken
   const object = req?.body?.object
 
+  // getting carInfo from database by VIN
+  if(object?.getCar){console.log(object)
+    const vin = object?.getCar
+    const query = {"car.vin":vin}
+    bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (carData)=>{
+      res.send({...carData, result: carData?.result.reverse()})
+      return
+    })
+  }
+
   bzDB( { req, res, col:'bzTokens', act:"FIND_ONE", query:{bzToken} }, (userData)=>{
 
     const login = userData?.result?.user?.login

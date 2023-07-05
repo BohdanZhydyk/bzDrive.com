@@ -25,6 +25,7 @@ function ActionBtn({ props:{name, click} }){
       case "show":        return `${link}icoShow.png`
       case "hide":        return `${link}icoHide.png`
       case "search":      return `${link}icoSearch.png`
+      case "erase":      return `${link}icoErase.png`
       case "link":        return `${link}newTab.png`
       default:            break
     }

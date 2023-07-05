@@ -1,20 +1,12 @@
 import React, { useState } from "react"
 
-import Input from "../../../../All/Input"
-import ActionBtn from "../../../../All/ActionBtn"
-import { carProps, clientProps, fromProps, telProps, toProps, vintProps } from "./searchProps"
-import { Order } from "../Order"
+import { SearchPannel } from "./SearchPannel"
+import { SearchOrdersPannel } from "./SearchOrdersPannel"
 
 
-function SearchArea({ props:{tr, lang, company, mode, ZLreducer, RELOAD} }) {
-
-  const [search, setSearch] = useState( [] )
-
-  const [orders, setOrders] = useState( [] )
+function SearchArea({ props:{tr, lang, company, mode, search, setSearch, orders, setOrders, ZLreducer, RELOAD} }) {
 
   const [searchBtn, setSearchBtn] = useState( true )
-
-  const leftMode = true
 
   const companyName = company?.shortName
   const firstDay = search?.from
@@ -35,6 +27,11 @@ function SearchArea({ props:{tr, lang, company, mode, ZLreducer, RELOAD} }) {
     })
   }
 
+  const ERASE = ()=>{
+    setSearch( [] )
+    setOrders( [] )
+  }
+
   const KEY_ENTER = (e)=>{
     if(e.key === 'Enter') SEARCH()
   }
@@ -44,39 +41,10 @@ function SearchArea({ props:{tr, lang, company, mode, ZLreducer, RELOAD} }) {
   return(
     <div className="SearchArea flex column">
 
-      <div className="SearchPannel flex start stretch wrap" onKeyDown={(e)=>KEY_ENTER(e)}>
+      <SearchPannel props={{tr, lang, searchBtn, search, setSearch, KEY_ENTER, SEARCH, ERASE}} />
 
-        <Input props={ fromProps(tr, lang, search, setSearch) } />
-        <Input props={ toProps(tr, lang, search, setSearch) } />
-        <Input props={ vintProps(search, setSearch) } />
-        <Input props={ carProps(search, setSearch) } />
-        <Input props={ clientProps(search, setSearch) } />
-        <Input props={ telProps(search, setSearch) } />
+      <SearchOrdersPannel props={{company, mode, search, orders, RELOAD}} />
 
-        {
-          searchBtn &&
-          <div className="SearchBtn flex">
-            <ActionBtn props={{name:'search', click:()=>SEARCH()}} />
-          </div>
-        }
-
-        <div className="RightLine flex stretch start"></div>
-
-      </div>
-
-      {
-        orders &&
-        orders.map( (order, l)=>{
-          const pannels = {LP:true, RP:true}
-          const orderProps = {leftMode, company, mode, order, firstDay, lastDay, pannels, RELOAD}
-          const key = `SearchOrder${l}${order._id}`
-          return(
-            <div className="OrdersLine flex wrap" key={key}>
-              <Order props={orderProps} />
-            </div>
-          )
-        })
-      }
     </div>
   )
 }

@@ -1,0 +1,25 @@
+
+.VINDecoder {
+  width:100%;
+
+  .BrandInput {
+    width:15%;
+    @media (max-width: 767px) {width:50%;}
+  }
+  .ModelInput {
+    width:15%;
+    @media (max-width: 767px) {width:50%;}
+  }
+  .ProdInput {
+    width:15%;
+    @media (max-width: 767px) {width:30%;}
+  }
+  .EngineInput {
+    width:20%;
+    @media (max-width: 767px) {width:70%;}
+  }
+  .VINinput {
+    width:30%;
+    @media (max-width: 767px) {width:100%;}
+  }
+}

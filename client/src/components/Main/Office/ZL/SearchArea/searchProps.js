@@ -22,7 +22,7 @@ export const toProps = (tr, lang, search, setSearch)=> ({
 })
 
 export const carProps = (search, setSearch)=>({
-  legend: `car`,
+  legend: `Marka/Model`,
   type: `text`,
   val: search?.car ? sanitizeTxt(search.car, `default`).sanText : '',
   cbVal: (val)=>{
@@ -32,7 +32,7 @@ export const carProps = (search, setSearch)=>({
 })
 
 export const clientProps = (search, setSearch)=>({
-  legend: `client`,
+  legend: `Client`,
   type: `text`,
   val: search?.client ? sanitizeTxt(search.client, `default`).sanText : '',
   cbVal: (val)=>{
@@ -42,7 +42,7 @@ export const clientProps = (search, setSearch)=>({
 })
 
 export const telProps = (search, setSearch)=>({
-  legend: `tel`,
+  legend: `Tel`,
   type: `text`,
   val: search?.tel ? sanitizeTxt(search.tel, `tel`).sanText : '',
   cbVal: (val)=>{
@@ -51,8 +51,8 @@ export const telProps = (search, setSearch)=>({
   cbErr: ()=>{}
 })
 
-export const vintProps = (search, setSearch)=>({
-  legend: `vin`,
+export const vinProps = (search, setSearch)=>({
+  legend: `VIN`,
   type: `text`,
   val: search?.vin ? sanitizeTxt(search.vin, `VIN`).sanText : '',
   cbVal: (val)=>{

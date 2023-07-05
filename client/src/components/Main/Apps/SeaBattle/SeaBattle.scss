@@ -1,0 +1,100 @@
+
+.SeaBattle {
+  width:100%;
+  padding:2vw 0;
+
+  .BattleArea {
+    width:90%;
+
+    .BattleField {
+      width:50%;
+      font-size:2vw;
+      @media screen and (orientation: portrait) {
+        width:100%;
+        font-size:4vw;
+      }
+
+      .Line {
+        width:100%;
+        
+        .NullEl {
+          width:3.5vw;
+          min-height:3.5vw;
+          @media screen and (orientation: portrait) {
+            width:7vw;
+            min-height:7vw;
+          }
+        }
+
+        .TopEl {
+          width:calc(3.5vw);
+          min-height:calc(3.5vw - 1px);
+          border-bottom:1px solid #999;
+          @media screen and (orientation: portrait) {
+            width:calc(7vw);
+            min-height:calc(7vw - 1px);
+          }
+        }
+
+        .FirstEl {
+          width:calc(3.5vw - 1px);
+          min-height:calc(3.5vw);
+          border-right:1px solid #999;
+          @media screen and (orientation: portrait) {
+            width:calc(7vw - 1px);
+            min-height:calc(7vw);
+          }
+        }
+
+        .El {
+          width:calc(3.5vw - 1px);
+          min-height:calc(3.5vw - 1px);
+          border-bottom:1px solid #999;
+          border-right:1px solid #999;
+          &:hover {
+            background-color:#f603;
+          }
+          @media screen and (orientation: portrait) {
+            width:calc(7vw - 1px);
+            min-height:calc(7vw - 1px);
+          }
+        }
+      }
+    }
+
+    .ShipsField {
+      width:50%;
+      font-size:2vw;
+      @media screen and (orientation: portrait) {
+        width:100%;
+        font-size:4vw;
+      }
+
+      .Ships {
+        width:calc(3.5vw * 11);
+        @media screen and (orientation: portrait) {
+          width:calc(7vw * 11);
+        }
+
+        .EmptyEl {
+          width:3.5vw;
+          min-height:3.5vw;
+          @media screen and (orientation: portrait) {
+            width:7vw;
+            min-height:7vw;
+          }
+        }
+
+        .ShipEl {
+          width:calc(3.5vw - 2px);
+          min-height:calc(3.5vw - 2px);
+          border:1px solid #999;
+          @media screen and (orientation: portrait) {
+            width:calc(7vw - 2px);
+            min-height:calc(7vw - 2px);
+          }
+        }
+      }
+    }
+  }
+}

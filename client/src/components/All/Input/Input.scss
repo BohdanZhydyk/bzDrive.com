@@ -1,9 +1,13 @@
 
 .Input {
+  width:calc(100% - 1vw - 2px);
+  min-height:3vw;
   margin-top: 0.5vw;
   padding:0.4vw 0.2vw 0.2vw 0.2vw;
   border:1px solid #555;
   border-radius:0.5vw;
+  @media (min-width: 481px) and (max-width: 767px) {min-height:4vw;}
+  @media (max-width: 481px) {min-height:7vw;}
 
   legend {
     font-size:80%;
@@ -20,8 +24,8 @@
     border:none;
     border-radius:0.25vw;
     font-size:1vw !important;
-    @media (min-width: 481px) and (max-width: 767px) {font-size: 2vw !important;}
-    @media (max-width: 481px) {font-size: 3vw !important;}
+    @media (min-width: 481px) and (max-width: 767px) {min-height:5vw; font-size: 2vw !important;}
+    @media (max-width: 481px) {min-height:7vw; font-size: 3vw !important;}
     @media print {font-size: 8px !important;}
   }
 
