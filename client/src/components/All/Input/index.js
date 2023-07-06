@@ -3,7 +3,7 @@ import React from "react"
 import './Input.scss'
 
 
-function Input({ props:{legend, type, plhol, val, err, cbVal, cbErr} }) {
+function Input({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal, cbErr} }) {
 
   const dateForInput = (date)=> `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`
   const dateForDiv = (date)=> `${date.slice(6,8)}.${date.slice(4,6)}.${date.slice(0,4)}`
@@ -18,7 +18,7 @@ function Input({ props:{legend, type, plhol, val, err, cbVal, cbErr} }) {
   }
 
   return (
-    <fieldset className="Input">
+    <fieldset className="Input flex">
 
       <legend className={err ? `txtOrg` : `txtGry`}>
         <span>{legend}</span>
@@ -31,14 +31,17 @@ function Input({ props:{legend, type, plhol, val, err, cbVal, cbErr} }) {
         placeholder={plhol}
         onChange={onChange}
         autoComplete="off"
-        // onKeyUp={ (e)=> e.key === "Enter" && ON_KEYUP_IMG(e) }
+        onKeyUp={ (e)=> (e.key === "Enter") && imgAct() }
       />
 
-      {/* <img className="ImgBtnSmall"
-        src={`https://bzdrive.com/files/ico/icoSearch.png`}
-        alt={`search`}
-        // onClick={ ()=> ON_KEYUP_IMG({ target:{value:val}, key:"Enter" }) }
-      /> */}
+      {
+        isImg &&
+        <img className="ImgBtnSmall"
+          src={`https://bzdrive.com/files/ico/ico${isImg}.png`}
+          alt={`${isImg}`}
+          onClick={ ()=> imgAct() }
+        />
+      }
 
     </fieldset>
   )

@@ -5,10 +5,12 @@
 
   .Title {
     width:100%;
-    font-size:150%;
     margin:0 0 1vw 0;
-
-    .TitleTxt {width:100%;}
+    
+    .TitleTxt {
+      width:100%;
+      font-size:150%;
+    }
   }
 
   .SearchArea {

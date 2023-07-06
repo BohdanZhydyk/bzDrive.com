@@ -30,7 +30,7 @@
   }
 
   img {
-    display:none;
+    @media print {display:none;}// display:none;
   }
 }
 .Input:focus-within {

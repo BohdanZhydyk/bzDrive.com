@@ -18,7 +18,21 @@ function VINDecoder(){
     {isInput:car?.engine, cl:"Engine",  pr:enginePropses(car, setCar, editErr, setEditErr)}
   ]
 
-  useEffect( ()=>{ (vin?.length === 17) && GET_VIN(vin, car, setCar, editErr, setEditErr) },[vin])
+  useEffect( ()=>{
+    
+    if(vin?.length === 17){
+
+      setEditErr( (prev)=> ({...prev, carVIN:""}) )
+
+      GET_VIN(vin, car, (data)=>{
+        setEditErr( (prev)=> ({...prev, carVIN:data?.msg}) )
+        setCar( (prev)=> ({...prev, ...data?.carData}) )
+      })
+
+    }
+    else{ setCar( (prev)=> false ) }
+
+  },[vin])
 
   // console.log("car", car)
   // console.log("msg", msg)
@@ -28,21 +42,18 @@ function VINDecoder(){
 
       {
         inputs.map( (input, i)=>{
+          const classes = input?.isInput ? `${input?.cl}Input flex` : ``
+          const key = `VINinputs${input?.cl}${i}`
           return(
-            <>
-            {
-              input?.isInput && 
-              <div className={`${input?.cl}Input flex`} key={`VINinputs${i}`}>
-                <Input props={input?.pr}/>
-              </div>
-            }
-            </>
+            <div className={classes} key={key}>
+              { input?.isInput && <Input props={input?.pr}/> }
+            </div>
           )
         })
       }
 
       <div className="VINinput flex">
-        <Input props={vinPropses(vin, setVin, editErr, setEditErr)}/>
+        <Input props={vinPropses(vin, setVin, car, setCar, editErr, setEditErr)}/>
       </div>
 
     </div>

@@ -1,3 +1,5 @@
+import { GET_VIN } from "./../../ZL/VINDecoder/VINDecoderLogic"
+
 
 export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, sanitizeTxt)=> [
   {
@@ -42,6 +44,11 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
     type: `text`,
     val: car?.vin ? sanitizeTxt(car.vin, `VIN`).sanText : '',
     err: editErr?.carVIN ?? '',
+    isImg: car?.vin?.length > 16 ? "Search" : false,
+    imgAct: ()=> GET_VIN(car?.vin, car, (data)=>{
+      setEditErr( (prev)=> ({...prev, carVIN:data?.msg}) )
+      setCar( (prev)=> ({...prev, ...data?.carData}) )
+    }),
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, vin:sanitizeTxt(val, `VIN`).sanText}))
       setSave(true)
