@@ -3,31 +3,37 @@ import { tr } from "../../../AppTranslate"
 import { GetUser, SetUser, RemUser } from "../../../AppFunctions";
 
 
-export const AuthReducer = (action, setFormErr, AppReload)=>{
+export const AuthReducer = (action, setFormErr, CHG_ACT, AppReload)=>{
+
+  const lang = GetUser().lang
 
   switch (action.type) {
     case "SUBMIT": SUBMIT(); break;
     case "LOGOUT": LOGOUT(); break;
     default: break;
   }
-
-  const lang = GetUser().lang
-
+  
   function SUBMIT(){
 
-    const query = {act:action.act, formData:action.formData}
+    const query = {act:action.act, lang, formData:action.formData}
 
     PostToApi( '/getAuth', query, (authData)=>{
 
-      if(authData?.errors){
-        const obj = authData?.errors
+      if(authData?.chgPannel){
+        CHG_ACT(authData?.chgPannel)
+        return
+      }
+      
+      const errors = authData?.errors
+
+      if(errors){
         setFormErr(
           {
-            login:    obj?.login    ? tr(obj.login, lang)   : false,
-            email:    obj?.email    ? tr(obj.email, lang)   : false,
-            pass:     obj?.pass     ? tr(obj.pass, lang)    : false,
-            verify:   obj?.verify   ? tr(obj.verify, lang)  : false,
-            confirm:  obj?.confirm  ? tr(obj.confirm, lang) : false,
+            login:    errors?.login    ? tr(errors.login, lang)   : false,
+            email:    errors?.email    ? tr(errors.email, lang)   : false,
+            pass:     errors?.pass     ? tr(errors.pass, lang)    : false,
+            verify:   errors?.verify   ? tr(errors.verify, lang)  : false,
+            confirm:  errors?.confirm  ? tr(errors.confirm, lang) : false,
           }
         )
         return

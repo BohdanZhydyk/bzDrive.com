@@ -29,12 +29,13 @@ function AuthPanel({ props:{AppReload} }) {
       case "LogIn":   setAct([`login`, `LogIn`, `SignUp`, `Forgot`]);  return;
       case "SignUp":  setAct([`signup`, `SignUp`, `LogIn`, `Forgot`]); return;
       case "Forgot":  setAct([`forgot`, `Forgot`, `LogIn`, `SignUp`]); return;
+      case "Confirm": setAct([`confirm`, `Confirm`]); return;
       default:        setAct([`login`, `LogIn`, `SignUp`, `Forgot`]);  return;
     }
   }
 
-  const SUBMIT = ()=> AuthReducer( { type:"SUBMIT", act:act[0], formData }, setFormErr, AppReload )
-  const LOGOUT = ()=> AuthReducer( { type:"LOGOUT", act:"logout" }, setFormErr, AppReload )
+  const SUBMIT = ()=> AuthReducer( { type:"SUBMIT", act:act[0], formData }, setFormErr, CHG_ACT, AppReload )
+  const LOGOUT = ()=> AuthReducer( { type:"LOGOUT", act:"logout" }, setFormErr, CHG_ACT, AppReload )
 
   return (
     <div className="AuthPanel flex column">

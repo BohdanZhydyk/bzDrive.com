@@ -31,7 +31,7 @@ function Input({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal, cbE
         placeholder={plhol}
         onChange={onChange}
         autoComplete="off"
-        onKeyUp={ (e)=> (e.key === "Enter") && imgAct() }
+        onKeyUp={ (e)=> ((e.key === "Enter") && isImg) && imgAct() }
       />
 
       {

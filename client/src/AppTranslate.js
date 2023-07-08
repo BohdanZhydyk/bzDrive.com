@@ -61,6 +61,7 @@ export const tr = (txt, lang)=>{
     LogInBtn:{en:"Log In", ua:"Увійти", pl:"Zaloguj się"},
     SignUpBtn:{en:"Sign Up", ua:"Зареєструватися", pl:"Zarejestruj się"},
     ForgotBtn:{en:"Forgot Password?", ua:"Забув пароль?", pl:"Zapomniałeś hasła?"},
+    ConfirmBtn:{en:"Confirm", ua:"Підтвердити", pl:"Potwierdźić"},
     PrivacyBtn:{en:"Privacy Policy", ua:"Політика конфіденційності", pl:"Polityka prywatności"},
     LogOutBtn:{en:"Log Out", ua:"Вийти", pl:"Wyloguj się"},
     ImgBtn_empty:{en:"", ua:"", pl:""},
@@ -150,15 +151,40 @@ export const tr = (txt, lang)=>{
       ua:"має містити від 8 до 20 символів!",
       pl:"musi zawierać od 8 do 20 znaków!",
     },
+    UserPresent:{
+      en:"such user already exists in the database!",
+      ua:"такий користувач вже є в базі даних!",
+      pl:"taki użytkownik już istnieje w bazie danych!"
+    },
     UserNotPresent:{
       en:"such user is not present in a database!",
       ua:"такий користувач не знайдений в базі даних!",
       pl:"taki użytkownik nie istnieje w bazie danych!"
     },
+    EmailPresent:{
+      en:"such email already exists in the database!",
+      ua:"такий email вже є в базі даних!",
+      pl:"taki email już istnieje w bazie danych!"
+    },
+    EmailNotPresent:{
+      en:"such email is not present in a database!",
+      ua:"такий email не знайдений в базі даних!",
+      pl:"taki email nie istnieje w bazie danych!"
+    },
+    EmailNotSent:{
+      en:"the server failed to send the email!",
+      ua:"сервер не зміг відправити email!",
+      pl:"serwer nie mógł wysłać wiadomości email!"
+    },
     WrongPass:{
       en:"a wrong password is entered!",
       ua:"введено неправильний пароль!",
       pl:"wprowadzono nieprawidłowe hasło!"
+    },
+    SamePass:{
+      en:"the passwords do not match!",
+      ua:"паролі не співпадають!",
+      pl:"hasła nie zgadzają się!"
     },
     AppAuthor: {
       en:"Web application author:",
@@ -179,6 +205,11 @@ export const tr = (txt, lang)=>{
       en: "Forgot your account password? It can happen to anyone. Just a few clicks are enough to fully restore the functionality of your account.",
       ua: "Забув пароль до акаунту? Це може трапитися з будь-ким. Достатньо кількох кліків, щоб повністю відновити функціональність свого акаунту.",
       pl: "Zapomniałeś hasła do swojego konta? To może przytrafić się każdemu. Wystarczy kilka kliknięć, aby w pełni przywrócić funkcjonalność swojego konta."
+    },
+    SecurityPannelTxtConfirm:{
+      en: "Enter the password you received in the email within 10 minutes to proceed.",
+      ua: "Введіть пароль, який ви отримали в email протягом 10 хвилин, щоб продовжити.",
+      pl: "Wprowadź hasło, które otrzymałeś w wiadomości email w ciągu 10 minut, aby kontynuować."
     },
     AddNewCompanyBtn:{en:"Add a new company", ua:"Додати нову компанію", pl:"Dodać nową firmę"},
     ActionBtn_color:{en:"color", ua:"колір", pl:"kolor"},
