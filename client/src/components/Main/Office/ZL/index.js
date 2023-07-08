@@ -9,6 +9,7 @@ import { Week } from "./Week"
 import { AddWeekBtn } from "./AddWeekBtn"
 import { Title } from "./Title"
 import SearchArea from "./SearchArea"
+import VINDecoder from "../VINDecoder"
 
 
 function ZL({ props:{size, company} }) {
@@ -56,6 +57,8 @@ function ZL({ props:{size, company} }) {
       <SearchArea props={{tr, lang, company, mode, search, setSearch, orders, setOrders, ZLreducer, RELOAD}} />
 
       { calendar && <Title props={{mode, lang, calendar}} /> }
+
+      <VINDecoder props={{}}/>
 
       <AddWeekBtn props={AddWeekBtnMinusProps}/>
 

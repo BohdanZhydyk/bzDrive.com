@@ -8,11 +8,20 @@ exports.getOffice = (req, res)=>{
   const object = req?.body?.object
 
   // getting carInfo from database by VIN
-  if(object?.getCar){console.log(object)
+  if(object?.getCar){
     const vin = object?.getCar
     const query = {"car.vin":vin}
     bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (carData)=>{
       res.send({...carData, result: carData?.result.reverse()})
+      return
+    })
+  }
+  // getting clientInfo from database by NIP
+  if(object?.getClient){
+    const nip = object?.getClient
+    const query = {"client.nip":nip}
+    bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (clientData)=>{
+      res.send({...clientData, result: clientData?.result.reverse()})
       return
     })
   }

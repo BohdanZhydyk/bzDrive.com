@@ -1,4 +1,5 @@
-import { GET_VIN } from "./../../ZL/VINDecoder/VINDecoderLogic"
+import { GET_VIN } from "../../VINDecoder/VINDecoderLogic"
+import { GET_NIP } from "../../NIPinfo/NIPinfoLogic"
 
 
 export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, sanitizeTxt)=> [
@@ -136,6 +137,11 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     type: `text`,
     val: client?.nip ? sanitizeTxt(client.nip, `NIP`).sanText : '',
     err: editErr?.clientNIP ?? '',
+    isImg: client?.nip?.length > 12 ? "Search" : false,
+    imgAct: ()=> GET_NIP(client?.nip, client, (data)=>{
+      setEditErr( (prev)=> ({...prev, clientNIP:data?.msg}) )
+      setClient( (prev)=> ({...prev, ...data?.clientData}) )
+    }),
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, nip:sanitizeTxt(val, `NIP`).sanText}))
       setSave(true)

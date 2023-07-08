@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 
 import "./VINDecoder.scss"
-import Input from "../../../../All/Input"
+import Input from "../../../All/Input"
 import { GET_VIN, brandPropses, enginePropses, modelPropses, prodPropses, vinPropses } from "./VINDecoderLogic"
 
 

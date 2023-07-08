@@ -2,7 +2,6 @@ import React from "react"
 
 import { tr } from "../../../../AppTranslate"
 import { TimeToObject } from "../../../../AppFunctions"
-import VINDecoder from "./VINDecoder"
 
 
 export function Title({ props:{mode, lang, calendar} }){
@@ -28,8 +27,6 @@ export function Title({ props:{mode, lang, calendar} }){
     <div className="Title bold flex column">
 
       <span className="TitleTxt flex">{title()}</span>
-
-      <VINDecoder props={{}}/>
       
     </div>
   )

@@ -1,6 +1,6 @@
 import axios from "axios"
-import { tr } from "../../../../../AppTranslate"
-import { GetUser, PostToApi, bzCalc, sanitizeTxt } from "../../../../../AppFunctions"
+import { tr } from "./../../../../AppTranslate"
+import { GetUser, PostToApi, bzCalc, sanitizeTxt } from "./../../../../AppFunctions"
 
 
 const lang = GetUser().lang
@@ -71,20 +71,22 @@ export const GET_VIN = (vin, car, cb)=>{
       model:    data[data?.length - 1]?.car?.model,
       prod:     data[data?.length - 1]?.car?.prod,
       engine:   data[data?.length - 1]?.car?.engine,
-      vin:      data[data?.length - 1]?.car?.vin,
+      // vin:      data[data?.length - 1]?.car?.vin,
       numbers:  data[data?.length - 1]?.car?.numbers,
       color:    data[data?.length - 1]?.car?.color
     }
 
     if( carData ){
-      cb( {msg:`CarInfo by bzDrive db`, carData} )
+      cb( {msg:`by bzDrive db`, carData} )
       return
     }
 
     // lt link = `https://www.decodethis.com/webservices/decodes/${vin}/xB6xzN1vUA-dXdL41EZf/1.json`
     // let link = `https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvaluesextended/${vin}?format=json` //Nhtsa
     
-    axios.get( `https://auto.dev/api/vin/${vin}?apikey=ZrQEPSkKYnp1YTgzQGdtYWlsLmNvbQ==` ).then( (res)=>{
+    axios.get(
+      `https://auto.dev/api/vin/${vin}?apikey=ZrQEPSkKYnp1YTgzQGdtYWlsLmNvbQ==`
+    ).then( (res)=>{
       
       // ZrQEPSkKYnp1YTgzQGdtYWlsLmNvbQ==
       // FREE = 5,000 API calls/mo
@@ -111,7 +113,7 @@ export const GET_VIN = (vin, car, cb)=>{
         const engine = `${size}${code}${hp}${drive() ? `_${drive()}` : ``}`
         const carData = {...car, brand, model, prod, engine}
         
-        cb( {msg:`CarInfo by "auto.dev" API`, carData} )
+        cb( {msg:`by "auto.dev"`, carData} )
         return
       }
     })
