@@ -5,7 +5,7 @@ import ActionBtn from "../../../All/ActionBtn"
 import EditArea from "../EditArea"
 
 
-export function InvLine({ props:{company, mode, top, invoice, RELOAD} }){
+export function InvLine({ props:{company, mode, top, invoice, dlw, RELOAD} }){
 
   const [edit, setEdit] = useState(false)
   
@@ -25,6 +25,8 @@ export function InvLine({ props:{company, mode, top, invoice, RELOAD} }){
 
   return(
     <div className="InvLine flex wrap stretch">
+
+      { top && <div className="DownLoadBar flex" style={{width:`${dlw}%`}}></div> }
       
       <span className={`InvNr Cell ${top ? `TopCell` : statusColor} flex`}>{nr}</span>
       <span className={`InvSel Cell ${top ? `TopCell` : statusColor} flex start`}>{seller}</span>

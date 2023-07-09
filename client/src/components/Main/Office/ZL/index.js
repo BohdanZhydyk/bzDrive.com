@@ -8,7 +8,7 @@ import { DaysNamePannel } from "./DaysNamePannel"
 import { Week } from "./Week"
 import { AddWeekBtn } from "./AddWeekBtn"
 import { Title } from "./Title"
-import SearchArea from "./SearchArea"
+import SearchArea from "../SearchArea"
 import VINDecoder from "../VINDecoder"
 
 

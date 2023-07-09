@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react"
 import "./FS.scss"
 import { FSreducer } from "./FSreducer"
 import { tr } from "../../../../AppTranslate"
-import { GetUser, TimeTo_YYYYMM, TimeTo_YYYYMMDD } from "../../../../AppFunctions"
+import { GetUser, TimeTo_YYYYMMDD, YYYYMMDD_ToFirstDayOfMonth, YYYYMMDD_ToLastDayOfMonth } from "../../../../AppFunctions"
 import { InvLine } from "./InvLine"
 import { Title } from "./Title"
+import NIPinfo from "../NIPinfo"
 
 
 function FS({ props:{company} }){
@@ -21,15 +22,58 @@ function FS({ props:{company} }){
     sum: `${tr(`TableSUM`,lang)}, zł`
   }
 
-  const [invoices, setInvoices] = useState(false)
+  const [invoices, setInvoices] = useState([])
 
-  const [firstDay, setFirstDay] = useState( parseInt(`${TimeTo_YYYYMM( Date.now() )}01`) )
-  const [lastDay, setLastDay] = useState( parseInt(`${TimeTo_YYYYMMDD( Date.now() )}`) )
+  const [dlw, setDlw] = useState(0)
+
+  const date = TimeTo_YYYYMMDD( Date.now() )
+
+  const [firstDay, setFirstDay] = useState( YYYYMMDD_ToFirstDayOfMonth(date) )
+  const [lastDay, setLastDay] = useState( YYYYMMDD_ToLastDayOfMonth(date) )
+
+  let intDownloadBtn = null
+
+  const GET_INVOICES = (firstDay, lastDay)=>{
+
+    clearInterval(intDownloadBtn)
+    setDlw(0)
+
+    intDownloadBtn = setInterval( ()=>{ setDlw( prev=> prev += (100 - prev)/100 ) }, 5)
+
+    const query = {mode, companyName:company?.shortName, "nr.from":{ $gte:firstDay, $lte:lastDay }}
+    FSreducer({type:"GET_INVOICES", query}, (data)=>{
+
+      const sortedData = data.sort( (a, b) =>{
+        return (a.nr.from !== b.nr.from) ? a.nr.from - b.nr.from : a.nr.sign - b.nr.sign
+      })
+      setInvoices(prev=> prev ? [...sortedData, ...prev] : [...sortedData] )
+
+      clearInterval(intDownloadBtn)
+      setDlw(0)
+    })
+
+  }
+
+  const MINUS_MONTH = (currentFirstDay)=>{
+
+    const currentYear = currentFirstDay.toString().slice(0, 4)
+    const currentMonth = currentFirstDay.toString().slice(4, 6)
+  
+    const newMonth = (currentMonth === '01') ? '12' : (parseInt(currentMonth, 10) - 1).toString().padStart(2, '0')
+    const newYear = (currentMonth === '01') ? (parseInt(currentYear, 10) - 1).toString() : currentYear
+  
+    const newFirstDay = parseInt(`${newYear}${newMonth}01`, 10)
+    const newLastDay = YYYYMMDD_ToLastDayOfMonth(newFirstDay)
+  
+    setFirstDay(newFirstDay)
+    // setLastDay(newLastDay)
+  
+    GET_INVOICES(newFirstDay, newLastDay)
+  }
 
   const RELOAD = ()=>{
-    setInvoices(false)
-    const query = {mode, companyName:company?.shortName, "nr.from":{ $gte:firstDay, $lte:lastDay }}
-    FSreducer({type:"GET_INVOICES", query}, (data)=>setInvoices(data))
+    setInvoices([])
+    GET_INVOICES(firstDay, lastDay)
   }
 
   useEffect( ()=>{ RELOAD() },[company])
@@ -39,16 +83,26 @@ function FS({ props:{company} }){
   return(
     <div className="FS flex column">
 
-      { invoices && <Title props={{mode, lang, firstDay, lastDay}} /> }
+      <Title props={{mode, lang, firstDay, lastDay}} />
+
+      <div className="ToolsArea flex end wrap">
+
+        <NIPinfo props={{}}/>
+
+        <div className="MinusMonthBtn flex" onClick={()=>MINUS_MONTH(firstDay)}>
+          <span>{tr(`MinusMonthBtn`,lang)}</span>
+        </div>
+        
+      </div>
 
       {
-        invoices && [topLine, ...invoices].map( (invoice, i)=>{
+        [topLine, ...invoices].map( (invoice, i)=>{
 
           const key = `InvoiceLine${i}`
           const top = i === 0
 
           return(
-            <InvLine props={{company, mode, top, invoice, RELOAD}} key={key} />
+            <InvLine props={{company, mode, top, invoice, dlw, RELOAD}} key={key} />
           )
         })
       }

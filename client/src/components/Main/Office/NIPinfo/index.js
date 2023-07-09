@@ -1,60 +1,81 @@
 import React, { useEffect, useState } from "react"
 
 import "./NIPinfo.scss"
-import Input from "./../Input"
-import { GET_VIN, brandPropses, enginePropses, modelPropses, prodPropses, vinPropses } from "./VINDecoderLogic"
+import "../EditArea/ElInfo/ElInfo.scss"
+import { tr } from "../../../../AppTranslate"
+import { GetUser } from "../../../../AppFunctions"
+import Input from "../../../All/Input"
+import { GET_NIP, nipPropses } from "./NIPinfoLogic"
+import { ClientPropses } from "../EditArea/ElInfo/propses"
+import { InfoPannel } from "../EditArea/ElInfo/InfoPannel"
 
 
-function NIPinfo(){
+function NIPinfo({ props:{} }){
 
-  const [vin, setVin] = useState(false)
-  const [car, setCar] = useState(false)
+  const lang = GetUser().lang
+
+  const [nip, setNip] = useState(false)
+
+  const [client, setClient] = useState(false)
+  const [clients, setClients] = useState(false)
+
   const [editErr, setEditErr] = useState(false)
+  const [save, setSave] = useState(false)
 
-  const inputs = [
-    {isInput:car?.brand,  cl:"Brand",   pr:brandPropses(car, setCar, editErr, setEditErr)},
-    {isInput:car?.model,  cl:"Model",   pr:modelPropses(car, setCar, editErr, setEditErr)},
-    {isInput:car?.prod,   cl:"Prod",    pr:prodPropses(car, setCar, editErr, setEditErr)},
-    {isInput:car?.engine, cl:"Engine",  pr:enginePropses(car, setCar, editErr, setEditErr)}
-  ]
+  const CHG_CL = (cl)=>{
+    setEditErr( (prev)=> ({...prev, NIP:cl?.msg}) )
+    setClient(cl?.clientData)
+  }
 
   useEffect( ()=>{
     
-    if(vin?.length === 17){
+    if(nip?.length === 13){
 
-      setEditErr( (prev)=> ({...prev, carVIN:""}) )
+      setClient( (prev)=> false )
+      setClients( (prev)=> false )
+      setEditErr( (prev)=> ({...prev, NIP:""}) )
 
-      GET_VIN(vin, car, (data)=>{
-        setEditErr( (prev)=> ({...prev, carVIN:data?.msg}) )
-        setCar( (prev)=> ({...prev, ...data?.carData}) )
+      GET_NIP(nip, clients[0], (data)=>{
+        setEditErr( (prev)=> ({...prev, NIP:data[0]?.msg}) )
+        setClient( (prev)=> ({...prev, ...data[0]?.clientData}) )
+        setClients( (prev)=> data )
       })
 
     }
-    else{ setCar( (prev)=> false ) }
+    else{
+      setClient( (prev)=> false )
+      setClients( (prev)=> false )
+    }
 
-  },[vin])
+  },[nip])
 
-  // console.log("car", car)
+  const ClientPr  = ClientPropses(tr, lang, client, setClient, editErr, setEditErr, setSave)
+
+  // console.log("clients", clients)
   // console.log("msg", msg)
 
   return(  
-    <div className="VINDecoder flex end wrap">
+    <div className="NIPinfo flex stretch end wrap">
 
       {
-        inputs.map( (input, i)=>{
-          const classes = input?.isInput ? `${input?.cl}Input flex` : ``
-          const key = `VINinputs${input?.cl}${i}`
-          return(
-            <div className={classes} key={key}>
-              { input?.isInput && <Input props={input?.pr}/> }
-            </div>
-          )
+        clients.length > 0 && clients.map( (cl, c)=>{
+          const key = `ChgClientBtn${c}`
+          return (cl?.msg !== editErr?.NIP)
+          ? <div className="ChgClientBtn flex" onClick={()=>CHG_CL(cl)} key={key}>{cl?.msg}</div>
+          : <div key={key}></div>
         })
       }
 
-      <div className="VINinput flex">
-        <Input props={vinPropses(vin, setVin, car, setCar, editErr, setEditErr)}/>
+      <div className="NIPinput flex">
+        <Input props={nipPropses(nip, setNip, client, setClient, editErr, setEditErr)}/>
       </div>
+
+      {
+        client &&
+        <section className="ElInfo flex end">
+          <InfoPannel props={{lang, title:`InfoPannelClient`, InfoProps:ClientPr}} />
+        </section>
+      }
 
     </div>
   )

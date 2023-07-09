@@ -1,4 +1,4 @@
-import { sanitizeTxt } from "./../../../../../AppFunctions"
+import { sanitizeTxt } from "./../../../../AppFunctions"
 
 
 export const fromProps = (tr, lang, search, setSearch)=> ({

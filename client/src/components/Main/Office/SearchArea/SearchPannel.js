@@ -1,7 +1,7 @@
 import React from "react"
 
-import Input from "../../../../All/Input"
-import ActionBtn from "../../../../All/ActionBtn"
+import Input from "../../../All/Input"
+import ActionBtn from "../../../All/ActionBtn"
 import { carProps, clientProps, fromProps, telProps, toProps, vinProps } from "./searchProps"
 
 

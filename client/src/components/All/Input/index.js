@@ -20,7 +20,7 @@ function Input({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal, cbE
   return (
     <fieldset className="Input flex">
 
-      <legend className={err ? `txtOrg` : `txtGry`}>
+      <legend className={`${err ? `txtOrg` : `txtGry`} overflow`}>
         <span>{legend}</span>
         <span>{`${err ? ` - ${err}` : ``}`}</span>
       </legend>

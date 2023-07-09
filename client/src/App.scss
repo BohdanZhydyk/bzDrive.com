@@ -37,6 +37,12 @@ body {
   .around	  {justify-content:space-around;}
 
   .blur {filter:blur(5px);}
+
+  .overflow {
+    overflow: hidden; /* Ukryj zawartość, która wychodzi poza element */
+    text-overflow: ellipsis; /* Pokaż "..." na końcu obciętego tekstu */
+    white-space: nowrap; /* Zapobiegaj zawijaniu tekstu */
+  }
   
   .ImgBtn {
     width:2vw; height:2vw; margin:0.25vw 0.75vw;

@@ -1,6 +1,5 @@
 import React from "react"
-
-import { Order } from "../Order"
+import { Order } from "../ZL/Order"
 
 
 export function SearchOrdersPannel({ props:{company, mode, search, orders, RELOAD} }) {

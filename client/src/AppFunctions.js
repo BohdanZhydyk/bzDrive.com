@@ -39,6 +39,18 @@ export function YYYYMMDD_ToWeekDay(date){
 export function TimeToWeekDay(time){
   return new Date(time).getDay() !== 0 ? new Date(time).getDay() : 7
 }
+export function YYYYMMDD_ToFirstDayOfMonth(date) {
+  const year = date.toString().slice(0, 4)
+  const month = date.toString().slice(4, 6)
+  const day = '01'
+  return parseInt(`${year}${month}${day}`, 10)
+}
+export function YYYYMMDD_ToLastDayOfMonth(date) {
+  const year = date.toString().slice(0, 4)
+  const month = date.toString().slice(4, 6)
+  const lastDay = new Date(year, month, 0).getDate().toString().padStart(2, '0')
+  return parseInt(`${year}${month}${lastDay}`, 10)
+}
 export function DocNameNormalize(nr){
   const mode = nr?.mode
   const year = nr?.from.toString().slice(0, 4)

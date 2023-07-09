@@ -2,7 +2,6 @@ import React from "react"
 
 import "./ElInfo.scss"
 import { tr } from "../../../../../AppTranslate"
-import { sanitizeTxt } from "../../../../../AppFunctions"
 import { CarPropses, DealerPropses, ClientPropses, SellerPropses, BuyerPropses } from "./propses"
 import { InfoPannel } from "./InfoPannel"
 
@@ -15,11 +14,11 @@ function ElInfo({ props:{
 
   const lang = user.lang
 
-  const CarPr     = CarPropses(tr, lang, car, setCar, editErr, setEditErr, setSave, sanitizeTxt)
-  const ClientPr  = ClientPropses(tr, lang, client, setClient, editErr, setEditErr, setSave, sanitizeTxt)
-  const SellerPr  = SellerPropses(tr, lang, seller, setSeller, editErr, setEditErr, setSave, sanitizeTxt)
-  const DealerPr  = DealerPropses(tr, lang, dealer, setDealer, editErr, setEditErr, setSave, sanitizeTxt)
-  const BuyerPr   = BuyerPropses(tr, lang, buyer, setBuyer, editErr, setEditErr, setSave, sanitizeTxt)
+  const CarPr     = CarPropses(tr, lang, car, setCar, editErr, setEditErr, setSave)
+  const ClientPr  = ClientPropses(tr, lang, client, setClient, editErr, setEditErr, setSave)
+  const SellerPr  = SellerPropses(tr, lang, seller, setSeller, editErr, setEditErr, setSave)
+  const DealerPr  = DealerPropses(tr, lang, dealer, setDealer, editErr, setEditErr, setSave)
+  const BuyerPr   = BuyerPropses(tr, lang, buyer, setBuyer, editErr, setEditErr, setSave)
 
   const pannel = ()=>{
     switch (mode) {

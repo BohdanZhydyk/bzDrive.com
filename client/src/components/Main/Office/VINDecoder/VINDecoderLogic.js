@@ -16,7 +16,7 @@ export const vinPropses = (vin, setVin, car, setCar, editErr, setEditErr)=>({
   imgAct: ()=>{
     setVin( (prev)=> false )
     setCar( (prev)=> false )
-    setEditErr( (prev)=> ({...prev, carVIN:false}) )
+    setEditErr( (prev)=> false )
   },
   cbVal: (val)=> setVin( (prev)=> sanitizeTxt(val, `VIN`).sanText ),
   cbErr: (val)=> setEditErr( (prev)=> ({...prev, carVIN:sanitizeTxt(val, `VIN`).sanErr} ))

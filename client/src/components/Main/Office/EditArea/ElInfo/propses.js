@@ -1,8 +1,9 @@
 import { GET_VIN } from "../../VINDecoder/VINDecoderLogic"
 import { GET_NIP } from "../../NIPinfo/NIPinfoLogic"
+import { sanitizeTxt } from "../../../../../AppFunctions"
 
 
-export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, sanitizeTxt)=> [
+export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave)=> [
   {
     classes:"brand",
     legend: tr(`BrandLegend`,lang),
@@ -118,7 +119,7 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave, 
   }
 ]
 
-export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, setSave, sanitizeTxt)=> [
+export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, setSave)=> [
   {
     classes:"name",
     legend: tr(`NameLegend`,lang),
@@ -246,7 +247,7 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
   }
 ]
 
-export const SellerPropses = (tr, lang, seller, setSeller, editErr, setEditErr, setSave, sanitizeTxt)=> [
+export const SellerPropses = (tr, lang, seller, setSeller, editErr, setEditErr, setSave)=> [
   {
     classes:"name",
     legend: tr(`NameLegend`,lang),
@@ -369,7 +370,7 @@ export const SellerPropses = (tr, lang, seller, setSeller, editErr, setEditErr, 
   }
 ]
 
-export const BuyerPropses = (tr, lang, buyer, setBuyer, editErr, setEditErr, setSave, sanitizeTxt)=> [
+export const BuyerPropses = (tr, lang, buyer, setBuyer, editErr, setEditErr, setSave)=> [
   {
     classes:"name",
     legend: tr(`NameLegend`,lang),
@@ -492,7 +493,7 @@ export const BuyerPropses = (tr, lang, buyer, setBuyer, editErr, setEditErr, set
   }
 ]
 
-export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, setSave, sanitizeTxt)=> [
+export const DealerPropses = (tr, lang, dealer, setDealer, editErr, setEditErr, setSave)=> [
   {
     classes:"name",
     legend: tr(`NameLegend`,lang),
