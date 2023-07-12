@@ -16,12 +16,19 @@ exports.getOffice = (req, res)=>{
       return
     })
   }
-  // getting clientInfo from database by NIP
-  if(object?.getClient){
-    const nip = object?.getClient
-    const query = {"client.nip":nip}
-    bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (clientData)=>{
-      res.send({...clientData, result: clientData?.result.reverse()})
+  // getting partnerInfo from database by NIP
+  if(object?.getPartner){
+    const nip = object?.nip
+    const partner = object?.partner
+    const query = (partner)=>{
+      switch(partner){
+        case "client": return {"client.nip":nip}
+        case "seller": return {"seller.nip":nip}
+        default: return {"dealer.nip":nip}
+      }
+    }
+    bzDB( { req, res, col:'bzDocuments', act:"FIND", query:query(partner) }, (partnerData)=>{
+      res.send({...partnerData, result: partnerData?.result.reverse()})
       return
     })
   }

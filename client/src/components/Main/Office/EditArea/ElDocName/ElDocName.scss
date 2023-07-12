@@ -34,11 +34,11 @@
     
     .DocTitle {
       width:100%;
-      font-size:150%;
   
       .DocName {
         width:calc(60% - 2vw);
         padding:0 1vw;
+        font-size:150%;
         @media (min-width: 481px) and (max-width: 767px) {width:calc(50% - 2vw)}
         @media (max-width: 481px) {width:calc(40% - 2vw)}
         @media print {width:calc(60% - 2vw)}
@@ -50,6 +50,7 @@
         padding:0.25vw 0;
         border:1px solid #999;
         border-radius:0.5vw;
+        font-size:150%;
         @media (min-width: 481px) and (max-width: 767px) {width:calc(50% - 2px)}
         @media (max-width: 481px) {width:calc(60% - 2px)}
         @media print {width:calc(39% - 2px)}

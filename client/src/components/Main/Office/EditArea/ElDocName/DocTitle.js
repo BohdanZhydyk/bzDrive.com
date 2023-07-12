@@ -1,10 +1,10 @@
 import React from "react"
 
-import { tr } from "../../../../../AppTranslate"
 import { DocNameNormalize } from "../../../../../AppFunctions"
+import Input from "../../../../All/Input"
 
 
-export function DocTitle({ props:{lang, mode, nr} }) {
+export function DocTitle({ props:{tr, lang, mode, nr, docNrPr} }) {
 
   const docName = `${tr(`DocName_${mode}`,lang)[0]} Nr`
   const docNr = DocNameNormalize(nr)
@@ -14,7 +14,11 @@ export function DocTitle({ props:{lang, mode, nr} }) {
 
       <div className="DocName flex end">{docName}</div>
 
-      <div className="DocNr flex">{docNr}</div>
+      {
+        mode === 'FZ'
+        ? <Input props={docNrPr} />
+        : <div className="DocNr flex">{docNr}</div>
+      }
 
     </div>
   )

@@ -139,9 +139,9 @@ export const ClientPropses = (tr, lang, client, setClient, editErr, setEditErr, 
     val: client?.nip ? sanitizeTxt(client.nip, `NIP`).sanText : '',
     err: editErr?.clientNIP ?? '',
     isImg: client?.nip?.length > 12 ? "Search" : false,
-    imgAct: ()=> GET_NIP(client?.nip, client, (data)=>{
+    imgAct: ()=> GET_NIP(client?.nip, "client", (data)=>{
       setEditErr( (prev)=> ({...prev, clientNIP:data?.msg}) )
-      setClient( (prev)=> ({...prev, ...data?.clientData}) )
+      setClient( (prev)=> ({...prev, ...data[0]?.partnerData}) )
     }),
     cbVal: (val)=>{
       setClient( (prev)=> ({...prev, nip:sanitizeTxt(val, `NIP`).sanText}))
@@ -266,6 +266,11 @@ export const SellerPropses = (tr, lang, seller, setSeller, editErr, setEditErr, 
     type: `text`,
     val: seller?.nip ? sanitizeTxt(seller.nip, `NIP`).sanText : '',
     err: editErr?.sellerNIP ?? '',
+    isImg: seller?.nip?.length > 12 ? "Search" : false,
+    imgAct: ()=> GET_NIP(seller?.nip, "seller", (data)=>{
+      setEditErr( (prev)=> ({...prev, sellerNIP:data?.msg}) )
+      setSeller( (prev)=> ({...prev, ...data[0]?.partnerData}) )
+    }),
     cbVal: (val)=>{
       setSeller( (prev)=> ({...prev, nip:sanitizeTxt(val, `NIP`).sanText}))
       setSave(true)

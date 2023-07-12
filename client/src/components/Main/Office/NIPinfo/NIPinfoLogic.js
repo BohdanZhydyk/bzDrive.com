@@ -5,7 +5,7 @@ import { GetUser, PostToApi, TimeToObject, sanitizeTxt } from "./../../../../App
 
 const lang = GetUser().lang
 
-export const nipPropses = (nip, setNip, client, setClient, editErr, setEditErr)=>({
+export const nipPropses = (nip, setNip, partner, setPartner, editErr, setEditErr)=>({
   classes:"nip",
   legend: tr(`NipLegend`,lang),
   plhol: tr(`NipSearchPlaceHolder`,lang),
@@ -15,38 +15,37 @@ export const nipPropses = (nip, setNip, client, setClient, editErr, setEditErr)=
   isImg: nip?.length === 13 ? "Erase" : false,
   imgAct: ()=>{
     setNip( (prev)=> false )
-    setClient( (prev)=> false )
+    setPartner( (prev)=> false )
     setEditErr( (prev)=> false )
   },
   cbVal: (val)=> setNip( (prev)=> sanitizeTxt(val, `NIP`).sanText ),
   cbErr: (val)=> setEditErr( (prev)=> ({...prev, NIP:sanitizeTxt(val, `NIP`).sanErr} ))
 })
 
-export const GET_NIP = (nip, client, cb)=>{
+export const GET_NIP = (nip, partner, cb)=>{
 
   let response = []
 
-  PostToApi("/getOffice", { getClient:nip }, (data)=>{
+  PostToApi("/getOffice", { getPartner:true, nip, partner }, (data)=>{
 
-    const clientData = {
-      ...client,
-      name: data[data?.length - 1]?.client?.name,
-      nip: data[data?.length - 1]?.client?.nip,
-      account: data[data?.length - 1]?.client?.account,
+    const partnerData = {
+      name: data[data?.length - 1]?.[partner]?.name,
+      nip: data[data?.length - 1]?.[partner]?.nip,
+      account: data[data?.length - 1]?.[partner]?.account,
       addr:{
-        zip: data[data?.length - 1]?.client?.addr?.zip,
-        town: data[data?.length - 1]?.client?.addr?.town,
-        street: data[data?.length - 1]?.client?.addr?.street,
-        nr: data[data?.length - 1]?.client?.addr?.nr,
+        zip: data[data?.length - 1]?.[partner]?.addr?.zip,
+        town: data[data?.length - 1]?.[partner]?.addr?.town,
+        street: data[data?.length - 1]?.[partner]?.addr?.street,
+        nr: data[data?.length - 1]?.[partner]?.addr?.nr,
       },
       contacts: {
-        tel: data[data?.length - 1]?.client?.contacts?.tel,
-        www: data[data?.length - 1]?.client?.contacts?.www,
-        email: data[data?.length - 1]?.client?.contacts?.email,
+        tel: data[data?.length - 1]?.[partner]?.contacts?.tel,
+        www: data[data?.length - 1]?.[partner]?.contacts?.www,
+        email: data[data?.length - 1]?.[partner]?.contacts?.email,
       }
     }
 
-    if( data[0] ){ response.push( {msg:`bzDriveDB`, clientData} ) }
+    if( data[0] ){ response.push( {msg:`bzDriveDB`, partnerData} ) }
 
     const NIP = nip.split("-").join("")
     const date = TimeToObject(new Date( Date.now() ))
@@ -84,8 +83,7 @@ export const GET_NIP = (nip, client, cb)=>{
           return newStr.trim()
         }
         
-        const clientData = {
-          ...client,
+        const partnerData = {
           name: firstToCapital( res.name ),
           nip: nip,
           account: res?.accountNumbers[0] ? res.accountNumbers[0] : "",
@@ -102,8 +100,7 @@ export const GET_NIP = (nip, client, cb)=>{
           regDate: res?.registrationLegalDate
         }
 
-        response.push( {msg:`CEIDG`, clientData} )
-
+        response.push( {msg:`CEIDG`, partnerData} )
         cb(response)
         return
 
@@ -111,7 +108,7 @@ export const GET_NIP = (nip, client, cb)=>{
       
     })
 
-    cb( {msg:`no ClientInfo`, carData:client} )
+    cb( {msg:`no PartnerInfo`, partnerData:partner} )
     return
   })
 

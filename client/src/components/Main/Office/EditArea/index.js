@@ -89,7 +89,7 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD}
 
       { ["FS","FZ"].includes(mode) && <ElComments props={ElCommentsProps}/> }
 
-      { ["ZL","PS","PZ","ZU"].includes(mode) && !printMode && <ElFiles props={ElFilesProps} /> }
+      { ["ZL","PS","PZ","ZU","FZ"].includes(mode) && !printMode && <ElFiles props={ElFilesProps} /> }
 
       { printMode && <ElSignatures props={ElSignaturesProps}/> }
 

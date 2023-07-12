@@ -16,64 +16,64 @@ function NIPinfo({ props:{} }){
 
   const [nip, setNip] = useState(false)
 
-  const [client, setClient] = useState(false)
-  const [clients, setClients] = useState(false)
+  const [partner, setPartner] = useState(false)
+  const [partners, setPartners] = useState(false)
 
   const [editErr, setEditErr] = useState(false)
   const [save, setSave] = useState(false)
 
-  const CHG_CL = (cl)=>{
-    setEditErr( (prev)=> ({...prev, NIP:cl?.msg}) )
-    setClient(cl?.clientData)
+  const CHG_CL = (pa)=>{
+    setEditErr( (prev)=> ({...prev, NIP:pa?.msg}) )
+    setPartner(pa?.partnerData)
   }
 
   useEffect( ()=>{
     
     if(nip?.length === 13){
 
-      setClient( (prev)=> false )
-      setClients( (prev)=> false )
+      setPartner( (prev)=> false )
+      setPartners( (prev)=> false )
       setEditErr( (prev)=> ({...prev, NIP:""}) )
 
-      GET_NIP(nip, clients[0], (data)=>{
+      GET_NIP(nip, "client", (data)=>{
         setEditErr( (prev)=> ({...prev, NIP:data[0]?.msg}) )
-        setClient( (prev)=> ({...prev, ...data[0]?.clientData}) )
-        setClients( (prev)=> data )
+        setPartner( (prev)=> ({...prev, ...data[0]?.partnerData}) )
+        setPartners( (prev)=> data )
       })
 
     }
     else{
-      setClient( (prev)=> false )
-      setClients( (prev)=> false )
+      setPartner( (prev)=> false )
+      setPartners( (prev)=> false )
     }
 
   },[nip])
 
-  const ClientPr  = ClientPropses(tr, lang, client, setClient, editErr, setEditErr, setSave)
+  const partnerPr  = ClientPropses(tr, lang, partner, setPartner, editErr, setEditErr, setSave)
 
   // console.log("clients", clients)
   // console.log("msg", msg)
 
   return(  
-    <div className="NIPinfo flex stretch end wrap">
+    <div className="NIPinfo flex stretch  end wrap">
 
       {
-        clients.length > 0 && clients.map( (cl, c)=>{
-          const key = `ChgClientBtn${c}`
-          return (cl?.msg !== editErr?.NIP)
-          ? <div className="ChgClientBtn flex" onClick={()=>CHG_CL(cl)} key={key}>{cl?.msg}</div>
+        partners.length > 0 && partners.map( (pa, p)=>{
+          const key = `ChgPartnerBtn${p}`
+          return (pa?.msg !== editErr?.NIP)
+          ? <div className="ChgPartnerBtn flex" onClick={()=>CHG_CL(pa)} key={key}>{pa?.msg}</div>
           : <div key={key}></div>
         })
       }
 
       <div className="NIPinput flex">
-        <Input props={nipPropses(nip, setNip, client, setClient, editErr, setEditErr)}/>
+        <Input props={nipPropses(nip, setNip, partner, setPartner, editErr, setEditErr)}/>
       </div>
 
       {
-        client &&
+        partner &&
         <section className="ElInfo flex end">
-          <InfoPannel props={{lang, title:`InfoPannelClient`, InfoProps:ClientPr}} />
+          <InfoPannel props={{lang, title:`InfoPannelClient`, InfoProps:partnerPr}} />
         </section>
       }
 

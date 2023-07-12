@@ -1,6 +1,9 @@
 import React from "react"
 
 import "./ElDocName.scss"
+import { docNrProps } from "./propses"
+import { tr } from "../../../../../AppTranslate"
+import { sanitizeTxt } from "../../../../../AppFunctions"
 import { DocTitle } from "./DocTitle"
 import { DocSign } from "./DocSign"
 
@@ -11,6 +14,8 @@ function ElDocName({ props:{user, mode, dealer, nr, setNr, setSave, editErr, set
 
   const logoImg = `https://bzdrive.com/files/dealers/${dealer?.img ?? ''}`
   const logoName = dealer?.shortName ?? ''
+
+  const docNrPr = docNrProps(tr, lang, nr, setNr, editErr, setEditErr, setSave, sanitizeTxt)
 
   return(
     <section className="ElDocName flex end stretch wrap">
@@ -25,7 +30,7 @@ function ElDocName({ props:{user, mode, dealer, nr, setNr, setSave, editErr, set
 
       <div className="ElDocNameData flex column start">
 
-        <DocTitle props={{lang, mode, nr}} />
+        <DocTitle props={{tr, lang, mode, nr, docNrPr}} />
 
         <DocSign props={{lang, mode, nr, setNr, setSave, editErr, setEditErr, printMode}} />
 

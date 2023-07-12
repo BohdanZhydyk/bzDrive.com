@@ -1,4 +1,18 @@
 
+export const docNrProps = (tr, lang, nr, setNr, editErr, setEditErr, setSave, sanitizeTxt)=> ({
+  legend: tr(`DocNrLegend`,lang),
+  type: `text`,
+  val: nr?.assignNr ? nr.assignNr : '',
+  err: editErr?.assignNr ?? '',
+  cbVal: (val)=>{
+    setNr( (prev)=> ({...prev, assignNr:sanitizeTxt(val, `all`).sanText}))
+    setSave(true)
+  },
+  cbErr: (val)=> setEditErr( (prev) => ({
+    ...prev, assignNr:sanitizeTxt(val, `all`).sanErr
+  }))
+})
+
 export const placeProps = (tr, lang, nr, setNr, editErr, setEditErr, setSave, sanitizeTxt)=> ({
   legend: tr(`PlaceLegendTop`,lang),
   type: `text`,

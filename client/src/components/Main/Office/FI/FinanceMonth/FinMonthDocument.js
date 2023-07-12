@@ -8,17 +8,26 @@ import EditArea from "../../EditArea"
 export function FinMonthDocument({ props:{company, doc, d, RELOAD} }){
 
   const mode = doc?.nr?.mode
+  const color = `FinDocColor${mode}`
 
   const [edit, setEdit] = useState(false)
 
-  const color = `FinDocColor${mode}`
+  const partnerName = (doc)=>{
+    const client = doc?.client?.name ? `${doc.client.name} - ` : ``
+    const brand = doc?.car?.brand ? `${doc.car.brand} - ` : ``
+    const model = doc?.car?.model ?? ``
+    if(doc?.car) return `${client}${brand} - ${model}`
+    if(doc?.client?.name) return doc.client.name
+    if(doc?.seller?.name) return doc.seller.name
+    return "-----"
+  }
 
   const docLine = (doc, d)=>{
     return {
       num: `${d}.`,
       usr: doc?.user,
-      nam: DocNameNormalize(doc?.nr),
-      inf: doc?.client?.name ?? (doc?.car ? `${doc?.car?.brand} - ${doc?.car?.model}` : "-----"),
+      nam: doc?.nr?.assignNr ?? DocNameNormalize(doc?.nr),
+      inf: partnerName(doc),
       net: SumArray(doc?.articles?.map( (el)=> el?.NET )),
       bru: SumArray(doc?.articles?.map( (el)=> el?.SUM )),
       btn: <ActionBtn props={{name:`edit`, click:()=> setEdit(!edit) }} />
