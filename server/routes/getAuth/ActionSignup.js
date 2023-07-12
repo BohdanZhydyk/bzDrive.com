@@ -1,9 +1,8 @@
-const axios = require('axios')
 const { bzDB } = require("../bzDB")
 const { bzPassHash } = require("../../safe/bcrypt")
-const { emailPass } = require('../../safe/safe')
 const { getRandomInt } = require("../../functions")
-const { EmailBody } = require("./EmailBody")
+const { EmailBody } = require("../emailer/EmailBody")
+const { sendEmail } = require('../emailer/sendEmail')
 
 
 exports.ActionSignup = (req, res)=>{
@@ -70,17 +69,12 @@ exports.ActionSignup = (req, res)=>{
           
           bzDB( { req, res, col:'bzUsers', act:"INSERT_ONE", query:user }, (dbData)=>{
 
-            let emailData = JSON.parse(JSON.stringify(
-              {
-                pass: emailPass,
-                from: "admin@bzdrive.com",
-                to: email,
-                theme: "bzDrive - SignIn code...",
-                msg: EmailBody({mode:"signin", email, login, lang, code})
-              }
-            ))
+            const from = "admin@bzdrive.com"
+            const to = email
+            const theme = "bzDrive - SignIn code..."
+            const msg = EmailBody({mode:"signin", email, login, lang, code})
 
-            axios.post( 'https://bz83.usermd.net/', emailData ).then( (bzMailData)=>{
+            sendEmail(from, to, theme, msg, (bzMailData)=>{
 
               if(bzMailData.status === 200){
                 res.send({ ...req?.body, result:{ chgPannel: "Confirm" } })
@@ -89,7 +83,7 @@ exports.ActionSignup = (req, res)=>{
 
               res.send({ ...req?.body, result:{ errors: {email:"EmailNotSent"} } })
 
-            }).catch( (err)=> console.log('err',err) )
+            })
 
           })
 

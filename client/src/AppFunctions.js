@@ -460,9 +460,9 @@ export const PostToApi = async (link, object, callback)=>{
     const Data = resData.data
 
     // Set the user language based on the IP country code if not already set
-    const lang = () => {
+    const setLanguage = ()=>{
 
-      if(GetUser().lang) return GetUser().lang
+      if(GetUser().lang) return GetUser().lang?.toLowerCase()
 
       const language = Data?.IP?.country_code?.toLowerCase()
       return(
@@ -475,7 +475,7 @@ export const PostToApi = async (link, object, callback)=>{
     
     // Set the token and user data in local storage
     SetToken(Data?.bzToken)
-    SetUser({...Data?.user, lang: lang()})
+    SetUser({ ...Data?.user, lang: setLanguage() })
 
     // Run the callback function with the response data (if provided)
     if(typeof callback === "function") callback(Data?.result)

@@ -7,7 +7,7 @@ function TagUl({ props:{el, lang} }){
   return(
     <div className="TagUl flex column">
 
-      <span className="Ul">{el.body[lang].ul}</span>
+      <span className="Ul">{el?.body[lang]?.ul}</span>
 
       <ul className="flex column">
       {

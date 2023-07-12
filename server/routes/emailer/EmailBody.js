@@ -27,46 +27,126 @@ exports.EmailBody = ({mode, email, login, lang, code})=>{
     {
       en: "Your e-mail address was entered when you tried to",
       ua: "Твій e-mail було вказано при спробі",
-      pl: "Twój e-mail został wprowadzony podczas próby",
-      ru: "Твой e-mail был указан при попытке"
+      pl: "Twój e-mail został wprowadzony podczas próby"
     },
     {
       en: "register",
       ua: "реєстрації",
-      pl: "rejestracji",
-      ru: "регистрации"
+      pl: "rejestracji"
     },
     {
       en: "reset your password",
       ua: "відновлення паролю",
-      pl: "zresetowania hasła",
-      ru: "восстановления пароля"
+      pl: "zresetowania hasła"
     },
     {
       en: "The procedure of",
       ua: "Процедуру",
-      pl: "Procedurę",
-      ru: "Процедуру"
+      pl: "Procedurę"
     },
     {
       en: "can be continued only from the device from which it was started!",
       ua: "можна продовжити тільки з пристрою, з якого було її розпочато!",
-      pl: "można kontynuować tylko z urządzenia, z którego ona została uruchomiona!",
-      ru: "можно продолжить только с устройства, с которого она была начата!"
+      pl: "można kontynuować tylko z urządzenia, z którego ona została uruchomiona!"
     },
     {
       en: "Copy the code below",
       ua: "Скопіюй поданий нижче код",
-      pl: "Skopiuj poniższy kod",
-      ru: "Скопируй нижеприведенный код"
+      pl: "Skopiuj poniższy kod"
     },
     {
       en: "into the appropriate form on the page",
       ua: "у відповідну форму на сторінці",
-      pl: "do odpowiedniego formularza na stronie",
-      ru: "в соответствующую форму на странице"
+      pl: "do odpowiedniego formularza na stronie"
     }
   ]
+
+  const body = (mode)=>{
+    switch(mode){
+      case "signin": return `
+        <center>
+
+          <p style="${st.p}">
+            <div>${tr[0][lang]} ${tr[1][lang]}.</div>
+            <div style="${st.formData}">
+              <div>
+                <span>login:</span>
+                <span style="${st.org}">${login}</span>
+              </div>
+              <div>
+                <span>e-mail:</span>
+                <span style="${st.org}">${email}</span>
+              </div>
+            </div>
+            <div>${tr[3][lang]} ${tr[1][lang]} ${tr[4][lang]}</div>
+            <div>
+              <span style="${st.yel}">${tr[5][lang]}</span>
+              <span>${tr[6][lang]}...</span>
+            </div>
+          </p>
+
+          <div style="${st.code}">
+            ${code}
+          </div>
+
+        </center>
+      `
+
+      case "forgot": return `
+        <center>
+
+          <p style="${st.p}">
+            <div>${tr[0][lang]} ${tr[2][lang]}.</div>
+            <div style="${st.formData}">
+              <div>
+                <span>login:</span>
+                <span style="${st.org}">${login}</span>
+              </div>
+              <div>
+                <span>e-mail:</span>
+                <span style="${st.org}">${email}</span>
+              </div>
+            </div>
+            <div>${tr[3][lang]} ${tr[2][lang]} ${tr[4][lang]}</div>
+            <div>
+              <span style="${st.yel}">${tr[5][lang]}</span>
+              <span>${tr[6][lang]}...</span>
+            </div>
+          </p>
+
+          <div style="${st.code}">
+            ${code}
+          </div>
+
+        </center>
+      `
+
+      case "newUser": return `
+        <center>
+
+          <p style="${st.p}">
+
+            <div>A new user has registered on the website.</div>
+
+            <div style="${st.formData}">
+              <div>
+                <span>login:</span>
+                <span style="${st.org}">${login}</span>
+              </div>
+              <div>
+                <span>e-mail:</span>
+                <span style="${st.org}">${email}</span>
+              </div>
+            </div>
+
+          </p>
+
+        </center>
+      `
+    
+      default: return( `<center>empty email...</center>` )
+    }
+  }
 
   return `
   <html>
@@ -83,36 +163,7 @@ exports.EmailBody = ({mode, email, login, lang, code})=>{
       </span>
     </header>
 
-    <main style="${st.main}">
-
-      <center>
-
-        <p style="${st.p}">
-          <div>${tr[0][lang]} ${mode === "signin" ? tr[1][lang] : tr[2][lang]}.</div>
-          <div style="${st.formData}">
-            <div>
-              <span>login:</span>
-              <span style="${st.org}">${login}</span>
-            </div>
-            <div>
-              <span>e-mail:</span>
-              <span style="${st.org}">${email}</span>
-            </div>
-          </div>
-          <div>${tr[3][lang]} ${mode === "signin" ? tr[1][lang] : tr[2][lang]} ${tr[4][lang]}</div>
-          <div>
-            <span style="${st.yel}">${tr[5][lang]}</span>
-            <span>${tr[6][lang]}...</span>
-          </div>
-        </p>
-
-        <div style="${st.code}">
-          ${code}
-        </div>
-
-      </center>
-
-    </main>
+    <main style="${st.main}"> ${ body(mode) } </main>
 
     <footer style="${st.footer}">
       <span>&copy;</span>

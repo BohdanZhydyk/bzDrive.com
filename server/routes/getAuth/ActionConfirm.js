@@ -1,5 +1,8 @@
 const { ObjectId } = require('mongodb')
 const { bzDB } = require("../bzDB")
+const { adminEmailAddr } = require('../../safe/safe')
+const { EmailBody } = require('../emailer/EmailBody')
+const { sendEmail } = require('../emailer/sendEmail')
 
 
 exports.ActionConfirm = (req, res)=>{
@@ -7,6 +10,7 @@ exports.ActionConfirm = (req, res)=>{
   const formData = req?.body?.object?.formData
 
   const bzToken = req?.body?.bzToken
+  const lang = req?.body?.object?.lang
   const confirm = formData?.confirm
   const query = { bzToken, confirm:{$exists: true} }
 
@@ -31,6 +35,14 @@ exports.ActionConfirm = (req, res)=>{
     }
 
     if(act === "signup"){
+
+      const from = "admin@bzdrive.com"
+      const to = adminEmailAddr
+      const theme = "bzDrive - newUser"
+      const msg = EmailBody({mode:"newUser", email, login, lang})
+
+      sendEmail(from, to, theme, msg, (bzMailData)=>{})
+
       bzDB( { req, res, col:'bzUsers', act:"INSERT_ONE", query:{...confirmData, pass} }, (insData)=>{
         res.send({ ...req?.body, result:{ chgPannel: "LogIn" } })
       })
