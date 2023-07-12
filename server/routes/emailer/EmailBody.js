@@ -1,9 +1,9 @@
 
 exports.EmailBody = ({mode, email, login, lang, code})=>{
 
-  let logo = "https://files.bzdrive.com/img/Drive/logo/logoDrive.gif"
+  const logo = "https://files.bzdrive.com/img/Drive/logo/logoDrive.gif"
 
-  let st = {
+  const st = {
     wht: "color:#fff;",
     org: "color:#f60;",
     yel: "color:#fd0;",
@@ -19,11 +19,11 @@ exports.EmailBody = ({mode, email, login, lang, code})=>{
     footer: "text-align:right; width:90%; padding:0 5%; color:#fff; background-color:#222; border-top:2px solid #999; border-bottom:2px solid #f60;"
   }
 
-  let bzLink = `<span style="${st.org}">bz</span><span style="${st.wht}">Drive</span><span style="${st.org}">.com</span>`
+  const bzLink = `<span style="${st.org}">bz</span><span style="${st.wht}">Drive</span><span style="${st.org}">.com</span>`
 
-  let main = ""
+  const main = ""
 
-  let tr = [
+  const tr = [
     {
       en: "Your e-mail address was entered when you tried to",
       ua: "Твій e-mail було вказано при спробі",
@@ -60,6 +60,15 @@ exports.EmailBody = ({mode, email, login, lang, code})=>{
       pl: "do odpowiedniego formularza na stronie"
     }
   ]
+
+  const header = `
+    <header style="${st.header}">
+      <img style="${st.imgLogo}" src="${logo}" alt="logo">
+      <span style="${st.headTxt}">
+        <span style="${st.org}">bz</span><span>Drive</span><span style="${st.org}">.com</span>
+      </span>
+    </header>
+  `
 
   const body = (mode)=>{
     switch(mode){
@@ -148,23 +157,7 @@ exports.EmailBody = ({mode, email, login, lang, code})=>{
     }
   }
 
-  return `
-  <html>
-  <head>
-    <title>bzDrive.com - ${mode}</title>
-  </head>
-
-  <body style="${st.body}">
-
-    <header style="${st.header}">
-      <img style="${st.imgLogo}" src="${logo}" alt="logo">
-      <span style="${st.headTxt}">
-        <span style="${st.org}">bz</span><span>Drive</span><span style="${st.org}">.com</span>
-      </span>
-    </header>
-
-    <main style="${st.main}"> ${ body(mode) } </main>
-
+  const footer = `
     <footer style="${st.footer}">
       <span>&copy;</span>
       <span style="${st.org}">B</span><span>ohdan</span>
@@ -173,6 +166,21 @@ exports.EmailBody = ({mode, email, login, lang, code})=>{
         ${bzLink}
       </a>
     </footer>
+  `
+
+  return `
+  <html>
+  <head>
+    <title>bzDrive.com - ${mode}</title>
+  </head>
+
+  <body style="${st.body}">
+
+    ${header}
+
+    <main style="${st.main}"> ${ body(mode) } </main>
+
+    ${footer}
 
   </body>
 

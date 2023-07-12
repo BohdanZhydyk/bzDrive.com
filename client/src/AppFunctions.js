@@ -107,6 +107,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     case "login":             return sanitizeLogin(txt)
     case "email":             return sanitizeEmail(txt)
     case "pass":              return sanitizePassword(txt)
+    case "verify":            return sanitizePassword(txt)
     case "CompanyNameShort":  return sanitizeCompanyNameShort(txt)
     case "CompanyName":       return sanitizeCompanyName(txt)
     case "VIN":               return sanitizeVIN(txt)

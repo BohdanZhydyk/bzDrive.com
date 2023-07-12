@@ -1,0 +1,87 @@
+
+.Profile {
+  width:100%;
+  margin:1vw 0 2vw 0;
+
+  .UserLogin {
+    width:calc(100% - 4vw);
+    min-height:4vw;
+    padding:0 2vw;
+    font-size:150%;
+  }
+
+  .ProfilePannel {
+    width:100%;
+
+    .ProfileUser {
+      width:calc(20% - 2vw);
+      margin:0 1vw;
+  
+      .ProfileAva {
+        width:calc(100% - 1vw);
+        margin:0 0.5vw;
+        border-radius:0.5vw;
+      }
+    }
+
+    .ProfileSections {
+      width:calc(80% - 2vw);
+      margin:0 1vw;
+
+      .ProfileSectionWraper {
+        width:100%;
+
+        .ProfileSection {
+          width:calc(50% - 1vw);
+          margin:0.5vw;
+      
+          .SectionName {
+            width:calc(100% - 4vw);
+            min-height:3vw;
+            padding:0 2vw;
+            background-color:#171;
+            border-radius:0.5vw 3vw 0 0;
+          }
+
+          .ActiveName {
+            border-radius:0.5vw 0.5vw 0 0;
+          }
+      
+          .SectionArea {
+            width:calc(100% - 1vw - 2px);
+            min-height:10vw;
+            margin:0 0 0.5vw 0;
+            padding:0 0.5vw 0.5vw 0.5vw;
+            border:1px solid;
+            border-color:#f60 #999 #999 #999;
+            border-radius:0 0 0.5vw 0.5vw;
+  
+            .SectionLine {
+              width:100%;
+  
+              .InputsPannel {
+                width:90%;
+                
+                .Input {
+                  width:100%;
+                }
+          
+                .RadioInput {
+                  width:100%;
+    
+                  .RadioBtn {
+                    width:30%;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .act {
+          color:#f00;
+        }
+      }
+    }
+  }
+}
