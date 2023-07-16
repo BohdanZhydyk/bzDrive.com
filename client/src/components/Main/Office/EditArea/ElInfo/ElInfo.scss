@@ -43,19 +43,33 @@
       .Input_tel {width:20%;}
       .Input_www {width:40%;}
       .Input_email {width:40%;}
-    }
-  }
 
-  .Input {
-    @media print {border:1px solid #ddd;}
+      .InfoPrintPannel {
+        width:100%;
+          
+        .InfoLine {
+          width:100%;
+          margin:0 0 0.5vw 0;
+          border-bottom:1px dashed #999;
 
-    legend {
-      @media print {color:#222;}
-    }
+          .InfoLineTitle {
+            width:calc(100% - 2vw);
+            padding:0 1vw;
+            font-size:70%;
+            color:#999;
+            @media print {color:#222 !important;}
+          }
 
-    input {
-      font-size:1vw;
-      @media print {color:#000;}
+          .InfoLineVal {
+            width:calc(100% - 1vw);
+            min-height:1.2vw;
+            padding:0.5vw;
+            @media (min-width: 481px) and (max-width: 767px) {min-height:2.5vw;}
+            @media (max-width: 481px) {min-height:4vw;}
+            @media print {min-height:1.2vw;}
+          }
+        }
+      }
     }
   }
 }

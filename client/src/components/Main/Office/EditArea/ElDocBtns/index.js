@@ -24,7 +24,7 @@ function ElDocBtns({ props:
 
   const actPannelPropses = {tr, mode, lang, setSave, status, setStatus}
   const colorBtnPropses = {tr, lang, setSave, car, setCar}
-  const printBtnPropses = {name:'print', click:()=>setEdit(false)}
+  const printBtnPropses = {name:'print', click:()=>{}}
   const saveBtnPropses = {name:'save', click:()=>ACTION_BTN('save')}
   const deleteBtnPropses = {name:'delete', click:()=>ACTION_BTN('delete')}
   const cancelBtnPropses = {name:'cancel', click:EDIT_CHG}

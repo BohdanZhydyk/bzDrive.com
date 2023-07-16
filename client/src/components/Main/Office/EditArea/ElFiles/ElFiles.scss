@@ -18,26 +18,26 @@
     width:99%;
     min-height:3vw;
     border-bottom:1px solid #444;
-    &:hover {
-      color:#fd0;
-      background-color:#1115;
-    }
+    &:hover {background-color:#1115;}
 
-    .FileCell {
-
-    }
     .FileName {
-      width:85%;
-      &:hover {
-        color:#fd0;
-      }
+      flex:1;
+      &:hover {color:#fd0;}
     }
     .FileSize {
-      width:5%;
-      .num {width:60%;}
-      .unit {width:40%;}
+      width:4%;
+      font-size:80%;
+      @media (min-width: 481px) and (max-width: 767px) {width:8%;}
+      @media (max-width: 481px) {width:13%;}
+
+      .num {width:65%;}
+      .unit {width:35%;}
     }
-    .FileAct {width:10%;}
+    .FileAct {
+      width:8%;
+      @media (min-width: 481px) and (max-width: 767px) {width:13%;}
+      @media (max-width: 481px) {width:18%;}
+    }
   }
 
   .UploadNewFile {

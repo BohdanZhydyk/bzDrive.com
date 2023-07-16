@@ -64,7 +64,7 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD}
 
   const ElDocBtnsProps = {user, mode, doc, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}
   const ElDocNameProps = {user, mode, dealer, nr, setNr, setSave, editErr, setEditErr, printMode}
-  const ElInfoProps = {user, mode, car, setCar, client, setClient, buyer, setBuyer, seller, setSeller, dealer, setDealer, setSave, editErr, setEditErr}
+  const ElInfoProps = {user, mode, car, setCar, client, setClient, buyer, setBuyer, seller, setSeller, dealer, setDealer, setSave, editErr, setEditErr, printMode}
   const ElFaultsProps = {user, car, setCar, setSave, printMode}
   const ElCalculatorProps = {user, articles, setArticles, setSave, printMode}
   const ElSummaryProps = {nr, setNr, setSave, articles, printMode}
@@ -72,10 +72,13 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD}
   const ElFilesProps = {doc, user, nr, setSave, files, setFiles}
   const ElSignaturesProps = {user}
 
+  const isElDocBtns = !printMode
+  const isElFiles = ["ZL","PS","PZ","ZU","FZ"].includes(mode) && nr?.sign !== "" && !printMode
+
   return(
     <div className="EditArea flex column start">
 
-      { !printMode && <ElDocBtns props={ElDocBtnsProps}/> }
+      { isElDocBtns && <ElDocBtns props={ElDocBtnsProps}/> }
 
       <ElDocName props={ElDocNameProps}/>
 
@@ -89,7 +92,7 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD}
 
       { ["FS","FZ"].includes(mode) && <ElComments props={ElCommentsProps}/> }
 
-      { ["ZL","PS","PZ","ZU","FZ"].includes(mode) && !printMode && <ElFiles props={ElFilesProps} /> }
+      { isElFiles && <ElFiles props={ElFilesProps} /> }
 
       { printMode && <ElSignatures props={ElSignaturesProps}/> }
 

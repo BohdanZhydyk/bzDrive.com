@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import QRCode from 'react-qr-code'
 
 import { tr } from "../../../../../AppTranslate"
 import { sanitizeTxt } from "../../../../../AppFunctions"
 import { placeProps, fromProps, toProps } from "./propses"
 import Input from "../../../../All/Input"
-
-import { useResizeDetector } from 'react-resize-detector'
 
 
 export function DocSign({ props:{lang, mode, nr, setNr, setSave, editErr, setEditErr, printMode} }) {
@@ -19,25 +17,11 @@ export function DocSign({ props:{lang, mode, nr, setNr, setSave, editErr, setEdi
     return `${day}.${month}.${year}`
   }
 
-  const { width, height, ref } = useResizeDetector()
-
-  let size = ()=>{
-    let digit = 20
-    if( width >= 481 ){ digit = 2 }
-    if( width >= 768 ){ digit = 5 }
-    return(digit)
-  }
-
   const url = `https://bzdrive.com${window.location.pathname}`
-  const [QRsize, setQRsize] = useState(parseInt(window.innerWidth / 30))
-  useEffect(() => {
-    const handleResize = () => setQRsize(parseInt(window.innerWidth / 30))
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+
 
   return(
-    <div className="DocSign flex end" ref={ref}>
+    <div className="DocSign flex end">
 
     {
       !printMode
@@ -78,7 +62,12 @@ export function DocSign({ props:{lang, mode, nr, setNr, setSave, editErr, setEdi
     {
       printMode &&
       <div className="QRCodeArea flex">
-        <QRCode value={url} size={QRsize} />
+        <QRCode
+        size={256}
+        style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+        value={url}
+        viewBox={`0 0 256 256`}
+        />
       </div>
     }
 

@@ -107,6 +107,11 @@ function FS({ props:{company} }){
         })
       }
 
+      {
+        (invoices?.length < 1) && (dlw === 0) &&
+        <div className="IsInvoices flex bold txtOrg">{`Nie znaleziono dokumentów w bazie danych dla podanego okresu czasu!`}</div>
+      }
+
     </div>
   )
 }

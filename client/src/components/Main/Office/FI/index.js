@@ -12,6 +12,7 @@ import { prepareFinances } from "./FinLogic"
 function FI({ props:{company} }){
   
   const mode = "FI"
+  
   const lang = GetUser().lang
 
   const [finances, setFinances] = useState(false)

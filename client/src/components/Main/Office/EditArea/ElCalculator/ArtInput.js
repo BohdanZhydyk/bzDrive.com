@@ -1,13 +1,25 @@
 import React from "react"
 
 
-export function ArtInput({ props:{val, align, onChange} }){
+export function ArtInput({ props:{name, isDisplay, val, align, CLA, FN, pl} }){
+
   return(
-    <input
-      style={{textAlign:align}}
-      type="text"
-      value={val}
-      onChange={ (event)=> onChange(event.target.value) }
-    />
+    <span className={`Table${name} ${CLA} ${align ?? "center"} flex`}>
+    {
+      isDisplay
+      ?
+      <span>{val}</span>
+      :
+      <input
+        style={{textAlign:align ?? "center"}}
+        type="text"
+        placeholder={pl}
+        value={val}
+        onChange={ (event)=> FN(name, event.target.value) }
+      />
+    // <ArtInput props={propsesART} />
+    }
+    </span>
+    
   )
 }

@@ -32,7 +32,7 @@ export function ElFaults({ props:{user, car, setCar, setSave, printMode} }) {
 
       <div className="FaultsTop bold flex start">{title}</div>
 
-      <div className="TextAreaSection flex">
+      <div className="TextAreaSection flex column start">
       {
         printMode
         ? <div className="StrToLines">{ strToLines(car?.faults) }</div>

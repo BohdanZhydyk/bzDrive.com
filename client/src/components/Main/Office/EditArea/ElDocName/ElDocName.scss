@@ -61,8 +61,11 @@
       width:99%;
 
       .QRCodeArea {
-        width:20%;
-        margin:0.25vw 0;
+        width:15%;
+        margin:0.5vw;
+        @media (min-width: 481px) and (max-width: 767px) {width:10%;}
+        @media (max-width: 481px) {width:15%;}
+        @media print {width:15%;}
       }
   
       .SignArea {

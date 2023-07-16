@@ -10,12 +10,14 @@ import ActionBtn from "../../../../All/ActionBtn"
 function ElFiles({ props:{doc, user, nr, setSave, files, setFiles} }){
   
   const FileTypeToIco = (type)=>{
+    const link = `https://bzdrive.com/files/ico/file`
     switch(type){
-      case "text/plain":                return {type:"txt", ico:"https://bzdrive.com/files/ico/fileTXT.png"}
-      case "application/octet-stream":  return {type:"bin", ico:"https://bzdrive.com/files/ico/fileBIN.png"}
-      case "image/png":                 return {type:"png", ico:"https://bzdrive.com/files/ico/filePNG.png"}
-      case "application/pdf":           return {type:"pdf", ico:"https://bzdrive.com/files/ico/filePDF.png"}
-      default:                          return {type:"def", ico:"https://bzdrive.com/files/ico/fileDEF.png"}
+      case "text/plain":                return {type:"txt", ico:`${link}TXT.png`}
+      case "application/octet-stream":  return {type:"bin", ico:`${link}BIN.png`}
+      case "image/png":                 return {type:"png", ico:`${link}PNG.png`}
+      case "image/jpeg":                return {type:"png", ico:`${link}PNG.png`}
+      case "application/pdf":           return {type:"pdf", ico:`${link}PDF.png`}
+      default:                          return {type:"def", ico:`${link}DEF.png`}
     }
   }
 
@@ -87,17 +89,18 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles} }){
           return(
             <div className="FileLine flex" key={key}>
 
-              <a className="FileName FileCell flex start" href={href} target="_blank" rel="noreferrer" >
-                <img className="ImgBtn" src={src} alt={alt} />
-                <span>{file?.fileName}</span>
+              <img className="ImgBtn" src={src} alt={alt} />
+
+              <a className="FileName flex start overflow" href={href} target="_blank" rel="noreferrer" >
+                {file?.fileName}
               </a>
 
-              <div className="FileSize FileCell flex end">
+              <div className="FileSize flex end">
                 <span className="num flex end">{num}</span>
                 <span className="unit flex end">{unit}</span>
               </div>
 
-              <span className="FileAct FileCell flex end">
+              <span className="FileAct flex end">
 
                 <a className="flex" href={href} download={file?.fileName} target="_blank" rel="noreferrer" >
                   <ActionBtn props={downloadPropses} />

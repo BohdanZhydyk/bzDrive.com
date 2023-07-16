@@ -4,7 +4,7 @@ import { DocNameNormalize } from "../../../../../AppFunctions"
 import Input from "../../../../All/Input"
 
 
-export function DocTitle({ props:{tr, lang, mode, nr, docNrPr} }) {
+export function DocTitle({ props:{tr, lang, mode, nr, docNrPr, printMode} }) {
 
   const docName = `${tr(`DocName_${mode}`,lang)[0]} Nr`
   const docNr = DocNameNormalize(nr)
@@ -16,7 +16,7 @@ export function DocTitle({ props:{tr, lang, mode, nr, docNrPr} }) {
 
       {
         mode === 'FZ'
-        ? <Input props={docNrPr} />
+        ? (!printMode ? <Input props={docNrPr} /> : <div className="DocNr flex">{docNrPr?.val}</div>)
         : <div className="DocNr flex">{docNr}</div>
       }
 

@@ -8,11 +8,13 @@
   border-radius:0.5vw;
   @media (min-width: 481px) and (max-width: 767px) {min-height:4vw;}
   @media (max-width: 481px) {min-height:7vw;}
+  @media print {border:1px solid #ddd !important;}
 
   legend {
     font-size:80%;
     margin:0 0.5vw;
     padding:0 0.5vw;
+    @media print {color:#222 !important;}
   }
 
   input {
@@ -26,7 +28,7 @@
     font-size:1vw !important;
     @media (min-width: 481px) and (max-width: 767px) {min-height:5vw; font-size: 2vw !important;}
     @media (max-width: 481px) {min-height:7vw; font-size: 3vw !important;}
-    @media print {font-size: 8px !important;}
+    @media print {color:#000 !important; font-size: 8px !important;}
   }
 
   img {

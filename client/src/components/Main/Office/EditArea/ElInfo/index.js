@@ -9,7 +9,7 @@ import { InfoPannel } from "./InfoPannel"
 function ElInfo({ props:{
   user, mode,
   car, setCar, client, setClient, dealer, setDealer, buyer, setBuyer, seller, setSeller,
-  setSave, editErr, setEditErr
+  setSave, editErr, setEditErr, printMode
 } }){
 
   const lang = user.lang
@@ -35,9 +35,9 @@ function ElInfo({ props:{
   return(
     <section className="ElInfo flex between stretch wrap">
 
-      <InfoPannel props={{lang, title:pannel().title1, InfoProps:pannel().info1}} />
+      <InfoPannel props={{lang, title:pannel().title1, InfoProps:pannel().info1, printMode}} />
       
-      <InfoPannel props={{lang, title:pannel().title2, InfoProps:pannel().info2}} />
+      <InfoPannel props={{lang, title:pannel().title2, InfoProps:pannel().info2, printMode}} />
 
     </section>
   )

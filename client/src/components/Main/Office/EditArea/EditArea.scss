@@ -29,12 +29,14 @@
 
     .TextAreaSection {
       width:100%;
-      margin:0.5vw 0.25vw;
+      margin:0.5vw 0.25vw 1vw 0.25vw;
+      min-height:2vw;
 
-      textarea {
-        min-height:4vw;
-        @media (min-width: 481px) and (max-width: 767px) {min-height:8vw;}
-        @media (max-width: 481px) {min-height:12vw;}
+      .TextArea {
+        min-height:8vw;
+        @media (min-width: 481px) and (max-width: 767px) {min-height:20vw;}
+        @media (max-width: 481px) {min-height:25vw;}
+        @media print {min-height:8vw;}
       }
 
       .StrToLines {
@@ -53,6 +55,7 @@
     .Signature{
       width:calc(50% - 2vw);
       margin:1vw;
+      text-align:center;
   
       .SignLine{
         width:80%;

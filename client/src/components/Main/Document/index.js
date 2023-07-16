@@ -25,7 +25,7 @@ function Document(){
   const month = doc?.nr?.from.toString().slice(4, 6)
   const sign = doc?.nr?.sign.toString().padStart(4, '0')
 
-  document.title = doc?.nr ? `${mode}/${year}/${month}/${sign}` : ''
+  document.title = doc?.nr ? `bzDrive.com/${mode}/${year}/${month}/${sign}` : ''
 
   const [edit, setEdit] = useState(false)
 

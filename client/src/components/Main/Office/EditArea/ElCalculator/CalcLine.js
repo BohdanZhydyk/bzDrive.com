@@ -8,86 +8,52 @@ export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, S
   const Top = CLA === "TableCellTop"
   const Bottom = CLA === "TableCellBottom"
 
-  const propsesART = { val:ART, align:"left", onChange:(data)=>FN("ART", data) }
-  const propsesPRI = { val:PRI, align:"center", onChange:(data)=>FN("PRI", data) }
-  const propsesQUA = { val:QUA, align:"center", onChange:(data)=>FN("QUA", data) }
+  const pl = "new product / service name"
+
+  const propsesART = { name:"ART", isDisplay:(Top || printMode), val:ART, align:"start", CLA, FN, pl }
+  const propsesPRI = { name:"PRI", isDisplay:(Top || printMode), val:PRI, CLA, FN }
+  const propsesQUA = { name:"QUA", isDisplay:(Top || printMode), val:QUA, CLA, FN }
+  const propsesVAT = { name:"VAT", isDisplay:(Top || printMode), val:VAT, CLA, FN }
+  const propsesNET = { name:"NET", isDisplay:(Top || Bottom || printMode), val:NET, CLA, FN }
+  const propsesPRV = { name:"PRV", isDisplay:(Top || Bottom || printMode), val:PRV, CLA, FN }
+  const propsesSUM = { name:"SUM", isDisplay:(Top || Bottom || printMode), val:SUM, CLA, FN }
 
   return(
-    <div className="CalcLine flex">
+    <div className="CalcLine flex end stretch">
 
-      <span className={`TableNUM ${CLA} flex`}>{ NUM }</span>
+      <div className={`TableNUM ${CLA} flex`}>{ !Bottom && NUM }</div>
 
-      <span className={`TableART${!printMode ? `_short` : ``} ${CLA} flex start`}>
-      {
-        Top
-        ? <span>{ART}</span>
-        : !Bottom ? <ArtInput props={propsesART} /> : <span></span>
-      }
-      </span>
+      <div className="CellsBetween flex end wrap stretch">
 
-      { TOT && <span className={`TableTOT ${CLA} flex end`}>{ TOT }</span> }
-
-      {
-        !Bottom &&
-        <span className={`TablePRI ${CLA} flex`}>
         {
-          Top
-          ? <span>{PRI}</span>
-          : <ArtInput props={propsesPRI} />
+          !Bottom && <div className='CellsOne flex stretch'>
+            <ArtInput props={propsesART} />
+          </div>
         }
-        </span>
-      }
 
-      {
-        !Bottom &&
-        <span className={`TableQUA ${CLA} flex`}>
-        {
-          Top
-          ? <span>{QUA}</span>
-          : <ArtInput props={propsesQUA} />
-        }
-        </span>
-      }
+        <div className='CellsTwo flex end stretch'>
 
-      {
-        !Bottom &&
-        <span className={`TableVAT ${CLA} flex`}>
-        {
-          Top
-          ? <span>{VAT}</span>
-          : <ArtInput props={{ val:VAT, align:"center", onChange:(data)=>FN("VAT", data) }} />
-        }
-        </span>
-      }
+          { TOT && <span className={`TableTOT ${CLA} flex end`}>{ TOT }</span> }
 
-      <span className={`TableNET ${CLA} flex`}>
-      {
-        Top || Bottom
-        ? <span>{NET}</span>
-        : <ArtInput props={{ val:NET, align:"center", onChange:(data)=>FN("NET", data) }} />
-      }
-      </span>
+          { !Bottom && <ArtInput props={propsesPRI} /> }
 
-      <span className={`TablePRV ${CLA} flex`}>
-      {
-        Top || Bottom
-        ? <span>{PRV}</span>
-        : <ArtInput props={{ val:PRV, align:"center", onChange:(data)=>FN("PRV", data) }} />
-      }
-      </span>
+          { !Bottom && <ArtInput props={propsesQUA} /> }
 
-      <span className={`TableSUM ${CLA} flex`}>
-      {
-        Top || Bottom
-        ? <span>{SUM}</span>
-        : <ArtInput props={{ val:SUM, align:"center", onChange:(data)=>FN("SUM", data) }} />
-      }
-      </span>
+          { !Bottom && <ArtInput props={propsesVAT} /> }
 
-      {/* <span className={`TableBTN ${CLA} ImgBtn flex`}>{ BTN }</span> */}
+          <ArtInput props={propsesNET} />
+
+          <ArtInput props={propsesPRV} />
+
+          <ArtInput props={propsesSUM} />
+        
+        </div>
+        
+      </div>
+        
       {
         !printMode &&
-        <span className={`TableBTN ${CLA} ImgBtn flex`}>{ BTN }</span>
+        <span className={`TableBTN ${CLA} flex`}>{ BTN }</span>
       }
 
     </div>

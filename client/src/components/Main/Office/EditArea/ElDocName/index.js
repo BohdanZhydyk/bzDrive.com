@@ -30,7 +30,7 @@ function ElDocName({ props:{user, mode, dealer, nr, setNr, setSave, editErr, set
 
       <div className="ElDocNameData flex column start">
 
-        <DocTitle props={{tr, lang, mode, nr, docNrPr}} />
+        <DocTitle props={{tr, lang, mode, nr, docNrPr, printMode}} />
 
         <DocSign props={{lang, mode, nr, setNr, setSave, editErr, setEditErr, printMode}} />
 

@@ -16,7 +16,7 @@ export function FinMonthDocument({ props:{company, doc, d, RELOAD} }){
     const client = doc?.client?.name ? `${doc.client.name} - ` : ``
     const brand = doc?.car?.brand ? `${doc.car.brand} - ` : ``
     const model = doc?.car?.model ?? ``
-    if(doc?.car) return `${client}${brand} - ${model}`
+    if(doc?.car) return `${client}${brand}${model}`
     if(doc?.client?.name) return doc.client.name
     if(doc?.seller?.name) return doc.seller.name
     return "-----"
@@ -26,7 +26,7 @@ export function FinMonthDocument({ props:{company, doc, d, RELOAD} }){
     return {
       num: `${d}.`,
       usr: doc?.user,
-      nam: doc?.nr?.assignNr ?? DocNameNormalize(doc?.nr),
+      nam: (doc?.nr?.assignNr?.length > 0) ? doc.nr.assignNr : DocNameNormalize(doc?.nr),
       inf: partnerName(doc),
       net: SumArray(doc?.articles?.map( (el)=> el?.NET )),
       bru: SumArray(doc?.articles?.map( (el)=> el?.SUM )),

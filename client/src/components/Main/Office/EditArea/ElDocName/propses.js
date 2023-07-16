@@ -1,8 +1,10 @@
+import { DocNameNormalize } from "../../../../../AppFunctions"
+
 
 export const docNrProps = (tr, lang, nr, setNr, editErr, setEditErr, setSave, sanitizeTxt)=> ({
   legend: tr(`DocNrLegend`,lang),
   type: `text`,
-  val: nr?.assignNr ? nr.assignNr : '',
+  val: (nr?.assignNr?.length > 0) ? nr.assignNr : (nr ? DocNameNormalize(nr) : ''),
   err: editErr?.assignNr ?? '',
   cbVal: (val)=>{
     setNr( (prev)=> ({...prev, assignNr:sanitizeTxt(val, `all`).sanText}))
