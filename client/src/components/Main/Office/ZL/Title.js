@@ -11,14 +11,14 @@ export function Title({ props:{mode, lang, calendar} }){
     const timeFrom = calendar[0].week[0]
     const timeTo = calendar[calendar.length - 1].week[calendar[calendar.length - 1].week.length - 1]
     const From = `
-      ${TimeToObject(timeFrom).day}
-      ${months[parseInt(TimeToObject(timeFrom).month) - 1]}
-      ${TimeToObject(timeFrom).year}
+      ${timeFrom.toString().slice(6, 8)}
+      ${months[parseInt(timeFrom.toString().slice(4, 6)) - 1]}
+      ${timeFrom.toString().slice(0, 4)}
     `
     const To = `
-      ${TimeToObject(timeTo).day}
-      ${months[parseInt(TimeToObject(timeTo).month) - 1]}
-      ${TimeToObject(timeTo).year}
+      ${timeTo.toString().slice(6, 8)}
+      ${months[parseInt(timeTo.toString().slice(4, 6)) - 1]}
+      ${timeTo.toString().slice(0, 4)}
     `
     return `${tr(`DocName_${mode}`,lang)[1]}: ${From} - ${To}`
   }

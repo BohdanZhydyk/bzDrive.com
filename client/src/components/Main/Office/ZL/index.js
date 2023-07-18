@@ -35,11 +35,11 @@ function ZL({ props:{size, company} }) {
     setCalendar(false)
     setSearch( {} )
     setOrders( [] )
-    ZLreducer({type:"GET_CALENDAR"}, (data)=>setCalendar(data))
+    ZLreducer({type:"GET_CALENDAR", calendar, mode, company}, (data)=>setCalendar(data))
   }
 
-  const AddWeekBtnMinusProps = {act:'MINUS_WEEK', lang, calendar, pannels, setCalendar, ZLreducer}
-  const AddWeekBtnPlusProps = {act:'PLUS_WEEK', lang, calendar, pannels, setCalendar, ZLreducer}
+  const AddWeekBtnMinusProps = {act:'MINUS_WEEK', lang, calendar, setCalendar, mode, company, pannels, ZLreducer}
+  const AddWeekBtnPlusProps = {act:'PLUS_WEEK', lang, calendar, setCalendar, mode, company, pannels, ZLreducer}
   const WeekProps = (line, l)=> ({line, l, lang, mode, company, pannels, ZLreducer, RELOAD})
 
   useEffect( ()=>{

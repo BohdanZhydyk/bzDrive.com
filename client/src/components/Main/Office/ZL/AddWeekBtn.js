@@ -3,9 +3,9 @@ import React from "react"
 import { tr } from "../../../../AppTranslate"
 
 
-export function AddWeekBtn({ props:{act, lang, calendar, setCalendar, pannels, ZLreducer} }){
+export function AddWeekBtn({ props:{act, lang, calendar, setCalendar, mode, company, pannels, ZLreducer} }){
 
-  const ADD_WEEK = ()=> ZLreducer( {type:act, calendar}, (data)=>setCalendar(data) )
+  const ADD_WEEK = ()=> ZLreducer( {type:act, calendar, mode, company}, (data)=>setCalendar(data) )
 
   return(
     <div className="DaysNamePannel MinHight flex stretch">

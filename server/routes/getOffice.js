@@ -83,29 +83,19 @@ exports.getOffice = (req, res)=>{
           res.send({...compData, result: []})
           return
         }
-
-        let query = ( firstDay > today )
-          ?
-          {
-            $and:[
-              { "nr.mode":mode },
-              { "company":company },
-              { "nr.to":{ $gte:firstDay } }
-            ]
-          }
-          :
-          {
-            $and:[
-              { "nr.mode":mode },
-              { "company":company },
-              {
-                $and: [
-                  {"nr.from":{ $lte:lastDay }},
-                  { $or: [{"nr.to":{ $gte:firstDay }}, {"status":"edit"}, {"status":"repair"}] }
-                ]
-              }
-            ]
-          }
+        
+        let query = {
+          $and:[
+            { "nr.mode":mode },
+            { "company":company },
+            {
+              $and: [
+                {"nr.from":{ $lte:lastDay }},
+                { $or: [{"nr.to":{ $gte:firstDay }}, {"status":"open"}, {"status":"repair"}] }
+              ]
+            }
+          ]
+        }
 
         // query for searchPannel
         if( searchMode && ((firstDay && lastDay) || vin || car || client || tel) ){
@@ -150,10 +140,11 @@ exports.getOffice = (req, res)=>{
 
         bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (ordersData)=>{
 
-          let to = (zl)=> 
-            ( ( zl.status === "open" ) || ( zl.status === "repair" ) ) && ( zl.nr.to < today )
-            ? today
-            : zl.nr.to
+          let to = (zl)=>{
+            const isStatus = ( zl.status === "open" ) || ( zl.status === "repair" )
+            const isToToday = (zl.nr.to < today)
+            return (isStatus && isToToday) ? today : zl.nr.to
+          }
 
           res.send({
             ...ordersData,

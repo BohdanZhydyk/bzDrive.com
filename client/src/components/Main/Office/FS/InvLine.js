@@ -22,7 +22,7 @@ export function InvLine({ props:{company, mode, top, invoice, dlw, RELOAD} }){
   const doc = top ? {nr:{ mode, from:today, to:today, sign:"", place, method:0 }} : invoice
 
   const ADD_EDIT_INV = ()=> setEdit(!edit)
-console.log(invoice)
+
   return(
     <div className="InvLine flex wrap stretch">
 

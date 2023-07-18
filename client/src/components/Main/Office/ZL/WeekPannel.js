@@ -12,22 +12,22 @@ export function WeekPannel({ props:{line, l, mode, company, pannels, lang, RELOA
 
   const monthNames = tr(`MonthNames`,lang)
 
-  const key = (day, d)=> `WeekDayName${d}${day}`
-
-  const txt = (day)=> `${TimeToObject(day).day} ${monthNames[parseInt(TimeToObject(day).month - 1)]}`
-  
-  const isSameDay = (day)=> ( TimeTo_YYYYMMDD(day) === TimeTo_YYYYMMDD(Date.now()) )
-  const isSameMonth = (day)=> ( TimeTo_YYYYMM(day) !== TimeTo_YYYYMM(Date.now()) )
-
-  const classes = (day, d)=>{
-    const Holyday = (d > 4) ? ` HolyDay` : ``
-    const Day = isSameDay(day) ? ` Today` : ``
-    const Month = isSameMonth(day) ? ` SameMonth` : ``
-    return `WeekDayName${Holyday}${Day}${Month} txtWht flex`
-  }
-
   const today = TimeTo_YYYYMMDD( Date.now() )
   const place = company?.addr?.town
+
+  const key = (date, d)=> `WeekDayName${d}${date}`
+
+  const txt = (date)=> `${date.toString().slice(6, 8)} ${monthNames[parseInt(date.toString().slice(4, 6) - 1)]}`
+  
+  const isSameDay = (date)=> ( date === today )
+  const isSameMonth = (date)=> ( date.toString().slice(0, 6) !== today.toString().slice(0, 6) )
+
+  const classes = (date, d)=>{
+    const Holyday = (d > 4) ? ` HolyDay` : ``
+    const Day = isSameDay(date) ? ` Today` : ``
+    const Month = isSameMonth(date) ? ` SameMonth` : ``
+    return `WeekDayName${Holyday}${Day}${Month} txtWht flex`
+  }
 
   const order = {// newOrder
     nr:{ mode, from:today, to:today, sign:"", place, method:0 },
@@ -39,10 +39,10 @@ export function WeekPannel({ props:{line, l, mode, company, pannels, lang, RELOA
 
       <div className="LeftLine flex start" style={{display:pannels.LP}}>
       {
-        line && line.week.map( (day, d)=>{
+        line && line.week.map( (date, d)=>{
           const key = `NewOrderBtn${l}${d}`
           return(
-            isSameDay(day)
+            isSameDay(date)
             ?
             <div className="NewOrderBtn flex" onClick={()=>setEdit(!edit)} key={key}>
               { tr(`NewOrderBtn`,lang) }
@@ -56,12 +56,12 @@ export function WeekPannel({ props:{line, l, mode, company, pannels, lang, RELOA
 
       <div className="RightLine flex" style={{display:pannels.RP}}>
       {
-        line && line.week.map( (day, d)=>{
-          const NEW_ORDER = ()=> isSameDay(day) ? setEdit(!edit) : setEdit(false)
-          const title = isSameDay(day) ? tr(`NewOrderBtn`,lang) : ``
+        line && line.week.map( (date, d)=>{
+          const NEW_ORDER = ()=> isSameDay(date) ? setEdit(!edit) : setEdit(false)
+          const title = isSameDay(date) ? tr(`NewOrderBtn`,lang) : ``
           return(
-            <div className={classes(day, d)} title={title} onClick={NEW_ORDER} key={key(day, d)}>
-              {txt(day)}
+            <div className={classes(date, d)} title={title} onClick={NEW_ORDER} key={key(date, d)}>
+              {txt(date)}
             </div>
           )
         })
