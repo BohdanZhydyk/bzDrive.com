@@ -98,7 +98,7 @@ export const GET_VIN = (vin, car, cb)=>{
         const brand = res?.make?.name
         const model = res?.model?.name
         const prod = res?.years[0]?.year
-        const size = res?.engine?.size ? `${res.engine.size}L` : ``// zrobic po przecinku
+        const size = res?.engine?.size ? `${res.engine.size}L` : ``
         const code = res?.engine?.manufacturerEngineCode ? `_${res.engine.manufacturerEngineCode}` : ``
         const hp = res?.engine?.horsepower ? `_${parseInt(bzCalc("*", res.engine.horsepower, 0.74))}kW` : ``
         const drive = ()=>{

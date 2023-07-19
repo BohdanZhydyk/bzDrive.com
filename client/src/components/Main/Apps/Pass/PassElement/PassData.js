@@ -23,7 +23,7 @@ export function PassData({
         <Input props={ siteNameProps(element, setElement, setSave) } />
       </div>
 
-      <div className="Link flex">
+      <div className="LinkBefore flex">
         <Input props={ linkProps(element, setElement, setSave) } />
       </div>
 
@@ -32,6 +32,10 @@ export function PassData({
       </div>
 
       <PassDataBtns props={{element, save, SAVE_ELEMENT, OPEN_CLOSE}}/>
+
+      <div className="LinkAfter flex">
+        <Input props={ linkProps(element, setElement, setSave) } />
+      </div>
 
       <div className="Information flex">
         <TextArea props={ infoProps(element, setElement, setSave) } />

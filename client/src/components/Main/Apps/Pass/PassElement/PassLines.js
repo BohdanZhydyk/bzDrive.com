@@ -18,16 +18,20 @@ export function PassLines({ props:{el, i, element, setElement, setSave, SHOW_PAS
         return(
           <div className="PassLine flex" key={`PassLine${i}${l}`} >
 
-            <div className="UserName flex">
-              <Input props={ userNameProps(line, l, setElement, setSave) } />
-            </div>
+            <div className="UserLoginPannel flex wrap">
 
-            <div className="Login flex">
-              <Input props={ loginProps(line, l, setElement, setSave) } />
-            </div>
+              <div className="UserName flex">
+                <Input props={ userNameProps(line, l, setElement, setSave) } />
+              </div>
 
-            <div className="Password flex">
-              <Input props={passProps} />
+              <div className="Login flex">
+                <Input props={ loginProps(line, l, setElement, setSave) } />
+              </div>
+
+              <div className="Password flex">
+                <Input props={passProps} />
+              </div>
+
             </div>
 
             <div className="LineBtns flex end">

@@ -22,9 +22,11 @@
   }
 
   select {
-    max-width:3vw;
+    max-width:2.5vw;
     background-color:#0000;
     color:#fff;
+    @media (min-width: 481px) and (max-width: 767px) {max-width:3vw;}
+    @media (max-width: 481px) {max-width:5vw;}
 
     option {
       color:#000;

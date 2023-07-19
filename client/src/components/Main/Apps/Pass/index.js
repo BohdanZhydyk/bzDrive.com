@@ -108,8 +108,9 @@ function Pass(){
         {
           (pass && user?.role) && passArr.map( (el, i)=>{
             const passProps = {user, el, i, newLine, groupsForInput, SAVE_PASS, SHOW_PASS}
+            const key = `PassElement${actGroup}${i}`
             return(
-              <PassElement props={passProps} key={`PassElement${i}`} />
+              <PassElement props={passProps} key={key} />
             )
           })
         }
