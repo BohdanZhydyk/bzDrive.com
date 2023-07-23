@@ -69,11 +69,12 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD}
   const ElCalculatorProps = {user, articles, setArticles, setSave, printMode}
   const ElSummaryProps = {nr, setNr, setSave, articles, printMode}
   const ElCommentsProps = {user, car, setCar, setSave, printMode}
-  const ElFilesProps = {doc, user, nr, setSave, files, setFiles}
+  const ElFilesProps = {doc, user, nr, setSave, files, setFiles, printMode}
   const ElSignaturesProps = {user}
 
   const isElDocBtns = !printMode
-  const isElFiles = ["ZL","PS","PZ","ZU","FZ"].includes(mode) && nr?.sign !== "" && !printMode
+  const isElFiles = ["ZL","PS","PZ","ZU","FZ"].includes(mode) && nr?.sign !== ""
+  const isElComments = ["FS","FZ"].includes(mode) && (printMode ? car?.comments : true)
 
   return(
     <div className="EditArea flex column start">
@@ -90,7 +91,7 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD}
 
       { ["FS","FZ","PS","PZ","ZU"].includes(mode) && <ElSummary props={ElSummaryProps} /> }
 
-      { ["FS","FZ"].includes(mode) && <ElComments props={ElCommentsProps}/> }
+      { isElComments && <ElComments props={ElCommentsProps}/> }
 
       { isElFiles && <ElFiles props={ElFilesProps} /> }
 

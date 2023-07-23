@@ -1,11 +1,11 @@
-import React, { useState } from "react"
+import React from "react"
 
 import { Order } from "./Order.js"
 
 
 export function OrdersLine({ props:{line, l, mode, company, pannels, ZLreducer, RELOAD} }) {
   
-  const [orders, setOrders] = useState(line?.orders ?? false)
+  const orders = line?.orders ?? false
 
   const firstDay = line.week[0]
   const lastDay = line.week[line.week.length - 1]
@@ -18,7 +18,7 @@ export function OrdersLine({ props:{line, l, mode, company, pannels, ZLreducer, 
       {
         orders && orders.map( (order, o)=>{
 
-          const key = `OrderLine${o}${order?._id}`
+          const key = `OrderLine${l}${o}${order?._id}`
 
           return <Order props={{company, mode, order, firstDay, lastDay, pannels, RELOAD}} key={key} />
 

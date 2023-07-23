@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { bzCalc } from "../../../../../AppFunctions"
 import ActionBtn from "./../../../../All/ActionBtn"
@@ -8,17 +8,21 @@ export function FinMonthSummary({ props:{fi, newMonth, taxYear, edit, setEdit, e
 
   const date = `${fi?.date.toString().slice(0,4)} / ${fi?.date.toString().slice(4,6)}`
   
-  const [incomes, setIncomes] = useState(fi?.col_9)
-  const [buyMaterials, setBuyMaterials] = useState(fi?.col_10)
-  const [elseExpenses, setElseExpenses] = useState(fi?.col_14)
-  const [ZUS, setZUS] = useState(fi?.ZUS)
-  const [pVAT, setpVAT] = useState(fi?.pVAT)
-  const [pZUS, setpZUS] = useState(fi?.pZUS)
+  const [incomes, setIncomes] = useState( fi?.col_9 )
+  const [buyMaterials, setBuyMaterials] = useState( fi?.col_10 )
+  const [elseExpenses, setElseExpenses] = useState( fi?.col_14 )
+  const [ZUS, setZUS] = useState( fi?.ZUS )
+  const [pVAT, setpVAT] = useState("0.00")
+  const [pZUS, setpZUS] = useState("0.00")
+
+  const [incomesDark, setIncomesDark] = useState("0.00")
+  const [expensesDark, setExpensesDark] = useState("0.00")
   
   const isFirstMonth = parseInt( fi?.date.toString().slice(4,6) ) === 1
   const outgoings = bzCalc("+", buyMaterials, elseExpenses)
   const profit = bzCalc("-", bzCalc("-", incomes, outgoings), ZUS)
   const VAT = bzCalc("*", bzCalc("-", incomes, outgoings), "0.23")
+  const profitDark = bzCalc("-", incomesDark, expensesDark)
 
   function CHG(fn, e){
     let val = e?.target?.value
@@ -36,6 +40,7 @@ export function FinMonthSummary({ props:{fi, newMonth, taxYear, edit, setEdit, e
   const pZUSInput = <input type="text" value={pZUS} onChange={(e)=>CHG(setpZUS, e)} />
 
   const clProfit = `${parseFloat(profit) >= 0 ? `txtGrn bold` : `txtRed bold`}`
+  const clProfitDark = `${parseFloat(profitDark) >= 0 ? `txtGrn bold` : `txtRed bold`}`
 
   const monthInfo = [
     {grp:"Obliczenia dla bieżącego miesiąca", cl:`underline bold`},
@@ -51,12 +56,31 @@ export function FinMonthSummary({ props:{fi, newMonth, taxYear, edit, setEdit, e
     {txt:"Do zapłaty ZUS :", val:isFirstMonth && edit ? pZUSInput : `${pZUS} zł`, cl:`txtYlw`}
   ]
 
+  const darkMonthInfo = [
+    {grp:`Obliczenia "na czarno"`, cl:`underline bold`},
+    {txt:"Dochód (brutto) :", val:`${profitDark} zł`, cl:clProfitDark},
+    {txt:"Przychód (brutto) :", val:`${incomesDark} zł`},
+    {txt:"Wydatki (brutto) :", val:`${expensesDark} zł`}
+  ]
+
   const SAVE = ()=>{
     setEdit(false)
     const template = {date:fi?.date, col_9:incomes, col_10:buyMaterials, col_14:elseExpenses, ZUS}
     const month = isFirstMonth ? {...template, pVAT, pZUS} : template
     SAVE_MONTH({newMonth, year:taxYear, month})
   }
+
+  useEffect( ()=>{
+
+    setIncomes( prev=> (fi?.calc && editDocs) ? fi?.calc?.inc.NET : fi?.col_9 )
+    setElseExpenses( prev=> (fi?.calc && editDocs) ? "0.00" : fi?.col_10 )
+    setBuyMaterials( prev=> (fi?.calc && editDocs) ? fi?.calc?.exp.NET : fi?.col_14 )
+    setZUS( prev=> (fi?.calc && editDocs) ? fi?.calc?.zus : fi?.ZUS )
+
+    setIncomesDark( prev=> (fi?.calc && editDocs) ? fi?.calc?.incDark : "0.00" )
+    setExpensesDark( prev=> (fi?.calc && editDocs) ? fi?.calc?.expDark : "0.00" )
+
+  },[editDocs, fi])
 
   return(
     <div className="FinMonthSummary">
@@ -80,6 +104,32 @@ export function FinMonthSummary({ props:{fi, newMonth, taxYear, edit, setEdit, e
 
       {
         monthInfo?.map( (line, l)=>{
+          return(
+            <div className="Line flex start" key={`MonthInfoLine${l}`}>
+            {
+              line?.grp &&
+              <span className={`LineGroup ${line?.cl} flex start`}>
+                {line.grp}
+              </span>
+            }
+            {
+              line?.txt &&
+              <span className={`LineName ${line?.cl} flex start`}>
+                {line.txt}
+              </span>
+            }
+            {
+              line?.val &&
+              <span className={`LineVal ${line?.cl} flex end`}>
+                {line.val}
+              </span>
+            }
+            </div>
+          )
+        })
+      }
+      {
+        editDocs && darkMonthInfo?.map( (line, l)=>{
           return(
             <div className="Line flex start" key={`MonthInfoLine${l}`}>
             {

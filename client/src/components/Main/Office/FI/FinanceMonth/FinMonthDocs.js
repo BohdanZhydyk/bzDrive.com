@@ -11,7 +11,7 @@ export function FinMonthDocs({ props:{company, fi, editDocs, setEditDocs, GET_DO
     cl: `FinDoscLineTop txtOrg bold`,
     num: `Lp.`,
     usr: `user`,
-    nam: `Faktura Nr`,
+    nam: `Nr dokumentu`,
     inf: `Informacja`,
     net: `Kwota netto, zł`,
     bru: `Wartość brutto, zł`,

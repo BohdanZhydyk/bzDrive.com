@@ -33,6 +33,29 @@ exports.getOffice = (req, res)=>{
     })
   }
 
+  function GET_FINANCES(company, taxYear){
+
+    const query = {company}
+    bzDB( { req, res, col:'bzFinances', act:"FIND", query }, (financesData)=>{
+
+      const finances = financesData?.result
+
+      const taxYearArr = finances.filter(
+        month=> parseInt(month?.date / 100) === taxYear
+      )
+      const isPrevTaxYear = finances.filter(
+        month=> parseInt(month?.date / 100) === taxYear - 1
+      )?.length > 0
+
+      res.send({
+        ...financesData,
+        result: {taxYearArr, isPrevTaxYear}
+      })
+
+    })
+
+  }
+
   bzDB( { req, res, col:'bzTokens', act:"FIND_ONE", query:{bzToken} }, (userData)=>{
 
     const login = userData?.result?.user?.login
@@ -41,6 +64,11 @@ exports.getOffice = (req, res)=>{
     bzDB( { req, res, col:'companies', act:"FIND", query }, (compData)=>{
 
       const myCompanies = compData?.result.map( (comp)=> comp?.shortName )
+      
+      if( myCompanies?.length === 0 ){
+        res.send({ ...compData, result:{userLogin:false, companiesData:false} })
+        return
+      }
 
       // getting information about available companies
       if(object?.getCompany){
@@ -78,11 +106,6 @@ exports.getOffice = (req, res)=>{
         const car = object?.query?.car
         const client = object?.query?.client
         const tel = object?.query?.tel
-
-        if( !myCompanies.includes(company) ){
-          res.send({...compData, result: []})
-          return
-        }
         
         let query = {
           $and:[
@@ -164,11 +187,6 @@ exports.getOffice = (req, res)=>{
         const company = object?.query?.companyName
         const from = object?.query["nr.from"]
 
-        if( !myCompanies.includes(company) ){
-          res.send({...compData, result: []})
-          return
-        }
-
         const query = {"nr.mode":mode, company, "nr.from":from}
 
         bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (invoicesData)=>{
@@ -186,30 +204,8 @@ exports.getOffice = (req, res)=>{
 
         const company = object?.query?.companyName
         const taxYear = object?.query?.taxYear
-
-        if( !myCompanies.includes(company) ){
-          res.send({...compData, result: []})
-          return
-        }
-
-        const query = {company}
-
-        bzDB( { req, res, col:'bzFinances', act:"FIND_ONE", query }, (financesData)=>{
-
-          const finances = financesData?.result?.finances
-          const taxYearArr = finances?.filter(
-            month=> parseInt(month?.date / 100) === taxYear
-          )
-          const isPrevTaxYear = finances?.filter(
-            month=> parseInt(month?.date / 100) === taxYear - 1
-          )?.length > 0
-
-          res.send({
-            ...financesData,
-            result: {taxYearArr, isPrevTaxYear}
-          })
-
-        })
+        
+        GET_FINANCES(company, taxYear)
 
       }
 
@@ -218,48 +214,22 @@ exports.getOffice = (req, res)=>{
 
         const company = object?.query?.companyName
         const taxYear = object?.query?.taxYear
-        const newMonth = object?.query?.newMonth
         const month = object?.query?.month
+        const date = month?.date
 
-        if( !myCompanies.includes(company) ){
-          res.send({...compData, result: []})
-          return
-        }
-
-        const query = {company}
+        const query = {company, date}
 
         bzDB( { req, res, col:'bzFinances', act:"FIND_ONE", query }, (financesData)=>{
 
-          const _id = ObjectId(financesData?.result?._id)
-          const date = object?.query?.month?.date
-          const finances = newMonth
-            ? [month, ...financesData?.result?.finances]
-            : financesData?.result?.finances.map(
-              (month)=> month?.date === date ? object?.query?.month : month
-            )
+          const result = financesData?.result
+          const month = object?.query?.month
+          const _id = ObjectId(result?._id)
+          
+          const act = result ? "UPDATE_ONE" : "INSERT_ONE"
+          const query = result ? {...result, ...month, _id} : {company, ...month}
 
-          const query = {...financesData?.result, finances, _id}
-
-          bzDB( { req, res, col:'bzFinances', act:"UPDATE_ONE", query }, (updatedFinData)=>{
-            
-            const query = {company}
-            bzDB( { req, res, col:'bzFinances', act:"FIND_ONE", query }, (financesData)=>{
-
-              const finances = financesData?.result?.finances
-              const taxYearArr = finances.filter(
-                month=> parseInt(month?.date / 100) === taxYear
-              )
-              const isPrevTaxYear = finances.filter(
-                month=> parseInt(month?.date / 100) === taxYear - 1
-              )?.length > 0
-    
-              res.send({
-                ...financesData,
-                result: {taxYearArr, isPrevTaxYear}
-              })
-
-            })
-
+          bzDB( { req, res, col:'bzFinances', act, query }, (updatedFinData)=>{
+            GET_FINANCES(company, taxYear)
           })
 
         })
@@ -367,11 +337,6 @@ exports.getOffice = (req, res)=>{
       if(object?.getDocuments){
 
         const company = object?.company
-
-        if( !myCompanies.includes(company) ){
-          res.send({...compData, result: []})
-          return
-        }
 
         const date = object?.date
 

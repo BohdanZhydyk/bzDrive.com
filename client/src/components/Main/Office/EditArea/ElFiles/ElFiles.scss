@@ -4,6 +4,7 @@
   margin:0 0 1vw 0;
   border:1px solid #999;
   border-radius:0.5vw;
+  @media print {display:none !important;}
 
   .ElFilesTop {
     width:calc(100% - 4vw);

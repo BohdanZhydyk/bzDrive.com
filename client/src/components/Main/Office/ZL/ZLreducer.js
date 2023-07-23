@@ -43,7 +43,7 @@ export const ZLreducer = (action, callback)=>{
     return calendar
   }
 
-  function GenerateCalendar(calendar){
+  function AddOrdersToCalendar(calendar){
     
     const query = {
       mode: action?.mode,
@@ -54,7 +54,6 @@ export const ZLreducer = (action, callback)=>{
     }
 
     ZLreducer( {type:"GET_ORDERS", query}, (data)=>{
-
       callback(
         calendar?.map( obj=>{
 
@@ -70,7 +69,6 @@ export const ZLreducer = (action, callback)=>{
               ( (order?.nr.to >= firstDay) || (order?.status === "edit") || (order?.status === "repair") )
             )
           }
-
           return {
             orders: data.filter( order=> (firstDay > today) ? rules1(order) : rules2(order) ),
             week:obj?.week
@@ -81,26 +79,25 @@ export const ZLreducer = (action, callback)=>{
   }
 
   switch (action.type) {
-    case "GET_ORDERS":    GET_ORDERS();   break;
     case "MINUS_WEEK":    MINUS_WEEK();   break;
     case "PLUS_WEEK":     PLUS_WEEK();    break;
+    case "GET_ORDERS":    GET_ORDERS();   break;
     case "GET_CALENDAR":  GET_CALENDAR(); break;
     default: break;
   }
+
+  function MINUS_WEEK(){ AddOrdersToCalendar( PrevWeek(calendar.slice(0,-1)) ) }
+  function PLUS_WEEK(){ AddOrdersToCalendar( NextWeek(calendar.slice(1)) ) }
 
   function GET_ORDERS(){
     const getOrdersQuery = {getOrders:true, query}
     PostToApi( '/getOffice', getOrdersQuery, (data)=> callback(data) )
   }
 
-  function MINUS_WEEK(){ GenerateCalendar( PrevWeek(calendar.slice(0,-1)) ) }
-
-  function PLUS_WEEK(){ GenerateCalendar( NextWeek(calendar.slice(1)) ) }
-
   function GET_CALENDAR(){
 
     if( calendar ){
-      GenerateCalendar( calendar.map( obj=> ({orders:false, week:obj?.week}) ) )
+      AddOrdersToCalendar( calendar.map( obj=> ({orders:false, week:obj?.week}) ) )
       return
     }
     
@@ -120,7 +117,7 @@ export const ZLreducer = (action, callback)=>{
     calendar = NextWeek(calendar)
     calendar = NextWeek(calendar)
 
-    GenerateCalendar(calendar)
+    AddOrdersToCalendar(calendar)
 
   }
 

@@ -8,17 +8,18 @@ import EditArea from "../../EditArea"
 export function FinMonthDocument({ props:{company, doc, d, RELOAD} }){
 
   const mode = doc?.nr?.mode
-  const color = `FinDocColor${mode}`
+  const color = `FinDocColor${mode} overflow`
 
   const [edit, setEdit] = useState(false)
 
   const partnerName = (doc)=>{
-    const client = doc?.client?.name ? `${doc.client.name} - ` : ``
-    const brand = doc?.car?.brand ? `${doc.car.brand} - ` : ``
+    const seller = doc?.seller?.name ? `${doc.seller.name}` : ``
+    const client = doc?.client?.name ? `${doc.client.name}` : ``
+    const brand = doc?.car?.brand ? `${doc.car.brand}` : ``
     const model = doc?.car?.model ?? ``
-    if(doc?.car) return `${client}${brand}${model}`
-    if(doc?.client?.name) return doc.client.name
-    if(doc?.seller?.name) return doc.seller.name
+    if(brand || model) return `${client ? `${client} - ` : ""}${brand ? `${brand} - ` : ""}${model}`
+    if(client) return client
+    if(seller) return seller
     return "-----"
   }
 
@@ -33,6 +34,8 @@ export function FinMonthDocument({ props:{company, doc, d, RELOAD} }){
       btn: <ActionBtn props={{name:`edit`, click:()=> setEdit(!edit) }} />
     }
   }
+
+  // console.log(doc)
 
   return(
     <div className={`FinDoscLine ${doc?.cl} flex wrap stretch`} >

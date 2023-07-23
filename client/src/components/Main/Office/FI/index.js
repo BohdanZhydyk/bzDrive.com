@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 
 import "./FI.scss"
 import { FIreducer } from "./FIreducer"
-import { GetUser, TimeTo_YYYYMM } from "../../../../AppFunctions"
+import { GetUser, SumArray, TimeTo_YYYYMM, bzCalc } from "../../../../AppFunctions"
 import { Title } from "./Title"
 import FinCalc from "./FinCalc"
 import FinanceMonth from "./FinanceMonth"
@@ -26,7 +26,7 @@ function FI({ props:{company} }){
   const isLastMonth = count === finances?.length
 
   const SAVE_MONTH = (obj)=>{
-    const query = {companyName:company?.shortName, newMonth:obj?.newMonth, taxYear:obj?.year, month:obj?.month}
+    const query = {companyName:company?.shortName, taxYear:obj?.year, month:obj?.month}
     setCount(1)
     setFinances(false)
     FIreducer({type:"SAVE_MONTH", query}, (data)=>{
@@ -48,7 +48,30 @@ function FI({ props:{company} }){
 
   const GET_DOCS = (date)=>{
     FIreducer({type:"GET_DOCUMENTS", taxDate:date, company:company?.shortName}, (data)=>{
-      setFinances( finances?.map( month=> month?.date === date ? {...month, doc:data} : month ) )
+
+      function SUM(mode, NetBrut){
+        return SumArray(
+          data?.filter( el=> el?.nr?.mode === mode )?.map( el=> SumArray( el?.articles?.map( el=> el[NetBrut] ) ) )
+        )
+      }
+
+      const inc = {
+        NET: bzCalc("+",SUM("FS","NET"),SUM("PS","NET")),
+        SUM: bzCalc("+",SUM("FS","SUM"),SUM("PS","SUM"))
+      }
+      const exp = {
+        NET: SUM("FZ","NET"),
+        SUM: SUM("FZ","SUM")
+      }
+      const zus = SUM("ZU","SUM")
+      const incDark = bzCalc("-", bzCalc("-", SUM("ZL","SUM"), inc?.SUM), zus)
+      const expDark = SUM("PZ","SUM")
+
+      setFinances( finances?.map(
+        month=> month?.date === date
+        ? {...month, doc:data, calc:{inc,exp,zus,incDark,expDark}}
+        : month
+      ))
     })
   }
 

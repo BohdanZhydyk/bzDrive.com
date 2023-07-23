@@ -7,7 +7,7 @@ import { UploadFile } from "../../../../All/UploadFile"
 import "./ElFiles.scss"
 import ActionBtn from "../../../../All/ActionBtn"
 
-function ElFiles({ props:{doc, user, nr, setSave, files, setFiles} }){
+function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} }){
   
   const FileTypeToIco = (type)=>{
     const link = `https://bzdrive.com/files/ico/file`
@@ -100,15 +100,18 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles} }){
                 <span className="unit flex end">{unit}</span>
               </div>
 
-              <span className="FileAct flex end">
+              {
+                !printMode &&
+                <span className="FileAct flex end">
 
-                <a className="flex" href={href} download={file?.fileName} target="_blank" rel="noreferrer" >
-                  <ActionBtn props={downloadPropses} />
-                </a>
+                  <a className="flex" href={href} download={file?.fileName} target="_blank" rel="noreferrer" >
+                    <ActionBtn props={downloadPropses} />
+                  </a>
 
-                <ActionBtn props={deletePropses} />
+                  <ActionBtn props={deletePropses} />
 
-              </span>
+                </span>
+              }
 
             </div>
           )
