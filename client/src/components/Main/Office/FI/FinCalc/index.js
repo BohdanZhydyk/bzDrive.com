@@ -5,7 +5,7 @@ import { FinYearSummary } from "./FinYearSummary"
 
 function FinCalc({ props:{lang, finances, taxPrevYear, GET_YEAR} }){
   return(
-    <div className="FinCalc flex stretch">
+    <div className="FinCalc flex stretch wrap">
 
       <FinYearSummary props={{lang, finances, taxPrevYear, GET_YEAR}} />
 

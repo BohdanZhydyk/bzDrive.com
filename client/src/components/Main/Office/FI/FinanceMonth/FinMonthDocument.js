@@ -8,7 +8,7 @@ import EditArea from "../../EditArea"
 export function FinMonthDocument({ props:{company, doc, d, RELOAD} }){
 
   const mode = doc?.nr?.mode
-  const color = `FinDocColor${mode} overflow`
+  const color = `${d === 0 ? `` : `FinCell overflow`} FinDocColor${mode} flex`
 
   const [edit, setEdit] = useState(false)
 
@@ -39,13 +39,16 @@ export function FinMonthDocument({ props:{company, doc, d, RELOAD} }){
 
   return(
     <div className={`FinDoscLine ${doc?.cl} flex wrap stretch`} >
-      <div className={`FinNum ${color} flex`}>{doc?.num ?? docLine(doc, d).num}</div>
-      <div className={`FinUsr ${color} flex start`}>{doc?.usr ?? docLine(doc, d).usr}</div>
-      <div className={`FinNam ${color} flex start`}>{doc?.nam ?? docLine(doc, d).nam}</div>
-      <div className={`FinInf ${color} flex start`}>{doc?.inf ?? docLine(doc, d).inf}</div>
-      <div className={`FinNet ${color} flex end`}>{doc?.net ?? docLine(doc, d).net}</div>
-      <div className={`FinBru ${color} flex end`}>{doc?.bru ?? docLine(doc, d).bru}</div>
-      <div className={`FinBtn ${color} flex end`}>{doc?.btn ?? docLine(doc, d).btn}</div>
+      <div className={`FinNum ${color}`}>{doc?.num ?? docLine(doc, d).num}</div>
+      <div className="Between flex wrap stretch">
+        <div className={`FinNam  ${color} start`}>{doc?.nam ?? docLine(doc, d).nam}</div>
+        <div className={`FinUsr  ${color} start`}>{doc?.usr ?? docLine(doc, d).usr}</div>
+        <div className={`FinInf1 ${color} start`}>{doc?.inf ?? docLine(doc, d).inf}</div>
+        <div className={`FinNet  ${color} end`}>{doc?.net ?? docLine(doc, d).net}</div>
+        <div className={`FinBru  ${color} end`}>{doc?.bru ?? docLine(doc, d).bru}</div>
+        <div className={`FinInf2 ${color} start`}>{doc?.inf ?? docLine(doc, d).inf}</div>
+      </div>
+      <div className={`FinBtn ${color} end`}>{doc?.btn ?? docLine(doc, d).btn}</div>
       { edit && <EditArea props={{company, mode, doc, edit, setEdit, RELOAD}} /> }
     </div>
   )
