@@ -17,7 +17,6 @@ export function ArtInput({ props:{name, isDisplay, val, align, CLA, FN, pl} }){
         value={val}
         onChange={ (event)=> FN(name, event.target.value) }
       />
-    // <ArtInput props={propsesART} />
     }
     </span>
     

@@ -108,19 +108,19 @@ export function FinMonthSummary({ props:{fi, newMonth, taxYear, edit, setEdit, e
             <div className="Line flex start" key={`MonthInfoLine${l}`}>
             {
               line?.grp &&
-              <span className={`LineGroup ${line?.cl} flex start`}>
+              <span className={`LineGroup ${line?.cl ?? ``} flex start`}>
                 {line.grp}
               </span>
             }
             {
               line?.txt &&
-              <span className={`LineName ${line?.cl} flex start`}>
+              <span className={`LineName ${line?.cl ?? ``} flex start`}>
                 {line.txt}
               </span>
             }
             {
               line?.val &&
-              <span className={`LineVal ${line?.cl} flex end`}>
+              <span className={`LineVal ${line?.cl ?? ``} flex end`}>
                 {line.val}
               </span>
             }
@@ -134,19 +134,19 @@ export function FinMonthSummary({ props:{fi, newMonth, taxYear, edit, setEdit, e
             <div className="Line flex start" key={`MonthInfoLine${l}`}>
             {
               line?.grp &&
-              <span className={`LineGroup ${line?.cl} flex start`}>
+              <span className={`LineGroup ${line?.cl ?? ``} flex start`}>
                 {line.grp}
               </span>
             }
             {
               line?.txt &&
-              <span className={`LineName ${line?.cl} flex start`}>
+              <span className={`LineName ${line?.cl ?? ``} flex start`}>
                 {line.txt}
               </span>
             }
             {
               line?.val &&
-              <span className={`LineVal ${line?.cl} flex end`}>
+              <span className={`LineVal ${line?.cl ?? ``} flex end`}>
                 {line.val}
               </span>
             }
