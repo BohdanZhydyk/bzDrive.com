@@ -82,6 +82,7 @@ exports.ActionSignup = (req, res)=>{
               }
 
               res.send({ ...req?.body, result:{ errors: {email:"EmailNotSent"} } })
+              return
 
             })
 

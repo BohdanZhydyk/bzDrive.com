@@ -8,8 +8,11 @@ import Main from './components/Main'
 import Footer from './components/Footer'
 
 import { useResizeDetector } from 'react-resize-detector'
+import { GetUser } from './AppFunctions'
 
 function App() {
+
+  const user = GetUser()
 
   const [state, setState] = useState(false)
 
@@ -23,6 +26,8 @@ function App() {
   }
 
   useEffect( ()=>{ !state && AppReducer( { type:"GET_STATE" }, state, setState ) }, [])
+
+  useEffect( ()=>{ user?.reload && AppReload() }, [user])
 
   const { width, height, ref } = useResizeDetector()
 

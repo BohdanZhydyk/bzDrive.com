@@ -160,7 +160,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     const min = 1
     const max = 24
     let sanErr = false
-    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃ]/g
+    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃЀ-ӿ]/g
     let sanText = txt ? txt.replace(allowedChars, '').slice(0, max) : ''
     if(sanText.length < min) sanErr = tr('Err_0', lang)
     return { sanText, sanErr }
@@ -169,7 +169,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     const min = 1
     const max = 64
     let sanErr = false
-    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃ]/g
+    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃЀ-ӿ]/g
     let sanText = txt ? txt.replace(allowedChars, '').slice(0, max) : ''
     if(sanText.length < min) sanErr = tr('Err_0', lang)
     return { sanText, sanErr }
@@ -217,7 +217,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     const min = 1
     const max = 24
     let sanErr = false
-    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃ]/g
+    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃЀ-ӿ]/g
     let sanText = txt ? txt.replace(allowedChars, '').slice(0, max) : ''
     if(sanText.length < min) sanErr = tr('Err_0', lang)
     return {sanText, sanErr}
@@ -226,10 +226,24 @@ export const sanitizeTxt = (txt, name = "default")=>{
     const min = 1
     const max = 64
     let sanErr = false
-    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃ]/g
+    const allowedChars = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃЀ-ӿ]/g
     let sanText = txt ? txt.replace(allowedChars, '').slice(0, max) : ''
     function formatStreetName(name) {
-      // if(!name.startsWith("ul. ")) return "ul. " + name
+      if(lang === "ua"){
+        if(
+          !name.startsWith("вул. ") &&
+          !name.startsWith("пл. ") &&
+          !name.startsWith("пр. ") &&
+          name?.length > 4
+        ){ return "вул. " + name }
+      }
+      if(lang === "pl"){
+        if(
+          !name.startsWith("ul. ") &&
+          !name.startsWith("al. ") &&
+          name?.length > 3
+        ){ return "ul. " + name }
+      }
       return name
     }
     if(sanText.length < min) sanErr = tr('Err_0', lang)
@@ -277,7 +291,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     let sanErr = false
     const regEx = /^(http(s)?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ;,./?%&=]*)?$/
     function formatWebsite(url) {
-      if(!url.startsWith("https")) return "https://" + url
+      if(!url.startsWith("https") && url?.length > 5) return "https://" + url
       return url
     }
     let sanText = txt ? txt.trim().slice(0, max) : ''
@@ -476,7 +490,11 @@ export const PostToApi = async (link, object, callback)=>{
     
     // Set the token and user data in local storage
     SetToken(Data?.bzToken)
-    SetUser({ ...Data?.user, lang: setLanguage() })
+    SetUser(
+      Data?.user === "RELOAD_APP"
+      ? { ...Data?.user, lang: setLanguage(), reload:true }
+      : { ...Data?.user, lang: setLanguage() }
+    )
 
     // Run the callback function with the response data (if provided)
     if(typeof callback === "function") callback(Data?.result)

@@ -1,5 +1,6 @@
 import React from "react"
 
+import "./FinCalc.scss"
 import { FinYearSummary } from "./FinYearSummary"
 
 

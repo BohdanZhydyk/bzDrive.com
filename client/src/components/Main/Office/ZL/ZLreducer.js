@@ -69,10 +69,9 @@ export const ZLreducer = (action, callback)=>{
               ( (order?.nr.to >= firstDay) || (order?.status === "edit") || (order?.status === "repair") )
             )
           }
-          return {
-            orders: data.filter( order=> (firstDay > today) ? rules1(order) : rules2(order) ),
-            week:obj?.week
-          }
+
+          const orders = !data ? [] : data.filter( order=> (firstDay > today) ? rules1(order) : rules2(order) )
+          return { orders, week:obj?.week }
         })
       )
     })

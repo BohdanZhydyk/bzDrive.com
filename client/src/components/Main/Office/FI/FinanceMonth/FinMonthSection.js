@@ -1,12 +1,7 @@
 import React from "react"
 
 
-export function FinMonthSection({ props:{newMonth, edit, setEdit, editDocs, setEditDocs} }){
-
-  const ON_CLICK = ()=>{
-    setEditDocs(!editDocs)
-    setEdit(newMonth ? !edit : false)
-  }
+export function FinMonthSection({ props:{newMonth, edit, editDocs, ON_CLICK} }){
 
   return(
     <div className="FinMonthSection flex column start">

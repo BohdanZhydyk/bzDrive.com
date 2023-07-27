@@ -29,6 +29,7 @@ exports.getState = (req, res)=>{
             )
           }
         })
+        return
       }
 
     })

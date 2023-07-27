@@ -37,9 +37,6 @@
     border-bottom:1px solid #444;
     @media (min-width: 481px) and (max-width: 767px) {margin:0 0 1vw 0;}
     @media (max-width: 481px) {margin:0 0 2vw 0;}
-    &:hover {
-      background-image:linear-gradient(transparent, #1715, transparent);
-    }
 
     .DownLoadBar {
       position:absolute;

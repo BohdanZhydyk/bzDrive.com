@@ -22,7 +22,7 @@ function ElInfo({ props:{
 
   const pannel = ()=>{
     switch (mode) {
-      case "ZU": return {title1:`InfoPannelBuyer`,  title2:`InfoPannelPayer`,  info1:BuyerPr, info2:DealerPr }
+      case "ZU": return {title1:`InfoPannelBuyer`,  title2:`InfoPannelPayer`,  info1:SellerPr, info2:DealerPr }
       case "ZL": return {title1:`InfoPannelCar`,    title2:`InfoPannelClient`, info1:CarPr, info2:ClientPr   }
       case "FS": return {title1:`InfoPannelDealer`, title2:`InfoPannelBuyer`,  info1:DealerPr, info2:ClientPr}
       case "PS": return {title1:`InfoPannelDealer`, title2:`InfoPannelBuyer`,  info1:DealerPr, info2:ClientPr}

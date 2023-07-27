@@ -36,7 +36,7 @@ export function InfoPrintPannel({ props:{InfoProps} }){
     `,
     val: `
       ${zip?.val ? `${zip.val}` : ``}
-      ${town?.val ? `${town.val},` : ``}
+      ${town?.val ? `${town.val}${street?.val ? `,` : ``}` : ``}
       ${street?.val ? `${street.val}` : ``}
       ${nr?.val ? `${nr.val}` : ``}
     `
@@ -48,8 +48,8 @@ export function InfoPrintPannel({ props:{InfoProps} }){
       ${email?.legend ? `${email.legend}` : ``}
     `,
     val: `
-      ${tel?.val ? `${tel.val},` : ``}
-      ${www?.val ? `${www.val},` : ``}
+      ${tel?.val ? `${tel.val}${www?.val ? `,` : ``}` : ``}
+      ${www?.val ? `${www.val}${email?.val ? `,` : ``}` : ``}
       ${email?.val ? `${email.val}` : ``}
     `
   }
@@ -59,7 +59,7 @@ export function InfoPrintPannel({ props:{InfoProps} }){
       ${model?.legend ? `${model.legend}` : ``}
     `,
     val: `
-      ${brand?.val ? `${brand.val} -` : ``}
+      ${brand?.val ? `${brand.val}${(brand?.val && model?.val) ? ` - ` : ``}` : ``}
       ${model?.val ? `${model.val}` : ``}
     `
   }
@@ -70,8 +70,8 @@ export function InfoPrintPannel({ props:{InfoProps} }){
       ${agree?.legend ? `${agree.legend}` : ``}
     `,
     val: `
-      ${odo?.val ? `${odo.val},` : ``}
-      ${fuel?.val ? `${fuel.val},` : ``}
+      ${odo?.val ? `${odo.val}${fuel?.val ? `,` : ``}` : ``}
+      ${fuel?.val ? `${fuel.val}${agree?.val ? `,` : ``}` : ``}
       ${agree?.val ? `${agree.val}` : ``}
     `
   }

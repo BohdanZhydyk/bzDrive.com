@@ -1,14 +1,16 @@
 import React, { useState } from "react"
 
-import ActionBtn from "../../../../All/ActionBtn"
 import { DocNameNormalize, SumArray } from "../../../../../AppFunctions"
 import EditArea from "../../EditArea"
 
 
 export function FinMonthDocument({ props:{company, doc, d, RELOAD} }){
 
+  const top = d === 0
+
   const mode = doc?.nr?.mode
-  const color = `${d === 0 ? `` : `FinCell overflow`} FinDocColor${mode} flex`
+  const color = `${top ? `FinCell` : `FinCell FinDocColor${mode} overflow`} flex`
+  const docCl = doc?.cl ?? `FinDoscLine`
 
   const [edit, setEdit] = useState(false)
 
@@ -30,25 +32,35 @@ export function FinMonthDocument({ props:{company, doc, d, RELOAD} }){
       nam: (doc?.nr?.assignNr?.length > 0) ? doc.nr.assignNr : DocNameNormalize(doc?.nr),
       inf: partnerName(doc),
       net: SumArray(doc?.articles?.map( (el)=> el?.NET )),
-      bru: SumArray(doc?.articles?.map( (el)=> el?.SUM )),
-      btn: <ActionBtn props={{name:`edit`, click:()=> setEdit(!edit) }} />
+      bru: SumArray(doc?.articles?.map( (el)=> el?.SUM ))
     }
   }
+
+  const classes = {
+    num: `FinNum ${color}`,
+    nam: `FinNam ${color} start`,
+    usr: `FinUsr ${color} start`,
+    net: `FinNet ${color} end`,
+    bru: `FinBru ${color} end`,
+    inf1: `FinInf1 ${color} start overflow`,
+    inf2: `FinInf2${top ? `Top` : ``} ${color} start overflow`,
+  }
+
+  const CLICK = ()=> !top && setEdit(!edit)
 
   // console.log(doc)
 
   return(
-    <div className={`FinDoscLine ${doc?.cl} flex wrap stretch`} >
-      <div className={`FinNum ${color}`}>{doc?.num ?? docLine(doc, d).num}</div>
-      <div className="Between flex wrap stretch">
-        <div className={`FinNam  ${color} start`}>{doc?.nam ?? docLine(doc, d).nam}</div>
-        <div className={`FinUsr  ${color} start`}>{doc?.usr ?? docLine(doc, d).usr}</div>
-        <div className={`FinInf1 ${color} start`}>{doc?.inf ?? docLine(doc, d).inf}</div>
-        <div className={`FinNet  ${color} end`}>{doc?.net ?? docLine(doc, d).net}</div>
-        <div className={`FinBru  ${color} end`}>{doc?.bru ?? docLine(doc, d).bru}</div>
-        <div className={`FinInf2 ${color} start`}>{doc?.inf ?? docLine(doc, d).inf}</div>
+    <div className={`${docCl} flex wrap stretch`}>
+      <div className={classes?.num} onClick={CLICK}>{doc?.num ?? docLine(doc, d).num}</div>
+      <div className="Between flex wrap stretch" onClick={CLICK}>
+        <div className={classes?.nam}>  {doc?.nam ?? docLine(doc, d).nam} </div>
+        <div className={classes?.usr}>  {doc?.usr ?? docLine(doc, d).usr} </div>
+        <div className={classes?.inf1}> {doc?.inf ?? docLine(doc, d).inf} </div>
+        <div className={classes?.net}>  {doc?.net ?? docLine(doc, d).net} </div>
+        <div className={classes?.bru}>  {doc?.bru ?? docLine(doc, d).bru} </div>
+        <div className={classes?.inf2}> {doc?.inf ?? docLine(doc, d).inf} </div>
       </div>
-      <div className={`FinBtn ${color} end`}>{doc?.btn ?? docLine(doc, d).btn}</div>
       { edit && <EditArea props={{company, mode, doc, edit, setEdit, RELOAD}} /> }
     </div>
   )

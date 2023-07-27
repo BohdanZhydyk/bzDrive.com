@@ -25,28 +25,27 @@ function FI({ props:{company} }){
 
   const isLastMonth = count === finances?.length
 
-  const SAVE_MONTH = (obj)=>{
+  function SET_FI(data){
+    setFinances( prepareFinances(data) )
+    data?.isPrevTaxYear && setTaxPrevYear(true)
+  }
+
+  function SAVE_MONTH(obj){
     const query = {companyName:company?.shortName, taxYear:obj?.year, month:obj?.month}
     setCount(1)
     setFinances(false)
-    FIreducer({type:"SAVE_MONTH", query}, (data)=>{
-      setFinances( prepareFinances(data) )
-      data?.isPrevTaxYear && setTaxPrevYear(true)
-    })
+    FIreducer( {type:"SAVE_MONTH", query}, (data)=> data && SET_FI(data) )
   }
 
-  const GET_YEAR = (year)=>{
+  function GET_YEAR(year){
     const query = {companyName:company?.shortName, taxYear:year}
     setCount(1)
     setFinances(false)
     setTaxPrevYear(false)
-    FIreducer({type:"GET_FINANCES", query}, (data)=>{
-      setFinances( prepareFinances(data) )
-      data?.isPrevTaxYear && setTaxPrevYear(true)
-    })
+    FIreducer( {type:"GET_FINANCES", query}, (data)=> data && SET_FI(data) )
   }
 
-  const GET_DOCS = (date)=>{
+  function GET_DOCS(date){
     FIreducer({type:"GET_DOCUMENTS", taxDate:date, company:company?.shortName}, (data)=>{
 
       function SUM(mode, NetBrut){

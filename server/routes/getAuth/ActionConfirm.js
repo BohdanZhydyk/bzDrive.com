@@ -45,6 +45,7 @@ exports.ActionConfirm = (req, res)=>{
 
       bzDB( { req, res, col:'bzUsers', act:"INSERT_ONE", query:{...confirmData, pass} }, (insData)=>{
         res.send({ ...req?.body, result:{ chgPannel: "LogIn" } })
+        return
       })
     }
 
@@ -58,6 +59,7 @@ exports.ActionConfirm = (req, res)=>{
         bzDB( { req, res, col:'bzUsers', act:"UPDATE_ONE", query }, (updData)=>{
           res.send({ ...req?.body, result:{ chgPannel: "LogIn" } })
         })
+        return
 
       })
     }

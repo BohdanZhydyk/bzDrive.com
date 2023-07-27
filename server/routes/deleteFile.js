@@ -24,6 +24,7 @@ exports.deleteFile = (req, res)=>{
       let message = `File "https://bzdrive.com/${req?.body?.fileAddr}/${fileName}" deleted successfully!`
 
       res.status(200).send({ message, stats })
+      return
 
     })
 

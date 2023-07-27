@@ -43,7 +43,7 @@ function FS({ props:{company} }){
     const query = {mode, companyName:company?.shortName, "nr.from":{ $gte:firstDay, $lte:lastDay }}
     FSreducer({type:"GET_INVOICES", query}, (data)=>{
 
-      const sortedData = data.sort( (a, b) =>{
+      const sortedData = !data ? [] : data.sort( (a, b) =>{
         return (a.nr.from !== b.nr.from) ? a.nr.from - b.nr.from : a.nr.sign - b.nr.sign
       })
       setInvoices(prev=> prev ? [...sortedData, ...prev] : [...sortedData] )

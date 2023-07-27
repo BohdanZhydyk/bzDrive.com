@@ -52,11 +52,28 @@ exports.getOffice = (req, res)=>{
         result: {taxYearArr, isPrevTaxYear}
       })
 
+      return
+
     })
 
   }
 
   bzDB( { req, res, col:'bzTokens', act:"FIND_ONE", query:{bzToken} }, (userData)=>{
+
+    // getting document by ID
+    if(object?.getDocument){
+
+      const _id = object?.docID ? ObjectId(object?.docID) : ""
+      const query = {_id}
+
+      bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query }, (docData)=>{
+        res.send({
+          ...docData,
+          result: docData?.result
+        })
+        return
+      })
+    }
 
     const login = userData?.result?.user?.login
     const query = { $or:[{"director":login},{"personnel.accountants":login},{"personnel.workers":login}] }
@@ -66,29 +83,31 @@ exports.getOffice = (req, res)=>{
       const myCompanies = compData?.result.map( (comp)=> comp?.shortName )
       
       if( myCompanies?.length === 0 ){
-        res.send({ ...compData, result:{userLogin:false, companiesData:false} })
+        res.send({ ...compData, result:false })
         return
       }
 
       // getting information about available companies
       if(object?.getCompany){
 
-          const comp = compData?.result
-          const userDirector = comp.filter(d => d.director === login)
-          const userNotDirector = comp.filter(d => d.director !== login)
+        const comp = compData?.result
+        const userDirector = comp.filter(d => d.director === login)
+        const userNotDirector = comp.filter(d => d.director !== login)
 
-          const sortedData = userDirector.sort((a, b) => {
-            if (a.director > b.director) return 1
-            if (a.director < b.director) return -1
-            return 0
-          })
+        const sortedData = userDirector.sort((a, b) => {
+          if (a.director > b.director) return 1
+          if (a.director < b.director) return -1
+          return 0
+        })
 
-          const companiesData = sortedData.concat(userNotDirector)
+        const companiesData = sortedData.concat(userNotDirector)
 
-          res.send({
-            ...compData,
-            result: {userLogin:login, companiesData}
-          })
+        res.send({
+          ...compData,
+          result: {userLogin:login, companiesData}
+        })
+
+        return
 
       }
 
@@ -177,6 +196,8 @@ exports.getOffice = (req, res)=>{
               .sort( (a, b)=> parseInt(a.nr.from) - parseInt(b.nr.from) ) // sort by date
           })
 
+          return
+
         })
       }
 
@@ -196,6 +217,8 @@ exports.getOffice = (req, res)=>{
               .sort( (a, b)=> parseInt(b.nr.sign) - parseInt(a.nr.sign) ) // sort by date
           })
         })
+
+        return
 
       }
 
@@ -232,21 +255,6 @@ exports.getOffice = (req, res)=>{
             GET_FINANCES(company, taxYear)
           })
 
-        })
-
-      }
-
-      // getting document by ID
-      if(object?.getDocument){
-
-        const _id = object?.docID ? ObjectId(object?.docID) : ""
-        const query = {_id}
-
-        bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query }, (docData)=>{
-          res.send({
-            ...docData,
-            result: docData?.result
-          })
         })
 
       }
@@ -289,6 +297,8 @@ exports.getOffice = (req, res)=>{
               ...documentData,
               result: documentData?.result
             })
+
+            return
     
           })
           :
@@ -305,6 +315,8 @@ exports.getOffice = (req, res)=>{
                 ...documentData,
                 result: documentData?.result
               })
+
+              return
       
             })
           })
@@ -326,6 +338,8 @@ exports.getOffice = (req, res)=>{
               ...docData,
               result: docData?.result
             })
+
+            return
 
           })
 
@@ -358,15 +372,17 @@ exports.getOffice = (req, res)=>{
 
           const ZU = documentsData?.result.filter( el=> el?.nr?.mode === "ZU").reverse()
           const FS = documentsData?.result.filter( el=> el?.nr?.mode === "FS").reverse()
-          const FZ = documentsData?.result.filter( el=> el?.nr?.mode === "FZ").reverse()
           const PS = documentsData?.result.filter( el=> el?.nr?.mode === "PS").reverse()
+          const FZ = documentsData?.result.filter( el=> el?.nr?.mode === "FZ").reverse()
           const PZ = documentsData?.result.filter( el=> el?.nr?.mode === "PZ").reverse()
           const ZL = documentsData?.result.filter( el=> el?.nr?.mode === "ZL").reverse()
 
           res.send({
             ...documentsData,
-            result: [...ZU, ...FS, ...FZ, ...PS, ...PZ, ...ZL]
+            result: [...ZU, ...FS, ...PS, ...FZ, ...PZ, ...ZL]
           })
+
+          return
 
         })
       }

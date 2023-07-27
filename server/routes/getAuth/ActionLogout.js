@@ -16,6 +16,7 @@ exports.ActionLogout = (req, res)=>{
 
   bzDB( { req, res, col:'bzTokens', act:"DELETE_MANY", query }, (dbData)=>{
     res.send( {bzToken, user:{lang}, result:dbData?.result} )
+    return
   })
 
 }

@@ -21,7 +21,7 @@ function Profile() {
   const role = user?.role
   const ava = user?.ava
 
-  console.log("user", user)
+  // console.log("user", user)
 
   return(
     <div className="Profile flex column">

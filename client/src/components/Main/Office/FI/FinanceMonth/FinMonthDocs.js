@@ -5,7 +5,7 @@ import { NewDocBtns } from "./NewDocBtns"
 import { FinMonthDocument } from "./FinMonthDocument"
 
 
-export function FinMonthDocs({ props:{company, fi, editDocs, setEditDocs, GET_DOCS} }){
+export function FinMonthDocs({ props:{company, fi, editDocs, setEditDocs, GET_DOCS, ON_CLICK} }){
 
   const docTop = {
     cl: `FinDoscLineTop txtOrg bold`,
@@ -14,8 +14,7 @@ export function FinMonthDocs({ props:{company, fi, editDocs, setEditDocs, GET_DO
     nam: `Nr dokumentu`,
     inf: `Informacja`,
     net: `Kwota netto, zł`,
-    bru: `Wartość brutto, zł`,
-    btn: <ActionBtn props={{name:`cancel`, click:()=>setEditDocs(!editDocs)}} />
+    bru: `Wartość brutto, zł`
   }
 
   const documents = fi.doc ? [docTop, ...fi.doc] : [docTop]
@@ -29,7 +28,7 @@ export function FinMonthDocs({ props:{company, fi, editDocs, setEditDocs, GET_DO
   return(
     <div className="FinMonthDocs flex column">
 
-      <NewDocBtns props={{company, RELOAD}} />
+      <NewDocBtns props={{company, editDocs, setEditDocs, RELOAD, ON_CLICK}} />
 
       {
         documents && documents.map( (doc, d)=>{

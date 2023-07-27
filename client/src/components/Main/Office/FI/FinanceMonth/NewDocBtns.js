@@ -2,9 +2,10 @@ import React, { useState } from "react"
 
 import EditArea from "../../EditArea"
 import { TimeTo_YYYYMMDD } from "../../../../../AppFunctions"
+import ActionBtn from "../../../../All/ActionBtn"
 
 
-export function NewDocBtns({ props:{company, RELOAD} }){
+export function NewDocBtns({ props:{company, editDocs, setEditDocs, RELOAD, ON_CLICK} }){
 
   const [edit, setEdit] = useState(false)
   const [mode, setMode] = useState(false)
@@ -45,6 +46,8 @@ export function NewDocBtns({ props:{company, RELOAD} }){
           )
         })
       }
+
+      <ActionBtn props={{name:`cancel`, click:()=>ON_CLICK()}} />
 
       { edit && <EditArea props={{company, mode, doc:newDoc, edit, setEdit, RELOAD}} /> }
 

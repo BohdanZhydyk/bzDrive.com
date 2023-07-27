@@ -53,6 +53,7 @@ exports.ActionLogin = (req, res)=>{
       const query = {time:Date.now(), user, bzToken}
       bzDB( { req, res, col:'bzTokens', act:"INSERT_ONE", query }, (dbData)=>{
         res.send( {bzToken, result:user} )
+        return
       })
 
     })

@@ -28,6 +28,7 @@ exports.uploadFile = (req, res)=>{
         size:file.size,
         mimetype:file.mimetype
       })
+      return
 
     })
 

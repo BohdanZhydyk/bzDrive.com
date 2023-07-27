@@ -10,8 +10,7 @@ import { FullScreenPannel } from "./FullScreenPannel"
 
 function Header({ props:{state, blur, BLUR, AppReload} }) {
 
-  const info = state.info
-  const nav = state.nav
+  const {info, nav} = state
 
   const telNr = info?.contacts.filter(el=> el?.key === 'tel')[0]?.val
 

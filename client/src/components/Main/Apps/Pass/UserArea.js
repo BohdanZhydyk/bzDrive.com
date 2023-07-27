@@ -24,7 +24,7 @@ export function UserArea({ props:{user, pass, actGroup, groups, SORT_PASS, ACT_G
       {
         !user?.role &&
         <div className="UserAtt flex column">
-          { att.map( (txt, p)=> <span>{txt}</span>) }
+          { att.map( (txt, p)=> <span key={`UserAtt${p}`}>{txt}</span>) }
         </div>
       }
 

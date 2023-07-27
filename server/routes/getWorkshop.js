@@ -11,6 +11,7 @@ exports.getWorkshop = (req, res)=>{
         result: workshopData.result
       }
     })
+    return
 
   })
 

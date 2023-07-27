@@ -38,7 +38,7 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
 
       // if the token is older than "tokenLifetime", generate a new one
       const tokenLifetime = (3600000 * 24)
-      if(Date.now() - ChekTokenData?.time > tokenLifetime){ Done(generateToken(), IP, false); return; }
+      if(Date.now() - ChekTokenData?.time > tokenLifetime){ Done(generateToken(), IP, "RELOAD_APP"); return; }
 
       Done(bzToken, IP, ChekTokenData?.user)
 
