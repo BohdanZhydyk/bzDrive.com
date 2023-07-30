@@ -1,8 +1,9 @@
 
 .UploadFile {
-  width:calc(100% - 1vw);
+  width:calc(100% - 1vw - 2px);
   padding:1vw 0.5vw;
   border:1px dashed #171;
+  border-radius:0.5vw;
   &:hover {
     border-color:#191;
     background-color:#1711;
@@ -12,7 +13,7 @@
     width:100%;
 
     .FileName {
-      width:calc(100% - 1vw - 6px);
+      width:calc(100% - 1vw - 2px);
       padding:0.25vw 0.5vw;
       color:#fff;
       background-color:transparent;
@@ -25,19 +26,12 @@
     width:100%;
   
     .UplBtn {
-      width:calc(50% - 2px);
-      margin:0.25vw 0;
-      min-height:2vw;
+      flex:1;
       color:#fff;
-      border:1px solid #999;
-      border-radius:0.5vw;
-      &:hover {
-        font-weight:bold;
-        font-size:120%;
-      }
+      min-height:2.5vw;
+      margin:0.25vw 0;
+      @media (min-width: 481px) and (max-width: 767px) {min-height:5vw;}
+      @media (max-width: 481px) {min-height:7vw;}
     }
-
-    .redBtn {background-color:#511;}
-    .grnBtn {background-color:#151;}
   }
 }

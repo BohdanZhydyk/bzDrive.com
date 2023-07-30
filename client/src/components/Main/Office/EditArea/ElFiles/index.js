@@ -1,13 +1,14 @@
 import React from "react"
 
+import "./ElFiles.scss"
 import { tr } from "../../../../../AppTranslate"
 import { bzBytesCalc, bzDeleteFile, PostToApi } from "../../../../../AppFunctions"
-import { UploadFile } from "../../../../All/UploadFile"
-
-import "./ElFiles.scss"
 import ActionBtn from "../../../../All/ActionBtn"
+import { UploadBtns } from "./UploadBtns"
 
 function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} }){
+
+  const lang = user?.lang
   
   const FileTypeToIco = (type)=>{
     const link = `https://bzdrive.com/files/ico/file`
@@ -17,6 +18,7 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} })
       case "image/png":                 return {type:"png", ico:`${link}PNG.png`}
       case "image/jpeg":                return {type:"png", ico:`${link}PNG.png`}
       case "application/pdf":           return {type:"pdf", ico:`${link}PDF.png`}
+      case "lnk":                      return {type:"lnk", ico:`${link}LNK.png`}
       default:                          return {type:"def", ico:`${link}DEF.png`}
     }
   }
@@ -47,7 +49,7 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} })
 
   const ADD_FILE = (data)=>{
     const file = {
-      fileID:Date.now(),
+      fileID: data?.fileID ?? Date.now(),
       fileAddr,
       fileName:data.name,
       fileSize:data.size,
@@ -63,22 +65,24 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} })
     })
   }
 
-  const fileProps = {
-    btnTxt:tr(`AddFileArea`,user.lang),
-    fileAddr,
-    callback: (data)=>ADD_FILE(data)
-  }
+  // console.log(files)
 
   return(
     <div className="ElFiles flex column">
 
-      <div className="ElFilesTop bold flex start">{tr(`FilesTop`,user.lang)}</div>
+      <div className="ElFilesTop bold flex start">{tr(`FilesTop`,lang)}</div>
 
       {
         files && files.map( (file, f)=>{
 
           const key = `FileLine${f}${file?.fileID}`
-          const href = `https://bzdrive.com/${file.fileAddr}/${file.fileName}`
+
+          const isLink = file?.fileType === "lnk"
+          const domain = `https://bzdrive.com/`
+          const href = isLink ? file?.fileAddr : `${domain}${file?.fileAddr}/${file?.fileName}`
+
+          const hostName = isLink ? ` / ${new URL(href).hostname}` : ``
+
           const src = FileTypeToIco(file?.fileType)?.ico
           const alt = FileTypeToIco(file?.fileType)?.type
           const num = bzBytesCalc(file?.fileSize)?.num
@@ -92,21 +96,24 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} })
               <img className="ImgBtn" src={src} alt={alt} />
 
               <a className="FileName flex start overflow" href={href} target="_blank" rel="noreferrer" >
-                {file?.fileName}
+                {`${file?.fileName}${hostName}`}
               </a>
 
               <div className="FileSize flex end">
-                <span className="num flex end">{num}</span>
-                <span className="unit flex end">{unit}</span>
+                { !isLink && <span className="num flex end">{num}</span> }
+                { !isLink && <span className="unit flex end">{unit}</span> }
               </div>
 
               {
                 !printMode &&
                 <span className="FileAct flex end">
 
-                  <a className="flex" href={href} download={file?.fileName} target="_blank" rel="noreferrer" >
-                    <ActionBtn props={downloadPropses} />
-                  </a>
+                  {
+                    !isLink &&
+                    <a className="flex" href={href} download={file?.fileName} target="_blank" rel="noreferrer" >
+                      <ActionBtn props={downloadPropses} />
+                    </a>
+                  }
 
                   <ActionBtn props={deletePropses} />
 
@@ -119,9 +126,7 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} })
         })
       }
 
-      <div className="UploadNewFile flex">
-        <UploadFile props={fileProps} />
-      </div>
+      <UploadBtns props={{tr, lang, fileAddr, setSave, setFiles, ADD_FILE}} />
 
     </div>
   )

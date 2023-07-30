@@ -1,28 +1,69 @@
 import React from "react"
 
-import { Info } from "./Info"
+import Input from "../../../../All/Input"
+import { tr } from "../../../../../AppTranslate"
 
 
-export function Right({ props:{contacts, lang} }){
+export function Right({ props:{editMode, contacts, i, lang, setWorkshop} }){
+
+  const inputPropses = (contact)=>{
+    return {
+      legend: contact?.txt[lang],
+      type: `text`,
+      val: contact?.content?.link[1],
+      cbVal: (val)=>{
+        setWorkshop( (prev)=> prev?.map( (el, e)=> e !== i
+          ? el
+          : {
+              ...el,
+              body:el?.body.map( cont=> cont?.element !== contact?.element
+                ? cont
+                : {
+                    ...cont,
+                    content:{
+                      ...cont?.content,
+                      link:[cont?.content?.link[0], val]
+                    }
+                  }
+              )
+            }
+        ))
+      },
+      cbErr: ()=>{}
+    }
+  }
+
   return(
     <div className="el-R flex column start">
     {
-      contacts.map( (contact, i)=>{
+      contacts.map( (contact, c)=>{
+
+        const link = `${contact?.content?.link[0]}${contact?.content?.link[1]}`
+        const key = `Contact${i}${c}`
+        const txt = `${tr(`Link_${contact?.element}`, lang)}:`
+
         return(
-          <div className="contact" key={`Contact${i}`}>
-            <div className="txt">{`${contact.txt[lang]}:`}</div>
-            {
-              contact.content.link
-              ?
-              <a className="content"
-                href={contact.content.link} target="_blank" rel="noreferrer">
-                <Info props={{contact}} />
+          <div className="Contact" key={key}>
+          {
+            !editMode
+            ?
+            <div className="ContactLine">
+              <div className="ContactName">{txt}</div>
+              <a className="Content flex between stretch" href={link} target="_blank" rel="noreferrer">
+
+                <img className="ImgBtn" src={contact?.img} alt={contact?.element} />
+
+                <div className="InfoTxt flex end">
+                  {contact?.content?.link[contact?.content?.show]}
+                </div>
+
               </a>
-              : 
-              <div className="content">
-                <Info props={{contact}} />
-              </div>
-            }
+            </div>
+            :
+            <div className="ContactLine">
+              <Input props={inputPropses(contact)} key={`EditTagContacts${i}${c}`} />
+            </div>
+          }
           </div>
         )
       })
@@ -30,3 +71,22 @@ export function Right({ props:{contacts, lang} }){
     </div>
   )
 }
+
+/*
+{
+  "element": "open",
+  "txt": {
+    "en": "Open",
+    "ua": "Відчинено",
+    "pl": "Czynne"
+  },
+  "content": [
+    "Pon : 09:00 - 17:00",
+    "Wt  : 09:00 - 17:00",
+    "Śr  : 09:00 - 17:00",
+    "Czw : 09:00 - 17:00",
+    "Pt  : 09:00 - 17:00"
+  ],
+  "img": "https://bzdrive.com/files/ico/contacts/open.png"
+}
+*/

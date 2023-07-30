@@ -5,20 +5,18 @@ import { Left } from './Left'
 import { Right } from './Right'
 
 
-function TagContacts({ props:{el, lang} }){
+function TagContacts({ props:{editMode, el, i, lang, setWorkshop} }){
 
   let GoogleMap = el?.body.filter( (EL)=> EL.element === "map" )
   let contacts = el?.body.filter( (EL)=> EL.element !== "map" )
 
   return(
-    <section className="tag">
-      <div className="TagContacts flex center stretch wrap">
+    <div className="TagContacts flex center stretch wrap">
 
-        <Left props={{GoogleMap}} />
-        <Right props={{contacts, lang}} />
+      <Left props={{editMode, GoogleMap, i, setWorkshop}} />
+      <Right props={{editMode, contacts, i, lang, setWorkshop}} />
 
-      </div>
-    </section>
+    </div>
   )
 }
 

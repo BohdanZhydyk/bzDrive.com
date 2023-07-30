@@ -3,20 +3,26 @@ import React from "react"
 import "./TagP.scss"
 
 
-function TagP({ props:{el, lang} }){
+function TagP({ props:{editMode, el, i, lang, setWorkshop} }){
   return(
     <div className="TagP flex stretch">
 
       {
         el?.body?.startImg &&
-        <img src={el.body.startImg} alt="tagImg" />
+        <div className="ImgArea flex column start">
+          <img src={el.body.startImg} alt="tagImg" />
+        </div>
       }
 
-      <p>{el.body.txt[lang]}</p>
+      <div className="ParagraphArea flex column start">
+        { el?.body?.txt.map( (par, p)=> <p key={`ParagraphLine${i}${p}`}>{par[lang]}</p> ) }
+      </div>
 
       {
         el?.body?.endImg &&
-        <img src={el.body.endImg} alt="tagImg" />
+        <div className="ImgArea flex column start">
+          <img src={el.body.endImg} alt="tagImg" />
+        </div>
       }
 
     </div>

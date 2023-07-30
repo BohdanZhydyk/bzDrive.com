@@ -18,16 +18,17 @@ export const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback
   const [submitAct, setSubmitAct] = useState(true)
 
   const CHANGE = (e)=>{
-    setFile(e.target.files[0])
-    setFileName(e.target.files[0].name)
+    setFile(prev=>e.target.files[0])
+    setFileName(prev=>e.target.files[0].name)
   }
 
-  const NAME_CHANGE = (e)=> setFileName(e.target.value)
+  const NAME_CHANGE = (e)=> setFileName(prev=>e.target.value)
 
   const CLEAR = ()=>{
-    setFile(false)
-    setFileName(false)
-    setSubmitAct(true)
+    setFile(prev=>false)
+    setFileName(prev=>false)
+    setErr(prev=>false)
+    setSubmitAct(prev=>true)
   }
 
   const UPLOADED = (data)=>{
@@ -39,12 +40,12 @@ export const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback
 
     e.preventDefault()
 
-    setSubmitAct(false)
+    setSubmitAct(prev=>false)
 
     bzUploadFile(file, fileAddr, fileName, (res)=>{
       res.status === 200
       ? UPLOADED(res.data) //res.data = {name, size, mimetype}
-      : setErr(res.data.message)
+      : setErr(prev=>res.data.message)
     })
 
   }
@@ -56,7 +57,7 @@ export const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback
 
         {
           !fileName
-          ? <span>{ btnTxt ?? tr("UploadFileTitle",lang) }</span>
+          ? <span>{ btnTxt ?? tr("AddFileArea",lang) }</span>
           : <input className="FileName flex" type="text" value={fileName} onChange={NAME_CHANGE} />
         }
 
@@ -71,16 +72,16 @@ export const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback
 
       </label>
 
-      { err && <div>error</div> }
+      { err && <div>{`error`}</div> }
 
       {
         file?.name &&
         <div className="UplBtns flex">
-          <input className="UplBtn redBtn flex" type="button" value={tr("ImgBtn_cancel",lang)} onClick={CLEAR} />
+          <input className="UplBtn BtnRed flex" type="button" value={tr("ImgBtn_cancel",lang)} onClick={CLEAR} />
           {
             submitAct
-            ? <input className="UplBtn grnBtn flex" type="submit" value={tr("ImgBtn_upload",lang)} />
-            : <div className="UplBtn grnBtn flex"></div>
+            ? <input className="UplBtn BtnGrn flex" type="submit" value={tr("ImgBtn_upload",lang)} />
+            : <div className="UplBtn BtnGrn flex"></div>
           }
         </div>
       }

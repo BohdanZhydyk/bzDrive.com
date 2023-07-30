@@ -2,16 +2,27 @@
 .TagP {
   width:100%;
 
-  img {
-    width:10vw;
-    margin:0 1vw;
-    border-radius:0.5vw;
+  .ImgArea {
+    width:20%;
+    padding:1vw 0;
+    @media (min-width: 481px) and (max-width: 767px) {width:40%;}
+    @media (max-width: 481px) {width:40%;}
+
+    img {
+      width:80%;
+      margin:0 1vw;
+      border-radius:0.5vw;
+    }
   }
 
-  p {
-    width:100%;
-    text-indent:3vw;
-    text-align:justify;
-    margin:1vw;
+  .ParagraphArea {
+    flex:1;
+
+    p {
+      width:98%;
+      text-indent:3vw;
+      text-align:justify;
+      margin:1vw;
+    }
   }
 }

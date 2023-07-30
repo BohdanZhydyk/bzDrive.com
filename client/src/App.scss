@@ -69,6 +69,25 @@ body {
     }
   }
 
+  .BtnGrn {
+    background-color:#1719;
+    border:1px solid #999;
+    border-radius:0.5vw;
+    &:hover {
+      border-color:#fff;
+      background-image:linear-gradient(#1915, #191, #1915);
+    }
+  }
+  .BtnRed {
+    background-color:#f009;
+    border:1px solid #999;
+    border-radius:0.5vw;
+    &:hover {
+      border-color:#fff;
+      background-image:linear-gradient(#f005, #f00, #f005);
+    }
+  }
+
   a {text-decoration:none; color:#fff;}
 
   .App {

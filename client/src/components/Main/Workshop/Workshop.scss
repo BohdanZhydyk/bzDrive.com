@@ -1,6 +1,21 @@
 
 .Workshop {
   width:100%;
+  margin:0 0 2vw 0;
+
+  .AdminBtn {
+    position:sticky;
+    top:0;
+    width:100%;
+    z-index:95;
+    background-image:linear-gradient(#1111, #111e, #1111);
+
+    .AdminInfo {
+      flex:1;
+      font-size:120%;
+      text-align:center;
+    }
+  }
 
   .WorkshopInfo {
     width:95%;

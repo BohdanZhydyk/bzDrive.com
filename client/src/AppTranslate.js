@@ -51,8 +51,13 @@ export const tr = (txt, lang)=>{
     TownLegend:{en:"town", ua:"населений пункт", pl:"miejscowość"},
     StreetLegend:{en:"street", ua:"вулиця", pl:"ulica"},
     StreetNrLegend:{en:"house", ua:"будинок", pl:"numer"},
+    FileNameLegend:{en:"file name", ua:"ім'я файлу", pl:"nazwa pliku"},
+    FileAddrLegend:{en:"link", ua:"посилання", pl:"skrót"},
     TelLegend:{en:"phone", ua:"телефон", pl:"telefon"},
     WwwLegend:{en:"website", ua:"веб-сайт", pl:"strona internetowa"},
+    Link_tel:{en:"Phone",ua:"Телефон",pl:"Telefon"},
+    Link_mailto:{en:"E-mail address", ua:"Електронна адреса", pl:"Adres e-mail"},
+    Link_fb:{en:"Facebook",ua:"Facebook",pl:"Facebook"},
     DirectorsList:{en:"director",ua:"директор",pl:"dyrektor"},
     AccountantsList:{en:"accountant",ua:"бухгалтер",pl:"księgowy"},
     WorkersList:{en:"worker", ua:"робітник", pl:"pracownik"},
@@ -82,7 +87,6 @@ export const tr = (txt, lang)=>{
     ImgBtn_search:{en:"search", ua:"пошук", pl:"szukać"},
     ImgBtn_erase:{en:"erase", ua:"стерти", pl:"wymazać"},
     ImgBtn_link:{en:"navigate", ua:"навігувати", pl:"nawigować"},
-    AddFileArea:{en:"Add file...", ua:"Додати файл...", pl:"Dodać plik..."},
     MethodRadioBtns:{en:['cash','transfer'], ua:['готівка','переказ'], pl:['gotówka','przelew']},
     SummaryLineTop:{en:"To pay", ua:"До сплати", pl:"Do zapłaty"},
     SummaryAmount:{en:"Amount in words", ua:"Сума словами", pl:"Kwota słownie"},
@@ -152,6 +156,21 @@ export const tr = (txt, lang)=>{
       en:"must contain from 8 to 20 characters!",
       ua:"має містити від 8 до 20 символів!",
       pl:"musi zawierać od 8 do 20 znaków!",
+    },
+    Err_9: {
+      en:"does not match the URL format!",
+      ua:"не відповідає формату URL!",
+      pl:"nie pasuje do formatu URL!"
+    },
+    Err_10:{
+      en:"must contain more than 4 characters!",
+      ua:"має містити більше 4 символів!",
+      pl:"musi zawierać więcej niż 4 znaki!"
+    },
+    Err_11:{
+      en:"number is too short!",
+      ua:"номер занадто короткий!",
+      pl:"numer jest za krótki!"
     },
     UserPresent:{
       en:"such user already exists in the database!",
@@ -251,8 +270,11 @@ export const tr = (txt, lang)=>{
     TableTOT:{en:"Total", ua:"Разом", pl:"Razem"},
     TableSeller:{en:"Seller", ua:"Продавець", pl:"Sprzedawca"},
     TableBuyer:{en:"Buyer", ua:"Покупець", pl:"Nabywca"},
-    UploadFileTitle:{en:"select file", ua:"вибери файл", pl:"wybierz plik"},
-    NewTranslate:{en:"", ua:"", pl:""}
+    NewTranslate:{en:"", ua:"", pl:""},
+    
+    // UploadFileTitle:{en:"select file", ua:"вибери файл", pl:"wybierz plik"},
+    AddFileArea:{en:"Add file...", ua:"Додати файл...", pl:"Dodać plik..."},
+    AddLinkArea:{en:"Add link...", ua:"Додати посилання...", pl:"Dodać skrót..."},
   }
 
   return translations[txt] ? translations[txt][lang] : <span className="txtRed">-</span>
