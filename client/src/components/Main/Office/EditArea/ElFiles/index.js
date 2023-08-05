@@ -32,9 +32,9 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} })
     const fileID = file?.fileID
     const fileAddr = file?.fileAddr
     const fileName = file?.fileName
-    bzDeleteFile(fileAddr, fileName, (data)=>{
-      data?.data?.message && console.log(data?.data?.message)
-      if(data?.status === 200){
+    bzDeleteFile(fileAddr, fileName, (deleteData)=>{
+      deleteData?.data?.message && console.log(deleteData?.data?.message)
+      if(deleteData?.status === 200){
         const query = {
           updateDocFiles:true,
           doc:{ ...doc, files:files.filter( F=> F?.fileID !== fileID ) }

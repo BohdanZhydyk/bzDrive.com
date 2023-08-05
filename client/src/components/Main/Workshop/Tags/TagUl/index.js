@@ -1,21 +1,28 @@
-import React from "react"
+import React, { useState } from "react"
 
 import "./TagUl.scss"
+import { UlWrapper } from "./UlWrapper"
+import { UlInputsWrapper } from "./UlInputsWrapper"
 
 
-function TagUl({ props:{el, lang} }){
+function TagUl({ props:{el, i, user, setWorkshop, editMode, setEditingText} }){
+
+  const [edit, setEdit] = useState(false)
+
+  function CLICK(){ editMode && setEdit(prev=>true)}
+
   return(
-    <div className="TagUl flex column">
+    <div className={`${editMode ? `AdminBorder` : `Border`} flex`} onClick={CLICK}>
 
-      <span className="Ul">{el?.body[lang]?.ul}</span>
+      <div className="TagUl flex column" onClick={CLICK}>
 
-      <ul className="flex column">
-      {
-        el?.body[lang]?.li && el.body[lang].li.map( (li, l)=>{
-          return <li key={`LiEl${l}`}>{li}</li>
-        })
-      }
-      </ul>
+        {
+          !edit
+          ? <UlWrapper props={{el, user}} />
+          : <UlInputsWrapper props={{el, i, setWorkshop, setEditingText}} />
+        }
+
+      </div>
 
     </div>
   )

@@ -2,20 +2,40 @@
 .TagUl {
   width:100%;
 
-  .Ul {
-    width:90%;
-    margin:1vw 2vw 0 2vw;
-    font-size: 120%;
-    font-weight: bold;
+  .UlWrapper {
+    width:100%;
+
+    .Ul {
+      width:90%;
+      margin:1vw 2vw 0 2vw;
+      font-size: 120%;
+      font-weight: bold;
+    }
+
+    .LiWrapper {
+      width:95%;
+      margin:0.5vw 0;
+
+      li {
+        width:98%;
+        color:#bbb;
+      }
+    }
   }
 
+  .UlInputsWrapper {
+    width:100%;
+    
+    .UlInputs {
+      width:calc((100% / 3) - 6px);
+      padding:0 0 0.5vw 0;
+      margin:0 2px;
+      border:1px dashed #f60;
 
-  ul {
-    width:90%;
-
-    li {
-      width:98%;
-      color:#bbb;
+      .LiInputsWrapper {
+        width:95%;
+        margin:0 0 0 4%;
+      }
     }
   }
 }

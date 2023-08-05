@@ -4,11 +4,11 @@ import Input from "../../../../All/Input"
 import { tr } from "../../../../../AppTranslate"
 
 
-export function Right({ props:{editMode, contacts, i, lang, setWorkshop} }){
+export function Right({ props:{edit, contacts, i, user, setWorkshop, setEditingText} }){
 
   const inputPropses = (contact)=>{
     return {
-      legend: contact?.txt[lang],
+      legend: contact?.txt[user?.lang],
       type: `text`,
       val: contact?.content?.link[1],
       cbVal: (val)=>{
@@ -28,6 +28,7 @@ export function Right({ props:{editMode, contacts, i, lang, setWorkshop} }){
               )
             }
         ))
+        setEditingText(prev=>true)
       },
       cbErr: ()=>{}
     }
@@ -40,12 +41,12 @@ export function Right({ props:{editMode, contacts, i, lang, setWorkshop} }){
 
         const link = `${contact?.content?.link[0]}${contact?.content?.link[1]}`
         const key = `Contact${i}${c}`
-        const txt = `${tr(`Link_${contact?.element}`, lang)}:`
+        const txt = `${tr(`Link_${contact?.element}`, user?.lang)}:`
 
         return(
           <div className="Contact" key={key}>
           {
-            !editMode
+            !edit
             ?
             <div className="ContactLine">
               <div className="ContactName">{txt}</div>

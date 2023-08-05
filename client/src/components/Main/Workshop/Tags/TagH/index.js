@@ -1,10 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 
 import "./TagH.scss"
 import Input from "../../../../All/Input"
 
 
-function TagH({ props:{editMode, el, i, lang, setWorkshop} }){
+function TagH({ props:{el, i, user, setWorkshop, editMode, setEditingText} }){
+
+  const [edit, setEdit] = useState(false)
+
+  function CLICK(){ editMode && setEdit(prev=>true)}
 
   const inputPropses = (lan)=>{
     return {
@@ -16,27 +20,32 @@ function TagH({ props:{editMode, el, i, lang, setWorkshop} }){
           ? el
           : {...el, body:{...el?.body, [lan]:val} }
         ))
+        setEditingText(prev=>true)
       },
       cbErr: ()=>{}
     }
   }
 
   return(
-    <h3 className="TagH flex">
-    {
-      !editMode
-      ?
-      <span>{el.body[lang]}</span>
-      :
-      <div className="TagHInputs flex wrap">
+    <div className={`${editMode ? `AdminBorder` : `Border`} flex`} onClick={CLICK}>
+
+      <h3 className="TagH flex">
       {
-        ["en","ua","pl"]?.map( (lan, l)=>{
-          return <Input props={inputPropses(lan)} key={`EditTagH${i}${l}`} />
-        })
+        !edit
+        ?
+        <span>{el.body[user?.lang]}</span>
+        :
+        <div className="TagHInputs flex wrap">
+        {
+          ["en","ua","pl"]?.map( (lan, l)=>{
+            return <Input props={inputPropses(lan)} key={`EditTagH${i}${l}`} />
+          })
+        }
+        </div>
       }
-      </div>
-    }
-    </h3>
+      </h3>
+    
+    </div>
   )
 }
 

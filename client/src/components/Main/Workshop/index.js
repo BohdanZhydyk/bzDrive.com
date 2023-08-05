@@ -14,13 +14,25 @@ import TagSlider from "./Tags/TagSlider"
 
 function Workshop() {
 
-  const {lang, role} = GetUser()
+  const user = GetUser()
 
   const [workshop, setWorkshop] = useState(false)
-
   const [editMode, setEditMode] = useState(false)
+  const [editingText, setEditingText] = useState(false)
 
-  useEffect( ()=>{ !workshop && WorkshopReducer({ type:"GET_WORKSHOP" }, workshop, setWorkshop) },[])
+  function SAVE_WORKSHOP(){
+    setEditMode(prev=>false)
+    setEditingText(prev=>false)
+    WorkshopReducer({ type:"SAVE_WORKSHOP" }, workshop, setWorkshop)
+  }
+
+  function GET_WORKSHOP(){
+    setEditMode(prev=>false)
+    setEditingText(prev=>false)
+    WorkshopReducer({ type:"GET_WORKSHOP" }, workshop, setWorkshop)
+  }
+
+  useEffect( ()=>{ !workshop && GET_WORKSHOP() },[])
 
   // console.log(workshop)
 
@@ -28,17 +40,15 @@ function Workshop() {
     <div className="Workshop flex column">
 
       {
-        role === "admin" &&
+        user?.role === "admin" &&
         <div className="AdminBtn flex end stretch">
+
           <span className="AdminInfo txtOrg bold flex">Jesteś administratorem - masz pełną kontrolę nad treścią strony!</span>
-          <ActionBtn props={{
-            name:editMode ? 'save' : 'edit',
-            click:()=>{
-              !editMode
-              ? setEditMode(prev=> !prev)
-              : setEditMode(prev=> !prev)
-            }
-          }} />
+          
+          { !editMode && <ActionBtn props={{name:'edit', click:()=>setEditMode(prev=> !prev)}} /> }
+          { editingText && <ActionBtn props={{name:'save', click:SAVE_WORKSHOP}} /> }
+          { editMode && <ActionBtn props={{name:'cancel', click:GET_WORKSHOP}} /> }
+
         </div>
       }
 
@@ -51,14 +61,15 @@ function Workshop() {
         {
           workshop.map( (el, i)=>{
 
-            const key = `TagKey${el?.tag}${i}`
+            const key = `TagKey${el?.id}${i}`
+            const props = {el, i, user, setWorkshop, editMode, setEditingText}
 
             switch (el?.tag) {
-              case "h":         return <TagH          props={{editMode, el, i, lang, setWorkshop}} key={key} />
-              case "p":         return <TagP          props={{editMode, el, i, lang, setWorkshop}} key={key} />
-              case "ul":        return <TagUl         props={{editMode, el, i, lang, setWorkshop}} key={key} />
-              case "contacts":  return <TagContacts   props={{editMode, el, i, lang, setWorkshop}} key={key} />
-              case "slider":    return <TagSlider     props={{editMode, el, i, lang, setWorkshop}} key={key} />
+              case "h":         return <TagH          props={props} key={key} />
+              case "p":         return <TagP          props={props} key={key} />
+              case "ul":        return <TagUl         props={props} key={key} />
+              case "contacts":  return <TagContacts   props={props} key={key} />
+              case "slider":    return <TagSlider     props={props} key={key} />
               default:          return <div key={key}></div>
             }
           })

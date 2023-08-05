@@ -1,28 +1,70 @@
 
 .TagP {
   width:100%;
+  
+  .PWrapper {
+    width:100%;
 
-  .ImgArea {
-    width:20%;
-    padding:1vw 0;
-    @media (min-width: 481px) and (max-width: 767px) {width:40%;}
-    @media (max-width: 481px) {width:40%;}
-
-    img {
-      width:80%;
-      margin:0 1vw;
-      border-radius:0.5vw;
+    .ImgArea {
+      width:20%;
+      padding:1vw 0;
+      @media (min-width: 481px) and (max-width: 767px) {width:40%;}
+      @media (max-width: 481px) {width:40%;}
+  
+      img {
+        width:80%;
+        margin:0 1vw;
+        border-radius:0.5vw;
+      }
+    }
+  
+    .ParagraphArea {
+      flex:1;
+  
+      p {
+        width:98%;
+        text-indent:3vw;
+        text-align:justify;
+        margin:1vw;
+      }
     }
   }
 
-  .ParagraphArea {
-    flex:1;
+  .PEditWrapper {
+    width:calc(100% - 0.5vw);
+    margin:0.25vw;
 
-    p {
-      width:98%;
-      text-indent:3vw;
-      text-align:justify;
-      margin:1vw;
+    .BeforeImg, .AfterImg {
+      width:100%;
+
+      .ImgArea {
+        width:20%;
+        padding:1vw 0;
+        @media (min-width: 481px) and (max-width: 767px) {width:40%;}
+        @media (max-width: 481px) {width:40%;}
+    
+        img {
+          width:80%;
+          margin:0 1vw;
+          border-radius:0.5vw;
+        }
+      }
+
+      .UploadFile {
+        flex:1;
+      }
+    }
+
+    .ParagraphWrapper {
+      width:calc(100% - 2px);
+      margin:0.25vw 0;
+      border:1px dashed #fD0;
+
+      .TextAreaWrapper {
+        width:calc(100% - 0.5vw - 2px);
+        margin:0.25vw;
+        border:1px dashed #171;
+      }
     }
   }
 }

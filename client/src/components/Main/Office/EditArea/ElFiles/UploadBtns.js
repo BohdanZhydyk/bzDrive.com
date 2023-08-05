@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import { UploadFile } from "../../../../All/UploadFile"
+import UploadFile from "../../../../All/UploadFile"
 import { UploadLink } from "./UploadLink"
 
 

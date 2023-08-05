@@ -1,7 +1,7 @@
 
 .Workshop {
   width:100%;
-  margin:0 0 2vw 0;
+  margin:0.25vw 0 2vw 0;
 
   .AdminBtn {
     position:sticky;
@@ -25,5 +25,19 @@
       font-size:120%;
       text-align:justify;
     }
+  }
+
+  .AdminBorder {
+    width:100%;
+    padding:0;
+    border-top:1px solid transparent;
+    border-bottom:1px solid transparent;
+    &:hover {
+      border-top:1px dashed #f60;
+      border-bottom:1px dashed #f60;
+    }
+  }
+  .Border {
+    width:100%;
   }
 }

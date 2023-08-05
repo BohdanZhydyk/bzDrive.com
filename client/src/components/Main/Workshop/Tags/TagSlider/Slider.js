@@ -1,32 +1,49 @@
 import React from 'react'
 
 
-export const Slider = ({ props:{txt, image, sliderFn} })=>{
+export const Slider = ({ props:{txt, image, count, sliderFn} })=>{
 
-  let btnL = `https://bzdrive.com/files/ico/sliderBtnL.png`
-  let btnR = `https://bzdrive.com/files/ico/sliderBtnR.png`
-  // let btnEdit = `https://bzdrive.com/files/ico/icoEdit.png`
+  const link = `https://bzdrive.com/`
+  const fileAddr = "files/slider/"
+  const file = `${link}${fileAddr}${image}`
 
-  let SLIDE_LEFT = ()=> sliderFn({type:"SLIDE_LEFT"})
-  let SLIDE_RIGHT = ()=> sliderFn({type:"SLIDE_RIGHT"})
-  // let EDIT = ()=> sliderFn({type:"EDIT"})
+  const imgLink = `https://bzdrive.com/files/ico/`
+  const btnL = `${imgLink}sliderBtnL.png`
+  const btnR = `${imgLink}sliderBtnR.png`
+
+  const SLIDE_LEFT = ()=> sliderFn({type:"SLIDE_LEFT"})
+  const SLIDE_RIGHT = ()=> sliderFn({type:"SLIDE_RIGHT"})
 
   return(
-    <div className="Slider flex stretch wrap">
+    <div className="Slider flex stretch">
 
-      <span className="sliderTxt flex">{txt}</span>
+      <span className="SliderTxt flex column">
 
-      <img className="Image" src={image} alt="SliderImage" />
+        <span>{txt}</span>
 
-      <div className="sliderImgBtn L flex" onClick={ ()=>SLIDE_LEFT() }>
+        <div className="CountLine flex">
+        {
+          count?.arr.map( (dot, d)=>{
+            const classes = `Dot ${d === count?.n ? `ActDot` : ``} flex`
+            const key = `CountEl${d}`
+            return(
+              <div className={classes} key={key}></div>
+            )
+          })
+        }
+        </div>
+
+      </span>
+
+      <img className="Image" src={file} alt="SliderImage" />
+
+      <div className="SliderImgBtn L flex" onClick={ ()=>SLIDE_LEFT() }>
         <img src={btnL} alt="Left" />
       </div>
 
-      <div className="sliderImgBtn R flex" onClick={ ()=>SLIDE_RIGHT() }>
+      <div className="SliderImgBtn R flex" onClick={ ()=>SLIDE_RIGHT() }>
         <img src={btnR} alt="Right" />
       </div>
-
-      {/* { admin && <img className="EditBtn imgBtn" src={btnEdit} onClick={ ()=>EDIT() } alt="edit" /> } */}
 
     </div>
   )

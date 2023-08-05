@@ -109,10 +109,10 @@ export const sanitizeTxt = (txt, name = "default")=>{
   const regExUppercase = /[A-Z]/
   const regExAlphanumeric = /[^a-zA-Z0-9]/g
   const regExEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  const regExSpecialChar = /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/
+  // const regExSpecialChar = /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/
   const regExSpecialCharacters = /[^a-zA-Z0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/g
   const regExExtendedSpecialCharacters = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃЀ-ӿ]/g
-  const regExWeb = /^(http(s)?:\/\/|ftp(s):\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ;,./?%&=]*)?$/
+  const regExWeb = /^(http(s)?:\/\/|ftp(s):\/\/)?([a-zA-Zа-яА-Я0-9-]+\.)+[a-zA-Zа-яА-Я0-9-\/]+(\/[\w- ;,./?%&=]*)?$/
 
   switch(name){
     case "login":             return sanitizeLogin(txt)

@@ -6,7 +6,7 @@ import { GetUser } from '../../../AppFunctions'
 import { bzUploadFile } from '../../../AppFunctions'
 
 
-export const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback} })=>{
+const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback} })=>{
 
   const lang = GetUser().lang
 
@@ -66,7 +66,7 @@ export const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback
           type="file"
           style={{display:"none"}}
           onChange={CHANGE}
-          accept={accept === false ? undefined : accept} // image/png, image/jpg, image/gif, image/jpeg
+          accept={accept ?? undefined} // image/png, image/jpg, image/gif, image/jpeg
           multiple={multiple}
         />
 
@@ -79,9 +79,8 @@ export const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback
         <div className="UplBtns flex">
           <input className="UplBtn BtnRed flex" type="button" value={tr("ImgBtn_cancel",lang)} onClick={CLEAR} />
           {
-            submitAct
-            ? <input className="UplBtn BtnGrn flex" type="submit" value={tr("ImgBtn_upload",lang)} />
-            : <div className="UplBtn BtnGrn flex"></div>
+            submitAct &&
+            <input className="UplBtn BtnGrn flex" type="submit" value={tr("ImgBtn_upload",lang)} />
           }
         </div>
       }
@@ -89,3 +88,5 @@ export const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback
     </form>
   )
 }
+
+export default UploadFile

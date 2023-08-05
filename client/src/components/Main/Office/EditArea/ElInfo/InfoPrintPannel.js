@@ -96,7 +96,7 @@ function InfoPrintLine({ props:{legend, val} }){
   return(
     <div className={`InfoLine flex column`}>
       <span className="InfoLineTitle flex start">{legend}</span>
-      <span className="InfoLineVal flex start">{val}</span>
+      <span className="InfoLineVal bold flex start">{val}</span>
     </div>
   )
 }
