@@ -1,32 +1,51 @@
 import React, { useState, useEffect } from "react"
 
 import "./TagSlider.scss"
-import { actions } from './actions'
-import { Slider } from './Slider'
-import { SliderEdit } from "./SliderEdit"
+import { SliderReducer, getBody } from './SliderReducer'
+import Slider from './Slider'
+import SliderEdit from "./SliderEdit"
 
 
 function TagSlider({ props:{el, i, user, setWorkshop, editMode, setEditingText} }){
   
   const [edit, setEdit] = useState(false)
-  const [slider, setSlider] = useState(el?.body)
-  const [folder, setFolder] = useState(0)
-  const [img, setImg] = useState(0)
+  const [slider, setSlider] = useState( getBody(el?.body, 0, 0) )
 
-  function CLICK(){ editMode && setEdit(prev=>true)}
+  function CLICK(){
+    if(editMode && !edit){
+      setSlider( getBody(el?.body, false, false) )
+      setEdit(prev=>true)
+    }
+  }
 
-  let txt = ""
-  slider[folder].txt.map( (text)=> txt = (text.name === user?.lang) ? text.val : txt )
+  const actFolder = slider?.body?.find( folder=> folder?.act )
+  const actVal = actFolder?.txt?.find( text=> text?.name === user?.lang )?.val
+  const actImgs = actFolder?.imgs
+  const actImg = actImgs?.find( img=> img?.act )?.img
 
-  const image = slider[folder].imgs[img]
-  const count = {arr:slider[folder]?.imgs, n:img}
+  const link = `https://bzdrive.com/`
+  const fileAddr = "files/slider/"
+  const imageLink = `${link}${fileAddr}${actImg}`
+  const btnL = `${link}files/ico/sliderBtnL.png`
+  const btnR = `${link}files/ico/sliderBtnR.png`
 
-  const sliderFn = (action)=> actions(action, img, setImg, folder, setFolder, slider, setSlider)
+  function PREV(){ SliderReducer({type:"SLIDE_PREV", setSlider, actImgs}) }
+  function NEXT(){ SliderReducer({type:"SLIDE_NEXT", setSlider, actImgs}) }
+
+  const sliderProps = {
+    actVal, actImgs, imageLink, btnL, btnR, PREV, NEXT
+  }
+  const sliderEditProps = {
+    user, slider, setSlider, nr:i, link, fileAddr, setWorkshop, setEditingText, btnL, btnR, SliderReducer
+  }
  
-  useEffect(() => {
-    const int = setInterval( ()=>sliderFn({type:"SLIDE_RIGHT"}), 3000 )
+  useEffect( ()=>{
+    const int = setInterval( ()=>NEXT(), 3000 )
+    if(edit){ clearInterval(int) }
     return () => clearInterval(int)
-  }, [img])
+  }, [slider])
+
+  useEffect( ()=>{ edit && setSlider( getBody(el?.body, false, false) ) }, [el] )
 
   // console.log(slider)
 
@@ -36,8 +55,8 @@ function TagSlider({ props:{el, i, user, setWorkshop, editMode, setEditingText} 
       <div className="TagSlider flex">
       {
         !edit
-        ? <Slider props={{txt, image, count, sliderFn}} />
-        : <SliderEdit props={{el, i, setWorkshop, setEditingText}} />
+        ? <Slider props={sliderProps} />
+        : <SliderEdit props={sliderEditProps} />
       }
       </div>
 
