@@ -12,7 +12,7 @@ exports.getOffice = (req, res)=>{
     const vin = object?.getCar
     const query = {"car.vin":vin}
     bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (carData)=>{
-      res.send({...carData, result: carData?.result.reverse()})
+      res.send({...carData, result: carData?.result?.reverse()})
       return
     })
   }
@@ -28,7 +28,7 @@ exports.getOffice = (req, res)=>{
       }
     }
     bzDB( { req, res, col:'bzDocuments', act:"FIND", query:query(partner) }, (partnerData)=>{
-      res.send({...partnerData, result: partnerData?.result.reverse()})
+      res.send({...partnerData, result: partnerData?.result?.reverse()})
       return
     })
   }
@@ -40,7 +40,7 @@ exports.getOffice = (req, res)=>{
 
       const finances = financesData?.result
 
-      const taxYearArr = finances.filter(
+      const taxYearArr = finances?.filter(
         month=> parseInt(month?.date / 100) === taxYear
       )
       const isPrevTaxYear = finances.filter(
@@ -80,7 +80,7 @@ exports.getOffice = (req, res)=>{
 
     bzDB( { req, res, col:'companies', act:"FIND", query }, (compData)=>{
 
-      const myCompanies = compData?.result.map( (comp)=> comp?.shortName )
+      const myCompanies = compData?.result?.map( (comp)=> comp?.shortName )
       
       if( myCompanies?.length === 0 ){
         res.send({ ...compData, result:false })
@@ -91,16 +91,16 @@ exports.getOffice = (req, res)=>{
       if(object?.getCompany){
 
         const comp = compData?.result
-        const userDirector = comp.filter(d => d.director === login)
-        const userNotDirector = comp.filter(d => d.director !== login)
+        const userDirector = comp?.filter(d => d?.director === login)
+        const userNotDirector = comp?.filter(d => d?.director !== login)
 
-        const sortedData = userDirector.sort((a, b) => {
-          if (a.director > b.director) return 1
-          if (a.director < b.director) return -1
+        const sortedData = userDirector?.sort((a, b) => {
+          if (a?.director > b?.director) return 1
+          if (a?.director < b?.director) return -1
           return 0
         })
 
-        const companiesData = sortedData.concat(userNotDirector)
+        const companiesData = sortedData?.concat(userNotDirector)
 
         res.send({
           ...compData,
@@ -183,17 +183,20 @@ exports.getOffice = (req, res)=>{
         bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (ordersData)=>{
 
           let to = (zl)=>{
-            const isStatus = ( zl.status === "open" ) || ( zl.status === "repair" )
-            const isToToday = (zl.nr.to < today)
-            return (isStatus && isToToday) ? today : zl.nr.to
+            const isStatus = ( zl?.status === "open" ) || ( zl?.status === "repair" )
+            const isToToday = (zl?.nr?.to < today)
+            return (isStatus && isToToday) ? today : zl?.nr?.to
           }
 
           res.send({
             ...ordersData,
-            result: ordersData?.result.map( (zl)=> ({ ...zl, nr:{...zl.nr, to: to(zl)} }) )
-              .sort( (a, b)=> parseInt(a.nr.sign) - parseInt(b.nr.sign) ) // sort by sign
-              .sort( (a, b)=> parseInt(b.nr.to - b.nr.from) - parseInt(a.nr.to - a.nr.from) ) // sort by length
-              .sort( (a, b)=> parseInt(a.nr.from) - parseInt(b.nr.from) ) // sort by date
+            result: ordersData?.result?.map( (zl)=> ({ ...zl, nr:{...zl?.nr, to: to(zl)} }) )
+              // sort by sign
+              .sort( (a, b)=> parseInt(a?.nr?.sign) - parseInt(b?.nr?.sign) )
+              // sort by length
+              .sort( (a, b)=> parseInt(b?.nr?.to - b?.nr?.from) - parseInt(a?.nr?.to - a?.nr?.from) )
+              // sort by date
+              .sort( (a, b)=> parseInt(a?.nr?.from) - parseInt(b?.nr?.from) )
           })
 
           return
@@ -214,7 +217,8 @@ exports.getOffice = (req, res)=>{
           res.send({
             ...invoicesData,
             result: invoicesData?.result
-              .sort( (a, b)=> parseInt(b.nr.sign) - parseInt(a.nr.sign) ) // sort by date
+              // sort by date
+              .sort( (a, b)=> parseInt(b?.nr?.sign) - parseInt(a?.nr?.sign) )
           })
         })
 
@@ -277,7 +281,7 @@ exports.getOffice = (req, res)=>{
           files:    object?.docData?.files
         }
 
-        const fromThatMonth = parseInt( `${parseInt(docData.nr.from / 100)}00` )
+        const fromThatMonth = parseInt( `${parseInt(docData?.nr?.from / 100)}00` )
 
         const lastSignQuery = {
           $and:[
@@ -307,7 +311,7 @@ exports.getOffice = (req, res)=>{
             const lastDocSign = isDocData?.result[0]?.nr?.sign
 
             const newDocSign = lastDocSign ? (lastDocSign + 1) : 1
-            const query = { ...docData, nr:{...docData.nr, sign:newDocSign} }
+            const query = { ...docData, nr:{...docData?.nr, sign:newDocSign} }
 
             bzDB( { req, res, col:'bzDocuments', act:"INSERT_ONE", query }, (documentData)=>{
       
@@ -370,12 +374,12 @@ exports.getOffice = (req, res)=>{
 
         bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (documentsData)=>{
 
-          const ZU = documentsData?.result.filter( el=> el?.nr?.mode === "ZU").reverse()
-          const FS = documentsData?.result.filter( el=> el?.nr?.mode === "FS").reverse()
-          const PS = documentsData?.result.filter( el=> el?.nr?.mode === "PS").reverse()
-          const FZ = documentsData?.result.filter( el=> el?.nr?.mode === "FZ").reverse()
-          const PZ = documentsData?.result.filter( el=> el?.nr?.mode === "PZ").reverse()
-          const ZL = documentsData?.result.filter( el=> el?.nr?.mode === "ZL").reverse()
+          const ZU = documentsData?.result?.filter( el=> el?.nr?.mode === "ZU")?.reverse()
+          const FS = documentsData?.result?.filter( el=> el?.nr?.mode === "FS")?.reverse()
+          const PS = documentsData?.result?.filter( el=> el?.nr?.mode === "PS")?.reverse()
+          const FZ = documentsData?.result?.filter( el=> el?.nr?.mode === "FZ")?.reverse()
+          const PZ = documentsData?.result?.filter( el=> el?.nr?.mode === "PZ")?.reverse()
+          const ZL = documentsData?.result?.filter( el=> el?.nr?.mode === "ZL")?.reverse()
 
           res.send({
             ...documentsData,

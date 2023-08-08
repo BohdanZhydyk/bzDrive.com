@@ -10,7 +10,7 @@ exports.getWorkshop = (req, res)=>{
 
   function SEND_WORKSHOP(data){
     bzDB( { req, res, col:'bzState', act:"FIND_ONE", query:{id} }, (workshopData)=>{
-      res.send({ ...workshopData, object:{...workshopData.object, result: workshopData.result} })
+      res.send({ ...workshopData, object:{...workshopData.object, result: workshopData?.result} })
       return
     })
   }

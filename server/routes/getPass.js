@@ -18,9 +18,9 @@ exports.getPass = (req, res)=>{
       bzDB( { req, res, col:'bzPass', act:"FIND", query:{user:login} }, (getPassData)=>{
         res.send({
           ...getPassData,
-          result: getPassData?.result.map(el=> ({
+          result: getPassData?.result?.map(el=> ({
             ...el,
-            siteData: el?.siteData.map( pass=>({
+            siteData: el?.siteData?.map( pass=>({
               userName: pass?.userName,
               login: pass?.login,
             }))
@@ -61,7 +61,7 @@ exports.getPass = (req, res)=>{
           siteName: object?.query?.siteName,
           link: object?.query?.link,
           info: object?.query?.info,
-          siteData: object?.query?.siteData.map( (el, n)=>({
+          siteData: object?.query?.siteData?.map( (el, n)=>({
             userName: el?.userName,
             login: el?.login,
             pass: (el?.pass && el?.encrypted) ? enCrypt(el?.pass) : passData?.result?.siteData[n]?.pass

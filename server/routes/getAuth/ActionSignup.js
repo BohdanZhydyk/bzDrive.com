@@ -7,51 +7,30 @@ const { sendEmail } = require('../emailer/sendEmail')
 
 exports.ActionSignup = (req, res)=>{
 
-  const formData = req?.body?.object?.formData
+  function SEND(errors){ res.send({ ...req?.body, result:{errors} }) }
 
   const bzToken = req?.body?.bzToken
   const lang = req?.body?.object?.lang
-  const login = formData?.login
-  const email = formData?.email
-  const pass = formData?.pass
-  const verify = formData?.verify
+  const {login, email, pass, verify} = req?.body?.object?.formData
 
-  if(!login){
-    res.send({ ...req?.body, result:{ errors: {login:"Err_1"} } })
-    return
-  }
+  if(!login){ return SEND({login:"Err_1"}) }
 
-  if(!email){
-    res.send({ ...req?.body, result:{ errors: {email:"Err_1"} } })
-    return
-  }
+  if(!email){ return SEND({email:"Err_1"}) }
 
-  if(!pass){
-    res.send({ ...req?.body, result:{errors: {pass:"Err_1"} } })
-    return
-  }
+  if(!pass){ return SEND({pass:"Err_1"}) }
 
   bzDB( { req, res, col:'bzUsers', act:"FIND_ONE", query:{login} }, (dbData)=>{
 
-    if(dbData?.result){
-      res.send({ ...req?.body, result:{ errors: {login:"UserPresent"} } })
-      return
-    }
+    if(dbData?.result){ return SEND({login:"UserPresent"}) }
 
     bzDB( { req, res, col:'bzUsers', act:"FIND_ONE", query:{email} }, (dbData)=>{
 
-      if(dbData?.result){
-        res.send({ ...req?.body, result:{ errors: {email:"EmailPresent"} } })
-        return
-      }
+      if(dbData?.result){ return SEND({email:"EmailPresent"}) }
       
       const passCompare = (pass, verify, cb)=> cb(pass === verify)
       passCompare( pass, verify, (isPass)=>{
 
-        if(!isPass){
-          res.send({ ...req?.body, result:{ errors: {verify:"SamePass"} } })
-          return
-        }
+        if(!isPass){ return SEND({verify:"SamePass"}) }
 
         bzPassHash(pass, (hash) => {
 
@@ -81,8 +60,7 @@ exports.ActionSignup = (req, res)=>{
                 return
               }
 
-              res.send({ ...req?.body, result:{ errors: {email:"EmailNotSent"} } })
-              return
+              return SEND({email:"EmailNotSent"})
 
             })
 

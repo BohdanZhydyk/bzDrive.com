@@ -14,9 +14,9 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
   // lim        limit of results
   // callback   callback function
 
-  let bzToken = req?.body?.bzToken  ? req.body.bzToken  : generateToken()
-  let IP =      req?.body?.IP       ? req.body.IP       : false
-  let user =    req?.body?.user     ? req.body.user     : false
+  let bzToken = req?.body?.bzToken ?? generateToken()
+  let IP =      req?.body?.IP      ?? false
+  let user =    req?.body?.user    ?? false
   
   const client = new MongoClient(url, { useUnifiedTopology: true })
   
@@ -38,7 +38,11 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
 
       // if the token is older than "tokenLifetime", generate a new one
       const tokenLifetime = (3600000 * 24)
-      if(Date.now() - ChekTokenData?.time > tokenLifetime){ Done(generateToken(), IP, "RELOAD_APP"); return; }
+      const isOlder = Date.now() - ChekTokenData?.time > tokenLifetime
+      if(isOlder){
+        Done( generateToken(), IP, "RELOAD_APP" )
+        return
+      }
 
       Done(bzToken, IP, ChekTokenData?.user)
 
@@ -46,7 +50,11 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
 
     function Queries(bzToken, IP, user){
 
-      const CB = (errors, result)=> errors ? ERR(bzToken, IP, user, errors) : OK(bzToken, IP, user, result)
+      const CB = (errors, result)=>{
+        errors
+        ? ERR(bzToken, IP, user, errors)
+        : OK(bzToken, IP, user, result)
+      }
       
       switch(act){
         case "FIND":          FIND();         break

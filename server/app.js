@@ -22,7 +22,8 @@ app.use( '/API', Router )
 
 const PORT = 2000;
 app.listen(PORT, () => {
-  let DT = unixToDateTimeConverter()
-  let txt = `API started on PORT ${PORT} - ${DT.hour}:${DT.min}:${DT.sec}-${DT.day}/${DT.month}/${DT.year}`
-  console.log(txt)
+  const DT = unixToDateTimeConverter()
+  const txt1 = `API started on PORT ${PORT}`
+  const txt2 = `${DT?.year}/${DT?.month}/${DT?.day}-${DT?.hour}:${DT?.min}:${DT?.sec}`
+  console.log(`${txt1} - ${txt2}`)
 })

@@ -4,8 +4,9 @@ exports.deleteFile = (req, res)=>{
   
   const fileAddr = __dirname + "/../public/" + req?.body?.fileAddr
   const fileName = req?.body?.fileName
+  const linkToFile = `${fileAddr}/${fileName}`
 
-  fs.stat(`${fileAddr}/${fileName}`, (err, stats)=>{
+  fs.stat(linkToFile, (err, stats)=>{
 
     // console.log(stats) //here we got all information of file in stats variable
 
@@ -14,14 +15,14 @@ exports.deleteFile = (req, res)=>{
       return
     }
 
-    fs.unlink(`${fileAddr}/${fileName}`, (err)=>{
+    fs.unlink(linkToFile, (err)=>{
 
       if(err){
         res.send({ message:`Error deleting file: ${err}`, stats })
         return
       }
 
-      let message = `File "https://bzdrive.com/${req?.body?.fileAddr}/${fileName}" deleted successfully!`
+      let message = `File ${linkToFile} deleted successfully!`
 
       res.status(200).send({ message, stats })
       return

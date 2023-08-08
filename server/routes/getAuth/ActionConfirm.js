@@ -7,32 +7,26 @@ const { sendEmail } = require('../emailer/sendEmail')
 
 exports.ActionConfirm = (req, res)=>{
 
-  const formData = req?.body?.object?.formData
+  function SEND(errors){ res.send({ ...req?.body, result:{errors} }) }
 
   const bzToken = req?.body?.bzToken
   const lang = req?.body?.object?.lang
-  const confirm = formData?.confirm
+  const confirm = req?.body?.object?.formData?.confirm
   const query = { bzToken, confirm:{$exists: true} }
 
-  if(!confirm){
-    res.send({ ...req?.body, result:{ errors: {confirm:"Err_1"} } })
-    return
-  }
+  if(!confirm){ return SEND({confirm:"Err_1"}) }
 
   bzDB( { req, res, col:'bzUsers', act:"FIND", query }, (dbData)=>{
 
     const result = dbData?.result[0]
-    const confirmData = result?.confirm
     const act = result?.act
-    const code = result?.confirm?.pass?.code
-    const login = result?.confirm?.login
-    const email = result?.confirm?.email
-    const pass = result?.confirm?.pass?.passHash
+    const confirmData = result?.confirm
+    const code = confirmData?.pass?.code
+    const login = confirmData?.login
+    const email = confirmData?.email
+    const pass = confirmData?.pass?.passHash
 
-    if(!confirm || (code !== confirm )){
-      res.send({ ...req?.body, result:{errors: {confirm:"WrongPass"} } })
-      return
-    }
+    if(!confirm || (code !== confirm )){ return SEND({confirm:"WrongPass"}) }
 
     if(act === "signup"){
 
@@ -58,8 +52,8 @@ exports.ActionConfirm = (req, res)=>{
 
         bzDB( { req, res, col:'bzUsers', act:"UPDATE_ONE", query }, (updData)=>{
           res.send({ ...req?.body, result:{ chgPannel: "LogIn" } })
+          return
         })
-        return
 
       })
     }

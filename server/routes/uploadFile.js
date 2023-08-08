@@ -24,9 +24,9 @@ exports.uploadFile = (req, res)=>{
       }
 
       res.status(200).send({
-        name:fileName,
-        size:file.size,
-        mimetype:file.mimetype
+        name: fileName,
+        size: file?.size,
+        mimetype: file?.mimetype
       })
       return
 

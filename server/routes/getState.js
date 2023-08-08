@@ -18,13 +18,13 @@ exports.getState = (req, res)=>{
       
       function Filter(nav, lvl){
         let arr = []
-        arr = nav.filter( el=> (el.lvl <= lvl) )
+        arr = nav?.filter( el=> (el?.lvl <= lvl) )
         res.send({
           ...navData,
           result:{
-            info: infoData.result.info,
-            nav: arr.map( el=> el.subnav
-              ? {...el, subnav:el.subnav.filter( el=> (el.lvl <= lvl) )}
+            info: infoData?.result?.info,
+            nav: arr?.map( el=> el.subnav
+              ? {...el, subnav:el?.subnav?.filter( el=> (el?.lvl <= lvl) )}
               : el
             )
           }

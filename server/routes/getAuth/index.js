@@ -23,7 +23,7 @@ exports.getAuth = (req, res)=>{
       case "confirm": ActionConfirm(req, res); return
       case "forgot": ActionForgot(req, res); return
       case "logout": ActionLogout(req, res); return
-      default: res.send( {...req.body, result:false, errors:'ERR: server app.js!!!'} ); return
+      default: res.send( {...req?.body, result:false, errors:'ERR: server app.js!!!'} ); return
     }
 
   })
