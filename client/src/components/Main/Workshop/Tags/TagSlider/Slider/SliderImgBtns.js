@@ -1,11 +1,11 @@
 import React from "react"
 
 
-export function SliderImgBtns({ props:{btnL, btnR, PREV, NEXT} }){
+export function SliderImgBtns({ props:{dirBtns, PREV, NEXT} }){
 
   const btns = [
-    { alt:"Left", src:btnL, fn:PREV },
-    { alt:"Right", src:btnR, fn:NEXT }
+    { alt:"Left", src:dirBtns?.btnL, fn:PREV },
+    { alt:"Right", src:dirBtns?.btnR, fn:NEXT }
   ]
 
   return(

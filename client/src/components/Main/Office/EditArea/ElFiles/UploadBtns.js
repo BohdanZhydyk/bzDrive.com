@@ -4,7 +4,7 @@ import UploadFile from "../../../../All/UploadFile"
 import { UploadLink } from "./UploadLink"
 
 
-export function UploadBtns({ props:{tr, lang, fileAddr, setSave, setFiles, ADD_FILE} }){
+export function UploadBtns({ props:{tr, formNr, lang, fileAddr, setSave, setFiles, ADD_FILE} }){
 
   const blankLink = ()=>({fileID: Date.now(), fileAddr: "", fileName: "", fileType: "lnk"})
 
@@ -29,7 +29,7 @@ export function UploadBtns({ props:{tr, lang, fileAddr, setSave, setFiles, ADD_F
   }
 
   const btnTxt = tr(`AddFileArea`,lang)
-  const fileProps = {btnTxt, fileAddr, callback: (data)=>ADD_FILE(data)}
+  const fileProps = {btnTxt, formNr, fileAddr, callback: (data)=>ADD_FILE(data)}
   const uploadLinkProps = {tr, lang, link, setLink, err, setErr, opened, OPEN_AREA, CANCEL_LINK, ADD_LINK}
 
   return(

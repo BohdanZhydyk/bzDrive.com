@@ -6,15 +6,16 @@ import Slider from './Slider'
 import SliderEdit from "./SliderEdit"
 
 
-function TagSlider({ props:{el, i, user, setWorkshop, editMode, setEditingText} }){
+function TagSlider({ props:{el, nr, user, setWorkshop, editMode, editingTag, setEditingTag} }){
   
   const [edit, setEdit] = useState(false)
   const [slider, setSlider] = useState( getBody(el?.body, 0, 0) )
 
   function CLICK(){
-    if(editMode && !edit){
+    if(editMode && !editingTag && !edit){
       setSlider( getBody(el?.body, false, false) )
       setEdit(prev=>true)
+      setEditingTag( prev=>el )
     }
   }
 
@@ -26,17 +27,19 @@ function TagSlider({ props:{el, i, user, setWorkshop, editMode, setEditingText} 
   const link = `https://bzdrive.com/`
   const fileAddr = "files/slider/"
   const imageLink = `${link}${fileAddr}${actImg}`
-  const btnL = `${link}files/ico/sliderBtnL.png`
-  const btnR = `${link}files/ico/sliderBtnR.png`
+  const dirBtns = {
+    btnL: `${link}files/ico/sliderBtnL.png`,
+    btnR: `${link}files/ico/sliderBtnR.png`
+  }
 
   function PREV(){ SliderReducer({type:"SLIDE_PREV", setSlider, actImgs}) }
   function NEXT(){ SliderReducer({type:"SLIDE_NEXT", setSlider, actImgs}) }
 
   const sliderProps = {
-    actVal, actImgs, imageLink, btnL, btnR, PREV, NEXT
+    actVal, actImgs, imageLink, dirBtns, PREV, NEXT
   }
   const sliderEditProps = {
-    user, slider, setSlider, nr:i, link, fileAddr, setWorkshop, setEditingText, btnL, btnR, SliderReducer
+    el, nr, user, slider, setSlider, link, fileAddr, setWorkshop, setEditingTag, dirBtns, SliderReducer
   }
  
   useEffect( ()=>{

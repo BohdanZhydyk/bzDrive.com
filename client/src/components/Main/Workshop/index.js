@@ -16,20 +16,18 @@ function Workshop() {
 
   const user = GetUser()
 
+  const adminTxt = `Jesteś administratorem - masz pełną kontrolę nad treścią strony!`
+
   const [workshop, setWorkshop] = useState(false)
   const [editMode, setEditMode] = useState(false)
-  const [editingText, setEditingText] = useState(false)
+  const [editingTag, setEditingTag] = useState(false)
 
   function SAVE_WORKSHOP(){
-    setEditMode(prev=>false)
-    setEditingText(prev=>false)
-    WorkshopReducer({ type:"SAVE_WORKSHOP" }, workshop, setWorkshop)
+    WorkshopReducer({ type:"SAVE_WORKSHOP" }, editingTag, setWorkshop, setEditMode, setEditingTag)
   }
 
   function GET_WORKSHOP(){
-    setEditMode(prev=>false)
-    setEditingText(prev=>false)
-    WorkshopReducer({ type:"GET_WORKSHOP" }, workshop, setWorkshop)
+    WorkshopReducer({ type:"GET_WORKSHOP" }, editingTag, setWorkshop, setEditMode, setEditingTag)
   }
 
   useEffect( ()=>{ !workshop && GET_WORKSHOP() },[])
@@ -43,10 +41,10 @@ function Workshop() {
         user?.role === "admin" &&
         <div className="AdminBtn flex end stretch">
 
-          <span className="AdminInfo txtOrg bold flex">Jesteś administratorem - masz pełną kontrolę nad treścią strony!</span>
+          <span className="AdminInfo txtOrg bold flex">{adminTxt}</span>
           
           { !editMode && <ActionBtn props={{name:'edit', click:()=>setEditMode(prev=> !prev)}} /> }
-          { editingText && <ActionBtn props={{name:'save', click:SAVE_WORKSHOP}} /> }
+          { editingTag && <ActionBtn props={{name:'save', click:SAVE_WORKSHOP}} /> }
           { editMode && <ActionBtn props={{name:'cancel', click:GET_WORKSHOP}} /> }
 
         </div>
@@ -59,10 +57,10 @@ function Workshop() {
         :
         <>
         {
-          workshop.map( (el, i)=>{
+          workshop.map( (el, nr)=>{
 
-            const key = `TagKey${el?.id}${i}`
-            const props = {el, i, user, setWorkshop, editMode, setEditingText}
+            const key = `TagKey${el?.id}${nr}`
+            const props = {el, nr, user, setWorkshop, editMode, editingTag, setEditingTag}
 
             switch (el?.tag) {
               case "h":         return <TagH          props={props} key={key} />

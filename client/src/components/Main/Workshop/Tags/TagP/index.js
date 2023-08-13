@@ -7,31 +7,33 @@ import UploadFile from "../../../../All/UploadFile"
 import { PostToApi } from "../../../../../AppFunctions"
 
 
-function TagP({ props:{el, i, user, setWorkshop, editMode, setEditingText} }){
+function TagP({ props:{el, nr, user, setWorkshop, editMode, editingTag, setEditingTag} }){
 
   const [edit, setEdit] = useState(false)
 
-  function CLICK(){ editMode && setEdit(prev=>true)}
+  function CLICK(){
+    if(editMode && !editingTag){
+      setEdit(prev=>true)
+      setEditingTag( prev=>el )
+    }
+  }
 
   const textAreaPropses = (par, p, lan)=>{
     return {
       plhol: tr(`PlaceHolder`,user?.lang),
       val: par[lan],
       cbVal: (val)=>{
-        setWorkshop( (prev)=> prev?.map( (el, e)=> e !== i
-          ? el
-          :
-          {
-            ...el,
-            body:{
-              ...el?.body,
-              txt:el?.body?.txt.map( (text, t)=>
-                t !== p ? text : {...text, [lan]:val}
-              )
-            }
+        const newEl = {
+          ...el,
+          body:{
+            ...el?.body,
+            txt:el?.body?.txt.map( (text, t)=>
+              t !== p ? text : {...text, [lan]:val}
+            )
           }
-        ))
-        setEditingText(prev=>true)
+        }
+        setWorkshop( prev=> prev?.map( (el, e)=> (e !== nr) ? el : newEl ))
+        setEditingTag( prev=> newEl )
       },
       cbErr: ()=>{}
     }
@@ -79,7 +81,7 @@ function TagP({ props:{el, i, user, setWorkshop, editMode, setEditingText} }){
           <div className="ParagraphArea flex column start">
             {
               el?.body?.txt.map( (par, p)=>
-                <p key={`ParagraphLine${i}${p}`}>{par[user?.lang]}</p>
+                <p key={`ParagraphLine${nr}${p}`}>{par[user?.lang]}</p>
               )
             }
           </div>
@@ -111,12 +113,12 @@ function TagP({ props:{el, i, user, setWorkshop, editMode, setEditingText} }){
           {
             el?.body?.txt.map( (par, p)=>{
               return(
-                <div className="ParagraphWrapper flex column" key={`ParagraphWrapper${i}${p}`}>
+                <div className="ParagraphWrapper flex column" key={`ParagraphWrapper${nr}${p}`}>
 
                   {
                     ["en","ua","pl"]?.map( (lan, l)=>{
                       return(
-                        <div className="TextAreaWrapper flex column" key={`TextAreaWrapper${i}${p}${l}`}>
+                        <div className="TextAreaWrapper flex column" key={`TextAreaWrapper${nr}${p}${l}`}>
                           <TextArea props={textAreaPropses(par, p, lan)} />
                         </div>
                       )

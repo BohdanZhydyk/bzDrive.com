@@ -5,11 +5,16 @@ import { UlWrapper } from "./UlWrapper"
 import { UlInputsWrapper } from "./UlInputsWrapper"
 
 
-function TagUl({ props:{el, i, user, setWorkshop, editMode, setEditingText} }){
+function TagUl({ props:{el, nr, user, setWorkshop, editMode, editingTag, setEditingTag} }){
 
   const [edit, setEdit] = useState(false)
 
-  function CLICK(){ editMode && setEdit(prev=>true)}
+  function CLICK(){
+    if(editMode && !editingTag){
+      setEdit(prev=>true)
+      setEditingTag( prev=>el )
+    }
+  }
 
   return(
     <div className={`${editMode ? `AdminBorder` : `Border`} flex`} onClick={CLICK}>
@@ -19,7 +24,7 @@ function TagUl({ props:{el, i, user, setWorkshop, editMode, setEditingText} }){
         {
           !edit
           ? <UlWrapper props={{el, user}} />
-          : <UlInputsWrapper props={{el, i, setWorkshop, setEditingText}} />
+          : <UlInputsWrapper props={{el, nr, setWorkshop, setEditingTag}} />
         }
 
       </div>

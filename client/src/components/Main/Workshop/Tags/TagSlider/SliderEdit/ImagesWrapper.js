@@ -7,30 +7,33 @@ import { ActionBtns } from "./ActionBtns"
 
 
 export function ImagesWrapper({ props:{
-  user, slider, setSlider, nr, folder, folderNr, link, fileAddr, setWorkshop, setEditingText, btnL, btnR, SliderReducer
+  el, nr, user, slider, setSlider, folder, folderNr, link,
+  fileAddr, setWorkshop, setEditingTag, dirBtns, SliderReducer
 } }){
 
   const ADD_FILE = (data)=>{
-    const file = {
-      fileID: data?.fileID ?? Date.now(),
-      fileAddr,
-      fileName:data.name,
-      fileSize:data.size,
-      fileType:data.mimetype
+    const newEl = {
+      ...el,
+      body:el?.body.map( (folder, F)=>
+        F !== folderNr
+        ? folder
+        :
+        { ...folder, imgs:[...folder?.imgs, {img:data.name}] }
+      )
     }
-    const query = {
-      updateDocFiles:true,
-      // doc:{ ...doc, files:[...files, file] }
-    }
-    PostToApi( '/getOffice111', query, (data)=>{
-      // setSave(true)
-      // data?.files && setFiles(data.files)
+    const query = { setWorkshop:true, tag:newEl }
+    PostToApi( '/getWorkshop', query, (data)=>{
+      setWorkshop(data?.workshop)
+      setEditingTag( prev=> newEl )
     })
   }
   
   const btnTxt = tr(`AddFileArea`,user?.lang)
+  const formNr = folderNr
+  const uniqueName = true
+  const warning = `(1200 x 500)`
   const accept = "image/png, image/gif, image/jpeg"
-  const fileProps = {btnTxt, fileAddr, accept, callback: (data)=>ADD_FILE(data)}
+  const fileProps = {btnTxt, formNr, fileAddr, uniqueName, warning, accept, callback: (data)=>ADD_FILE(data)}
 
   return(
     <div className="ImagesWrapper flex wrap">
@@ -42,20 +45,21 @@ export function ImagesWrapper({ props:{
           const classes = `SliderImage ${isActImg ? `ActImg` : ``} flex`
           const key_k = `SliderImage${nr}${folderNr}${imageNr}`
           const imageLink = `${link}${fileAddr}${image?.img}`
+          const actBtnsProps = {el, nr, slider, setSlider, folder, folderNr, image, imageNr, fileAddr, setWorkshop, setEditingTag, dirBtns, SliderReducer}
 
           return(
             <div className={classes} key={key_k}>
 
               <img src={imageLink} alt="SlImg" />
 
-              <ActionBtns props={{slider, setSlider, nr, folder, folderNr, image, imageNr, fileAddr, setWorkshop, setEditingText, btnL, btnR, SliderReducer}} />
+              <ActionBtns props={actBtnsProps} />
 
             </div>
           )
         })
       }
 
-      <UploadFile props={fileProps} />
+      <UploadFile props={fileProps} key={`uplf${folderNr}`}/>
 
     </div>
   )

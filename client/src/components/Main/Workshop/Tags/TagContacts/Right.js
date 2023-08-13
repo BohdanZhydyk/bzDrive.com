@@ -4,7 +4,7 @@ import Input from "../../../../All/Input"
 import { tr } from "../../../../../AppTranslate"
 
 
-export function Right({ props:{edit, contacts, i, user, setWorkshop, setEditingText} }){
+export function Right({ props:{edit, contacts, el, nr, user, setWorkshop, setEditingTag} }){
 
   const inputPropses = (contact)=>{
     return {
@@ -12,23 +12,21 @@ export function Right({ props:{edit, contacts, i, user, setWorkshop, setEditingT
       type: `text`,
       val: contact?.content?.link[1],
       cbVal: (val)=>{
-        setWorkshop( (prev)=> prev?.map( (el, e)=> e !== i
-          ? el
-          : {
-              ...el,
-              body:el?.body.map( cont=> cont?.element !== contact?.element
-                ? cont
-                : {
-                    ...cont,
-                    content:{
-                      ...cont?.content,
-                      link:[cont?.content?.link[0], val]
-                    }
-                  }
-              )
-            }
-        ))
-        setEditingText(prev=>true)
+        const newEl = {
+          ...el,
+          body:el?.body.map( cont=> cont?.element !== contact?.element
+            ? cont
+            : {
+                ...cont,
+                content:{
+                  ...cont?.content,
+                  link:[cont?.content?.link[0], val]
+                }
+              }
+          )
+        }
+        setWorkshop( (prev)=> prev?.map( (el, e)=> (e !== nr) ? el : newEl ))
+        setEditingTag( prev=> newEl )
       },
       cbErr: ()=>{}
     }
@@ -40,7 +38,7 @@ export function Right({ props:{edit, contacts, i, user, setWorkshop, setEditingT
       contacts.map( (contact, c)=>{
 
         const link = `${contact?.content?.link[0]}${contact?.content?.link[1]}`
-        const key = `Contact${i}${c}`
+        const key = `Contact${nr}${c}`
         const txt = `${tr(`Link_${contact?.element}`, user?.lang)}:`
 
         return(
@@ -62,7 +60,7 @@ export function Right({ props:{edit, contacts, i, user, setWorkshop, setEditingT
             </div>
             :
             <div className="ContactLine">
-              <Input props={inputPropses(contact)} key={`EditTagContacts${i}${c}`} />
+              <Input props={inputPropses(contact)} key={`EditTagContacts${nr}${c}`} />
             </div>
           }
           </div>

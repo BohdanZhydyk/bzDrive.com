@@ -2,7 +2,7 @@ import React from "react"
 import Input from "../../../../All/Input"
 
 
-export function Left({ props:{edit, GoogleMap, i, setWorkshop, setEditingText} }){
+export function Left({ props:{edit, GoogleMap, el, nr, setWorkshop, setEditingTag} }){
 
   const inputPropses = (link)=>{
     return {
@@ -10,11 +10,16 @@ export function Left({ props:{edit, GoogleMap, i, setWorkshop, setEditingText} }
       type: `text`,
       val: link?.content,
       cbVal: (val)=>{
-        setWorkshop( (prev)=> prev?.map( (el, e)=> e !== i
-          ? el
-          : {...el, body:el?.body?.map( obj=> obj?.element !== "map" ? obj : {...obj, content:val}) }
-        ))
-        setEditingText(prev=>true)
+        const newEl = {
+          ...el,
+          body:el?.body?.map( obj=>
+            obj?.element !== "map"
+            ? obj
+            : {...obj, content:val}
+          )
+        }
+        setWorkshop( (prev)=> prev?.map( (el, e)=> (e !== nr) ? el : newEl ))
+        setEditingTag( prev=> newEl )
       },
       cbErr: ()=>{}
     }
@@ -27,7 +32,7 @@ export function Left({ props:{edit, GoogleMap, i, setWorkshop, setEditingText} }
       <div className="GoogleMapsInput flex">
       {
         GoogleMap.map( (link, l)=>{
-          return <Input props={inputPropses(link)} key={`GoogleMaps${i}${l}`} />
+          return <Input props={inputPropses(link)} key={`GoogleMaps${nr}${l}`} />
         })
       }
       </div>

@@ -5,11 +5,16 @@ import { Left } from './Left'
 import { Right } from './Right'
 
 
-function TagContacts({ props:{el, i, user, setWorkshop, editMode, setEditingText} }){
+function TagContacts({ props:{el, nr, user, setWorkshop, editMode, editingTag, setEditingTag} }){
 
   const [edit, setEdit] = useState(false)
 
-  function CLICK(){ editMode && setEdit(prev=>true)}
+  function CLICK(){
+    if(editMode && !editingTag){
+      setEdit(prev=>true)
+      setEditingTag( prev=>el )
+    }
+  }
 
   let GoogleMap = el?.body.filter( (EL)=> EL.element === "map" )
   let contacts = el?.body.filter( (EL)=> EL.element !== "map" )
@@ -19,8 +24,8 @@ function TagContacts({ props:{el, i, user, setWorkshop, editMode, setEditingText
 
       <div className="TagContacts flex center stretch wrap" onClick={CLICK}>
 
-        <Left props={{edit, GoogleMap, i, setWorkshop, setEditingText}} />
-        <Right props={{edit, contacts, i, user, setWorkshop, setEditingText}} />
+        <Left props={{edit, GoogleMap, el, nr, setWorkshop, setEditingTag}} />
+        <Right props={{edit, contacts, el, nr, user, setWorkshop, setEditingTag}} />
 
       </div>
 

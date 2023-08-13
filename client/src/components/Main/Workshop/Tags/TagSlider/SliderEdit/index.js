@@ -5,7 +5,8 @@ import { ImagesWrapper } from "./ImagesWrapper"
 
 
 function SliderEdit({ props:{
-  user, slider, setSlider, nr, link, fileAddr, setWorkshop, setEditingText, btnL, btnR, SliderReducer
+  el, nr, user, slider, setSlider, link, fileAddr,
+  setWorkshop, setEditingTag, dirBtns, SliderReducer
 } }){
   return(
     <div className="SliderEdit flex column">
@@ -13,11 +14,12 @@ function SliderEdit({ props:{
       slider?.body.map( (folder, folderNr)=>{
 
         const inputsWrapperProps = {
-          slider, folder, nr, folderNr, setWorkshop, setEditingText
+          el, nr, folder, folderNr, setWorkshop, setEditingTag
         }
         
         const imagesWrapperProps = {
-          user, slider, setSlider, nr, folder, folderNr, link, fileAddr, setWorkshop, setEditingText, btnL, btnR, SliderReducer
+          el, nr, user, slider, setSlider, folder, folderNr, link, fileAddr,
+          setWorkshop, setEditingTag, dirBtns, SliderReducer
         }
 
         return(

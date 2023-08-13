@@ -1,13 +1,15 @@
-import React from "react"
+import React, { useState } from "react"
 
 import ActionBtn from "../../../../../All/ActionBtn"
 import { getBody } from "../SliderReducer"
 
 
 export function ActionBtns({ props:{
-  slider, setSlider, nr, folder, folderNr, image, imageNr,
-  fileAddr, setWorkshop, setEditingText, btnL, btnR, SliderReducer
+  el, nr, slider, setSlider, folder, folderNr, image, imageNr,
+  fileAddr, setWorkshop, setEditingTag, dirBtns, SliderReducer
 } }){
+
+  const [isDelete, setIsDelete] = useState(false)
 
   const isFirstEl = imageNr !== 0
   const isLastEl = imageNr !== folder?.imgs.length - 1
@@ -16,7 +18,8 @@ export function ActionBtns({ props:{
   const ACT_IMG = ()=> setSlider( getBody(slider?.body, folderNr, imageNr) )
 
   function MOVE_IMG(dir){
-    SliderReducer({type:"MOVE_IMG", dir, nr, folderNr, image, imageNr, fileAddr, setWorkshop, setEditingText})
+    setIsDelete(prev=>false)
+    SliderReducer({type:"MOVE_IMG", el, nr, dir, folderNr, image, imageNr, fileAddr, setWorkshop, setEditingTag})
   }
 
   return(
@@ -25,20 +28,22 @@ export function ActionBtns({ props:{
       {
         (isActImg && isFirstEl) &&
         <div className="ActImgBtnL flex" onClick={()=>MOVE_IMG("LEFT")}>
-          <img className="ImgBtn" src={btnL} alt="ActBtn" />
+          <img className="ImgBtn" src={dirBtns?.btnL} alt="ActBtn" />
         </div>
       }
       {
         (isActImg && isLastEl) &&
         <div className="ActImgBtnR flex" onClick={()=>MOVE_IMG("RIGHT")}>
-          <img className="ImgBtn" src={btnR} alt="ActBtn" />
+          <img className="ImgBtn" src={dirBtns?.btnR} alt="ActBtn" />
         </div>
       }
 
       {
         isActImg &&
         <div className="ActImgBtnDel flex">
-          <ActionBtn props={{name:'delete', click:()=>MOVE_IMG("DEL")}} />
+          { !isDelete && <ActionBtn props={{name:'delete', click:()=>setIsDelete(prev=>true)}} /> }
+          { isDelete && <ActionBtn props={{name:'check', click:()=>MOVE_IMG("DEL")}} /> }
+          { isDelete && <ActionBtn props={{name:'cancel', click:()=>setIsDelete(prev=>false)}} /> }
         </div>
       }
 

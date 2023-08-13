@@ -1,4 +1,4 @@
-import { bzDeleteFile } from "../../../../../AppFunctions"
+import { PostToApi, bzDeleteFile } from "../../../../../AppFunctions"
 
 export function getBody(body, folderNr, imageNr){
   
@@ -62,7 +62,7 @@ const SLIDE_NEXT = ({setSlider, actImgs})=>{
   })
 }
 
-function MOVE_IMG({dir, nr, folderNr, imageNr, image, fileAddr, setWorkshop, setEditingText}){
+function MOVE_IMG({el, nr, dir, folderNr, image, imageNr, fileAddr, setWorkshop, setEditingTag}){
 
   function ImgTo(imgs, nr){
 
@@ -85,20 +85,19 @@ function MOVE_IMG({dir, nr, folderNr, imageNr, image, fileAddr, setWorkshop, set
     }
   }
 
-  setWorkshop( (prev)=> prev?.map( (el, e)=> e !== nr
-    ? el
-    :
-    {
-      ...el,
-      body:el?.body.map( (folder, F)=>
-        F !== folderNr
-        ? folder
-        :
-        {...folder, imgs:ImgTo(folder?.imgs, imageNr)}
-      )
-    }
-  ))
-
-  setEditingText(prev=>true)
+  const newEl = {
+    ...el,
+    body:el?.body.map( (folder, F)=>
+      F !== folderNr
+      ? folder
+      :
+      {...folder, imgs:ImgTo(folder?.imgs, imageNr)}
+    )
+  }
+  const query = { setWorkshop:true, tag:newEl }
+  PostToApi( '/getWorkshop', query, (data)=>{
+    setWorkshop(data?.workshop)
+    setEditingTag( prev=> newEl )
+  })
 
 }

@@ -3,7 +3,7 @@ import React from "react"
 import Input from "../../../../All/Input"
 
 
-export function UlInputsWrapper({ props:{el, i, setWorkshop, setEditingText} }){
+export function UlInputsWrapper({ props:{el, nr, setWorkshop, setEditingTag} }){
   
   const inputPropsesUl = (lan)=>{
     return {
@@ -11,11 +11,9 @@ export function UlInputsWrapper({ props:{el, i, setWorkshop, setEditingText} }){
       type: `text`,
       val: el.body[lan]?.ul,
       cbVal: (val)=>{
-        setWorkshop( (prev)=> prev?.map( (el, e)=> e !== i
-          ? el
-          : {...el, body:{...el?.body, [lan]:{...el?.body[lan], ul:val}} }
-        ))
-        setEditingText(prev=>true)
+        const newEl = {...el, body:{...el?.body, [lan]:{...el?.body[lan], ul:val}} }
+        setWorkshop( prev=> prev?.map( (el, e)=> (e !== nr) ? el : newEl ))
+        setEditingTag( prev=> newEl )
       },
       cbErr: ()=>{}
     }
@@ -27,21 +25,18 @@ export function UlInputsWrapper({ props:{el, i, setWorkshop, setEditingText} }){
       type: `text`,
       val: li,
       cbVal: (val)=>{
-        setWorkshop( (prev)=> prev?.map( (el, e)=> e !== i
-          ? el
-          :
-          {
-            ...el,
-            body:{
-              ...el?.body,
-              [lan]:{
-                ...el?.body[lan],
-                li:el?.body[lan]?.li.map( (txt, t)=> t !== n ? txt : val )
-              }
+        const newEl = {
+          ...el,
+          body:{
+            ...el?.body,
+            [lan]:{
+              ...el?.body[lan],
+              li:el?.body[lan]?.li.map( (txt, t)=> t !== n ? txt : val )
             }
           }
-        ))
-        setEditingText(prev=>true)
+        }
+        setWorkshop( prev=> prev?.map( (el, e)=> (e !== nr) ? el : newEl ))
+        setEditingTag( prev=> newEl )
       },
       cbErr: ()=>{}
     }
@@ -51,7 +46,7 @@ export function UlInputsWrapper({ props:{el, i, setWorkshop, setEditingText} }){
     <div className="UlInputsWrapper flex wrap">
     {
       ["en","ua","pl"]?.map( (lan, l)=>{
-        const keyUl = `EditTagUl${i}${l}`
+        const keyUl = `EditTagUl${nr}${l}`
         return(
           <div className="UlInputs" key={keyUl}>
 
@@ -60,7 +55,7 @@ export function UlInputsWrapper({ props:{el, i, setWorkshop, setEditingText} }){
             <div className="LiInputsWrapper flex column">
             {
               el?.body[lan]?.li.map( (li, n)=>{
-                const keyLi = `EditTagLi${i}${l}${n}`
+                const keyLi = `EditTagLi${nr}${l}${n}`
                 return <Input props={inputPropsesLi(lan, li, n)} key={keyLi} />
               })
             }

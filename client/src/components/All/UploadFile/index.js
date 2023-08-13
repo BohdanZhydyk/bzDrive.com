@@ -6,7 +6,7 @@ import { GetUser } from '../../../AppFunctions'
 import { bzUploadFile } from '../../../AppFunctions'
 
 
-const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback} })=>{
+const UploadFile = ({ props:{btnTxt, formNr, fileAddr, uniqueName, warning, accept, multiple, callback} })=>{
 
   const lang = GetUser().lang
 
@@ -17,9 +17,11 @@ const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback} })=>{
 
   const [submitAct, setSubmitAct] = useState(true)
 
+  const formName = `InputTag${formNr ? `_${formNr}` : ``}`
+
   const CHANGE = (e)=>{
     setFile(prev=>e.target.files[0])
-    setFileName(prev=>e.target.files[0].name)
+    setFileName(prev=> !uniqueName ? e.target.files[0].name : `${Date.now()}_${e.target.files[0].name}`)
   }
 
   const NAME_CHANGE = (e)=> setFileName(prev=>e.target.value)
@@ -53,16 +55,19 @@ const UploadFile = ({ props:{btnTxt, fileAddr, accept, multiple, callback} })=>{
   return(
     <form className="UploadFile flex column" onSubmit={SUBMIT}>
 
-      <label htmlFor="InputTag" className="InputTag flex wrap">
+      <label htmlFor={formName} className="InputTag flex wrap">
 
         {
           !fileName
-          ? <span>{ btnTxt ?? tr("AddFileArea",lang) }</span>
+          ? <div>
+              <div>{ btnTxt ?? tr("AddFileArea",lang) }</div>
+              { warning && <div className="txtOrg">{warning}</div> }
+            </div>
           : <input className="FileName flex" type="text" value={fileName} onChange={NAME_CHANGE} />
         }
 
         <input
-          id="InputTag"
+          id={formName}
           type="file"
           style={{display:"none"}}
           onChange={CHANGE}

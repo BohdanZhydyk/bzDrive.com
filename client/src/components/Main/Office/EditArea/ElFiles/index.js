@@ -18,7 +18,7 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} })
       case "image/png":                 return {type:"png", ico:`${link}PNG.png`}
       case "image/jpeg":                return {type:"png", ico:`${link}PNG.png`}
       case "application/pdf":           return {type:"pdf", ico:`${link}PDF.png`}
-      case "lnk":                      return {type:"lnk", ico:`${link}LNK.png`}
+      case "lnk":                       return {type:"lnk", ico:`${link}LNK.png`}
       default:                          return {type:"def", ico:`${link}DEF.png`}
     }
   }
@@ -27,6 +27,7 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} })
   const MM = nr?.from.toString().slice(4, 6)
   const sign = nr?.sign.toString().padStart(4, '0')
   const fileAddr = `files/DOC/${nr?.mode}_${YYYY}_${MM}_${sign}`
+  const formNr = `${YYYY}_${MM}_${sign}`
 
   const DELETE_FILE = (file)=>{
     const fileID = file?.fileID
@@ -126,7 +127,7 @@ function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} })
         })
       }
 
-      <UploadBtns props={{tr, lang, fileAddr, setSave, setFiles, ADD_FILE}} />
+      <UploadBtns props={{tr, formNr, lang, fileAddr, setSave, setFiles, ADD_FILE}} />
 
     </div>
   )

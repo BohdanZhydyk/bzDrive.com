@@ -8,33 +8,40 @@ exports.getWorkshop = (req, res)=>{
   const object = req?.body?.object
   const id = "WorkshopApp_state"
 
-  function SEND_WORKSHOP(data){
+  function SEND_WORKSHOP(){
     bzDB( { req, res, col:'bzState', act:"FIND_ONE", query:{id} }, (workshopData)=>{
       res.send({ ...workshopData, object:{...workshopData.object, result: workshopData?.result} })
-      return
     })
   }
 
   // getting workshop
-  if(object?.getWS){ SEND_WORKSHOP() }
+  if(object?.getWorkshop){
+    SEND_WORKSHOP()
+    return
+  }
   
   // setting workshop
-  if(object?.setWS){
+  if(object?.setWorkshop){
 
+    const tag = object?.tag
+    
     bzDB( { req, res, col:'bzTokens', act:"FIND_ONE", query:{bzToken} }, (userData)=>{
 
-      userData?.result?.user?.role !== "admin"
+      (userData?.result?.user?.role !== "admin" || !tag)
       ?
       SEND_WORKSHOP()
       :
       bzDB( { req, res, col:'bzState', act:"FIND_ONE", query:{id} }, (workshopData)=>{
 
-        const workshop = object?.workshop
         const _id = ObjectId(workshopData?.result?._id)
+
+        const Data = workshopData?.result?.workshop
+        const workshop = Data?.map( tagEl=> (tagEl?.id !== tag?.id) ? tagEl : tag )
 
         bzDB( { req, res, col:'bzState', act:"UPDATE_ONE", query:{workshop, _id} }, (updatedWorkshopData)=>{
 
           SEND_WORKSHOP()
+          return
 
         })
 

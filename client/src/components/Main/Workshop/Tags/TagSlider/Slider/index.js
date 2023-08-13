@@ -4,7 +4,7 @@ import { SliderImgBtns } from './SliderImgBtns'
 import { SliderTxt } from './SliderTxt'
 
 
-function Slider({ props:{actVal, actImgs, imageLink, btnL, btnR, PREV, NEXT} }){
+function Slider({ props:{actVal, actImgs, imageLink, dirBtns, PREV, NEXT} }){
   return(
     <div className="Slider flex stretch">
 
@@ -12,7 +12,7 @@ function Slider({ props:{actVal, actImgs, imageLink, btnL, btnR, PREV, NEXT} }){
 
       <img className="Image" src={imageLink} alt="SliderImg" />
 
-      <SliderImgBtns props={{btnL, btnR, PREV, NEXT}} />
+      <SliderImgBtns props={{dirBtns, PREV, NEXT}} />
 
     </div>
   )

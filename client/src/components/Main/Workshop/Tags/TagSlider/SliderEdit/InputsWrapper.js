@@ -3,7 +3,7 @@ import React from "react"
 import Input from "../../../../../All/Input"
 
 
-export function InputsWrapper({ props:{slider, folder, nr, folderNr, setWorkshop, setEditingText} }){
+export function InputsWrapper({ props:{el, nr, folder, folderNr, setWorkshop, setEditingTag} }){
 
   const inputPropses = (folderNr, langNr)=>{
     return {
@@ -11,28 +11,25 @@ export function InputsWrapper({ props:{slider, folder, nr, folderNr, setWorkshop
       type: `text`,
       val: folder?.txt[langNr]?.val,
       cbVal: (val)=>{
-        setWorkshop( prev=> prev?.map( (tag, t)=>
-          t !== nr
-          ? tag
-          :
-          {
-            ...tag,
-            body: tag?.body.map( (folder, F)=>
-              F !== folderNr
-              ? folder
-              :
-              {
-                ...folder,
-                txt: folder?.txt.map( (lang, L)=>
-                  L !== langNr
-                  ? lang
-                  : {...lang, val}
-                )
-              }
-            )
-          }
-        ))
-        setEditingText(prev=>true)
+        const newEl = {
+          ...el,
+          body: el?.body.map( (folder, F)=>
+            F !== folderNr
+            ? folder
+            :
+            {
+              ...folder,
+              txt: folder?.txt.map( (lang, L)=>
+                L !== langNr
+                ? lang
+                : {...lang, val}
+              )
+            }
+          )
+        }
+        console.log(newEl)
+        setWorkshop( prev=> prev?.map( (el, e)=> (e !== nr) ? el : newEl ))
+        setEditingTag( prev=> newEl )
       },
       cbErr: ()=>{}
     }
