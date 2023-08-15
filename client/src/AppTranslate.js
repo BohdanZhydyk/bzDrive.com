@@ -112,6 +112,21 @@ export const tr = (txt, lang)=>{
       ua:"Слідкуйте за оновленнями!..",
       pl:"Śledź nasze aktualności!..",
     },
+    StoreWarning_1:{
+      en:"Welcome!",
+      ua:"Вітаємо!",
+      pl:"Witamy!",
+    },
+    StoreWarning_2:{
+      en:"You are currently in the testing version of our store.",
+      ua:"Зараз ви знаходитесь у тестовій версії нашого магазину.",
+      pl:"Obecnie znajdujesz się w wersji testowej naszego sklepu.",
+    },
+    StoreWarning_3:{
+      en:"This is an excellent opportunity for you to observe our development. We ask for your understanding if you encounter any shortcomings while using the platform.",
+      ua:"Це відмінна можливість для вас спостерігати за нашим розвитком. Ми просимо про розуміння, якщо ви зіткнетеся з якими-небудь недоліками під час використання платформи.",
+      pl:"To doskonała okazja dla Ciebie, aby obserwować nasz rozwój. Prosimy o zrozumienie, jeśli napotkasz jakieś niedoskonałości podczas korzystania z platformy.",
+    },
     Err_0:{
       en:"**en**",
       ua:"**ua**",
@@ -163,9 +178,9 @@ export const tr = (txt, lang)=>{
       pl:"nie pasuje do formatu URL!"
     },
     Err_10:{
-      en:"must contain more than 4 characters!",
+      en:"must contain btn than 4 characters!",
       ua:"має містити більше 4 символів!",
-      pl:"musi zawierać więcej niż 4 znaki!"
+      pl:"musi zawierać btn niż 4 znaki!"
     },
     Err_11:{
       en:"number is too short!",
@@ -273,6 +288,7 @@ export const tr = (txt, lang)=>{
     NewTranslate:{en:"", ua:"", pl:""},
     AddFileArea:{en:"Add file...", ua:"Додати файл...", pl:"Dodać plik..."},
     AddLinkArea:{en:"Add link...", ua:"Додати посилання...", pl:"Dodać skrót..."},
+    MoreBtn:{en:"See details...", ua:"Дивитися деталі...", pl:"Zobacz szczegóły..."},
   }
 
   return translations[txt] ? translations[txt][lang] : <span className="txtRed">-</span>

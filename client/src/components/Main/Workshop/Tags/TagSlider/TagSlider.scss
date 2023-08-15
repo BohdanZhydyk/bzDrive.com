@@ -107,6 +107,7 @@
         
         .Input {
           width:32%;
+          @media (max-width: 767px){width:100%;}
         }
       }
 
@@ -119,6 +120,7 @@
           min-height:10vw;
           margin:0.25vw 0.5%;
           border:1px dashed transparent;
+          @media (max-width: 767px){width:calc(50% - 1% - 2px);}
   
           img {
             width:100%;
@@ -158,6 +160,10 @@
         width:calc(33% - 1% - 1vw - 2px);
         min-height:11vw;
         margin:0.25vw 0.5%;
+        @media (max-width: 767px){
+          width:calc(50% - 1% - 1vw - 2px);
+          min-height:17.5vw;
+        }
       }
     }
   }

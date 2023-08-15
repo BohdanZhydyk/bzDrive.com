@@ -1,0 +1,18 @@
+
+.Store {
+  width:100%;
+
+  .CommingSoon {
+    width:calc(80% - 2vw - 2px);
+    margin:0.5vw;
+    padding:0.5vw;
+    text-align:center;
+    border:1px dashed #f60;
+    @media (min-width: 481px) and (max-width: 767px) {
+      width:calc(90% - 2vw - 2px);
+    }
+    @media (max-width: 481px) {
+      width:calc(98% - 2vw - 2px);
+    }
+  }
+}

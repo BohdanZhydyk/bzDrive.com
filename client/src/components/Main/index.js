@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import './Main.scss'
 import SiteIcon from '../All/SiteIcon'
 import Workshop from './Workshop'
+import Store from './Store'
 import News from './News'
 import Apps from './Apps'
 import Office from './Office'
@@ -26,6 +27,7 @@ function Main({ props:{nav, blur, BLUR, size} }) {
       :
       <Routes>
         <Route path="/"           exact element={<Workshop props={{sub:subNav("/")}}/>} />
+        <Route path="/store/*"          element={<Store props={{sub:subNav("/store")}}/>} />
         <Route path="/news"             element={<News props={{sub:subNav("/news")}}/>} />
         <Route path="/apps/*"           element={<Apps props={{sub:subNav("/apps")}}/>} />
         <Route path="/office/*"         element={<Office props={{size, sub:subNav("/office")}}/>} />

@@ -43,6 +43,12 @@ body {
     text-overflow: ellipsis; /* Pokaż "..." na końcu obciętego tekstu */
     white-space: nowrap; /* Zapobiegaj zawijaniu tekstu */
   }
+
+  .Radius {
+    border-radius:0.5vw;
+    @media (min-width: 481px) and (max-width: 767px){border-radius:0.75vw;}
+    @media (max-width: 481px){border-radius:1vw;}
+  }
   
   .ImgBtn {
     width:2vw; height:2vw; margin:0.25vw 0.75vw;
@@ -89,6 +95,10 @@ body {
   }
 
   a {text-decoration:none; color:#fff;}
+
+  .BoxShadow {
+    &:hover{box-shadow: 0 0 0.5vw 0.5vw #999;}
+  }
 
   .App {
     display: flex;
