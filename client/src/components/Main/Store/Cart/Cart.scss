@@ -1,0 +1,33 @@
+
+.Cart {
+  width:calc(100% - 1vw);
+  margin:1vw 0.5vw 2vw 0.5vw;
+
+  .ArticleTopLine {
+    min-height:3vw;
+    background-color:#111;
+  }
+  .ArticleLine {
+    border-bottom:1px solid #444;
+  }
+  .SumLine {
+    margin:0.5vw 0;
+  }
+  .ArticleTopLine, .ArticleLine, .SumLine {
+    width:98%;
+
+    .ArtCell {
+      padding:0.25vw 0.5vw;
+      text-align:center;
+    }
+    .NUM {width:calc(3% - 1vw);}
+    .ART {flex:1;}
+    .PRI, .NET, .PRV, .SUM {width:calc(6% - 1vw);}
+    .QUA {width:calc(15% - 1vw);}
+    .TOT {
+      width:calc(10% - 1vw);
+      min-height:3vw;
+      background-color:#111;
+    }
+  }
+}

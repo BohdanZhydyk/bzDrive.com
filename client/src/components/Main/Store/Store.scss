@@ -2,17 +2,61 @@
 .Store {
   width:100%;
 
-  .CommingSoon {
-    width:calc(80% - 2vw - 2px);
-    margin:0.5vw;
-    padding:0.5vw;
-    text-align:center;
-    border:1px dashed #f60;
-    @media (min-width: 481px) and (max-width: 767px) {
+  .ToolsPannel {
+    width:100%;
+  
+    .CommingSoon {
       width:calc(90% - 2vw - 2px);
+      margin:0.5vw;
+      padding:0.5vw;
+      text-align:center;
+      border:1px dashed #f60;
+      @media (min-width: 481px) and (max-width: 767px) {
+        width:calc(80% - 2vw - 2px);
+      }
+      @media (max-width: 481px) {
+        width:calc(80% - 2vw - 2px);
+      }
     }
-    @media (max-width: 481px) {
-      width:calc(98% - 2vw - 2px);
+
+    .CartWrapper {
+      position:relative;
+      width:10%;
+      @media (min-width: 481px) and (max-width: 767px) {width:20%;}
+      @media (max-width: 481px) {width:20%;}
+  
+      .CartBtn {
+        width:4vw; height:4vw; margin:0.25vw 0.75vw;
+        &:hover {width:4.5vw; height:4.5vw; margin:0 0.5vw;}
+        @media (min-width: 481px) and (max-width: 767px) {
+          width:8vw; height:8vw; margin:0.5vw 1vw;
+          &:hover {width:9vw; height:9vw; margin:0 0.5vw;}
+        }
+        @media (max-width: 481px) {
+          width:12vw; height:12vw; margin:0.5vw 1vw;
+          &:hover {width:13vw; height:13vw; margin:0 0.5vw;}
+        }
+      }
+
+      .CartCount {
+        position:absolute;
+        top:0;
+        right:2vw;
+        width:2vw;
+        background-color:#222;
+        border:1px solid #f00;
+        border-radius:0.25vw;
+        @media (min-width: 481px) and (max-width: 767px) {
+          top:0;
+          right:4vw;
+          width:4vw;
+        }
+        @media (max-width: 481px) {
+          top:0;
+          right:2vw;
+          width:5vw;
+        }
+      }
     }
   }
 }

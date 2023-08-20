@@ -22,23 +22,6 @@
   .BuyRight {
     width:70%;
 
-    .QuaBtns {
-      width:100%;
-
-      .QuaBtnMinus, .QuaBtnPlus {
-        width:2vw;
-        @media (min-width: 481px) and (max-width: 767px) {width:4vw;}
-        @media (max-width: 481px) {width:6vw;}
-      }
-      .Quantity {
-        width:5vw;
-        padding:0.25vw 0;
-        border:1px solid #444;
-        @media (min-width: 481px) and (max-width: 767px) {width:12vw;}
-        @media (max-width: 481px) {width:20vw;}
-      }
-    }
-
     .Availability {
       width:90%;
       min-height:2.5vw;

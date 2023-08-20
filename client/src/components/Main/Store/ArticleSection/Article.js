@@ -1,16 +1,15 @@
 import React from "react"
 
-import "./ArticleArea.scss"
 import { NavLink } from "react-router-dom"
 import BuyPannel from "../BuyPannel"
 
 
-export function Article({ props:{art, a, tr, lang} }){
+export function Article({ props:{article, a, tr, lang, ADD_TO_CART} }){
 
-  const {id, name, imgs, price, quantity} = art
+  const {ID, ART, IMG, PRI, QUA} = article
 
-  const isNewArticle = id === "new"
-  const isImgs = imgs?.length > 0
+  const isNewArticle = ID === "new"
+  const isImgs = IMG?.length > 0
   
   const addArtBtn = "https://bzdrive.com/files/ico/icoPlus.png"
 
@@ -25,22 +24,22 @@ export function Article({ props:{art, a, tr, lang} }){
       }
 
       {
-        name &&
-        <NavLink className="ArtName overflow bold flex" to={`/store/article/${id}`}>
-          {name}
+        ART &&
+        <NavLink className="ArtName overflow bold flex" to={`/store/article/${ID}`}>
+          {ART}
         </NavLink>
       }
 
       {
         isImgs &&
-        <NavLink className="ArtImg flex" to={`/store/article/${id}`}>
-          <img src={imgs[0]} alt="ArtImg" />
+        <NavLink className="ArtImg flex" to={`/store/article/${ID}`}>
+          <img src={IMG[0]} alt="ArtImg" />
         </NavLink>
       }
 
       {
         !isNewArticle &&
-        <BuyPannel props={{quantity, price}}/>
+        <BuyPannel props={{ID, QUA, PRI, tr, lang, ADD_TO_CART}}/>
       }
 
     </div>

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react"
 
 import "./ArticleInfo.scss"
-import { initialArticle } from "../StoreReducer"
 import { PostToApi } from "../../../../AppFunctions"
 import { ArtSlider } from "./ArtSlider"
 import BuyPannel from "../BuyPannel"
 import SiteIcon from "../../../All/SiteIcon"
 
 
-function ArticleInfo(){
+function ArticleInfo({ props:{tr, lang, ADD_TO_CART} }){
   
   const currentPath = window.location.pathname.split("/")
   const articleID = currentPath[currentPath.length - 1]
 
   const [art, setArt] = useState(false)
 
+  const id = art?.id
   const name = art?.name ?? ""
   const imgs = art?.imgs ?? []
   const price = art?.price ?? "0.00"
@@ -47,7 +47,7 @@ function ArticleInfo(){
               <div className="EmptyPannel flex"></div>
 
               <div className="BuyPannelWrapper flex end">
-                <BuyPannel props={{quantity, price}}/>
+                <BuyPannel props={{id, quantity, price, tr, lang, ADD_TO_CART}}/>
               </div>
 
             </div>

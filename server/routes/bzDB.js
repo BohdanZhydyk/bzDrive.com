@@ -34,7 +34,7 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
         Statistic(bzToken, IP, user)
       }
   
-      if(!ChekTokenData){ Done(bzToken, IP, false); return; }
+      if(!ChekTokenData){ Done(bzToken, IP, user); return; }
 
       // if the token is older than "tokenLifetime", generate a new one
       const tokenLifetime = (3600000 * 24)
