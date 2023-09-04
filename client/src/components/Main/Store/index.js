@@ -1,44 +1,36 @@
 import React, { useEffect, useState } from "react"
-import { NavLink, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 
 import "./Store.scss"
 import { tr } from "../../../AppTranslate"
-import { GetUser, PostToApi } from "../../../AppFunctions"
+import { GetUser } from "../../../AppFunctions"
 import SiteIcon from "../../All/SiteIcon"
-import ArticleSection from "./ArticleSection"
-import ArticleInfo from "./ArticleInfo"
+import Articles from "./Articles"
 import Cart from "./Cart"
+import { StoreReducer } from "./StoreReducer"
 
 
 function Store({ props:{} }){
 
-  const {lang, role} = GetUser()
-  const isAdmin = role === "admin"
+  const user = GetUser()
+  const lang = user?.lang
 
   const [store, setStore] = useState(false)
   const [cart, setCart] = useState(false)
+
+  const [showCart, setShowCart] = useState(false)
 
   const cartCount = cart?.length
   const isArtInCart = cartCount > 0
   const cartImg = `https://bzdrive.com/files/ico/icoCart${isArtInCart ? `Full` : ``}.png`
 
-  const newArt = {"ID": "new"}
+  function StoreFn(action){ StoreReducer(store, setStore, cart, setCart, user, action) }
 
-  function ADD_TO_CART(ID, qua){
-    const query = {addToCart:true, ID, qua}
-    PostToApi( '/getStore', query, (data)=>{
-      setStore( prev=> isAdmin ? [newArt, ...data?.articles] : data?.articles )
-      setCart( prev=> data?.cart )
-    })
-  }
+  function GO_TO_CART(){ setShowCart(prev=>!showCart) }
   
   useEffect( ()=>{
     const query = {getArticles:true}
-    !store &&
-    PostToApi( '/getStore', query, (data)=>{
-      setStore( prev=> isAdmin ? [newArt, ...data?.articles] : data?.articles )
-      setCart( prev=> data?.cart )
-    })
+    !store && StoreFn({type:"GET_STORE", query})
   }, [])
 
   // console.log("store",store)
@@ -61,17 +53,25 @@ function Store({ props:{} }){
               <div>{tr("StoreWarning_3", lang)}</div>
             </section>
 
-            <NavLink className="CartWrapper flex" to={"/store/cart"}>
+            <div className="CartWrapper flex" onClick={GO_TO_CART}>
               <img className="CartBtn flex" src={cartImg} alt="cart" />
               { isArtInCart && <div className="CartCount flex">{cartCount}</div> }
-            </NavLink>
+            </div>
 
           </div>
           
           <Routes>
-            <Route path="/"     exact element={<ArticleSection props={{store, tr, lang, ADD_TO_CART}}/>} />
-            <Route path="/article/*"  element={<ArticleInfo props={{tr, lang, ADD_TO_CART}}/>} />
+
+            <Route path="/"
+              exact element={
+                !showCart
+                ? <Articles props={{store, tr, user, StoreFn}}/>
+                : <Cart props={{cart, tr, user, StoreFn}} />
+              }
+            />
+
             <Route path="/cart"       element={<Cart props={{tr, lang, cart}} />} />
+
           </Routes>
 
         </>

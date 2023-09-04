@@ -1,5 +1,5 @@
 
-.ArticleSection {
+.Articles {
   width:98%;
   margin:1vw 0 2vw 0;
   
@@ -12,7 +12,7 @@
     &:hover {
       border-color:#f60;
       background-color:#1711;
-      .ImgBtnAdd {width:40%;}
+      .ArtImg .ImgBtnAdd {width:40%;}
     }
     @media (min-width: 481px) and (max-width: 767px) {
       padding:1vw 0.5vw;
@@ -22,8 +22,6 @@
       padding:2vw 0.5vw;
       width:calc(50% - 2vw - 2px);
     }
-
-    .ImgBtnAdd {width:30%;}
 
     .ArtName {
       width:100%;
@@ -47,7 +45,9 @@
         min-height:44vw;
       }
 
-      img {width:100%;}
+      .ArtImgAva {width:100%;}
+
+      .ImgBtnAdd {width:30%;}
     }
   }
 }

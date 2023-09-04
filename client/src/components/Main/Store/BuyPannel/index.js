@@ -4,16 +4,19 @@ import "./BuyPannel.scss"
 import QuaBtns from "../QuaBtns"
 
 
-function BuyPannel({ props:{ID, QUA, PRI, tr, lang, ADD_TO_CART} }){
+function BuyPannel({ props:{ID, QUA, PRI, tr, user, StoreFn} }){
 
   const [qua, setQua] = useState(0)
 
   const isQua = qua > 0
   const artPRI = PRI ?? "0.00"
 
+  const isAdmin = user?.role === "admin"
+
   function ADD(){
     setQua(prev=> 0)
-    ADD_TO_CART(ID, qua)
+    const query = {addToCart:true, ID, qua}
+    StoreFn({type:"ADD_TO_CART", isAdmin, query})
   }
 
   const icoAddToCart = "https://bzdrive.com/files/ico/icoAddToCart.png"

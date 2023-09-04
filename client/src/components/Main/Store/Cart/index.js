@@ -6,9 +6,11 @@ import { ArticleLine } from "./ArticleLine"
 import { PostToApi, SumArray, bzCalc } from "../../../../AppFunctions"
 
 
-function Cart({ props:{tr, lang, cart} }){
+function Cart({ props:{cart, tr, user, StoreFn} }){
 
   const [myCart, setMyCart] = useState( false )
+
+  const lang = user?.lang
 
   const topLine = {
     NUM:tr("TableNUM", lang),
@@ -29,7 +31,7 @@ function Cart({ props:{tr, lang, cart} }){
 
   useEffect( ()=>{
     const query = {getQuantities:true, cart}
-    !myCart && PostToApi( '/getStore', query, (data)=>{ setMyCart(prev=>data) })
+    !myCart && StoreFn({type:"GET_CART", query, setMyCart})
   }, [])
 
   return(
@@ -40,7 +42,12 @@ function Cart({ props:{tr, lang, cart} }){
         <div className="DownloadIcon flex"><SiteIcon props={{speed:4}} /></div>
         :
         <>
-
+        {
+          myCart?.length === 0
+          ?
+          <>empty</>
+          :
+          <>
           {
             [topLine, ...myCart]?.map( (article, a)=>{
               return(
@@ -49,13 +56,21 @@ function Cart({ props:{tr, lang, cart} }){
             })
           }
 
-          <div className="SumLine flex end">
+          <div className="SumLine flex bold end">
             <div className="ArtCell TOT flex end">{tr("TableTOT", lang)}</div>
             <div className="ArtCell NET flex end">{CalcArticle()?.NET}</div>
             <div className="ArtCell PRV flex end">{CalcArticle()?.VAT}</div>
             <div className="ArtCell SUM flex end">{CalcArticle()?.SUM}</div>
             <div className="ArtCell QUA flex end"></div>
           </div>
+
+          <div className="BuyBtn flex end">
+            <span className="BtnGrn flex">Kupić</span>
+          </div>
+        
+        </>
+        }
+
 
         </>
       }

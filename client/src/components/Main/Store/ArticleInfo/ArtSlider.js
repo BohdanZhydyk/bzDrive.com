@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 
 
-export function ArtSlider({ props:{imgs} }){
+export function ArtSlider({ props:{IMG} }){
 
   const [nr, setNr] = useState(0)
 
-  const isImgs = imgs?.length > 0
-  const mainImg = imgs[nr]
+  const isImgs = IMG?.length > 0
+  const mainImg = IMG[nr]
 
   return(
     <div className="ArtSlider flex column start">
@@ -17,7 +17,7 @@ export function ArtSlider({ props:{imgs} }){
 
       <div className="ElseImgs flex">
       {
-        imgs?.map( (elseImg, i)=>{
+        IMG?.map( (elseImg, i)=>{
 
           const key = `ElseImg${i}`
 

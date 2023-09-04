@@ -1,89 +1,100 @@
 
 .ArticleInfo {
-  width:calc(100% - 1vw);
-  padding:1vw 0.5vw 2vw 0.5vw;
+  position:absolute;
+  left:0;
+  z-index:1;
+  width:calc(100% - 3vw);
+  margin:-0.5vw 1vw;
+  padding:0.5vw 0.5vw 0.5vw 0.5vw;
+  min-height:30vw;
+  box-shadow: 0 0 0.5vw 0.5vw #999;
+  background-color: #222;
   
-  .ArticleInfoPannel {
+  .ArticleName {
     width:100%;
-    border-top:1px solid #999;
+    min-height:5vw;
     border-bottom:1px solid #999;
-  
-    .ArticleName {
-      width:calc(100% - 4vw);
-      min-height:5vw;
-      padding:0 2vw;
+    @media (min-width: 481px) and (max-width: 767px) {min-height:10vw;}
+    @media (max-width: 481px) {min-height:15vw;}
+
+    .ArticleNameTxt {
+      flex:1;
+      padding:0 1vw 0 2vw;
       font-size:150%;
-      border-bottom:1px solid #999;
-      @media (min-width: 481px) and (max-width: 767px) {min-height:10vw;}
-      @media (max-width: 481px) {min-height:15vw;}
     }
+  }
 
-    .ArtSlider {
-      width:calc(25% - 1vw);
-      margin:0 0.5vw;
+  .ArtSlider {
+    width:calc(25% - 1vw);
+    margin:0 0.5vw;
+    @media (max-width: 767px) {width:calc(100% - 1vw)}
+
+    .MainImg {
+      width:20vw;
+      min-height:20vw;
+      padding:0.5vw;
       @media (max-width: 767px) {width:calc(100% - 1vw)}
+      
+      img {width:100%;}
+    }
 
-      .MainImg {
-        width:22vw;
-        min-height:22vw;
-        padding:0.5vw;
-        @media (max-width: 767px) {width:calc(100% - 1vw)}
-        
-        img {width:100%;}
+    .ElseImgs {
+      width:100%;
+      min-height:5vw;
+      margin-bottom:0.5vw;
+      border-top:1px solid #999;
+      border-bottom:1px solid #444;
+
+      .ElseImg {
+        width:4vw;
+        min-height:4vw;
+        margin:0.5vw 0;
+        @media (max-width: 767px) {
+          width:15vw;
+          min-height:15vw;
+        }
+      }
+    }
+  }
+
+  .ArtDescription {
+    width:calc(75% - 2vw - 1px);
+    padding:0.5vw 1vw;
+    border-left:1px solid #444;
+    @media (max-width: 767px) {
+      width:calc(100% - 2vw);
+      border:none;
+    }
+
+    .TopPannel {
+      width:100%;
+      border-bottom:1px solid #444;
+
+      .EmptyPannel {
+        width:75%;
+        @media (max-width: 767px) {width:50%}
       }
 
-      .ElseImgs {
-        width:100%;
+      .BuyPannelWrapper {
+        width:25%;
         min-height:6vw;
-        border-top:1px solid #999;
-        border-bottom:1px solid #444;
-
-        .ElseImg {
-          width:5vw;
-          min-height:5vw;
-          margin:0.5vw 0;
-          @media (max-width: 767px) {
-            width:15vw;
-            min-height:15vw;
-          }
+        @media (max-width: 767px) {
+          width:50%;
+          margin:1vw 0;
         }
       }
     }
 
-    .ArtDescription {
-      width:calc(75% - 2vw - 1px);
-      padding:0.5vw 1vw;
-      border-left:1px solid #444;
-      @media (max-width: 767px) {
-        width:calc(100% - 2vw);
-        border:none;
-      }
+    p {
+      width:100%;
+      text-indent: 2vw;
+      font-size:120%;
+      text-align:justify;
+    }
 
-      .TopPannel {
-        width:100%;
-        border-bottom:1px solid #444;
-
-        .EmptyPannel {
-          width:75%;
-          @media (max-width: 767px) {width:50%}
-        }
-
-        .BuyPannelWrapper {
-          width:25%;
-          margin:0.5vw 0;
-          @media (max-width: 767px) {
-            width:50%;
-            margin:1vw 0;
-          }
-        }
-      }
-
-      p {
-        width:100%;
-        text-indent: 2vw;
-        font-size:120%;
-        text-align:justify;
-      }
+    .TextArea {
+      min-height:15vw;
+      margin:0.5vw 0;
     }
   }
 }

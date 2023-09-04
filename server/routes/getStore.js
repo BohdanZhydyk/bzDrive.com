@@ -7,7 +7,12 @@ exports.getStore = (req, res)=>{
 
   const bzToken = req?.body?.bzToken
   const object = req?.body?.object
-  const id = object?.articleID
+  const login = object?.login
+  const ID = object?.articleID
+
+  const findBy = login ?? bzToken
+
+  console.log(findBy)
 
   // getting articles
   if(object?.getArticles){
@@ -27,16 +32,11 @@ exports.getStore = (req, res)=>{
 
   // getting article by articleID
   if(object?.getArticle){
-    bzDB( { req, res, col:'bzStoreArt', act:"FIND_ONE", query:{id} }, (articlesData)=>{
+    bzDB( { req, res, col:'bzStoreArt', act:"FIND_ONE", query:{ID} }, (articleData)=>{
 
-      const newArticle = {
-        "id": generateArticleNr(),
-        "lastModify": Date.now()
-      }
-
-      id !== "new"
-      ? res.send({ ...articlesData, result: articlesData?.result })
-      : res.send({ ...articlesData, result:newArticle })
+      articleData?.result
+      ? res.send({ ...articleData, result: articleData?.result })
+      : res.send({ ...articleData, result:{ID: generateArticleNr(), LMO: Date.now()} })
 
       return
     })
@@ -44,7 +44,8 @@ exports.getStore = (req, res)=>{
 
   bzDB( { req, res, col:'bzTokens', act:"FIND_ONE", query:{bzToken} }, (userData)=>{
 
-    const login = userData?.result?.user?.login
+    const user = userData?.result?.user
+    const isAdmin = user?.role === "admin"
 
     // add articles to cart
     if(object?.addToCart){
@@ -52,9 +53,9 @@ exports.getStore = (req, res)=>{
       const ID = object?.ID
       const qua = object?.qua
       
-      bzDB( { req, res, col:'bzStoreArt', act:"FIND_ONE", query:{ID} }, (articlesData)=>{
+      bzDB( { req, res, col:'bzStoreArt', act:"FIND_ONE", query:{ID} }, (articleData)=>{
 
-        const result = articlesData?.result
+        const result = articleData?.result
         const QUA = result?.QUA
         const ART = result?.ART
         const PRI = result?.PRI
@@ -94,9 +95,9 @@ exports.getStore = (req, res)=>{
 
                 bzDB( { req, res, col:'bzStoreCart', act:"FIND_ONE", query:{bzToken} }, (newCartData)=>{
 
-                  bzDB( { req, res, col:'bzStoreArt', act:"FIND", query:{} }, (articlesData)=>{
+                  bzDB( { req, res, col:'bzStoreArt', act:"FIND", query:{} }, (articleData)=>{
 
-                    const articles = articlesData?.result
+                    const articles = articleData?.result
                     const cart = newCartData?.result?.articles
 
                     res.send({ ...cartData, result:{articles, cart} })
@@ -118,27 +119,61 @@ exports.getStore = (req, res)=>{
       })
     }
 
-    // add articles to cart
-    if(object?.getQuantities){
+    // get quantities of articles in cart
+    if (object?.getQuantities) {
 
-      function fetchQuantity(art, callback) {
-        bzDB({ req, res, col:'bzStoreArt', act:'FIND_ONE', query:{ID:art?.ID} }, (articlesData)=>{
-          callback({...art, QUA:articlesData?.result?.QUA})
+      async function fetchQuantities(cart){
+        const promises = cart.map((art)=>{
+          return new Promise((resolve)=>{
+            bzDB({ req, res, col:'bzStoreArt', act:'FIND_ONE', query:{ID:art?.ID} }, (articlesData)=>{
+              resolve({ ...art, QUA:articlesData?.result?.QUA })
+            })
+          })
         })
+    
+        const updatedCart = await Promise.all(promises)
+
+        res.send({ ...userData, result:updatedCart })
+
       }
+    
+      object?.cart
+      ? fetchQuantities(object?.cart)
+      : res.send({ ...userData, result:[] })
 
-      let remaining = object.cart.length
-      const updatedCart = []
+      return
+    }
 
-      object.cart.forEach((art)=>{
-        fetchQuantity(art, (updatedArt)=>{
-          updatedCart.push(updatedArt)
-          remaining--
+    // save article in db
+    if(isAdmin && object?.saveArticle){
 
-          if(remaining === 0){
-            res.send({ ...userData, result:updatedCart })
-            return
-          }
+      const art = object?.art
+      const {ID, LMO, CAT, ART, PRI, QUA, IMG, DSC} = art
+      
+      bzDB({ req, res, col:'bzStoreArt', act:'FIND_ONE', query:{ID:art?.ID} }, (articleData)=>{
+        const result = articleData?.result
+        const _id = ObjectId(result?._id)
+
+        const act = result ? "UPDATE_ONE" : "INSERT_ONE"
+        const query = result
+          ? { ID, LMO:Date.now(), CAT, ART, PRI, QUA, IMG, DSC, _id }
+          : { ID:generateArticleNr(), LMO:Date.now(), CAT, ART, PRI, QUA, IMG, DSC }
+
+        bzDB( { req, res, col:'bzStoreArt', act, query }, (updatedArtData)=>{
+
+          bzDB( { req, res, col:'bzStoreArt', act:"FIND", query:{} }, (articlesData)=>{
+
+            bzDB( { req, res, col:'bzStoreCart', act:"FIND_ONE", query:{bzToken} }, (cartData)=>{
+      
+              const articles = articlesData?.result
+              const cart = cartData?.result?.articles
+      
+              res.send({ ...cartData, result:{articles, cart} })
+              return
+            })
+      
+          })
+
         })
       })
     }
