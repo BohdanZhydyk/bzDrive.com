@@ -5,16 +5,18 @@ import { artLine, bottomLine, emptyArticle, topLine } from './ElCalculatorLogic'
 import { CalcLine } from './CalcLine'
 
 
-function ElCalculator({ props:{articles, setArticles, setSave, printMode} }){
+function ElCalculator({ props:{user, articles, setArticles, setSave, printMode} }){
 
   if(!articles){ articles = [emptyArticle] }
+
+  const lang = user?.lang
 
   return(
     <section className="ElCalculator flex column">
 
       <div className="CalculatorPannelTop bold flex">
       {
-        topLine(articles, setSave, setArticles, printMode).map( (article, a)=>{
+        topLine(articles, setSave, setArticles, printMode, lang).map( (article, a)=>{
           return <CalcLine props={article} key={`CalcLineTop${a}`} />
         })
       }
@@ -29,7 +31,7 @@ function ElCalculator({ props:{articles, setArticles, setSave, printMode} }){
 
       <div className="CalculatorPannelBottom bold flex">
       {
-        bottomLine(articles, setSave, setArticles, printMode).map( (article, a)=>{
+        bottomLine(articles, setSave, setArticles, printMode, lang).map( (article, a)=>{
           return <CalcLine props={article} key={`CalcLineTop${a}`} />
         })
       }

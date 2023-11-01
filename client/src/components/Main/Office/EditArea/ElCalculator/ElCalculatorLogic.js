@@ -3,8 +3,6 @@ import { tr } from "../../../../../AppTranslate"
 import ActionBtn from "../../../../All/ActionBtn"
 
 
-const lang = GetUser()?.lang
-
 export const emptyArticle = {ART:"",PRI:"0.00",QUA:"1",VAT:"23",NET:"0.00",PRV:"0.00",SUM:"0.00"}
 
 export const PLUS_ART_FIRST = (articles, setSave, setArticles)=>{
@@ -24,7 +22,7 @@ export const CHG_ART = (articles, setSave, setArticles, name, val, a)=>{
   setArticles( articles.map( (art, i)=> i === a ? ArticleCalc(name, art, val) : art ) )
 }
 
-export const topLine = (articles, setSave, setArticles, printMode)=> [{
+export const topLine = (articles, setSave, setArticles, printMode, lang)=> [{
   CLA: `TableCellTop`,
   NUM: tr(`TableNUM`,lang),
   ART: tr(`TableART`,lang),
@@ -53,7 +51,7 @@ export const artLine = (articles, setSave, setArticles, printMode, art, a)=> ({
   printMode
 })
 
-export const bottomLine = (articles, setSave, setArticles, printMode)=> [{
+export const bottomLine = (articles, setSave, setArticles, printMode, lang)=> [{
   CLA: `TableCellBottom`,
   NUM: ``,
   ART: ``,

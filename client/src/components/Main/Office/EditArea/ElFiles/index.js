@@ -6,7 +6,7 @@ import { bzBytesCalc, bzDeleteFile, PostToApi } from "../../../../../AppFunction
 import ActionBtn from "../../../../All/ActionBtn"
 import { UploadBtns } from "./UploadBtns"
 
-function ElFiles({ props:{doc, user, nr, setSave, files, setFiles, printMode} }){
+function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} }){
 
   const lang = user?.lang
   

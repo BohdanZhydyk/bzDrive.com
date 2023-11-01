@@ -66,10 +66,10 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD}
   const ElDocNameProps = {user, mode, dealer, nr, setNr, setSave, editErr, setEditErr, printMode}
   const ElInfoProps = {user, mode, car, setCar, client, setClient, buyer, setBuyer, seller, setSeller, dealer, setDealer, setSave, editErr, setEditErr, printMode}
   const ElFaultsProps = {user, car, setCar, setSave, printMode}
-  const ElCalculatorProps = {articles, setArticles, setSave, printMode}
+  const ElCalculatorProps = {user, articles, setArticles, setSave, printMode}
   const ElSummaryProps = {nr, setNr, setSave, articles, printMode}
   const ElCommentsProps = {user, car, setCar, setSave, printMode}
-  const ElFilesProps = {doc, user, nr, setSave, files, setFiles, printMode}
+  const ElFilesProps = {user, doc, nr, setSave, files, setFiles, printMode}
   const ElSignaturesProps = {user}
 
   const isElDocBtns = !printMode
