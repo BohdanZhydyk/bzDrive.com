@@ -1,27 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 
 import "./ElFiles.scss"
 import { tr } from "../../../../../AppTranslate"
-import { bzBytesCalc, bzDeleteFile, PostToApi } from "../../../../../AppFunctions"
-import ActionBtn from "../../../../All/ActionBtn"
+import { bzDeleteFile, PostToApi } from "../../../../../AppFunctions"
 import { UploadBtns } from "./UploadBtns"
+import { FileLine } from "./FileLine"
 
 function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} }){
 
   const lang = user?.lang
-  
-  const FileTypeToIco = (type)=>{
-    const link = `https://bzdrive.com/files/ico/file`
-    switch(type){
-      case "text/plain":                return {type:"txt", ico:`${link}TXT.png`}
-      case "application/octet-stream":  return {type:"bin", ico:`${link}BIN.png`}
-      case "image/png":                 return {type:"png", ico:`${link}PNG.png`}
-      case "image/jpeg":                return {type:"png", ico:`${link}PNG.png`}
-      case "application/pdf":           return {type:"pdf", ico:`${link}PDF.png`}
-      case "lnk":                       return {type:"lnk", ico:`${link}LNK.png`}
-      default:                          return {type:"def", ico:`${link}DEF.png`}
-    }
-  }
 
   const YYYY = nr?.from.toString().slice(0, 4)
   const MM = nr?.from.toString().slice(4, 6)
@@ -66,7 +53,7 @@ function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} })
     })
   }
 
-  // console.log(files)
+  console.log(files)
 
   return(
     <div className="ElFiles flex column">
@@ -77,53 +64,10 @@ function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} })
         files && files.map( (file, f)=>{
 
           const key = `FileLine${f}${file?.fileID}`
+          const fileLineProps = {file, f, files, setFiles, setSave, printMode, DELETE_FILE}
 
-          const isLink = file?.fileType === "lnk"
-          const domain = `https://bzdrive.com/`
-          const href = isLink ? file?.fileAddr : `${domain}${file?.fileAddr}/${file?.fileName}`
+          return <FileLine props={fileLineProps} key={key} />
 
-          const hostName = isLink ? ` / ${new URL(href).hostname}` : ``
-
-          const src = FileTypeToIco(file?.fileType)?.ico
-          const alt = FileTypeToIco(file?.fileType)?.type
-          const num = bzBytesCalc(file?.fileSize)?.num
-          const unit = bzBytesCalc(file?.fileSize)?.unit
-          const downloadPropses = {name:"download", click:()=>{}}
-          const deletePropses = {name:"delete", click:()=>DELETE_FILE(file)}
-
-          return(
-            <div className="FileLine flex" key={key}>
-
-              <img className="ImgBtn" src={src} alt={alt} />
-
-              <a className="FileName flex start overflow" href={href} target="_blank" rel="noreferrer" >
-                {`${file?.fileName}${hostName}`}
-              </a>
-
-              <div className="FileSize flex end">
-                { !isLink && <span className="num flex end">{num}</span> }
-                { !isLink && <span className="unit flex end">{unit}</span> }
-              </div>
-
-              {
-                !printMode &&
-                <span className="FileAct flex end">
-
-                  {
-                    !isLink &&
-                    <a className="flex" href={href} download={file?.fileName} target="_blank" rel="noreferrer" >
-                      <ActionBtn props={downloadPropses} />
-                    </a>
-                  }
-
-                  <ActionBtn props={deletePropses} />
-
-                </span>
-              }
-
-            </div>
-          )
-          
         })
       }
 
