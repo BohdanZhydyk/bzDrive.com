@@ -7,32 +7,6 @@ exports.getOffice = (req, res)=>{
   const bzToken = req?.body?.bzToken
   const object = req?.body?.object
 
-  // getting carInfo from database by VIN
-  if(object?.getCar){
-    const vin = object?.getCar
-    const query = {"car.vin":vin}
-    bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (carData)=>{
-      res.send({...carData, result: carData?.result?.reverse()})
-      return
-    })
-  }
-  // getting partnerInfo from database by NIP
-  if(object?.getPartner){
-    const nip = object?.nip
-    const partner = object?.partner
-    const query = (partner)=>{
-      switch(partner){
-        case "client": return {"client.nip":nip}
-        case "seller": return {"seller.nip":nip}
-        default: return {"dealer.nip":nip}
-      }
-    }
-    bzDB( { req, res, col:'bzDocuments', act:"FIND", query:query(partner) }, (partnerData)=>{
-      res.send({...partnerData, result: partnerData?.result?.reverse()})
-      return
-    })
-  }
-
   function GET_FINANCES(company, taxYear){
 
     const query = {company}

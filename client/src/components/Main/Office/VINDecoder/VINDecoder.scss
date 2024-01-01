@@ -1,25 +1,44 @@
 
 .VINDecoder {
   width:100%;
+  margin:0 0 1vw 0;
 
-  .BrandInput {
-    width:15%;
-    @media (max-width: 767px) {width:50%;}
+  .VINinputPannel {
+    width:100%;
+
+    .VINinput {
+      width:29.5%;
+      @media (max-width: 767px) {width:100%;}
+    }
   }
-  .ModelInput {
-    width:15%;
-    @media (max-width: 767px) {width:50%;}
-  }
-  .ProdInput {
-    width:15%;
-    @media (max-width: 767px) {width:30%;}
-  }
-  .EngineInput {
-    width:20%;
-    @media (max-width: 767px) {width:70%;}
-  }
-  .VINinput {
-    width:29.5%;
-    @media (max-width: 767px) {width:100%;}
+
+  .VINlines {
+    width:100%;
+
+    .VINline {
+      width:100%;
+
+      .LineName {
+        width:10%;
+        padding:1vw 1vw 0 1vw;
+        @media (max-width: 767px) {width:15%;}
+      }
+      .BrandInput {
+        width:20%;
+        @media (max-width: 767px) {width:40%;}
+      }
+      .ModelInput {
+        width:20%;
+        @media (max-width: 767px) {width:40%;}
+      }
+      .ProdInput {
+        width:10%;
+        @media (max-width: 767px) {width:20%;}
+      }
+      .EngineInput {
+        width:29.5%;
+        @media (max-width: 767px) {width:80%;}
+      }
+    }
   }
 }

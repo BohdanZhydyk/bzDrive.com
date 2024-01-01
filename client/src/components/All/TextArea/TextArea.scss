@@ -3,6 +3,8 @@
   width: calc(100% - 3vw - 2px);
   padding:1vw;
   border:none;
+  outline:none;
+  &:hover, &:focus, &:active { border:none; }
   resize:vertical;
   color:#fff;
   background-color:#0000;

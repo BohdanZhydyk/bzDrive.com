@@ -63,7 +63,7 @@ export function FileLine({ props:{file, f, files, setFiles, setSave, printMode, 
 
   return(
 
-    <div className="FileLine flex">
+    <div className="FileLine flex start">
 
       <img className="ImgBtn" src={src} alt={alt} />
 

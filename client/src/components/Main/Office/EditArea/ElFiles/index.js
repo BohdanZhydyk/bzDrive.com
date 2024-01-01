@@ -53,7 +53,7 @@ function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} })
     })
   }
 
-  console.log(files)
+  // console.log(files)
 
   return(
     <div className="ElFiles flex column">

@@ -22,6 +22,7 @@ export const tr = (txt, lang)=>{
     Nav_Statistic:{en:"Statistic", ua:"Статистика", pl:"Statystyka"},
     Nav_Traffic:{en:"Traffic", ua:"Трафік", pl:"Trafik"},
     Nav_Profile:{en:"Profile", ua:"Профіль", pl:"Profil"},
+    Nav_bzConnect:{en:"bzConnect", ua:"bzConnect", pl:"bzConnect"},
     PlaceHolder:{en:"enter data...", ua:"введіть дані...", pl:"wprowadź dane..."},
     DocNrLegend:{en:"Document number", ua:"Номер документу", pl:"Numer dokumentu"},
     NipSearchPlaceHolder:{en:"Search by NIP", ua:"Пошук за ІПН", pl:"Wyszukiwarka NIP"},

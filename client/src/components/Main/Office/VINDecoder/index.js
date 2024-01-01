@@ -2,58 +2,60 @@ import React, { useEffect, useState } from "react"
 
 import "./VINDecoder.scss"
 import Input from "../../../All/Input"
-import { GET_VIN, brandPropses, enginePropses, modelPropses, prodPropses, vinPropses } from "./VINDecoderLogic"
+import { GET_VIN, vinPropses } from "./VINDecoderLogic"
+import { GetUser } from "../../../../AppFunctions"
+import { LineVIN } from "./LineVIN"
 
 
 function VINDecoder(){
 
-  const [vin, setVin] = useState(false)
-  const [car, setCar] = useState(false)
-  const [editErr, setEditErr] = useState(false)
+  const lang = GetUser().lang
 
-  const inputs = [
-    {isInput:car?.brand,  cl:"Brand",   pr:brandPropses(car, setCar, editErr, setEditErr)},
-    {isInput:car?.model,  cl:"Model",   pr:modelPropses(car, setCar, editErr, setEditErr)},
-    {isInput:car?.prod,   cl:"Prod",    pr:prodPropses(car, setCar, editErr, setEditErr)},
-    {isInput:car?.engine, cl:"Engine",  pr:enginePropses(car, setCar, editErr, setEditErr)}
-  ]
+  const [vin, setVin] = useState(false)
+  const [lines, setLines] = useState(false)
+  const [editErr, setEditErr] = useState(false)
 
   useEffect( ()=>{
     
     if(vin?.length === 17){
 
+      setLines(false)
       setEditErr( (prev)=> ({...prev, carVIN:""}) )
 
-      GET_VIN(vin, car, (data)=>{
-        setEditErr( (prev)=> ({...prev, carVIN:data?.msg}) )
-        setCar( (prev)=> ({...prev, ...data?.carData}) )
+      GET_VIN(vin, (data)=>{
+
+        setLines(data)
+        data?.length === 0 && setEditErr( (prev)=> ({...prev, carVIN:"Not decoded!"}) )
+
       })
 
     }
-    else{ setCar( (prev)=> false ) }
+    else{ setLines( (prev)=> false ) }
 
   },[vin])
 
-  // console.log("car", car)
-  // console.log("msg", msg)
+  // console.log("lines", lines)
 
   return(  
-    <div className="VINDecoder flex end wrap">
+    <div className="VINDecoder flex column">
 
+      <div className="VINinputPannel flex end">
+        <div className="VINinput flex">
+          <Input props={vinPropses(vin, setVin, lines, setLines, editErr, setEditErr, lang)}/>
+        </div>
+      </div>
+
+      <div className="VINlines flex column">
       {
-        inputs.map( (input, i)=>{
-          const classes = input?.isInput ? `${input?.cl}Input flex` : ``
-          const key = `VINinputs${input?.cl}${i}`
-          return(
-            <div className={classes} key={key}>
-              { input?.isInput && <Input props={input?.pr}/> }
+        lines && lines.map( (line, l)=>{
+          return(  
+            <div className="VINline flex end stretch wrap" key={`VINinputs${l}`}>
+              <div className="LineName txtOrg bold flex end">{line.msg}</div>
+              <LineVIN props={{carData:line?.carData, l}} />
             </div>
           )
         })
       }
-
-      <div className="VINinput flex">
-        <Input props={vinPropses(vin, setVin, car, setCar, editErr, setEditErr)}/>
       </div>
 
     </div>

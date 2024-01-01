@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 
-import SiteIcon from "./../All/SiteIcon";
+import { NavLink } from "react-router-dom"
+import SiteIcon from "./../All/SiteIcon"
 import { ColorSiteName } from "../All/ColorName/ColorSiteName"
 
 export function SiteName({ props: {info, blur, BLUR} }) {
@@ -12,7 +13,7 @@ export function SiteName({ props: {info, blur, BLUR} }) {
   const link = info?.link
 
   return (
-    <div className={`SiteName flex start ${blur ? `blur` : ``}`}>
+    <NavLink to={"/"} className={`SiteName flex start ${blur ? `blur` : ``}`}>
 
       <div className="ImgBtn flex">
         <SiteIcon props={{speed:4}} />
@@ -22,6 +23,6 @@ export function SiteName({ props: {info, blur, BLUR} }) {
         <ColorSiteName props={{link}} />
       </div>
 
-    </div>
-  );
+    </NavLink>
+  )
 }

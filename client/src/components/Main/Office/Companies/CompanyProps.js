@@ -78,7 +78,7 @@ export const CompanyProps = (lang, company, setCompany)=>{
       legend: tr(`StreetNrLegend`,lang),
       type: `text`,
       plhol: tr(`PlaceHolder`,lang),
-      val: company?.addr?.nr ? sanitizeTxt(company.addr.nr, 'town').sanText : '',
+      val: company?.addr?.nr ? sanitizeTxt(company.addr.nr, 'default').sanText : '',
       cbVal: (val)=> setCompany( (prev) => ({
         ...prev, addr:{...prev.addr, nr:val}
       })),

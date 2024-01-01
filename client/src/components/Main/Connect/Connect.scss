@@ -1,0 +1,68 @@
+
+.Connect {
+  flex: 1;
+  flex-direction: column;
+  width:100%;
+
+  .ChatArea {
+    flex: 1;
+    width:100%;
+    margin:1vw 0;
+
+    .EmptyMsg {
+      width:90vw;
+      margin:0.5vw;
+      padding:0.5vw;
+      border:1px dashed #f60;
+      border-radius:0.5vw;
+    }
+
+    .MessageArea {
+      width:95%;
+      text-align:center;
+
+      .Ava {
+        border-radius:50%;
+      }
+
+      .Message {
+        width:80%;
+        margin:0.25vw 0;
+        padding:1vw;
+      }
+
+      .isMyMsg {
+        background-color:#1115;
+        border-radius:0.5vw 1.5vw 0 0.5vw;
+      }
+
+      .notMyMsg {
+        background-color:#3335;
+        border-radius:1.5vw 0.5vw 0.5vw 0;
+      }
+    }
+  }
+
+  .ChatInputLine {
+    width:95%;
+    margin:0.5vw 0;
+    padding:0.5vw;
+    background-color:#111;
+    border-radius:0.5vw;
+
+    .ChatInput {
+      width:100%;
+      padding:1vw;
+      min-height:3vw;
+      color:#fff;
+      background-color:transparent;
+      resize:none;
+      border:none;
+      outline:none;
+      &:hover, &:focus, &:active { border:none; }
+    }
+
+    .SendBtn {
+    }
+  }
+}
