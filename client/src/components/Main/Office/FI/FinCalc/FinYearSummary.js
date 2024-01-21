@@ -1,6 +1,5 @@
-import React, { useState } from "react"
+import React from "react"
 
-import { tr } from "../../../../../AppTranslate"
 import { bzCalc, SumArray, TimeTo_YYYYMM } from "../../../../../AppFunctions"
 import { calcTaxProfit } from "./../FinLogic"
 
@@ -8,15 +7,15 @@ import { calcTaxProfit } from "./../FinLogic"
 export function FinYearSummary({ props:{lang, finances, taxPrevYear, GET_YEAR} }){
 
   const nowYear = parseInt( TimeTo_YYYYMM( Date.now() ).toString().slice(0,4) )
-  const finYear = parseInt( finances[0]?.date.toString().slice(0,4) )
+  const finYear = parseInt( (finances?.length > 0) ? finances[0]?.date?.year : new Date().getFullYear() )
   const isNowYear = nowYear === finYear
 
   // netRevenue - przychód netto
-  const netRevenue = SumArray(finances.map( el=> el?.col_9))
+  const netRevenue = SumArray(finances.map( el=> el?.col_9 ?? "0.00"))
   // netCosts - wydatki netto
-  const netCosts = SumArray(finances.map( el=> bzCalc("+", el?.col_10, el?.col_14) ))
+  const netCosts = SumArray(finances.map( el=> bzCalc("+", el?.col_10 ?? "0.00", el?.col_14 ?? "0.00") ))
   // Składki zdrowotne ZUS
-  const taxZUS = SumArray(finances.map( el=> el?.ZUS))
+  const taxZUS = SumArray(finances.map( el=> el?.ZUS ?? "0.00"))
 
   const incomeTaxThreshold = "120000.00" // próg podatkowy
   const taxReductionAmount = "3600.00" // kwota zmniejszająca podatek

@@ -8,7 +8,14 @@
   
   .Contacts {
     width:30%;
-    @media (max-width: 767px) {width:100%;}
+    @media (min-width: 481px) and (max-width: 767px) {
+      width:100%;
+      min-height:7vw;
+    }
+    @media (max-width: 481px) {
+      width:100%;
+      min-height:10vw;
+    }
   }
 
   .Copyright {

@@ -6,12 +6,12 @@ import ActionBtn from "./../../../../All/ActionBtn"
 
 export function FinMonthSummary({ props:{fi, newMonth, taxYear, edit, setEdit, editDocs, SAVE_MONTH} }){
 
-  const date = `${fi?.date.toString().slice(0,4)} / ${fi?.date.toString().slice(4,6)}`
+  const date = `${fi?.date?.year} / ${fi?.date?.month.toString().padStart(2, '0')}`
   
-  const [incomes, setIncomes] = useState( fi?.col_9 )
-  const [buyMaterials, setBuyMaterials] = useState( fi?.col_10 )
-  const [elseExpenses, setElseExpenses] = useState( fi?.col_14 )
-  const [ZUS, setZUS] = useState( fi?.ZUS )
+  const [incomes, setIncomes] = useState( fi?.col_9 ?? "0.00" )
+  const [buyMaterials, setBuyMaterials] = useState( fi?.col_10 ?? "0.00" )
+  const [elseExpenses, setElseExpenses] = useState( fi?.col_14 ?? "0.00" )
+  const [ZUS, setZUS] = useState( fi?.ZUS ?? "0.00" )
   const [pVAT, setpVAT] = useState("0.00")
   const [pZUS, setpZUS] = useState("0.00")
 
@@ -72,10 +72,10 @@ export function FinMonthSummary({ props:{fi, newMonth, taxYear, edit, setEdit, e
 
   useEffect( ()=>{
 
-    setIncomes( prev=> (fi?.calc && editDocs) ? fi?.calc?.inc.NET : fi?.col_9 )
-    setElseExpenses( prev=> (fi?.calc && editDocs) ? "0.00" : fi?.col_10 )
-    setBuyMaterials( prev=> (fi?.calc && editDocs) ? fi?.calc?.exp.NET : fi?.col_14 )
-    setZUS( prev=> (fi?.calc && editDocs) ? fi?.calc?.zus : fi?.ZUS )
+    setIncomes( prev=> (fi?.calc && editDocs) ? fi?.calc?.inc.NET : (fi?.col_9 ?? "0.00") )
+    setElseExpenses( prev=> (fi?.calc && editDocs) ? "0.00" : (fi?.col_10 ?? "0.00") )
+    setBuyMaterials( prev=> (fi?.calc && editDocs) ? fi?.calc?.exp.NET : (fi?.col_14 ?? "0.00") )
+    setZUS( prev=> (fi?.calc && editDocs) ? fi?.calc?.zus : (fi?.ZUS ?? "0.00") )
 
     setIncomesDark( prev=> (fi?.calc && editDocs) ? fi?.calc?.incDark : "0.00" )
     setExpensesDark( prev=> (fi?.calc && editDocs) ? fi?.calc?.expDark : "0.00" )

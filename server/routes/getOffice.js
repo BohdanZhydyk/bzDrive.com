@@ -1,5 +1,6 @@
 const { MongoClient, ObjectId } = require('mongodb')
 const { bzDB } = require('./bzDB')
+const { unixToDateTimeConverter } = require('../functions')
 
 
 exports.getOffice = (req, res)=>{
@@ -9,24 +10,38 @@ exports.getOffice = (req, res)=>{
 
   function GET_FINANCES(company, taxYear){
 
-    const query = {company}
-    bzDB( { req, res, col:'bzFinances', act:"FIND", query }, (financesData)=>{
+    const isPrevTaxYearQuery = {company, "date.year":taxYear-1}
+    bzDB( { req, res, col:'bzFinances', act:"FIND", query:isPrevTaxYearQuery }, (PrevTaxYearData)=>{
 
-      const finances = financesData?.result
+      const isPrevTaxYear = PrevTaxYearData?.result?.length > 0
 
-      const taxYearArr = finances?.filter(
-        month=> parseInt(month?.date / 100) === taxYear
-      )
-      const isPrevTaxYear = finances.filter(
-        month=> parseInt(month?.date / 100) === taxYear - 1
-      )?.length > 0
+      const taxYearQuery = {company, "date.year":taxYear}
+      bzDB( { req, res, col:'bzFinances', act:"FIND", query:taxYearQuery }, (financesData)=>{
 
-      res.send({
-        ...financesData,
-        result: {taxYearArr, isPrevTaxYear}
+        const YYYY = unixToDateTimeConverter().year
+        const monthCount = YYYY === `${taxYear}` ? parseInt(unixToDateTimeConverter().month) : 12
+
+        let finances = []
+
+        for (let month = monthCount; month > 0; month--) {
+
+          const emptyMonth = { "company": company, "date": { year: taxYear, month } }
+          const finEl = financesData?.result.filter( mo=> mo?.date?.month === month)
+
+          finances.push( finEl?.length > 0 ? finEl[0] : emptyMonth )
+
+        }
+
+        const taxYearArr = finances?.filter( month=> month?.date?.year === taxYear )
+
+        res.send({
+          ...financesData,
+          result: {taxYearArr, isPrevTaxYear}
+        })
+
+        return
+
       })
-
-      return
 
     })
 
@@ -332,8 +347,14 @@ exports.getOffice = (req, res)=>{
 
         const date = object?.date
 
-        const to = { $gte: parseInt(`${date}00`), $lte: parseInt(`${date}31`) }
-        const from = { $gte: parseInt(`${date}00`), $lte: parseInt(`${date}31`) }
+        const to = {
+          $gte: parseInt(`${date?.year}${date?.month.toString().padStart(2, '0')}00`),
+          $lte: parseInt(`${date?.year}${date?.month.toString().padStart(2, '0')}31`)
+        }
+        const from = {
+          $gte: parseInt(`${date?.year}${date?.month.toString().padStart(2, '0')}00`),
+          $lte: parseInt(`${date?.year}${date?.month.toString().padStart(2, '0')}31`)
+        }
 
         const query = {
           $or: [

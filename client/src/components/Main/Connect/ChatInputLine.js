@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 
-export function ChatInputLine({ props:{user, setMsgs} }){
+export function ChatInputLine({ props:{user, ConnectReducer} }){
 
   const icoSend = `https://bzdrive.com/files/ico/icoSend.png`
 
@@ -11,7 +11,7 @@ export function ChatInputLine({ props:{user, setMsgs} }){
 
   function SEND_MSG(val){
     if(val.trim()?.length === 0) return
-    setMsgs( prev=> [...prev, { id: Date.now(), author: user?.login, ava: user?.ava, txt: val }] )
+    ConnectReducer({type:"ADD_MESSAGE", val})
     setVal("")
   }
 

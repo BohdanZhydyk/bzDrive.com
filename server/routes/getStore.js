@@ -12,8 +12,6 @@ exports.getStore = (req, res)=>{
 
   const findBy = login ?? bzToken
 
-  console.log(findBy)
-
   // getting articles
   if(object?.getArticles){
     bzDB( { req, res, col:'bzStoreArt', act:"FIND", query:{} }, (articlesData)=>{

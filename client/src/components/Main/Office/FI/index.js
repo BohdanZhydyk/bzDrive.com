@@ -6,7 +6,6 @@ import { GetUser, SumArray, TimeTo_YYYYMM, bzCalc } from "../../../../AppFunctio
 import { Title } from "./Title"
 import FinCalc from "./FinCalc"
 import FinanceMonth from "./FinanceMonth"
-import { prepareFinances } from "./FinLogic"
 
 
 function FI({ props:{company} }){
@@ -26,8 +25,9 @@ function FI({ props:{company} }){
   const isLastMonth = count === finances?.length
 
   function SET_FI(data){
-    setFinances( prepareFinances(data) )
-    data?.isPrevTaxYear && setTaxPrevYear(true)
+    // setFinances( prepareFinances(data) )
+    setFinances( data?.taxYearArr )
+    setTaxPrevYear(data?.isPrevTaxYear)
   }
 
   function SAVE_MONTH(obj){

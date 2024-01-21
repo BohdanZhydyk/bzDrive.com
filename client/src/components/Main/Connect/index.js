@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 
 import "./Connect.scss"
 import { Scrollbars } from 'react-custom-scrollbars-2'
-import { GetUser } from "../../../AppFunctions"
+import { GetUser, PostToApi } from "../../../AppFunctions"
 import { MessageArea } from "./MessageArea"
 import { ChatInputLine } from "./ChatInputLine"
 
@@ -11,39 +11,53 @@ function Connect({ props:{} }){
 
   const user = GetUser()
 
-  const [msgs, setMsgs] = useState([
-    {
-      id: 12345678901,
-      author: "bz83",
-      txt: "first msg"
-    },
-    {
-      id: 12345678902,
-      txt: "second msg"
-    },
-    {
-      id: 12345678903,
-      author: "bz83",
-      txt: "third msg"
-    },
-    {
-      id: 12345678904,
-      author: "test",
-      txt: "fourth msg"
-    }
-  ])
+  const [msgs, setMsgs] = useState([])
 
   const isMsgs = msgs?.length > 0
 
   const emptyMsg = "emptyMsg"
 
   const scrollbarsRef = useRef()
+  
+  const ConnectReducer = (action, callback)=>{
+
+    switch (action.type) {
+      case "GET_MESSAGES":    GET_MESSAGES();   break;
+      case "ADD_MESSAGE":     ADD_MESSAGE();    break;
+      default: break;
+    }
+  
+    function SUBSCRIBE(){
+      PostToApi( '/getConnect', {Subscribe:true}, (data)=>{
+        setMsgs(prev=> data)
+        SUBSCRIBE()
+        if(scrollbarsRef.current){ scrollbarsRef.current.scrollToBottom() }
+      })
+    }
+  
+    function GET_MESSAGES(){
+      PostToApi( '/getConnect', {GetMessages:true}, (data)=>{
+        setMsgs(prev=> data)
+        SUBSCRIBE()
+        if(scrollbarsRef.current){ scrollbarsRef.current.scrollToBottom() }
+      })
+    }
+  
+    function ADD_MESSAGE(){
+      PostToApi( '/getConnect', {AddMessage:action?.val}, (data)=>{
+        setMsgs(prev=> data)
+        SUBSCRIBE()
+        if(scrollbarsRef.current){ scrollbarsRef.current.scrollToBottom() }
+      })
+    }
+  
+  }
 
   useEffect(() => {
-    if (scrollbarsRef.current) {
-      scrollbarsRef.current.scrollToBottom()
-    }
-  }, [msgs])
+    ConnectReducer({type:"GET_MESSAGES"})
+  }, [])
+
+  console.log(msgs)
 
   return(
     <div className="Connect flex column">
@@ -55,14 +69,18 @@ function Connect({ props:{} }){
       <React.Fragment>
 
         <Scrollbars className="ChatArea flex" ref={scrollbarsRef}>
-        {
-          !isMsgs
-          ? <span className="EmptyMsg flex">{emptyMsg}</span>
-          : <MessageArea props={{user, msgs}} />
-        }
+
+          <div className="ChatWrapper flex column end">
+          {
+            !isMsgs
+            ? <span className="EmptyMsg flex">{emptyMsg}</span>
+            : <MessageArea props={{user, msgs}} />
+          }
+          </div>
+
         </Scrollbars>
 
-        <ChatInputLine props={{user, setMsgs}} />
+        <ChatInputLine props={{user, ConnectReducer}} />
 
       </React.Fragment>
     }

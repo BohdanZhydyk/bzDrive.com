@@ -47,9 +47,11 @@ export const CarPropses = (tr, lang, car, setCar, editErr, setEditErr, setSave)=
     val: car?.vin ? sanitizeTxt(car.vin, `VIN`).sanText : '',
     err: editErr?.carVIN ?? '',
     isImg: car?.vin?.length > 16 ? "Search" : false,
-    imgAct: ()=> GET_VIN(car?.vin, car, (data)=>{
-      setEditErr( (prev)=> ({...prev, carVIN:data?.msg}) )
-      setCar( (prev)=> ({...prev, ...data?.carData}) )
+    imgAct: ()=> GET_VIN(car?.vin, (data)=>{
+      const carData = data?.length > 0 ? data[0].carData : false
+      const msg = data?.length > 0 ? data[0].msg : ""
+      setEditErr( (prev)=> ({...prev, carVIN:msg}) )
+      setCar( (prev)=> ({...prev, ...carData}) )
     }),
     cbVal: (val)=>{
       setCar( (prev)=> ({...prev, vin:sanitizeTxt(val, `VIN`).sanText}))
