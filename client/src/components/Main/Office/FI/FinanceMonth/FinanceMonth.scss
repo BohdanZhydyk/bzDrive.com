@@ -98,19 +98,24 @@
       margin:0.25vw 0;
 
       .NewDocBtn {
-        width:23%;
+        width:calc(23% - 2px);
         min-height:3vw;
         margin:0.5vw;
         text-align:center;
         color:#fff;
+        border:1px solid transparent;
         border-radius:0.5vw;
         @media (min-width: 481px) and (max-width: 767px) {
-          width:calc(23% - 1vw);
+          width:calc(23% - 1vw - 2px);
           min-height:5vw;
         }
         @media (max-width: 481px) {
-          width:calc(22% - 1vw);
+          width:calc(22% - 1vw - 2px);
           min-height:9vw;
+        }
+        &:hover{
+          border:1px solid #999;
+          font-weight: bold;
         }
       }
     }
@@ -118,7 +123,7 @@
     .FinDoscLineTop {
       width:100%;
       min-height:2vw;
-      padding:0.5vw;
+      padding:0.5vw 0;
       background-color: #111;
       border-bottom:1px solid #444;
       border-radius:0.5vw 0.5vw 0 0;

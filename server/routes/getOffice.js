@@ -369,16 +369,14 @@ exports.getOffice = (req, res)=>{
 
         bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (documentsData)=>{
 
-          const ZU = documentsData?.result?.filter( el=> el?.nr?.mode === "ZU")?.reverse()
-          const FS = documentsData?.result?.filter( el=> el?.nr?.mode === "FS")?.reverse()
-          const PS = documentsData?.result?.filter( el=> el?.nr?.mode === "PS")?.reverse()
-          const FZ = documentsData?.result?.filter( el=> el?.nr?.mode === "FZ")?.reverse()
-          const PZ = documentsData?.result?.filter( el=> el?.nr?.mode === "PZ")?.reverse()
-          const ZL = documentsData?.result?.filter( el=> el?.nr?.mode === "ZL")?.reverse()
+          function SORT(mode){
+            const RES = documentsData?.result
+            return RES?.filter(el=> el?.nr?.mode === mode)?.sort((a, b)=> a?.nr?.from - b?.nr?.from)
+          }
 
           res.send({
             ...documentsData,
-            result: [...ZU, ...FS, ...PS, ...FZ, ...PZ, ...ZL]
+            result: [ ...SORT("ZU"),...SORT("FS"),...SORT("PS"),...SORT("FZ"),...SORT("PZ"),...SORT("ZL") ]
           })
 
           return

@@ -16,7 +16,7 @@ export function FinMonthDocs({ props:{company, fi, editDocs, setEditDocs, GET_DO
     bru: `Wartość brutto, zł`
   }
 
-  const documents = fi.doc ? [docTop, ...fi.doc] : [docTop]
+  const documents = fi?.doc ? [docTop, ...fi.doc] : [docTop]
 
   const RELOAD = ()=> GET_DOCS(fi?.date)
 

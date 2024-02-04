@@ -5,9 +5,9 @@ import { artLine, bottomLine, emptyArticle, topLine } from './ElCalculatorLogic'
 import { CalcLine } from './CalcLine'
 
 
-function ElCalculator({ props:{user, articles, setArticles, setSave, printMode} }){
+function ElCalculator({ props:{user, mode, articles, setArticles, setSave, printMode} }){
 
-  if(!articles){ articles = [emptyArticle] }
+  if(!articles){ articles = [emptyArticle(mode)] }
 
   const lang = user?.lang
 
@@ -16,7 +16,7 @@ function ElCalculator({ props:{user, articles, setArticles, setSave, printMode} 
 
       <div className="CalculatorPannelTop bold flex">
       {
-        topLine(articles, setSave, setArticles, printMode, lang).map( (article, a)=>{
+        topLine(mode, articles, setSave, setArticles, printMode, lang).map( (article, a)=>{
           return <CalcLine props={article} key={`CalcLineTop${a}`} />
         })
       }
@@ -31,7 +31,7 @@ function ElCalculator({ props:{user, articles, setArticles, setSave, printMode} 
 
       <div className="CalculatorPannelBottom bold flex">
       {
-        bottomLine(articles, setSave, setArticles, printMode, lang).map( (article, a)=>{
+        bottomLine(mode, articles, setSave, setArticles, printMode, lang).map( (article, a)=>{
           return <CalcLine props={article} key={`CalcLineTop${a}`} />
         })
       }

@@ -1,17 +1,20 @@
-import { GetUser, SumArray, bzCalc } from "../../../../../AppFunctions"
+import { SumArray, bzCalc } from "../../../../../AppFunctions"
 import { tr } from "../../../../../AppTranslate"
 import ActionBtn from "../../../../All/ActionBtn"
 
 
-export const emptyArticle = {ART:"",PRI:"0.00",QUA:"1",VAT:"23",NET:"0.00",PRV:"0.00",SUM:"0.00"}
-
-export const PLUS_ART_FIRST = (articles, setSave, setArticles)=>{
-  setSave(true)
-  setArticles([emptyArticle, ...articles])
+export const emptyArticle = (mode)=> {
+  const VAT = mode === "ZU" ? "0" : "23"
+  return {ART:"",PRI:"0.00",QUA:"1",VAT,NET:"0.00",PRV:"0.00",SUM:"0.00"}
 }
-export const PLUS_ART_LAST = (articles, setSave, setArticles)=>{
+
+export const PLUS_ART_FIRST = (mode, articles, setSave, setArticles)=>{
   setSave(true)
-  setArticles([...articles, emptyArticle])
+  setArticles([emptyArticle(mode), ...articles])
+}
+export const PLUS_ART_LAST = (mode, articles, setSave, setArticles)=>{
+  setSave(true)
+  setArticles([...articles, emptyArticle(mode)])
 }
 export const DEL_ART = (articles, setSave, setArticles, a)=>{
   setSave(true)
@@ -22,7 +25,7 @@ export const CHG_ART = (articles, setSave, setArticles, name, val, a)=>{
   setArticles( articles.map( (art, i)=> i === a ? ArticleCalc(name, art, val) : art ) )
 }
 
-export const topLine = (articles, setSave, setArticles, printMode, lang)=> [{
+export const topLine = (mode, articles, setSave, setArticles, printMode, lang)=> [{
   CLA: `TableCellTop`,
   NUM: tr(`TableNUM`,lang),
   ART: tr(`TableART`,lang),
@@ -32,7 +35,7 @@ export const topLine = (articles, setSave, setArticles, printMode, lang)=> [{
   NET: `${tr(`TableNET`,lang)}, zł`,
   PRV: `${tr(`TablePRV`,lang)}, zł`,
   SUM: `${tr(`TableSUM`,lang)}, zł`,
-  BTN: <ActionBtn props={{ name:`plus`, click:()=>PLUS_ART_FIRST(articles, setSave, setArticles) }} />,
+  BTN: <ActionBtn props={{ name:`plus`, click:()=>PLUS_ART_FIRST(mode, articles, setSave, setArticles) }} />,
   printMode
 }]
 
@@ -51,7 +54,7 @@ export const artLine = (articles, setSave, setArticles, printMode, art, a)=> ({
   printMode
 })
 
-export const bottomLine = (articles, setSave, setArticles, printMode, lang)=> [{
+export const bottomLine = (mode, articles, setSave, setArticles, printMode, lang)=> [{
   CLA: `TableCellBottom`,
   NUM: ``,
   ART: ``,
@@ -59,7 +62,7 @@ export const bottomLine = (articles, setSave, setArticles, printMode, lang)=> [{
   NET: SumArray(articles.map(el=> el.NET)),
   PRV: SumArray(articles.map(el=> el.PRV)),
   SUM: SumArray(articles.map(el=> el.SUM)),
-  BTN: <ActionBtn props={{ name:`plus`, click:()=>PLUS_ART_LAST(articles, setSave, setArticles) }} />,
+  BTN: <ActionBtn props={{ name:`plus`, click:()=>PLUS_ART_LAST(mode, articles, setSave, setArticles) }} />,
   printMode
 }]
 
