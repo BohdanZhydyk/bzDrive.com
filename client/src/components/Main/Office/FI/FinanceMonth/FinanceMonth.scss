@@ -186,8 +186,8 @@
       text-align:center;
       @media (max-width: 767px) {width:calc(10% - 0.5vw);}
     }
-    .FinDocColorZU {background-color: #fd02;}
     .FinDocColorZL {background-color: #7982;}
+    .FinDocColorZU, .FinDocColorVA {background-color: #fd02;}
     .FinDocColorFS, .FinDocColorPS {background-color: #1712;}
     .FinDocColorFZ, .FinDocColorPZ {background-color: #f002;}
   }

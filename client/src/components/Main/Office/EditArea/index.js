@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import { Element, scroller } from 'react-scroll'
 
 import './EditArea.scss'
-import { GetUser, PostToApi } from "../../../../AppFunctions"
+import { GetUser, PostToApi, getRandomColor, vwToPx } from "../../../../AppFunctions"
 import ElDocBtns from "./ElDocBtns"
 import ElDocName from "./ElDocName"
 import ElInfo from "./ElInfo"
@@ -11,6 +12,7 @@ import { ElComments } from "./ElComments"
 import { ElSignatures } from "./ElSignatures"
 import ElFiles from "./ElFiles"
 import ElSummary from "./ElSummary"
+import DownloadBar from "../../../All/DownloadBar"
 
 
 function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD} }) {
@@ -18,32 +20,19 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD}
   const user = GetUser()
 
   const [save, setSave] = useState(false)
-
   const [editErr, setEditErr] = useState({})
-
-  const [id, setId] = useState( doc?._id ?? false )
-
-  const [docCompany, setDocCompany] = useState( company?.shortName ?? company?.id )
-
-  const [docUser, setDocUser] = useState( doc?.user ?? user.login )
-
-  const [status, setStatus] = useState(doc?.status ?? "open")
-
-  const [nr, setNr] = useState( doc?.nr )
-
-  const [car, setCar] = useState( doc?.car )
-
-  const [client, setClient] = useState( doc?.client )
-
-  const [dealer, setDealer] = useState( doc?.dealer ?? company )
-
-  const [buyer, setBuyer] = useState( doc?.buyer )
-
-  const [seller, setSeller] = useState( doc?.seller )
-
-  const [articles, setArticles] = useState( doc?.articles )
-
-  const [files, setFiles] = useState( doc?.files ?? [] )
+  const [id, setId] = useState(false)
+  const [docCompany, setDocCompany] = useState(false)
+  const [docUser, setDocUser] = useState(false)
+  const [status, setStatus] = useState(false)
+  const [nr, setNr] = useState(false)
+  const [car, setCar] = useState(false)
+  const [client, setClient] = useState(false)
+  const [dealer, setDealer] = useState(false)
+  const [buyer, setBuyer] = useState(false)
+  const [seller, setSeller] = useState(false)
+  const [articles, setArticles] = useState(false)
+  const [files, setFiles] = useState([])
 
   function ACTION_BTN(act){
 
@@ -76,30 +65,69 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD}
   const isElFiles = ["ZL","PS","PZ","ZU","FZ"].includes(mode) && nr?.sign !== ""
   const isElComments = ["FS","FZ"].includes(mode) && (printMode ? car?.comments : true)
 
+  const scroolToDiv = ()=>{
+    scroller.scrollTo('EditArea', {
+      duration: 1000,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+      offset: vwToPx(-0.5)
+    })
+  }
+
+  useEffect( ()=>{
+    const query = {getDocument:true, mode, company, docID:doc?._id}
+    !id && PostToApi( '/getOffice', query, (data)=>{
+      setId( data?._id ?? false )
+      setDocCompany( data?.company ?? company?.shortName ?? company?.id )
+      setDocUser( data?.user ?? user.login )
+      setStatus( data?.status ?? "open" )
+      setNr( data?.nr ? {...doc?.nr, method:data?.nr?.method, mode:data?.nr?.mode, place:data?.nr?.place, sign:data?.nr?.sign} : doc?.nr )
+      setCar( {...car, ...data?.car, color:data?.car?.color ?? getRandomColor()} )
+      setClient( data?.client )
+      setDealer( data?.dealer )
+      setBuyer( data?.buyer )
+      setSeller( data?.seller )
+      setArticles( data?.articles )
+      setFiles( data?.files ?? [] )
+
+      scroolToDiv()
+    })
+  }, [])
+
   return(
-    <div className="EditArea flex column start">
+    <React.Fragment>
+      {
+        !nr
+        ?
+        <Element className="EditArea flex column start">
+          <DownloadBar />
+        </Element>
+        :
+        <Element className="EditArea Shadow flex column start">
 
-      { isElDocBtns && <ElDocBtns props={ElDocBtnsProps}/> }
+          { isElDocBtns && <ElDocBtns props={ElDocBtnsProps}/> }
 
-      <ElDocName props={ElDocNameProps}/>
+          <ElDocName props={ElDocNameProps}/>
 
-      <ElInfo props={ElInfoProps}/>
+          <ElInfo props={ElInfoProps}/>
 
-      { ["ZL"].includes(mode) && <ElFaults props={ElFaultsProps}/> }
+          { ["ZL"].includes(mode) && <ElFaults props={ElFaultsProps}/> }
 
-      <ElCalculator props={ElCalculatorProps} />
+          <ElCalculator props={ElCalculatorProps} />
 
-      { ["FS","FZ","PS","PZ","ZU"].includes(mode) && <ElSummary props={ElSummaryProps} /> }
+          { ["FS","FZ","PS","PZ","ZU"].includes(mode) && <ElSummary props={ElSummaryProps} /> }
 
-      { isElComments && <ElComments props={ElCommentsProps}/> }
+          { isElComments && <ElComments props={ElCommentsProps}/> }
 
-      { isElFiles && <ElFiles props={ElFilesProps} /> }
+          { isElFiles && <ElFiles props={ElFilesProps} /> }
 
-      { printMode && <ElSignatures props={ElSignaturesProps}/> }
+          { printMode && <ElSignatures props={ElSignaturesProps}/> }
 
-      { !printMode && <ElDocBtns props={ElDocBtnsProps}/> }
+          { !printMode && <ElDocBtns props={ElDocBtnsProps}/> }
 
-    </div>
+        </Element>
+      }
+    </React.Fragment>
   )
 }
 

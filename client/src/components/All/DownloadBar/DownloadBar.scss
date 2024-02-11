@@ -1,0 +1,13 @@
+
+.DownloadBar {
+  width:100%;
+
+  .Bar {
+    min-height:2vw;
+    color:transparent;
+    border-radius:0.5vw;
+    background-image:linear-gradient(#0902, #090c, #0902);
+    @media (min-width: 481px) and (max-width: 767px) {min-height:4vw; border-radius:1vw;}
+    @media (max-width: 481px) {min-height:6vw; border-radius:1.5vw;}
+  }
+}

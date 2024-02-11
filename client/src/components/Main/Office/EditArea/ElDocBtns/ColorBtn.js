@@ -1,18 +1,16 @@
 import React, { useState } from "react"
 
-import { getRandomColor } from "../../../../../AppFunctions"
-
 
 export function ColorBtn({ props:{tr, lang, setSave, car, setCar} }) {
   
   const [colorPicker, setColorPicker] = useState(false)
 
-  const color = car?.color ?? getRandomColor()
+  const color = car?.color
 
   function COLOR_CHG(e){
     setSave(true)
     setColorPicker(false)
-    setCar( {...car, color:e.target.value} )
+    setCar( prev=> ({ ...prev, color:e.target.value }) )
   }
 
   const OrderStyle = {

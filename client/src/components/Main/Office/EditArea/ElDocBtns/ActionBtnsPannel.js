@@ -1,11 +1,14 @@
-import React from "react"
+import React, { useState } from "react"
 
 
 export function ActionBtnsPannel({ props:{tr, mode, lang, setSave, status, setStatus} }) {
 
+  const [menu, setMenu] = useState(false)
+
   function ACT_CHG(act){
     setSave(true)
     setStatus(act)
+    setMenu(prev=>!prev)
   }
 
   const btns = ()=>{
@@ -21,21 +24,40 @@ export function ActionBtnsPannel({ props:{tr, mode, lang, setSave, status, setSt
   }
 
   return(
-    <>
-    {
-      btns().map( (btn, n)=>{
+    <div className="ActionBtnsPannel">
 
-        const classes = `ActBtn ${btn === status ? `ActBtn_${btn}` : ``} flex`
-        const key = `ActBtn${n}`
-        const txt = tr(`ActionBtn_${btn}`, lang)
+      {
+        btns().filter(btn=> btn === status).map( (btn, n)=>{
 
-        return(
-          <div className={classes} key={key} onClick={()=>ACT_CHG(btn)}>
-            { txt }
-          </div>
-        )
-      })
-    }
-    </>
+          const classes = `ActBtn ${btn === status ? `ActBtn_${btn}` : ``} flex`
+          const key = `ActBtn${n}`
+          const txt = tr(`ActionBtn_${btn}`, lang)
+
+          return(
+            <div className={classes} key={key} onClick={()=>setMenu(prev=>!prev)}>
+              { txt }
+            </div>
+          )
+        })
+      }
+
+      <div className="ActionBtnsMenu">
+      {
+        menu && btns().filter(btn=> btn !== status).map( (btn, n)=>{
+
+          const classes = `ActBtn ActBtn_${btn} flex`
+          const key = `ActBtn${n}`
+          const txt = tr(`ActionBtn_${btn}`, lang)
+
+          return(
+            <div className={classes} key={key} onClick={()=>ACT_CHG(btn)}>
+              { txt }
+            </div>
+          )
+        })
+      }
+      </div>
+
+    </div>
   )
 }

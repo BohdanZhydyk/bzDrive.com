@@ -3,11 +3,29 @@
   width:100%;
 
   .ActionBtns {
-    width:70%;
+    width:30%;
+    @media (min-width: 481px) and (max-width: 767px) {width:40%;}
+    @media (max-width: 481px) {width:60%;}
+
+    .ActionBtnsPannel {
+      position:relative;
+      width:50%;
+
+      .ActionBtnsMenu {
+        position:absolute;
+        width:100%;
+        background-color: #222;
+        border-radius:0.5vw;
+      }
+    }
+
+    .ColorBtnPannel {
+      width:50%;
+    }
 
     .ActBtn {
       position:relative;
-      width:15%;
+      width:calc(100% - 0.5vw);
       min-height:3vw;
       margin:0.5vw 0.25vw;
       color:#999;
@@ -18,14 +36,8 @@
         color:#fff;
         background-image:linear-gradient(0deg, #1112, #111a 30% 70%, #1112)
       }
-      @media (min-width: 481px) and (max-width: 767px) {
-        width:45%;
-        min-height:4vw;
-      }
-      @media (max-width: 481px) {
-        width:45%;
-        min-height:5vw;
-      }
+      @media (min-width: 481px) and (max-width: 767px) {min-height:4vw;}
+      @media (max-width: 481px) {min-height:5vw;}
 
       input {
         position:absolute;

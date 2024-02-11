@@ -38,7 +38,7 @@ function FS({ props:{company} }){
     clearInterval(intDownloadBtn)
     setDlw(0)
 
-    intDownloadBtn = setInterval( ()=>{ setDlw( prev=> prev += (100 - prev)/100 ) }, 5)
+    intDownloadBtn = setInterval( ()=>{ setDlw( prev=> prev + (100 - prev)/200 ) }, 5)
 
     const query = {mode, companyName:company?.shortName, "nr.from":{ $gte:firstDay, $lte:lastDay }}
     FSreducer({type:"GET_INVOICES", query}, (data)=>{

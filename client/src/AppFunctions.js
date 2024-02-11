@@ -59,6 +59,12 @@ export function DocNameNormalize(nr){
   return `${mode}/${year}/${month}/${sign}`
 }
 
+// my vw to px function
+export const vwToPx = (vw)=>{
+  const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+  return (vw * width) / 100
+}
+
 // my filesize calculator function
 export const bzBytesCalc = (Bytes)=>{
   if(Bytes > 1073741824) return {num:(parseFloat(Bytes) / parseFloat(1073741824)).toFixed(1), unit:"GB"}

@@ -54,11 +54,29 @@ exports.getOffice = (req, res)=>{
 
       const _id = object?.docID ? ObjectId(object?.docID) : ""
       const query = {_id}
+      const mode = object?.mode
+      const company = object?.company
+
+      const zusData = { seller:{ name: "Skladka zdrowotna ZUS", account: company?.acc_ZUS }, dealer: company }
+      const vatData = { seller:{ name: "Podatek VAT", account: company?.acc_VAT }, dealer: company }
+
+      function newDocument(mode){
+        switch (mode) {
+          case "ZU":  return zusData
+          case "VA":  return vatData
+          case "PS":  return {dealer: company}
+          case "PZ":  return {dealer: company}
+          case "FZ":  return {dealer: company}
+          case "ZL":  return {dealer: company}
+          case "FS":  return {dealer: company}
+          default:    break
+        }
+      }
 
       bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query }, (docData)=>{
         res.send({
           ...docData,
-          result: docData?.result
+          result: docData?.result ?? newDocument(mode)
         })
         return
       })
@@ -359,6 +377,7 @@ exports.getOffice = (req, res)=>{
         const query = {
           $or: [
               { $and:[{"company":company}, { "nr.mode":"ZU" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"VA" }, {"nr.from":from}] },
               { $and:[{"company":company}, { "nr.mode":"FS" }, {"nr.from":from}] },
               { $and:[{"company":company}, { "nr.mode":"FZ" }, {"nr.from":from}] },
               { $and:[{"company":company}, { "nr.mode":"PS" }, {"nr.from":from}] },
@@ -376,7 +395,15 @@ exports.getOffice = (req, res)=>{
 
           res.send({
             ...documentsData,
-            result: [ ...SORT("ZU"),...SORT("FS"),...SORT("PS"),...SORT("FZ"),...SORT("PZ"),...SORT("ZL") ]
+            result: [
+              ...SORT("ZU"),
+              ...SORT("VA"),
+              ...SORT("FS"),
+              ...SORT("PS"),
+              ...SORT("FZ"),
+              ...SORT("PZ"),
+              ...SORT("ZL")
+            ]
           })
 
           return

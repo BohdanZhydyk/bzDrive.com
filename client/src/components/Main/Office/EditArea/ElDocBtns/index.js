@@ -30,13 +30,15 @@ function ElDocBtns({ props:
   const cancelBtnPropses = {name:'cancel', click:EDIT_CHG}
 
   return(
-    <section className="ElDocBtns flex">
+    <section className="ElDocBtns flex between">
 
-      <div className="ActionBtns flex start wrap">
+      <div className="ActionBtns flex start stretch">
 
         <ActionBtnsPannel props={actPannelPropses} />
 
-        { ["ZL"].includes(mode) && <ColorBtn props={colorBtnPropses} /> }
+        <div className="ColorBtnPannel">
+          { ["ZL"].includes(mode) && <ColorBtn props={colorBtnPropses} /> }
+        </div>
 
       </div>
 

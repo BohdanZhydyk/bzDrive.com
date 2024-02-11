@@ -21,6 +21,7 @@ export function NewDocBtns({ props:{company, editDocs, setEditDocs, RELOAD, ON_C
 
   const docBtns = [
     {mode:"ZU", style:{backgroundColor:"#fd04"}, method:1, txt:`Oplata ZUS`},
+    {mode:"VA", style:{backgroundColor:"#fd04"}, method:1, txt:`Podatek VAT`},
     {mode:"PS", style:{backgroundColor:"#1714"}, method:0, txt:`Paragon Sprzedazy`},
     {mode:"PZ", style:{backgroundColor:"#f004"}, method:0, txt:`Paragon Zakupu`},
     {mode:"FZ", style:{backgroundColor:"#f004"}, method:1, txt:`Faktura Zakupu`},

@@ -1,11 +1,14 @@
 
+.Shadow {
+  box-shadow: 0 0 0.5vw 0.5vw #999;
+}
+
 .EditArea {
   width:calc(100% - 1vw - 2px);
   margin:1vw 0;
   padding:0.5vw;
   border:1px solid #999;
   border-radius:0.5vw;
-  box-shadow: 0 0 0.5vw 0.5vw #999;
   @media print {
     border:none;
     box-shadow:none;
