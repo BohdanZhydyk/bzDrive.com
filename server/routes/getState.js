@@ -8,7 +8,7 @@ exports.getState = (req, res)=>{
 
       const nav = navData?.result?.nav
       const role = navData?.user?.role
-  
+
       switch(role){
         case "admin":   Filter( nav, 3 );     break
         case "master":  Filter( nav, 2 );     break

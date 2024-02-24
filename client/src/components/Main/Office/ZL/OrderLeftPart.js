@@ -9,6 +9,7 @@ export function OrderLeftPart({ props:{order, title, styles, checkImg, pannels, 
 
   const number = DocNameNormalize(order?.nr)
   const carName = `${order?.car?.brand} - ${order?.car?.model}`
+  const carIco = `https://bzdrive.com/files/CarIcons/${order?.car?.brand?.replace(/[^a-zA-Z]/g, '').toLowerCase()}.svg`
   const sum = SumArray( order?.articles?.map( (el)=> el.SUM ) )
   const tel = order?.client?.name
     ? `${order.client.name}`
@@ -34,6 +35,7 @@ export function OrderLeftPart({ props:{order, title, styles, checkImg, pannels, 
 
         <span className={`OrderCar OrderCell flex start`} style={cellSt} onClick={()=>setEdit(!edit)}>
           <span className="CellTxt flex">
+            <img className="ImgBtn IcoColor flex" src={carIco} alt="SVG" />
             <span>{carName}</span>
           </span>
         </span>

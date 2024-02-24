@@ -18,7 +18,7 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
   let IP =      req?.body?.IP      ? req.body.IP      : false
   let user =    req?.body?.user    ? req.body.user    : false
 
-  const client = new MongoClient(url, { useUnifiedTopology: true })
+  const client = new MongoClient(url)
   
   const ERR = (bzToken, IP, user, errors)=> callback({bzToken, IP, user, errors}) // client.close()
   const OK = (bzToken, IP, user, result)=> callback({bzToken, IP, user, result}) // client.close()

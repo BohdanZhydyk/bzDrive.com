@@ -216,6 +216,10 @@
 
         .CellTxt {
           padding:0 0.5vw;
+
+          .IcoColor {
+            filter: invert(100%);
+          }
         }
       }
       .OrderAva {
