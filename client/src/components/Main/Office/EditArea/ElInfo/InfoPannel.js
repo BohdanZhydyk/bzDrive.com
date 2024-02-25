@@ -1,7 +1,7 @@
 import React from "react"
 
 import { tr } from "../../../../../AppTranslate"
-import Input from "../../../../All/Input"
+import InputText from "../../../../All/InputText"
 import { InfoPrintPannel } from "./InfoPrintPannel"
 
 
@@ -22,7 +22,7 @@ export function InfoPannel({ props:{lang, title, InfoProps, printMode} }){
         InfoProps.map( (input, i)=>{
           return(
             <div className={`Input_${input?.classes}`} key={`Input_${input?.classes}${i}`}>
-              <Input props={ input }/>
+              <InputText props={ input }/>
             </div>
           )
         })

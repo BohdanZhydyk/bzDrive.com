@@ -4,7 +4,8 @@ import QRCode from 'react-qr-code'
 import { tr } from "../../../../../AppTranslate"
 import { sanitizeTxt } from "../../../../../AppFunctions"
 import { placeProps, fromProps, toProps } from "./propses"
-import Input from "../../../../All/Input"
+import InputText from "../../../../All/InputText"
+import InputDate from "../../../../All/InputDate"
 
 
 export function DocSign({ props:{lang, mode, nr, setNr, setSave, editErr, setEditErr, printMode} }) {
@@ -28,11 +29,11 @@ export function DocSign({ props:{lang, mode, nr, setNr, setSave, editErr, setEdi
       ?
       <>
   
-        <Input props={ placeProps(tr, lang, nr, setNr, editErr, setEditErr, setSave, sanitizeTxt) } />
+        <InputText props={ placeProps(tr, lang, nr, setNr, editErr, setEditErr, setSave, sanitizeTxt) } />
   
-        <Input props={ fromProps(tr, lang, nr, setNr, setSave) } />
+        <InputDate props={ fromProps(tr, lang, nr, setNr, setSave) } />
         
-        { ["ZL"].includes(mode) && <Input props={ toProps(tr, lang, nr, setNr, setSave) } /> }
+        { ["ZL"].includes(mode) && <InputDate props={ toProps(tr, lang, nr, setNr, setSave) } /> }
 
       </>
       :

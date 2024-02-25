@@ -237,9 +237,8 @@
           @media (max-width: 481px) {width:calc(100% - 1px); font-size:80%; color:#f60;}
         }
         .OrderCar {
-          width:calc(75% - 1px);
+          flex:1;
           font-weight:bold;
-          @media (min-width: 481px) and (max-width: 767px) {width:calc(70% - 1px);}
           @media (max-width: 481px) {width:calc(100% - 1px);}
         }
       }

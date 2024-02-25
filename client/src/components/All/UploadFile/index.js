@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import "./UploadFile.scss"
 import { tr } from '../../../AppTranslate'
-import { GetUser } from '../../../AppFunctions'
+import { GetUser, sanitizeTxt } from '../../../AppFunctions'
 import { bzUploadFile } from '../../../AppFunctions'
 
 
@@ -19,12 +19,17 @@ const UploadFile = ({ props:{btnTxt, formNr, fileAddr, uniqueName, warning, acce
 
   const formName = `InputTag${formNr ? `_${formNr}` : ``}`
 
-  const CHANGE = (e)=>{
-    setFile(prev=>e.target.files[0])
-    setFileName(prev=> !uniqueName ? e.target.files[0].name : `${Date.now()}_${e.target.files[0].name}`)
+  function sanitizeFileName(filename){
+    setFileName( prev=> sanitizeTxt(filename, "fileName")?.sanText )
   }
 
-  const NAME_CHANGE = (e)=> setFileName(prev=>e.target.value)
+  const CHANGE = (e)=>{
+    setFile(prev=>e.target.files[0])
+    !uniqueName ? sanitizeFileName(e.target.files[0].name) : sanitizeFileName(`${Date.now()}_${e.target.files[0].name}`)
+  }
+
+  // const NAME_CHANGE = (e)=> setFileName(prev=>e.target.value)
+  const NAME_CHANGE = (e)=> sanitizeFileName(e.target.value)
 
   const CLEAR = ()=>{
     setFile(prev=>false)

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 import "./TagH.scss"
-import Input from "../../../../All/Input"
+import InputText from "../../../../All/InputText"
 
 
 function TagH({ props:{el, nr, user, setWorkshop, editMode, editingTag, setEditingTag} }){
@@ -41,7 +41,7 @@ function TagH({ props:{el, nr, user, setWorkshop, editMode, editingTag, setEditi
         <div className="TagHInputs flex wrap">
         {
           ["en","ua","pl"]?.map( (lan, l)=>{
-            return <Input props={inputPropses(lan)} key={`EditTagH${nr}${l}`} />
+            return <InputText props={inputPropses(lan)} key={`EditTagH${nr}${l}`} />
           })
         }
         </div>

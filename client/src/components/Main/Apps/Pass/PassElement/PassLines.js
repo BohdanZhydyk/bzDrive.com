@@ -1,6 +1,6 @@
 import React from "react"
 
-import Input from "../../../../All/Input"
+import InputText from "../../../../All/InputText"
 import ActionBtn from "../../../../All/ActionBtn"
 import { userNameProps, loginProps, encryptedPassProps, cryptedPassProps } from "./passProps"
 
@@ -21,15 +21,15 @@ export function PassLines({ props:{el, i, element, setElement, setSave, SHOW_PAS
             <div className="UserLoginPannel flex wrap">
 
               <div className="UserName flex">
-                <Input props={ userNameProps(line, l, setElement, setSave) } />
+                <InputText props={ userNameProps(line, l, setElement, setSave) } />
               </div>
 
               <div className="Login flex">
-                <Input props={ loginProps(line, l, setElement, setSave) } />
+                <InputText props={ loginProps(line, l, setElement, setSave) } />
               </div>
 
               <div className="Password flex">
-                <Input props={passProps} />
+                <InputText props={passProps} />
               </div>
 
             </div>

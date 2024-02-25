@@ -1,5 +1,6 @@
 import { emailProps, langProps, passProps, verifyProps, confirmProps, genderProps } from "./propses"
-import Input from "../../All/Input"
+
+import InputText from "../../All/InputText"
 import RadioInput from "../../All/RadioInput"
 
 
@@ -67,8 +68,8 @@ export const sections = (props)=>{
       fn: ()=>ACTIVE_SECTION("pass"),
       component:
       <div className="InputsPannel flex column">
-        <Input props={passProps(pass, setPass)} />
-        <Input props={verifyProps(verify, setVerify)} />
+        <InputText props={passProps(pass, setPass)} />
+        <InputText props={verifyProps(verify, setVerify)} />
       </div>
     },
     {
@@ -78,7 +79,7 @@ export const sections = (props)=>{
       fn: ()=>ACTIVE_SECTION("email"),
       component:
       <div className="InputsPannel flex column">
-        <Input props={emailProps(email, setEmail)} />
+        <InputText props={emailProps(email, setEmail)} />
       </div>
     },
     {

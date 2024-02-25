@@ -39,16 +39,31 @@ export const topLine = (mode, articles, setSave, setArticles, printMode, lang)=>
   printMode
 }]
 
+// export const artLine = (articles, setSave, setArticles, printMode, art, a)=> ({
+//   CLA: `TableCell`,
+//   NUM: `${a + 1}.`,
+//   ART: art.ART,
+//   PRI: SanQuates(art.PRI),
+//   QUA: SanQuantity(art.QUA),
+//   VAT: SanQuantity(art.VAT),
+//   NET: SanQuates(art.NET),
+//   PRV: SanQuates(art.PRV),
+//   SUM: SanQuates(art.SUM),
+//   FN: (name, val)=>CHG_ART(articles, setSave, setArticles, name, val, a),
+//   BTN: <ActionBtn props={{ name:`delete`, click:()=>DEL_ART(articles, setSave, setArticles, a) }} />,
+//   printMode
+// })
+
 export const artLine = (articles, setSave, setArticles, printMode, art, a)=> ({
   CLA: `TableCell`,
   NUM: `${a + 1}.`,
   ART: art.ART,
-  PRI: SanQuates(art.PRI),
-  QUA: SanQuantity(art.QUA),
-  VAT: SanQuantity(art.VAT),
-  NET: SanQuates(art.NET),
-  PRV: SanQuates(art.PRV),
-  SUM: SanQuates(art.SUM),
+  PRI: art.PRI,
+  QUA: art.QUA,
+  VAT: art.VAT,
+  NET: art.NET,
+  PRV: art.PRV,
+  SUM: art.SUM,
   FN: (name, val)=>CHG_ART(articles, setSave, setArticles, name, val, a),
   BTN: <ActionBtn props={{ name:`delete`, click:()=>DEL_ART(articles, setSave, setArticles, a) }} />,
   printMode
@@ -67,7 +82,8 @@ export const bottomLine = (mode, articles, setSave, setArticles, printMode, lang
 }]
 
 export function SanQuates(val) {
-  if(val === ""){val = "0.00"}
+  if (val === "") { val = "0.00"}
+  val = val.replace(/,/g, ".")
   const regex = /[^0-9.-]/g
   const sanitized = val.replace(regex, "")
   return parseFloat(sanitized).toFixed(2)

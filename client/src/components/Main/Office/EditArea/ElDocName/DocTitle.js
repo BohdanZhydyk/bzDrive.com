@@ -1,7 +1,7 @@
 import React from "react"
 
 import { DocNameNormalize } from "../../../../../AppFunctions"
-import Input from "../../../../All/Input"
+import InputText from "../../../../All/InputText"
 
 
 export function DocTitle({ props:{tr, lang, mode, nr, docNrPr, printMode} }) {
@@ -16,7 +16,7 @@ export function DocTitle({ props:{tr, lang, mode, nr, docNrPr, printMode} }) {
 
       {
         mode === 'FZ'
-        ? (!printMode ? <Input props={docNrPr} /> : <div className="DocNr flex">{docNrPr?.val}</div>)
+        ? (!printMode ? <InputText props={docNrPr} /> : <div className="DocNr flex">{docNrPr?.val}</div>)
         : <div className="DocNr flex">{docNr}</div>
       }
 

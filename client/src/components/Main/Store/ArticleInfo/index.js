@@ -4,7 +4,7 @@ import "./ArticleInfo.scss"
 import { ArtSlider } from "./ArtSlider"
 import BuyPannel from "../BuyPannel"
 import ActionBtn from "../../../All/ActionBtn"
-import Input from "../../../All/Input"
+import InputText from "../../../All/InputText"
 import { decriptionPropses, namePropses, pricePropses, quantityPropses } from "./ArticleProps"
 import TextArea from "../../../All/TextArea"
 
@@ -46,7 +46,7 @@ function ArticleInfo({ props:{article, a, tr, user, StoreFn, SHOW_ART} }){
         {
           edit !== "editing"
           ? <div className="ArticleNameTxt overflow bold flex start">{name}</div>
-          : <Input props={namePropses(art, setArt, editErr, setEditErr, setSave)}/>
+          : <InputText props={namePropses(art, setArt, editErr, setEditErr, setSave)}/>
         }
         {
           edit === "admin"
@@ -70,8 +70,8 @@ function ArticleInfo({ props:{article, a, tr, user, StoreFn, SHOW_ART} }){
               ? <BuyPannel props={{ID, QUA, PRI, tr, user, StoreFn}}/>
               :
               <>
-                <Input props={quantityPropses(art, setArt, editErr, setEditErr, setSave)}/>
-                <Input props={pricePropses(art, setArt, editErr, setEditErr, setSave)}/>
+                <InputText props={quantityPropses(art, setArt, editErr, setEditErr, setSave)}/>
+                <InputText props={pricePropses(art, setArt, editErr, setEditErr, setSave)}/>
               </>
             }
           </div>

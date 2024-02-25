@@ -1,7 +1,7 @@
 import React from "react"
 
 import { tr } from "../../../AppTranslate"
-import Input from "../../All/Input"
+import InputText from "../../All/InputText"
 
 
 export function SecurityPannel({ props:{lang, act, formErr, propses, CHG_ACT, SUBMIT} }) {
@@ -29,15 +29,15 @@ export function SecurityPannel({ props:{lang, act, formErr, propses, CHG_ACT, SU
 
       <form className="FormPannel flex column" onKeyDown={ (e)=> ON_KEY_DOWN(e) }>
 
-        { ['login', 'signup'].includes(act[0]) && <Input props={ propses().login }/> }
+        { ['login', 'signup'].includes(act[0]) && <InputText props={ propses().login }/> }
 
-        { ['signup', 'forgot'].includes(act[0]) && <Input props={ propses().email }/> }
+        { ['signup', 'forgot'].includes(act[0]) && <InputText props={ propses().email }/> }
 
-        { ['login', 'signup', 'forgot'].includes(act[0]) && <Input props={ propses().pass }/> }
+        { ['login', 'signup', 'forgot'].includes(act[0]) && <InputText props={ propses().pass }/> }
 
-        { ['signup', 'forgot'].includes(act[0]) && <Input props={ propses().verify }/> }
+        { ['signup', 'forgot'].includes(act[0]) && <InputText props={ propses().verify }/> }
 
-        { ['confirm'].includes(act[0]) && <Input props={ propses().confirm }/> }
+        { ['confirm'].includes(act[0]) && <InputText props={ propses().confirm }/> }
 
         {
           act[1] &&

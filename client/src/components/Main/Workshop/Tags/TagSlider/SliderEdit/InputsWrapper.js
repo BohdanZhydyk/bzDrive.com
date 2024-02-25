@@ -1,6 +1,6 @@
 import React from "react"
 
-import Input from "../../../../../All/Input"
+import InputText from "../../../../../All/InputText"
 
 
 export function InputsWrapper({ props:{el, nr, folder, folderNr, setWorkshop, setEditingTag} }){
@@ -40,7 +40,7 @@ export function InputsWrapper({ props:{el, nr, folder, folderNr, setWorkshop, se
     {
       folder?.txt.map( (lang, langNr)=>{
         return(
-          <Input props={inputPropses(folderNr, langNr)} key={`ThemeInput${nr}${folderNr}${langNr}`} />
+          <InputText props={inputPropses(folderNr, langNr)} key={`ThemeInput${nr}${folderNr}${langNr}`} />
         )
       })
     }

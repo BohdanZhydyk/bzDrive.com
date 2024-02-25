@@ -3,7 +3,7 @@ import React from "react"
 import { tr } from "../../../../AppTranslate"
 import { CompanyProps } from "./CompanyProps"
 import ActionBtn from "../../../All/ActionBtn"
-import Input from '../../../All/Input'
+import InputText from '../../../All/InputText'
 
 
 
@@ -27,26 +27,26 @@ export function ConpanyInfo({ props:{lang, company, setCompany} }) {
         </div>
 
         <div className="CompanyTitle flex wrap">
-          <div className="TitleShortName flex"><Input props={ propses().shortName } /></div>
-          <div className="TitleName flex"><Input props={ propses().name } /></div>
+          <div className="TitleShortName flex"><InputText props={ propses().shortName } /></div>
+          <div className="TitleName flex"><InputText props={ propses().name } /></div>
         </div>
 
         <div className="Digits flex">
-          <div className="DigNip flex"><Input props={ propses().nip } /></div>
-          <div className="DigAcc flex"><Input props={ propses().account } /></div>
+          <div className="DigNip flex"><InputText props={ propses().nip } /></div>
+          <div className="DigAcc flex"><InputText props={ propses().account } /></div>
         </div>
 
         <div className="Address flex wrap">
-          <div className="AddrZip flex"><Input props={ propses().zip } /></div>
-          <div className="AddrTown flex"><Input props={ propses().town } /></div>
-          <div className="AddrStreet flex"><Input props={ propses().streetName } /></div>
-          <div className="AddrNr flex"><Input props={ propses().streetNr } /></div>
+          <div className="AddrZip flex"><InputText props={ propses().zip } /></div>
+          <div className="AddrTown flex"><InputText props={ propses().town } /></div>
+          <div className="AddrStreet flex"><InputText props={ propses().streetName } /></div>
+          <div className="AddrNr flex"><InputText props={ propses().streetNr } /></div>
         </div>
 
         <div className="Contacts flex wrap">
-          <div className="ContTel flex"><Input props={ propses().tel } /></div>
-          <div className="ContEmail flex"><Input props={ propses().email } /></div>
-          <div className="ContWww flex"><Input props={ propses().www } /></div>
+          <div className="ContTel flex"><InputText props={ propses().tel } /></div>
+          <div className="ContEmail flex"><InputText props={ propses().email } /></div>
+          <div className="ContWww flex"><InputText props={ propses().www } /></div>
         </div>
 
         <div className="Personnel flex stretch between">

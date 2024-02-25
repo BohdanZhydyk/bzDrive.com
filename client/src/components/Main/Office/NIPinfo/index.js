@@ -4,13 +4,13 @@ import "./NIPinfo.scss"
 import "../EditArea/ElInfo/ElInfo.scss"
 import { tr } from "../../../../AppTranslate"
 import { GetUser } from "../../../../AppFunctions"
-import Input from "../../../All/Input"
+import InputText from "../../../All/InputText"
 import { GET_NIP, nipPropses } from "./NIPinfoLogic"
 import { ClientPropses } from "../EditArea/ElInfo/propses"
 import { InfoPannel } from "../EditArea/ElInfo/InfoPannel"
 
 
-function NIPinfo({ props:{} }){
+function NIPinfo({ props }){
 
   const lang = GetUser().lang
 
@@ -20,7 +20,7 @@ function NIPinfo({ props:{} }){
   const [partners, setPartners] = useState(false)
 
   const [editErr, setEditErr] = useState(false)
-  const [save, setSave] = useState(false)
+  const [, setSave] = useState(false)
 
   const CHG_CL = (pa)=>{
     setEditErr( (prev)=> ({...prev, NIP:pa?.msg}) )
@@ -67,7 +67,7 @@ function NIPinfo({ props:{} }){
       }
 
       <div className="NIPinput flex">
-        <Input props={nipPropses(nip, setNip, partner, setPartner, editErr, setEditErr)}/>
+        <InputText props={nipPropses(nip, setNip, partner, setPartner, editErr, setEditErr)}/>
       </div>
 
       {

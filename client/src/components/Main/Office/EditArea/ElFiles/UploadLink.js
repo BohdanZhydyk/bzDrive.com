@@ -1,6 +1,6 @@
 import React from "react"
 
-import Input from "../../../../All/Input"
+import InputText from "../../../../All/InputText"
 import { sanitizeTxt } from "../../../../../AppFunctions"
 
 
@@ -40,8 +40,8 @@ export function UploadLink({ props:{
       {
         opened &&
         <div className="UploadLinkInputs">
-          <Input props={fileNameProps} />
-          <Input props={fileAddrProps} />
+          <InputText props={fileNameProps} />
+          <InputText props={fileAddrProps} />
         </div>
       }
 

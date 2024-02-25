@@ -1,0 +1,43 @@
+
+.Input {
+  width:calc(100% - 1vw - 2px);
+  min-height:3vw;
+  margin-top: 0.5vw;
+  padding:0.4vw 0.2vw 0.2vw 0.2vw;
+  border:1px solid #555;
+  border-radius:0.5vw;
+  @media (min-width: 481px) and (max-width: 767px) {min-height:4vw;}
+  @media (max-width: 481px) {min-height:7vw;}
+  @media print {border:1px solid #ddd !important;}
+
+  legend {
+    font-size:80%;
+    margin:0 0.5vw;
+    padding:0 0.5vw;
+    @media print {color:#222 !important;}
+  }
+
+  input {
+    margin:0;
+    padding:0.25vw 0.5vw;
+    width:calc(100% - 1vw);
+    font-size:1vw !important;
+    background-color:transparent;
+    border:none;
+    outline:none;
+    &:hover, &:focus, &:active { border:none; }
+    @media (min-width: 481px) and (max-width: 767px) {min-height:5vw; font-size: 2vw !important;}
+    @media (max-width: 481px) {min-height:7vw; font-size: 3vw !important;}
+    @media print {color:#000 !important; font-size: 8px !important;}
+  }
+
+  img {
+    @media print {display:none;}// display:none;
+  }
+
+  .ColorInput-Wht {color:#fff}
+  .ColorInput-Trs {color:transparent}
+}
+.Input:focus-within {
+  border-color: #f60;
+}

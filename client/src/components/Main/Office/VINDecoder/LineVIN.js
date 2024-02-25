@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import Input from "../../../All/Input"
+import InputText from "../../../All/InputText"
 import { brandPropses, enginePropses, modelPropses, prodPropses } from "./VINDecoderLogic"
 import { GetUser } from "../../../../AppFunctions"
 
@@ -27,7 +27,7 @@ export function LineVIN({ props:{carData, l} }){
         const key = `VINinputs${input?.cl}${l}${i}`
         return(
           <div className={classes} key={key}>
-            { input?.isInput && <Input props={input?.pr}/> }
+            { input?.isInput && <InputText props={input?.pr}/> }
           </div>
         )
       })

@@ -1,6 +1,6 @@
 import React from "react"
 
-import Input from "../../../../All/Input"
+import InputText from "../../../../All/InputText"
 import InputSelect from "../../../../All/InputSelect"
 import TextArea from "../../../../All/TextArea"
 import ActionBtn from "../../../../All/ActionBtn"
@@ -20,11 +20,11 @@ export function PassData({
     <div className="PassData flex start wrap">
 
       <div className="SiteName flex">
-        <Input props={ siteNameProps(element, setElement, setSave) } />
+        <InputText props={ siteNameProps(element, setElement, setSave) } />
       </div>
 
       <div className="LinkBefore flex">
-        <Input props={ linkProps(element, setElement, setSave) } />
+        <InputText props={ linkProps(element, setElement, setSave) } />
       </div>
 
       <div className="Group flex">
@@ -34,7 +34,7 @@ export function PassData({
       <PassDataBtns props={{element, save, SAVE_ELEMENT, OPEN_CLOSE}}/>
 
       <div className="LinkAfter flex">
-        <Input props={ linkProps(element, setElement, setSave) } />
+        <InputText props={ linkProps(element, setElement, setSave) } />
       </div>
 
       <div className="Information flex">

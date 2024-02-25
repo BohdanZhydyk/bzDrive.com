@@ -118,7 +118,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
   // const regExSpecialChar = /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/
   const regExSpecialCharacters = /[^a-zA-Z0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/g
   const regExExtendedSpecialCharacters = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃЀ-ӿ]/g
-  const regExWeb = /^(http(s)?:\/\/|ftp(s):\/\/)?([a-zA-Zа-яА-Я0-9-]+\.)+[a-zA-Zа-яА-Я0-9-\/]+(\/[\w- ;,./?%&=]*)?$/
+  const regExWeb = /^(http(s)?:\/\/|ftp(s)?:\/\/)?([a-zA-Zа-яА-Я0-9-]+\.)+[a-zA-Zа-яА-Я0-9-\/]+(\/[\w- ;,./?%&=]*)?$/
 
   switch(name){
     case "login":             return sanitizeLogin(txt)
@@ -137,6 +137,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     case "www":               return sanitizeWebsite(txt)
     case "carNumbers":        return sanitizeCarNumbers(txt)
     case "hostname":          return sanitizeHostName(txt)
+    case "fileName":          return sanitizeFileName(txt)
     default: return {sanText:txt, sanErr:false}
   }
   function sanitizeLogin(txt) {
@@ -179,7 +180,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
   }
   function sanitizeCompanyName(txt) {
     const min = 1
-    const max = 64
+    const max = 256
     let sanErr = false
     let sanText = txt ? txt.replace(regExExtendedSpecialCharacters, '').slice(0, max) : ''
     if(sanText.length < min) sanErr = tr('Err_1', lang)
@@ -322,6 +323,14 @@ export const sanitizeTxt = (txt, name = "default")=>{
     let sanErr = false
     if (!sanText) sanErr = tr('Err_1', lang)
     if (!regExWeb.test(sanText)) sanErr = tr('Err_9', lang)
+    return { sanText, sanErr }
+  }
+  function sanitizeFileName(txt) {
+    const min = 1
+    const max = 128
+    let sanErr = false
+    let sanText = txt ? txt.replace(regExExtendedSpecialCharacters, '_').replace(/\s/g, '_').slice(0, max) : ''
+    if(sanText.length < min) sanErr = tr('Err_1', lang)
     return { sanText, sanErr }
   }
 }

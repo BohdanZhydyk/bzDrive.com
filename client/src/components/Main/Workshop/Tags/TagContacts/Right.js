@@ -1,6 +1,6 @@
 import React from "react"
 
-import Input from "../../../../All/Input"
+import InputText from "../../../../All/InputText"
 import { tr } from "../../../../../AppTranslate"
 
 
@@ -60,7 +60,7 @@ export function Right({ props:{edit, contacts, el, nr, user, setWorkshop, setEdi
             </div>
             :
             <div className="ContactLine">
-              <Input props={inputPropses(contact)} key={`EditTagContacts${nr}${c}`} />
+              <InputText props={inputPropses(contact)} key={`EditTagContacts${nr}${c}`} />
             </div>
           }
           </div>

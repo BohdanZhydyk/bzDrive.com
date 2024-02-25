@@ -3,7 +3,7 @@ import React from 'react'
 import "./ElSummary.scss"
 import { tr } from "../../../../../AppTranslate"
 import { bzPriceToWord, GetUser, SumArray } from '../../../../../AppFunctions'
-import Input from "../../../../All/Input"
+import InputDate from "../../../../All/InputDate"
 import RadioInput from '../../../../All/RadioInput'
 
 
@@ -58,7 +58,7 @@ function ElSummary({ props:{nr, setNr, setSave, articles, printMode} }){
       cl2:`LinesCell`,
       component: printMode
         ? to
-        : <Input props={toProps} />
+        : <InputDate props={toProps} />
     }
   ]
 

@@ -1,18 +1,12 @@
 import React from "react"
 
-import './Input.scss'
+import './InputText.scss'
 
 
-function Input({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal, cbErr} }) {
-
-  const dateForInput = (date)=> `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`
-  const dateForDiv = (date)=> `${date.slice(6,8)}.${date.slice(4,6)}.${date.slice(0,4)}`
-
-  const Val = type === "date" ? dateForInput(val.toString()) : val
+function InputText({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal, cbErr} }) {
 
   const onChange = (e) => {
-    const V = e?.target?.value
-    const sendVal = type === "date" ? parseInt( V ? V.split("-").join("") : "" ) : (V ?? '')
+    const sendVal = (e?.target?.value ?? '')
     cbVal(sendVal)
     cbErr(sendVal)
   }
@@ -26,7 +20,7 @@ function Input({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal, cbE
       </legend>
 
       <input
-        value={Val}
+        value={val}
         type={type}
         placeholder={plhol}
         onChange={onChange}
@@ -57,4 +51,4 @@ function Input({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal, cbE
 //   cbErr: (val)=> setErr( (prev) => ({...prev, login:sanitizeTxt(val, `login`).sanErr}))
 // }
 
-export default Input
+export default InputText

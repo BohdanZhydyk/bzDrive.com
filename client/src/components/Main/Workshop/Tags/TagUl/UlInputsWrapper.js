@@ -1,6 +1,6 @@
 import React from "react"
 
-import Input from "../../../../All/Input"
+import InputText from "../../../../All/InputText"
 
 
 export function UlInputsWrapper({ props:{el, nr, setWorkshop, setEditingTag} }){
@@ -50,13 +50,13 @@ export function UlInputsWrapper({ props:{el, nr, setWorkshop, setEditingTag} }){
         return(
           <div className="UlInputs" key={keyUl}>
 
-            <Input props={inputPropsesUl(lan)} />
+            <InputText props={inputPropsesUl(lan)} />
 
             <div className="LiInputsWrapper flex column">
             {
               el?.body[lan]?.li.map( (li, n)=>{
                 const keyLi = `EditTagLi${nr}${l}${n}`
-                return <Input props={inputPropsesLi(lan, li, n)} key={keyLi} />
+                return <InputText props={inputPropsesLi(lan, li, n)} key={keyLi} />
               })
             }
             </div>

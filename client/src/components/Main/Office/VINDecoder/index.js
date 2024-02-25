@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 
 import "./VINDecoder.scss"
-import Input from "../../../All/Input"
+import InputText from "../../../All/InputText"
 import { GET_VIN, vinPropses } from "./VINDecoderLogic"
 import { GetUser } from "../../../../AppFunctions"
 import { LineVIN } from "./LineVIN"
@@ -41,7 +41,7 @@ function VINDecoder(){
 
       <div className="VINinputPannel flex end">
         <div className="VINinput flex">
-          <Input props={vinPropses(vin, setVin, lines, setLines, editErr, setEditErr, lang)}/>
+          <InputText props={vinPropses(vin, setVin, lines, setLines, editErr, setEditErr, lang)}/>
         </div>
       </div>
 

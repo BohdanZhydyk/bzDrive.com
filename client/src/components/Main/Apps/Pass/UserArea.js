@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import Input from "../../../All/Input"
+import InputText from "../../../All/InputText"
 import { searchProps } from "./PassElement/passProps"
 
 
@@ -40,7 +40,7 @@ export function UserArea({ props:{user, pass, actGroup, groups, SORT_PASS, ACT_G
         </div>
 
         <div className="Search flex end">
-          <Input props={ searchProps(txt, setTxt, SORT_PASS) }/>
+          <InputText props={ searchProps(txt, setTxt, SORT_PASS) }/>
         </div>
 
         <div className="Groups flex end wrap">

@@ -1,15 +1,19 @@
 import React from "react"
 
-import Input from "../../../All/Input"
+import InputDate from "../../../All/InputDate"
 import ActionBtn from "../../../All/ActionBtn"
 import { carProps, clientProps, fromProps, telProps, toProps, vinProps } from "./searchProps"
+import InputText from "../../../All/InputText"
 
 
 export function SearchPannel({ props:{tr, lang, searchBtn, search, setSearch, KEY_ENTER, SEARCH, ERASE} }) {
 
-  const inputsArr = [
+  const inputsDateArr = [
     {cl:`From flex`,    pr:fromProps(tr, lang, search, setSearch)},
-    {cl:`To flex`,      pr:toProps(tr, lang, search, setSearch)},
+    {cl:`To flex`,      pr:toProps(tr, lang, search, setSearch)}
+  ]
+
+  const inputsArr = [
     {cl:`VIN flex`,     pr:vinProps(search, setSearch)},
     {cl:`Car flex`,     pr:carProps(search, setSearch)},
     {cl:`Client flex`,  pr:clientProps(search, setSearch)},
@@ -22,8 +26,14 @@ export function SearchPannel({ props:{tr, lang, searchBtn, search, setSearch, KE
     <div className="SearchPannel flex start stretch wrap" onKeyDown={(e)=>KEY_ENTER(e)}>
 
       {
+        inputsDateArr.map( (input, i)=>{
+          return( <div className={input.cl} key={`InpDate${i}`}><InputDate props={input.pr} /></div> )
+        })
+      }
+
+      {
         inputsArr.map( (input, i)=>{
-          return( <div className={input.cl} key={`Inp${i}`}><Input props={input.pr} /></div> )
+          return( <div className={input.cl} key={`Inp${i}`}><InputText props={input.pr} /></div> )
         })
       }
 

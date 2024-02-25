@@ -64,7 +64,7 @@
     width:100%;
 
     .PassEl {
-      width:calc((100% / 5) - 2vw - 2px);
+      width:calc((100% / 5) - 2vw - 4px);
       min-height:2.5vw;
       margin:0.5vw;
       padding:0.5vw;
@@ -72,11 +72,11 @@
       border:1px solid #999;
       border-radius:0.5vw;
       @media (min-width: 481px) and (max-width: 767px) {
-        width:calc((100% / 3) - 2vw - 2px);
+        width:calc((100% / 3) - 2vw - 4px);
         min-height:6vw;
       }
       @media (max-width: 481px) {
-        width:calc((100% / 2) - 2vw - 2px);
+        width:calc((100% / 2) - 2vw - 4px);
         min-height:8vw;
       }
       &:hover {

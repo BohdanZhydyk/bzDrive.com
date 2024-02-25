@@ -3,9 +3,9 @@
   width:100%;
 
   .el-L {
-    width:calc(75% - 1px);
+    width:calc(75% - 2px);
     border-right:1px dashed #f60;
-    @media (min-width: 481px) and (max-width: 767px) {width:calc(60% - 1px);}
+    @media (min-width: 481px) and (max-width: 767px) {width:calc(60% - 2px);}
     @media (max-width: 481px) {
       width:100%;
       border-right:none;
