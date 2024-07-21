@@ -11,7 +11,7 @@ export function NavBtn({ props:{link, lang, burger, actNavBtn, actSubNavBtn, act
   const name = link.name
   const cl = (actNavBtn === name) ? 'activeNavBtn' : ''
   const act = (actSubMenu === name)
-  const linkName = tr(`Nav_${name}`,lang)
+  const linkName = tr(`Nav_${name.toUpperCase()}`,lang)
   const pannelMode = burger ? 'nav' : false
   const isSubBtn = false
   const CLICK = ()=> NavClick(isSubBtn, name, false)
@@ -23,7 +23,7 @@ export function NavBtn({ props:{link, lang, burger, actNavBtn, actSubNavBtn, act
 
       {
         link.subnav
-        ? <div className={cl} onClick={CLICK}>{tr(`Nav_${name}`,lang)}</div>
+        ? <div className={cl} onClick={CLICK}>{tr(`Nav_${name.toUpperCase()}`,lang)}</div>
         : <NavLink className={cl} to={to} onClick={SUB_CLICK}>{linkName}</NavLink>
       }
 

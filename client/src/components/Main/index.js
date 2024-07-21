@@ -8,6 +8,7 @@ import Store from './Store'
 import News from './News'
 import Apps from './Apps'
 import Office from './Office'
+import OfficeOld from './OfficeOld'
 import Statistic from './Statistic'
 import Profile from './Profile'
 import Document from './Document'
@@ -32,6 +33,7 @@ function Main({ props:{nav, blur, BLUR, size} }) {
         <Route path="/news"             element={<News props={{sub:subNav("/news")}}/>} />
         <Route path="/apps/*"           element={<Apps props={{sub:subNav("/apps")}}/>} />
         <Route path="/office/*"         element={<Office props={{size, sub:subNav("/office")}}/>} />
+        <Route path="/officeold/*"      element={<OfficeOld props={{size, sub:subNav("/officeold")}}/>} />
         <Route path="/statistic"        element={<Statistic props={{sub:subNav("/statistic")}}/>} />
         <Route path="/profile"          element={<Profile props={{sub:subNav("/profile")}}/>} />
         <Route path="/connect"          element={<Connect props={{sub:subNav("/connect")}}/>} />

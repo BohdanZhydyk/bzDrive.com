@@ -13,7 +13,7 @@ export function SubMenu({ props:{link, tr, lang, burger, actSubNavBtn, NavClick}
         const subName = sub.name
         const isActive = (actSubNavBtn === subName)
         const subCl = isActive ? 'activeSubNavBtn' : ''
-        const subLinkName = `${isActive ? '- ' : ''}${tr(`Nav_${subName}`,lang)}`
+        const subLinkName = `${isActive ? '- ' : ''}${tr(`Nav_${subName.toUpperCase()}`,lang)}`
         const isSubBtn = true
         const pannelMode = burger ? 'nav' : false
         const CLICK = ()=> NavClick(isSubBtn, subName, pannelMode)

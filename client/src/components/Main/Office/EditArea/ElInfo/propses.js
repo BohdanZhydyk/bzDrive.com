@@ -1,5 +1,5 @@
-import { GET_VIN } from "../../VINDecoder/VINDecoderLogic"
-import { GET_NIP } from "../../NIPinfo/NIPinfoLogic"
+import { GET_VIN } from "../../DecoderVIN/DecoderVINLogic"
+import { GET_NIP } from "../../DecoderNIP/DecoderNIPLogic"
 import { sanitizeTxt } from "../../../../../AppFunctions"
 
 

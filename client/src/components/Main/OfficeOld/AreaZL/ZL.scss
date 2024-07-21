@@ -1,0 +1,230 @@
+
+.ZL {
+  width:99%;
+  margin-bottom:2vw;
+
+  .Title {
+    width:100%;
+    margin:0 0 1vw 0;
+    
+    .TitleTxt {
+      width:100%;
+      font-size:150%;
+    }
+  }
+
+  .MinHight {
+    @media (min-width: 481px) and (max-width: 767px) {min-height:5vw;}
+    @media (max-width: 481px) {min-height:9vw;}
+  }
+
+  .LeftLine {
+    width:calc(70% - 0.5% - 2px);
+    min-height:1vw;
+    padding:0.25vw 0.5% 0.25vw 0;
+    border-right:1px solid #999;
+    @media (max-width: 767px) {
+      border:none;
+      padding:0.25vw 0;
+      width:calc(100% - 0.5vw);
+    }
+
+    .AddWeekBtn {
+      display:none;
+      width:100%;
+      padding:0.5vw 0;
+      background-color:#171;
+      border-radius:0.5vw;
+      @media (max-width: 767px) {
+        display:flex;
+        width:70%;
+      }
+    }
+
+    .ShowCalendarBtn {
+      display:none;
+      width:calc(30% - 0.5vw);
+      margin:0 0 0 0.5vw;
+      background-color:#fd0;
+      border-radius:0.5vw;
+      @media (max-width: 767px) {
+        display:flex;
+      }
+    }
+
+    .NewOrderBtn {
+      width:25%;
+      min-height:2vw;
+      margin-left:2vw;
+      padding:0.5vw 0;
+      background-color:#f60;
+      border:1px solid#fff;
+      border-radius:0.25vw;
+      &:hover {
+        font-size:110%;
+        cursor:pointer;
+        background-image:linear-gradient(0deg, #1111, #1115 40% 60%, #1111);
+      }
+      @media (min-width: 481px) and (max-width: 767px) {width:30%;}
+      @media (max-width: 481px) {width:40%;}
+    }
+  }
+
+  .RightLine {
+    width:calc(30% - 0.5%);
+    min-height:1vw;
+    padding:0.25vw 0 0.25vw 0.5%;
+    @media (max-width: 767px) {
+      display:none;
+      padding:0.25vw 0;
+      width:100%;
+    }
+
+    .ShowTableBtn {
+      display:none;
+      width:calc(30% - 0.5vw);
+      margin:0 0.5vw 0 0;
+      background-color:#fd0;
+      border-radius:0.5vw;
+      @media (max-width: 767px) {
+        display:flex;
+      }
+    }
+
+    .AddWeekBtn {
+      width:100%;
+      padding:0.5vw 0;
+      background-color:#171;
+      border-radius:0.5vw;
+    }
+
+    .DayName {
+      width:calc( (100% / 7) - 2px );
+      background-color:#111;
+      border:1px solid #999;
+      border-radius:0.5vw;
+    }
+
+    .WeekDayName {
+      width:calc( (100% / 7) - 2px );
+      padding:0.5vw 0;
+      background-color:#111;
+      border:1px solid #999;
+      border-radius:0.5vw;
+    }
+
+    .SameMonth {opacity:0.4;}
+    .HolyDay {background-color:#f002;}
+    .Today {
+      background-color:#f60;
+      border-color:#fff;
+      &:hover {
+        cursor:pointer;
+        background-image:linear-gradient(0deg, #1111, #1115 40% 60%, #1111);
+      }
+    }
+  }
+  
+  .DaysNamePannel {
+    width:100%;
+  }
+
+  .WeekPannel {
+    width:100%;
+  }
+
+  .OrdersLine {
+    width:100%;
+
+    .Order {
+      width:100%;
+
+      .StatusLine {
+        position:absolute;
+        opacity:1;
+        top:1.2vw;
+        width:100%;
+        min-height:3px;
+        @media (min-width: 481px) and (max-width: 767px) {
+          top:2.4vw;
+          min-height:5px;
+        }
+        @media (max-width: 481px) {
+          top:3.2vw;
+          min-height:5px;
+        }
+      }
+
+      .StatusLineColor_open {background-color:transparent;}
+      .StatusLineColor_repair {background-color:transparent;}
+      .StatusLineColor_close {background-color:#fd07;}
+      .StatusLineColor_delete {background-color:#f007;}
+
+      .OrderCell {
+        position:relative;
+        border-right:1px solid #999;
+        border-radius:0.25vw;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+
+        .CellTxt {
+          padding:0 0.5vw;
+
+          .IcoColor {
+            filter: invert(100%);
+          }
+        }
+      }
+      .OrderAva {
+        width:calc(5% - 1px);
+        @media (min-width: 481px) and (max-width: 767px) {width:calc(6% - 1px);}
+        @media (max-width: 481px) {width:calc(8% - 1px);}
+      }
+      .MainCell {
+        position:relative;
+        width:65%;
+        @media (max-width: 481px) {width:calc(50% - 1px);}
+        .OrderNr {
+          width:calc(25% - 1px);
+          @media (min-width: 481px) and (max-width: 767px) {width:calc(30% - 1px);}
+          @media (max-width: 481px) {width:calc(100% - 1px); font-size:80%; color:#f60;}
+        }
+        .OrderCar {
+          flex:1;
+          font-weight:bold;
+          @media (max-width: 481px) {width:calc(100% - 1px);}
+        }
+      }
+      .OrderTel {
+        width:calc(20% - 1px);
+        @media (min-width: 481px) and (max-width: 767px) {width:calc(19% - 1px);}
+        @media (max-width: 481px) {width:calc(27% - 1px);}
+      }
+      .OrderSUM {
+        width:calc(10% - 1px);
+        @media (min-width: 481px) and (max-width: 767px) {width:calc(10% - 1px);}
+        @media (max-width: 481px) {width:calc(15% - 1px);}
+      }
+
+      .OrderR {
+        position:relative;
+
+        .OrderBody {
+          width:calc(100% - 0.5vw - 2px);
+          padding:0 0.5vw 0 0;
+          border-left:1px solid #999;
+          border-right:1px solid #999;
+          border-radius:0.5vw;
+        }
+      }
+
+      .AvaImg {
+        width:2vw;
+        min-height:2vw;
+        margin:0.1vw 0;
+        background-color:#0005;
+      }
+    }
+  }
+}

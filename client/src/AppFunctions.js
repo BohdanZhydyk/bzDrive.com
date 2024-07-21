@@ -1,6 +1,7 @@
 import axios from 'axios'
 import cookies from 'js-cookie'
 import { tr } from './AppTranslate'
+import { scroller } from 'react-scroll'
 
 // functions that work with cookies
 export const RemToken   = ()=> cookies.remove('bzToken')
@@ -63,6 +64,16 @@ export function DocNameNormalize(nr){
 export const vwToPx = (vw)=>{
   const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
   return (vw * width) / 100
+}
+
+// Scrooler
+export const bzScroolToDiv = (divName, offset)=>{
+  scroller.scrollTo(divName, {
+    duration: 1000,
+    delay: 0,
+    smooth: 'easeInOutQuart',
+    offset: vwToPx(offset)
+  })
 }
 
 // my filesize calculator function

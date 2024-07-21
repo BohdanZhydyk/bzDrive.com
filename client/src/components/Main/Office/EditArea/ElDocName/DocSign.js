@@ -20,7 +20,6 @@ export function DocSign({ props:{lang, mode, nr, setNr, setSave, editErr, setEdi
 
   const url = `https://bzdrive.com${window.location.pathname}`
 
-
   return(
     <div className="DocSign flex end">
 

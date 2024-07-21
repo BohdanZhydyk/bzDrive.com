@@ -8,14 +8,14 @@ import { ActionBtnsPannel } from "./ActionBtnsPannel"
 
 
 function ElDocBtns({ props:
-  {user, mode, doc, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}
+  {user, mode, doc, save, setSave, EDIT_DOC, status, setStatus, car, setCar, ACTION_BTN}
 }) {
 
   const lang = user.lang
 
   function EDIT_CHG(){
     setSave(true)
-    setEdit(!edit)
+    EDIT_DOC()
   }
 
   const isSave = save || doc?.nr?.sign === ""

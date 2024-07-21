@@ -34,8 +34,6 @@ function Document(){
   const query = {getDocument:true, docID}
   useEffect( ()=>{ !doc && PostToApi( '/getOffice', query, (data)=> setDoc(data) ) }, [])
 
-  // console.log("doc", doc)
-
   return(
     <div className="Document flex column start" ref={componentRef} >
 

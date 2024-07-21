@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { Element, scroller } from 'react-scroll'
 
 import './EditArea.scss'
-import { GetUser, PostToApi, getRandomColor, vwToPx } from "../../../../AppFunctions"
+import { GetUser, getRandomColor } from "../../../../AppFunctions"
 import ElDocBtns from "./ElDocBtns"
 import ElDocName from "./ElDocName"
 import ElInfo from "./ElInfo"
@@ -12,46 +11,60 @@ import { ElComments } from "./ElComments"
 import { ElSignatures } from "./ElSignatures"
 import ElFiles from "./ElFiles"
 import ElSummary from "./ElSummary"
-import DownloadBar from "../../../All/DownloadBar"
 
 
-function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD} }) {
+// function EditArea({ props:{company, mode, prog, doc, edit, setEdit, printMode, Reducer} }) {
+function EditArea({ props:{company, l, doc, printMode, EDIT_DOC, Reducer} }) {
+
+  // const printMode = false
+
+  const mode = doc?.nr?.mode
 
   const user = GetUser()
 
-  const [save, setSave] = useState(false)
-  const [editErr, setEditErr] = useState({})
-  const [id, setId] = useState(false)
-  const [docCompany, setDocCompany] = useState(false)
-  const [docUser, setDocUser] = useState(false)
-  const [status, setStatus] = useState(false)
-  const [nr, setNr] = useState(false)
-  const [car, setCar] = useState(false)
-  const [client, setClient] = useState(false)
-  const [dealer, setDealer] = useState(false)
-  const [buyer, setBuyer] = useState(false)
-  const [seller, setSeller] = useState(false)
-  const [articles, setArticles] = useState(false)
-  const [files, setFiles] = useState([])
-
-  function ACTION_BTN(act){
-
-    function SAVE_DOC(id, docData){
-      const query = {saveDoc:true, id, docData}
-      PostToApi( '/getOffice', query, (data)=> RELOAD(data) )
-    }
-
-    const docData = {docCompany, docUser, status, nr, car, client, seller, dealer, articles, files}
-
-    switch (act) {
-      case "save":    SAVE_DOC( id, docData );                   setEdit(!edit); break;
-      case "delete":  SAVE_DOC( id, {...docData, status:act} );  setEdit(!edit); break;
-      default: break;
-    }
-
+  function setStates(el){
+    return ({
+      id:           el?._id ?? false,
+      docCompany:   el?.company ?? company?.shortName ?? company?.id,
+      docUser:      el?.user ?? user.login,
+      status:       el?.status ?? "open",
+      nr:           el?.nr,
+      car:          {...el?.car, color:el?.car?.color ?? getRandomColor()},
+      client:       el?.client,
+      dealer:       el?.dealer,
+      buyer:        el?.buyer,
+      seller:       el?.seller,
+      articles:     el?.articles,
+      files:        el?.files ?? []
+    })
   }
 
-  const ElDocBtnsProps = {user, mode, doc, save, setSave, edit, setEdit, status, setStatus, car, setCar, ACTION_BTN}
+  const [save, setSave]               = useState( false )
+  const [editErr, setEditErr]         = useState( {} )
+  const [id, setId]                   = useState( setStates(doc)?.id )
+  const [docCompany, setDocCompany]   = useState( setStates(doc)?.docCompany )
+  const [docUser, setDocUser]         = useState( setStates(doc)?.docUser )
+  const [status, setStatus]           = useState( setStates(doc)?.status )
+  const [nr, setNr]                   = useState( setStates(doc)?.nr )
+  const [car, setCar]                 = useState( setStates(doc)?.car )
+  const [client, setClient]           = useState( setStates(doc)?.client )
+  const [dealer, setDealer]           = useState( setStates(doc)?.dealer )
+  const [buyer, setBuyer]             = useState( setStates(doc)?.buyer )
+  const [seller, setSeller]           = useState( setStates(doc)?.seller )
+  const [articles, setArticles]       = useState( setStates(doc)?.articles )
+  const [files, setFiles]             = useState( setStates(doc)?.files )
+
+  function ACTION_BTN(act){
+    function SAVE_DOC(id, docData){ Reducer({type:`SAVE_DOC`, docID:id, docData}) }
+    const docData = {docCompany, docUser, status, nr, car, client, seller, dealer, articles, files}
+    switch (act) {
+      case "save":    SAVE_DOC( id, docData );                   EDIT_DOC(); break;
+      case "delete":  SAVE_DOC( id, {...docData, status:act} );  EDIT_DOC(); break;
+      default: break;
+    }
+  }
+
+  const ElDocBtnsProps = {user, mode, doc, save, setSave, EDIT_DOC, status, setStatus, car, setCar, ACTION_BTN}
   const ElDocNameProps = {user, mode, dealer, nr, setNr, setSave, editErr, setEditErr, printMode}
   const ElInfoProps = {user, mode, car, setCar, client, setClient, buyer, setBuyer, seller, setSeller, dealer, setDealer, setSave, editErr, setEditErr, printMode}
   const ElFaultsProps = {user, car, setCar, setSave, printMode}
@@ -61,73 +74,48 @@ function EditArea({ props:{company, mode, doc, edit, setEdit, printMode, RELOAD}
   const ElFilesProps = {user, doc, nr, setSave, files, setFiles, printMode}
   const ElSignaturesProps = {user}
 
-  const isElDocBtns = !printMode
   const isElFiles = ["ZL","PS","PZ","ZU","FZ"].includes(mode) && nr?.sign !== ""
   const isElComments = ["FS","FZ"].includes(mode) && (printMode ? car?.comments : true)
-
-  const scroolToDiv = ()=>{
-    scroller.scrollTo('EditArea', {
-      duration: 1000,
-      delay: 0,
-      smooth: 'easeInOutQuart',
-      offset: vwToPx(-0.5)
-    })
-  }
-
+  
   useEffect( ()=>{
-    const query = {getDocument:true, mode, company, docID:doc?._id}
-    !id && PostToApi( '/getOffice', query, (data)=>{
-      setId( data?._id ?? false )
-      setDocCompany( data?.company ?? company?.shortName ?? company?.id )
-      setDocUser( data?.user ?? user.login )
-      setStatus( data?.status ?? "open" )
-      setNr( data?.nr ? {...doc?.nr, method:data?.nr?.method, mode:data?.nr?.mode, place:data?.nr?.place, sign:data?.nr?.sign} : doc?.nr )
-      setCar( {...car, ...data?.car, color:data?.car?.color ?? getRandomColor()} )
-      setClient( data?.client )
-      setDealer( data?.dealer )
-      setBuyer( data?.buyer )
-      setSeller( data?.seller )
-      setArticles( data?.articles )
-      setFiles( data?.files ?? [] )
-
-      scroolToDiv()
-    })
-  }, [])
+    setId( setStates(doc)?.id )
+    setDocCompany( setStates(doc)?.docCompany )
+    setDocUser( setStates(doc)?.docUser )
+    setStatus( setStates(doc)?.status )
+    setNr( setStates(doc)?.nr )
+    setCar( setStates(doc)?.car )
+    setClient( setStates(doc)?.client )
+    setDealer( setStates(doc)?.dealer )
+    setBuyer( setStates(doc)?.buyer )
+    setSeller( setStates(doc)?.seller )
+    setArticles( setStates(doc)?.articles )
+    setFiles( setStates(doc)?.files )
+  }, [doc])
 
   return(
-    <React.Fragment>
-      {
-        !nr
-        ?
-        <Element className="EditArea flex column start">
-          <DownloadBar />
-        </Element>
-        :
-        <Element className="EditArea Shadow flex column start">
+    <div className={`EditArea Shadow flex column start`}>
 
-          { isElDocBtns && <ElDocBtns props={ElDocBtnsProps}/> }
+      { !printMode && <ElDocBtns props={ElDocBtnsProps}/> }
 
-          <ElDocName props={ElDocNameProps}/>
+      <ElDocName props={ElDocNameProps}/>
 
-          <ElInfo props={ElInfoProps}/>
+      <ElInfo props={ElInfoProps}/>
 
-          { ["ZL"].includes(mode) && <ElFaults props={ElFaultsProps}/> }
+      { ["ZL"].includes(mode) && <ElFaults props={ElFaultsProps}/> }
 
-          <ElCalculator props={ElCalculatorProps} />
+      <ElCalculator props={ElCalculatorProps} />
 
-          { ["FS","FZ","PS","PZ","ZU"].includes(mode) && <ElSummary props={ElSummaryProps} /> }
+      { ["FS","FZ","PS","PZ","ZU"].includes(mode) && <ElSummary props={ElSummaryProps} /> }
 
-          { isElComments && <ElComments props={ElCommentsProps}/> }
+      { isElComments && <ElComments props={ElCommentsProps}/> }
 
-          { isElFiles && <ElFiles props={ElFilesProps} /> }
+      { isElFiles && <ElFiles props={ElFilesProps} /> }
 
-          { printMode && <ElSignatures props={ElSignaturesProps}/> }
+      { printMode && <ElSignatures props={ElSignaturesProps}/> }
 
-          { !printMode && <ElDocBtns props={ElDocBtnsProps}/> }
+      {/* { !printMode && <ElDocBtns props={ElDocBtnsProps}/> } */}
 
-        </Element>
-      }
-    </React.Fragment>
+    </div>
   )
 }
 

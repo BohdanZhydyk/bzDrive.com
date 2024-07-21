@@ -1,0 +1,53 @@
+
+.ElSummary {
+  width:99%;
+  margin:0 0 1vw 0;
+
+  .SumLine {
+    width:100%;
+    margin:0 0 0.5vw 0;
+
+    .SumEmpty {
+      width:20%;
+      min-height:3vw;
+      @media (min-width: 481px) and (max-width: 767px) {width:5%;}
+      @media (max-width: 481px) {width:5%;}
+      @media print {width:20%;}
+    }
+    .SumName {
+      width:calc(20% - 4vw);
+      padding:0 2vw;
+      @media (min-width: 481px) and (max-width: 767px) {width:calc(25% - 4vw);}
+      @media (max-width: 481px) {width:calc(35% - 4vw);}
+      @media print {width:calc(20% - 4vw);}
+    }
+    .SumValue {
+      width:calc(60% - 2vw);
+      padding:0 0 0 2vw;
+      @media (min-width: 481px) and (max-width: 767px) {width:calc(60% - 2vw);}
+      @media (max-width: 481px) {width:calc(60% - 2vw);}
+      @media print {width:calc(60% - 2vw);}
+    }
+
+    .TopCell {
+      font-size:150%;
+      min-height:4vw;
+      background-color:#111;
+      @media print {background-color:#ddd;}
+    }
+
+    .LinesCell {
+      width:calc(60% - 8vw);
+      margin:0 6vw 0 2vw;
+      border-top:1px dashed #999;
+      border-bottom:1px dashed #999;
+      @media (max-width: 767px) {
+        width:calc(60% - 3vw);
+        margin:0 2vw 0 1vw;
+      }
+      @media print {border-color:#ddd;}
+    }
+
+    .Input, .RadioInput {width:30%;}
+  }
+}

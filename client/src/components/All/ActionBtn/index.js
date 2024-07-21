@@ -32,6 +32,9 @@ function ActionBtn({ props:{name, click} }){
       case "down":        return `${link}icoBtnDown.png`
       case "left":        return `${link}icoBtnLeft.png`
       case "right":       return `${link}icoBtnRight.png`
+      case "doc":         return `${link}icoDOC.png`
+      case "vin":         return `${link}icoVIN.png`
+      case "nip":         return `${link}icoNIP.png`
       default:            break
     }
   }

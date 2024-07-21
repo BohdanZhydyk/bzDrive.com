@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 
 import "./ElFiles.scss"
 import { tr } from "../../../../../AppTranslate"
@@ -70,8 +70,11 @@ function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} })
 
         })
       }
-
-      <UploadBtns props={{tr, formNr, lang, fileAddr, setSave, setFiles, ADD_FILE}} />
+      
+      {
+        !printMode &&
+        <UploadBtns props={{tr, formNr, lang, fileAddr, setSave, setFiles, ADD_FILE}} />
+      }
 
     </div>
   )

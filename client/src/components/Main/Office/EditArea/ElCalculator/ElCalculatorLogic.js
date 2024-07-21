@@ -3,10 +3,7 @@ import { tr } from "../../../../../AppTranslate"
 import ActionBtn from "../../../../All/ActionBtn"
 
 
-export const emptyArticle = (mode)=> {
-  const VAT = mode === "ZU" ? "0" : "23"
-  return {ART:"",PRI:"0.00",QUA:"1",VAT,NET:"0.00",PRV:"0.00",SUM:"0.00"}
-}
+export const emptyArticle = (mode)=> ({ART:"",PRI:"0.00",QUA:"1",VAT:"23",NET:"0.00",PRV:"0.00",SUM:"0.00"})
 
 export const PLUS_ART_FIRST = (mode, articles, setSave, setArticles)=>{
   setSave(true)
