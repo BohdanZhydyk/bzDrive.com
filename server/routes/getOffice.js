@@ -9,7 +9,8 @@ exports.getOffice = (req, res)=>{
   const object = req?.body?.object
 
   function newDoc(){
-    const nowToYYYYMMDD = parseInt(`${unixToDateTimeConverter()?.year}${unixToDateTimeConverter()?.month}${unixToDateTimeConverter()?.day}`)
+    const dateTime = unixToDateTimeConverter()
+    const nowToYYYYMMDD = parseInt(`${dateTime?.year}${dateTime?.month}${dateTime?.day}`)
     return ({ _id:"NewDoc", nr:{mode:"", from:nowToYYYYMMDD, to:nowToYYYYMMDD, sign:""} })
   }
 
@@ -284,6 +285,35 @@ exports.getOffice = (req, res)=>{
           })
 
         })
+      }
+
+      // update document files
+      if(object?.updateDocFiles){
+
+        const _id = ObjectId(object?.doc?._id)
+
+        function cleanDoc(obj) {
+          return Object.entries(obj).reduce((acc, [key, value]) => {
+            const isExcludedKey = (key === 'downloadStatus' && value === false) || (key === 'editMode' && value === true)
+            return !isExcludedKey ? { ...acc, [key]: value } : acc
+          }, {})
+        }
+
+        bzDB( { req, res, col:'bzDocuments', act:"UPDATE_ONE", query:{...cleanDoc(object?.doc), _id} }, (updateDocData)=>{
+
+          bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{_id} }, (docData)=>{
+    
+            res.send({
+              ...docData,
+              result: docData?.result
+            })
+
+            return
+
+          })
+
+        })
+
       }
 
     })
