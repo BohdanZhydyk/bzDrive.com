@@ -2,8 +2,10 @@ const { MongoClient, ObjectId } = require('mongodb')
 const { bzDB } = require('./bzDB')
 const { generateArticleNr } = require('../safe/safe')
 
+const axios = require('axios')
 
-exports.getStore = (req, res)=>{
+
+exports.getStore = async (req, res)=>{
 
   const bzToken = req?.body?.bzToken
   const object = req?.body?.object
@@ -11,6 +13,101 @@ exports.getStore = (req, res)=>{
   const ID = object?.articleID
 
   const findBy = login ?? bzToken
+
+  // getting CarCards
+  if(object?.getCarCards){
+
+    const { id, lang } = object
+
+    if(!id){
+      bzDB( { req, res, col:'bzDocuments', act:"FIND", query:{ "soft": { $exists: true, $ne: null } } }, (swData)=>{
+
+        const result = swData?.result.map( el=>{
+          const car = {
+            docID: el?._id,
+            brand: el?.car?.brand,
+            model: el?.car?.model,
+            engine: el?.car?.engine,
+            vin: el?.car?.vin
+          }
+          return el?.soft.map(sw => ({
+            ...car,
+            ...{
+              id: sw?.id,
+              ECUType: sw?.ECUType,
+              swVersion: sw?.swVersion,
+              hwVersion: sw?.hwVersion,
+              programmer: sw?.programmer,
+              mod: sw?.mod,
+              readMethod: sw?.readMethod,
+              swType: sw?.swType
+            }
+          }))
+        })
+
+        res.send({ ...swData, result: result.flat() })
+        return
+
+      })
+    }
+    else{
+      bzDB( { req, res, col:'bzPayU', act:"FIND_ONE", query:{ bzToken, softwareId:id } }, (payData)=>{
+
+        const OAUTH_CLIENT_ID = '484712'
+        const OAUTH_CLIENT_SECRET = 'e2099867f6bbe5b65458b822b4935502'
+        const PAYU_URL = 'https://secure.snd.payu.com'
+
+        function resultat(result, pay){
+          return({
+            _id: result?._id,
+            nr: {
+              from: result?.nr?.from,
+              sign: result?.nr?.sign,
+              mode: result?.nr?.mode
+            },
+            car: {
+              brand: result?.car?.brand,
+              model: result?.car?.model,
+              engine: result?.car?.engine,
+              vin: result?.car?.vin
+            },
+            soft: result?.soft,
+            pay
+          })
+        }
+
+        // 1. Uzyskaj token dostępu OAuth
+        axios.post(`${PAYU_URL}/pl/standard/user/oauth/authorize`, 
+          `grant_type=client_credentials&client_id=${OAUTH_CLIENT_ID}&client_secret=${OAUTH_CLIENT_SECRET}`, 
+          { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+        )
+        .then(authResponse => {
+            const accessToken = authResponse.data.access_token
+            const orderId = payData?.result?.orderId
+            return axios.get(`${PAYU_URL}/api/v2_1/orders/${orderId}`, {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+              }
+            })
+        })
+        .then(response => {
+          bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{ "soft": { $elemMatch: { id } } } }, (swData)=>{
+            res.send({ ...swData, result: resultat(swData?.result, response.data) })
+            return
+          })
+        })
+        .catch(error => {
+          bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{ "soft": { $elemMatch: { id } } } }, (swData)=>{
+            res.send({ ...swData, result: resultat(swData?.result, error.response?.data || error.message) })
+            return
+          })
+        })
+
+      })
+    }
+
+  }
 
   // getting articles
   if(object?.getArticles){
@@ -44,6 +141,33 @@ exports.getStore = (req, res)=>{
 
     const user = userData?.result?.user
     const isAdmin = user?.role === "admin"
+    
+    // saving CarCard
+    if(isAdmin && object?.saveCarCard){
+      
+      const newCarData = object?.car
+      const _id = ObjectId(newCarData?._id)
+  
+      bzDB( { req, res, col:'bzSoftware', act:"FIND_ONE", query:{_id} }, (swData)=>{
+
+        if(swData?.result){
+          bzDB( { req, res, col:'bzSoftware', act:"UPDATE_ONE", query:{...newCarData, _id} }, (updatedData)=>{
+            bzDB( { req, res, col:'bzSoftware', act:"FIND_ONE", query:{_id} }, (swNewData)=>{
+              res.send({ ...swNewData, result: swNewData?.result })
+              return
+            })
+          })
+        }
+        else{
+          bzDB( { req, res, col:'bzSoftware', act:"INSERT_ONE", query:{...newCarData} }, (insertedData)=>{
+            res.send({ ...insertedData, result: insertedData?.result?.insertedId })
+            return
+          })
+        }
+
+      })
+  
+    }
 
     // add articles to cart
     if(object?.addToCart){
@@ -173,6 +297,64 @@ exports.getStore = (req, res)=>{
           })
 
         })
+      })
+    }
+
+    // buy Software
+    if (object?.buySoftware) {
+
+      const { id, lang, price } = object
+
+      const OAUTH_CLIENT_ID = '484712'
+      const OAUTH_CLIENT_SECRET = 'e2099867f6bbe5b65458b822b4935502'
+      const PAYU_URL = 'https://secure.snd.payu.com'
+
+      // 1. Uzyskaj token dostępu OAuth
+      axios.post(`${PAYU_URL}/pl/standard/user/oauth/authorize`, 
+        `grant_type=client_credentials&client_id=${OAUTH_CLIENT_ID}&client_secret=${OAUTH_CLIENT_SECRET}`, 
+        { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+      )
+      .then(authResponse => {
+          const accessToken = authResponse.data.access_token
+          const IP = req?.body?.IP?.ip
+          const sum = price * 100
+
+          const url = `${req?.body?.IP?.host === "localhost" ? `http://localhost:3000` : `https://bzdrive.com`}/softpage/${id}`
+
+          // 2. Stwórz zamówienie w PayU
+          return axios.post(`${PAYU_URL}/api/v2_1/orders`, {
+            continueUrl: url, // URL po zakończeniu płatności
+            customerIp: IP,
+            merchantPosId: OAUTH_CLIENT_ID,
+            description: `Software ID: ${id}`,
+            currencyCode: 'PLN',
+            totalAmount: sum, // Kwota w groszach
+            buyer: { email: 'klient@example.com', language: lang },
+            products: [{ name: 'Oprogramowanie', unitPrice: sum, quantity: 1 }]
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`
+            }
+          })
+      })
+      .then(paymentResponse => {
+
+        const redirectUrl = paymentResponse?.request?.res?.responseUrl
+        const urlParams = new URLSearchParams(redirectUrl.split('?')[1])
+        const orderId = urlParams.get('orderId')
+
+        // Zwróć URL do przekierowania do PayU
+        bzDB( { req, res, col:'bzPayU', act:"INSERT_ONE", query:{bzToken, orderId, softwareId:id} }, (insertedData)=>{
+          res.send({ ...userData, result:redirectUrl })
+          return
+        })
+
+      })
+      .catch(error => {
+          console.error("Error in buying software:", error)
+          res.status(500).json({ error: "Wystąpił błąd podczas zakupu oprogramowania." })
       })
     }
     

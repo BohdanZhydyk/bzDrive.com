@@ -55,7 +55,7 @@ function DecoderNIP({ props }){
   // console.log("msg", msg)
 
   return(  
-    <div className="DecoderNIP flex stretch  end wrap">
+    <div className="DecoderNIP flex stretch end wrap">
 
       {
         partners.length > 0 && partners.map( (pa, p)=>{

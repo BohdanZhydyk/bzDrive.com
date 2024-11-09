@@ -1,7 +1,7 @@
 
 .ElCalculator {
-  width:calc(99% - 2px);
-  margin:0 0 1vw 0;
+  width:calc(100% - 2px);
+  margin:1vw 0 0 0;
   border:1px solid #999;
   border-radius:0.5vw;
   padding-bottom:1vw;
@@ -17,11 +17,14 @@
     width:100%;
   }
 
+  .BorderBottom {
+    border-bottom:1px solid #444;
+    @media print {border-bottom:1px solid #ddd;}
+  }
+
   .CalcLine {
     width:99%;
     min-height:3vw;
-    border-bottom:1px solid #444;
-    @media print {min-height:3vw; border-bottom:1px solid #ddd;}
 
     .TableCellTop {
       min-height:3vw;

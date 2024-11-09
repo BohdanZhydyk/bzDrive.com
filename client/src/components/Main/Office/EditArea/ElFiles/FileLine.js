@@ -8,6 +8,12 @@ export function FileLine({ props: { file, f, files, setFiles, setSave, printMode
   const [more, setMore] = useState(false)
   const [del, setDel] = useState(false)
 
+  const morePropses = { name:"more", click: ()=> { setDel(false); setMore(!more) } }
+  const downloadPropses = { name:"download", click: ()=> setMore(!more) }
+  const deletePropses = { name:"delete", click: ()=> setDel(true) }
+  const cancelPropses = { name:"cancel", click: ()=> setDel(false) }
+  const checkPropses = { name:"check", click: ()=> DELETE_FILE(file) }
+
   const FileTypeToIco = (type)=> {
     const link = `https://bzdrive.com/files/ico/file`
     switch (type) {
@@ -31,12 +37,6 @@ export function FileLine({ props: { file, f, files, setFiles, setSave, printMode
       return [...before, itemToMove, ...after]
     })
   }
-
-  const morePropses = { name:"more", click: ()=> { setDel(false); setMore(!more) } }
-  const downloadPropses = { name:"download", click: ()=> setMore(!more) }
-  const deletePropses = { name:"delete", click: ()=> setDel(true) }
-  const cancelPropses = { name:"cancel", click: ()=> setDel(false) }
-  const checkPropses = { name:"check", click: ()=> DELETE_FILE(file) }
 
   const isLink = file?.fileType === "lnk"
   const domain = `https://bzdrive.com/`
@@ -62,7 +62,7 @@ export function FileLine({ props: { file, f, files, setFiles, setSave, printMode
     e.preventDefault()
     const fromIndex = parseInt(e.dataTransfer.getData('text/plain'), 10)
     const toIndex = f
-    if (fromIndex !== toIndex) { moveFile(fromIndex, toIndex) }
+    if(fromIndex !== toIndex){ moveFile(fromIndex, toIndex) }
   }
 
   return (

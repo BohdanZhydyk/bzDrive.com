@@ -1,0 +1,155 @@
+
+.LeftPannel {
+  position:relative;
+  width:calc(70% - 0.5vw - 1px);
+  min-height:2vw;
+  padding:0.1vw 0.25vw;
+  border-right: 1px solid #999;
+  @media (max-width: 767px) {
+    width:100%;
+    min-height:5vw;
+  }
+
+  .SelBtn {
+    width:18%;
+    min-height:2.5vw;
+    font-weight:bold;
+    &:hover {
+      font-size:120%;
+    }
+    @media (max-width: 767px) {
+      width:22%;
+      min-height:5vw;
+    }
+  }
+
+  .NewDocBtn {
+    background-color: #f60;
+    border-radius:0.5vw 0 0 0.5vw;
+  }
+
+  .SortDocBtn {
+    background-color: #171;
+    border-radius:0 0.5vw 0.5vw 0;
+  }
+
+  .SelBtnNotAct {
+    border-radius:0.5vw;
+  }
+
+  .SelectDocBtnPannel {
+    position:relative;
+    flex:1;
+    min-height:calc(2.5vw - 2px);
+
+    .SelectDocBtn {
+      z-index:10;
+      width:12%;
+      min-height:2vw;
+      margin:0 0.25vw;
+      border-radius:0.5vw;
+      border:1px solid transparent;
+      &:hover {
+        background-color:#fd02;
+      }
+      @media (max-width: 767px) {
+        min-height:4vw;
+      }
+    }
+
+    .ActDocBtn {
+      color:#fff;
+      font-weight:bold;
+      border-left:1px solid transparent;
+      border-right:1px solid transparent;
+      border-top:1px solid transparent;
+      border-bottom:1px solid rgb(21, 255, 0);
+      border-radius:0 0 0.5vw 0.5vw;
+      background-image:linear-gradient(transparent, #1918);
+    }
+  }
+
+  .SelPannelNEW {
+    background-color: #f602;
+    padding:0 0 0 1vw;
+    margin:0 1vw 0 0;
+    border-top:1px solid #f60;
+    border-bottom:1px solid #f60;
+    border-radius:0 0.5vw 0.5vw 0;
+  }
+
+  .SelPannelSORT {
+    background-color: #1712;
+    padding:0 1vw 0 0;
+    margin:0 0 0 1vw;
+    border-top:1px solid #171;
+    border-bottom:1px solid #171;
+    border-radius:0.5vw 0 0 0.5vw;
+  }
+
+  .DayNameWeekLeft {
+    width:100%;
+    min-height:calc(2.5vw + 2px);
+
+    .DocMode {
+      width:18%;
+      min-height:2.5vw;
+      background-color:#fb0;
+      border-radius:0.5vw;
+      &:hover {
+        font-weight:bold;
+        background-image:linear-gradient(#fd05, #fd0, #fd05);
+      }
+      @media (max-width: 767px) {
+        width:22%;
+        min-height:5vw;
+      }
+    }
+
+    .Earned {
+      flex:1;
+      font-size:90%;
+
+      .AmountLine {
+        width:100%;
+
+        .AmountElement {
+          width:4vw;
+          margin:0 0.25vw 0 0;
+          padding:0 0.5vw;
+          background-image:linear-gradient(#3331, #5558);
+          border-bottom:1px solid;
+          border-radius:0 0 0.5vw 0.5vw;
+          @media (max-width: 767px) {
+            width:8vw;
+          }
+        }
+      }
+    }
+  }
+
+  .DocLeft {
+    width:100%;
+    margin:0.25vw 0 0 0;
+
+    .DocCell {
+      position:relative;
+      min-height:2.5vw;
+      padding:0 0.25vw;
+      border:1px solid #999;
+      border-radius:0.25vw;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      @media (max-width: 767px) {
+        min-height:5vw;
+      }
+    }
+
+    .DocAva {width:5%;}
+    .DocNr {width:15%;}
+    .DocClientName, .DocCarName {flex:1;}
+    .DocClient, .DocNIP {width:15%;}
+    .DocSum {width:10%;}
+  }
+}

@@ -10,6 +10,7 @@ import { ElFaults } from "./ElFaults"
 import { ElComments } from "./ElComments"
 import { ElSignatures } from "./ElSignatures"
 import ElFiles from "./ElFiles"
+import ElSoft from "./ElSoft"
 import ElSummary from "./ElSummary"
 
 
@@ -35,7 +36,8 @@ function EditArea({ props:{company, l, doc, printMode, EDIT_DOC, Reducer} }) {
       buyer:        el?.buyer,
       seller:       el?.seller,
       articles:     el?.articles,
-      files:        el?.files ?? []
+      files:        el?.files,
+      soft:         el?.soft
     })
   }
 
@@ -53,10 +55,11 @@ function EditArea({ props:{company, l, doc, printMode, EDIT_DOC, Reducer} }) {
   const [seller, setSeller]           = useState( setStates(doc)?.seller )
   const [articles, setArticles]       = useState( setStates(doc)?.articles )
   const [files, setFiles]             = useState( setStates(doc)?.files )
+  const [soft, setSoft]               = useState( setStates(doc)?.soft )
 
   function ACTION_BTN(act){
     function SAVE_DOC(id, docData){ Reducer({type:`SAVE_DOC`, docID:id, docData}) }
-    const docData = {docCompany, docUser, status, nr, car, client, seller, dealer, articles, files}
+    const docData = {docCompany, docUser, status, nr, car, client, seller, dealer, articles, files, soft}
     switch (act) {
       case "save":    SAVE_DOC( id, docData );                   EDIT_DOC(); break;
       case "delete":  SAVE_DOC( id, {...docData, status:act} );  EDIT_DOC(); break;
@@ -72,10 +75,14 @@ function EditArea({ props:{company, l, doc, printMode, EDIT_DOC, Reducer} }) {
   const ElSummaryProps = {nr, setNr, setSave, articles, printMode}
   const ElCommentsProps = {user, car, setCar, setSave, printMode}
   const ElFilesProps = {user, doc, nr, setSave, files, setFiles, printMode}
+  const ElSoftProps = {user, nr, car, setCar, soft, setSoft, save, setSave, printMode}
   const ElSignaturesProps = {user}
 
-  const isElFiles = ["ZL","PS","PZ","ZU","FZ"].includes(mode) && nr?.sign !== ""
-  const isElComments = ["FS","FZ"].includes(mode) && (printMode ? car?.comments : true)
+  const isFaults = ["ZL"].includes(mode)
+  const isSummary = ["FS","FZ","PS","PZ","ZU"].includes(mode)
+  const isElComments = ["FS", "FZ"].includes(mode) && (!printMode || car?.comments)
+  const isElFiles = ((printMode && files?.length > 0) || (!printMode && (["ZL","PS","PZ","FZ"].includes(mode) && nr?.sign !== "")))
+  const isElSoft = ((printMode && soft?.length > 0) || (!printMode && (["ZL"].includes(mode) && nr?.sign !== "")))
   
   useEffect( ()=>{
     setId( setStates(doc)?.id )
@@ -90,10 +97,11 @@ function EditArea({ props:{company, l, doc, printMode, EDIT_DOC, Reducer} }) {
     setSeller( setStates(doc)?.seller )
     setArticles( setStates(doc)?.articles )
     setFiles( setStates(doc)?.files )
+    setSoft( setStates(doc)?.soft )
   }, [doc])
 
   return(
-    <div className={`EditArea Shadow flex column start`}>
+    <div className="EditArea Shadow flex column start">
 
       { !printMode && <ElDocBtns props={ElDocBtnsProps}/> }
 
@@ -101,19 +109,21 @@ function EditArea({ props:{company, l, doc, printMode, EDIT_DOC, Reducer} }) {
 
       <ElInfo props={ElInfoProps}/>
 
-      { ["ZL"].includes(mode) && <ElFaults props={ElFaultsProps}/> }
+      { isFaults && <ElFaults props={ElFaultsProps}/> }
 
       <ElCalculator props={ElCalculatorProps} />
 
-      { ["FS","FZ","PS","PZ","ZU"].includes(mode) && <ElSummary props={ElSummaryProps} /> }
+      { isSummary && <ElSummary props={ElSummaryProps} /> }
 
       { isElComments && <ElComments props={ElCommentsProps}/> }
 
       { isElFiles && <ElFiles props={ElFilesProps} /> }
 
+      { isElSoft && <ElSoft props={ElSoftProps} /> }
+
       { printMode && <ElSignatures props={ElSignaturesProps}/> }
 
-      {/* { !printMode && <ElDocBtns props={ElDocBtnsProps}/> } */}
+      { !printMode && <ElDocBtns props={ElDocBtnsProps}/> }
 
     </div>
   )

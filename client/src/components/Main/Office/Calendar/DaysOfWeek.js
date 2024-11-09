@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react"
+
 import DownloadBar from "../../../All/DownloadBar"
 
 
-export function DaysOfWeek({ props:{tr, user, docs, prevWeek, docSelect, setDocSelect, docSelectDlBar, setDocSelectDlBar, Reducer} }) {
+export function DaysOfWeek({ props:{
+  tr, user, docs, prevWeek, docSelect, setDocSelect, docSelectDlBar, setDocSelectDlBar, visibleSide, Reducer
+} }) {
 
   const dayNames = tr(`DayNames`,user?.lang)
 
@@ -33,11 +36,11 @@ export function DaysOfWeek({ props:{tr, user, docs, prevWeek, docSelect, setDocS
   }, [prevWeek, docSelect])
 
   return(
-    <div className="WeekArea flex">
+    <div className="DocumentLine flex start stretch">
 
-      <div className="WeekDocs flex stretch">
-
-        <div className="LeftPannel flex">
+      {
+        (!visibleSide?.mobile || visibleSide?.side) &&
+        <div className="LeftPannel flex stretch">
 
           <div className={`SelBtn NewDocBtn ${isNew ? `` : `SelBtnNotAct`}  flex`} onClick={()=>setSelPannel(prev=>selPannelNames[0])} >
             {tr(`SelBtn_${selPannelNames[0]}`,user?.lang)}
@@ -68,7 +71,10 @@ export function DaysOfWeek({ props:{tr, user, docs, prevWeek, docSelect, setDocS
           </div>
 
         </div>
+      }
 
+      {
+        (!visibleSide?.mobile || !visibleSide?.side) &&
         <div className="RightPannel flex">
 
           {
@@ -80,8 +86,7 @@ export function DaysOfWeek({ props:{tr, user, docs, prevWeek, docSelect, setDocS
           }
 
         </div>
-
-      </div>
+      }
 
     </div>
   )

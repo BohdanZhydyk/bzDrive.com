@@ -130,6 +130,8 @@ export const sanitizeTxt = (txt, name = "default")=>{
   const regExSpecialCharacters = /[^a-zA-Z0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/g
   const regExExtendedSpecialCharacters = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃЀ-ӿ]/g
   const regExWeb = /^(http(s)?:\/\/|ftp(s)?:\/\/)?([a-zA-Zа-яА-Я0-9-]+\.)+[a-zA-Zа-яА-Я0-9-\/]+(\/[\w- ;,./?%&=]*)?$/
+  const regExNonDigits = /[^0-9.,]/g
+  const regExMultipleDots = /\.{2,}/g
 
   switch(name){
     case "login":             return sanitizeLogin(txt)
@@ -149,6 +151,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
     case "carNumbers":        return sanitizeCarNumbers(txt)
     case "hostname":          return sanitizeHostName(txt)
     case "fileName":          return sanitizeFileName(txt)
+    case "price":             return sanitizePrice(txt)
     default: return {sanText:txt, sanErr:false}
   }
   function sanitizeLogin(txt) {
@@ -344,6 +347,16 @@ export const sanitizeTxt = (txt, name = "default")=>{
     if(sanText.length < min) sanErr = tr('Err_1', lang)
     return { sanText, sanErr }
   }
+  function sanitizePrice(txt) {
+    let sanErr = false
+    let sanText = ''
+    const input = txt ? txt.toString() : '0.00'
+    let cleanedTxt = input.replace(regExNonDigits, '').replace(regExMultipleDots, '.')
+    cleanedTxt = cleanedTxt.replace(',', '.')
+    let numericValue = parseFloat(cleanedTxt)
+    sanText = numericValue.toFixed(2)
+    return { sanText, sanErr }
+  }  
 }
 
 export const bzUploadFile = (file, fileAddr, fileName, cb)=>{
@@ -358,6 +371,7 @@ export const bzUploadFile = (file, fileAddr, fileName, cb)=>{
 
   let link = 'https://bzdrive.com/API/uploadFile'
   // let link = 'http://localhost:2000/API/uploadFile'
+  // let link = process.env.NODE_ENV === "development" ? 'http://localhost:2000/API/uploadFile' : 'https://bzdrive.com/API/uploadFile'
   
   axios.post( link, formData, config ).then( (res)=> cb(res) )
 
@@ -369,8 +383,67 @@ export const bzDeleteFile = (fileAddr, fileName, cb)=>{
 
   let link = 'https://bzdrive.com/API/deleteFile'
   // let link = 'http://localhost:2000/API/deleteFile'
+  // let link = process.env.NODE_ENV === "development" ? 'http://localhost:2000/API/deleteFile' : 'https://bzdrive.com/API/deleteFile'
 
   axios.post( link, query).then( (res)=> cb(res) )
+
+}
+
+export const bzDeleteFolder = (folderAddr, cb)=>{
+  
+  let query = { folderAddr }
+
+  let link = 'https://bzdrive.com/API/deleteFolder'
+  // let link = 'http://localhost:2000/API/deleteFolder'
+  // let link = process.env.NODE_ENV === "development" ? 'http://localhost:2000/API/deleteFolder' : 'https://bzdrive.com/API/deleteFolder'
+
+  axios.post( link, query).then( (res)=> cb(res) )
+
+}
+
+export const bzGetEarnings = (arr)=>{
+
+  const Sum = (arr) => {
+    return arr.reduce((acc, item) => ({
+        NET: bzCalc("+", acc.NET, item.NET),
+        PRV: bzCalc("+", acc.PRV, item.PRV),
+        SUM: bzCalc("+", acc.SUM, item.SUM)
+    }), { NET: "0.00", PRV: "0.00", SUM: "0.00" })
+  }
+
+  const SumArr = (mode, arr) => {
+    const filtered = arr?.filter(el => el?.mode === mode)?.map(el => el?.art)
+    const summed = filtered?.map(subArray => Sum(subArray))
+    return Sum(summed)
+  }
+
+  const DOCS = {
+    ZL: SumArr("ZL", arr),
+    ZU: SumArr("ZU", arr),
+    VA: SumArr("VA", arr),
+    FS: SumArr("FS", arr),
+    FZ: SumArr("FZ", arr),
+    PS: SumArr("PS", arr),
+    PZ: SumArr("PZ", arr),
+  }
+
+  const tax = bzCalc("+", DOCS?.ZU?.NET, DOCS?.VA?.NET)
+  const income = bzCalc("+", DOCS?.FS?.NET, DOCS?.PS?.NET)
+  const expense = DOCS?.FZ?.NET
+  const total = bzCalc("-", income, bzCalc("+", tax, expense))
+
+  const incomeVat = bzCalc("+", DOCS?.FS?.PRV, DOCS?.PS?.PRV)
+  const expenseVat = DOCS?.FZ?.PRV
+  const vat = bzCalc("-", incomeVat, expenseVat)
+
+  const blackIncome = bzCalc("-", DOCS?.ZL?.SUM, total)
+  const blackExpense = DOCS?.PZ?.SUM
+  const blackTotal = bzCalc("-", blackIncome, blackExpense)
+
+  const white = {tax, vat, income, expense, total}
+  const black = {income:blackIncome, expense:blackExpense, total:blackTotal}
+
+  return { white, black }
 
 }
 

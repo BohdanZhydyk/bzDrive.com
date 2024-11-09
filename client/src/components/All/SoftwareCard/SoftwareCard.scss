@@ -1,0 +1,132 @@
+
+.SoftwareCard {
+  width:100%;
+  padding:1vw 0 2vw 0;
+
+  .CardTopLine {
+    width:calc(100% - 3vw);
+    font-size:200%;
+    padding:1vw 1vw 1vw 2vw;
+
+    .Title {
+      flex:1;
+
+      .IcoProgrammer {
+        width:4vw;
+        height:4vw;
+        margin:0 2vw 0 0;
+        padding:0.5vw;
+        font-size:1vw;
+        border:1px solid #999;
+        border-radius:0.5vw;
+
+        img {
+          width:3vw;
+          height:3vw;
+        }
+      }
+    }
+
+    .IDsection {
+      width:15%;
+      
+      .CardID {
+        width:100%;
+        font-size:50%;
+      }
+
+      .AdminBtns {
+        width:100%;
+      }
+    }
+  }
+
+  .GroupInfo {
+    width:calc((100% / 3) - 1vw);
+    padding:0.5vw;
+
+    .Sticker {
+      width:calc(100% - 0.5vw - 2px);
+      min-height:10vw;
+      padding:0.25vw;
+      border:1px solid #999;
+      border-radius:0.5vw;
+
+      .StickerDownload {
+        width:100%;
+        top:0;
+        right:0;
+        padding:0.5vw;
+      }
+
+      .NoSticker {
+        font-size:130%;
+      }
+
+      .StickerLine {
+        width:calc(100% - 4vw);
+        padding:0 1vw;
+        border-bottom:1px dashed #555;
+      }
+
+      .StickerImg {
+        width:100%;
+        border-radius:0.5vw;
+      }
+    }
+
+    .CardLine {
+      width:100%;
+      min-height:2vw;
+      font-family: 'Courier New', monospace;
+
+      .Description {
+        width:35%;
+      }
+
+      .Value {
+        flex:1;
+      }
+    }
+  }
+
+  .ArticlesPannel {
+    width:calc((100% / 3 * 2) - 2vw);
+    padding:0.5vw 1vw;
+
+    .SoftwarePannel {
+      width:100%;
+
+      .SoftWareTopLine {
+        width:calc(100% - 2vw);
+        padding:0.5vw 1vw;
+        font-size:120%;
+        letter-spacing: 0.1vw;
+        background-color: #1114;
+        border-top:1px solid #999;
+      }
+
+      .SoftWareLines {
+        width:100%;
+        border-top:1px solid #999;
+
+        .SoftwareLine {
+          width:calc(100% - 0.5vw);
+          padding:0 0.25vw;
+          min-height:2vw;
+          border-bottom:1px dashed #555;
+  
+          .FileName {
+            flex:1;
+            &:hover {color:#fd0;}
+          }
+  
+          .FileSize {
+            width:10%;
+          }
+        }
+      }
+    }
+  }
+
+}

@@ -1,0 +1,45 @@
+
+.BrandsWrapper {
+  width:100%;
+
+  .AddNew {
+    border:1px solid transparent !important;
+  }
+
+  .Brand {
+    position:relative;
+    width:calc((100% / 7) - 1vw - 2px);
+    min-height:3vw;
+    margin:0.5vw;
+    border:1px solid #999;
+    border-radius:0.5vw;
+    &:hover {background-color: #1115;}
+  }
+
+  .CarsWrapper {
+    width:calc(100% - 1vw);
+    margin:0.5vw;
+    padding:0.5vw 0;
+    border-top:1px solid #999;
+    border-bottom:1px solid #999;
+    border-radius:0.5vw;
+  }
+
+  .BrandName {
+    flex:1;
+    font-size:130%;
+  }
+
+  .Count {
+    position:absolute;
+    top:-0.25vw;
+    right:-0.25vw;
+    padding:0 0.75vw;
+    background-color: #171;
+    border-radius:0.5vw;
+  }
+
+  .CarLines {
+    width:100%;
+  }
+}

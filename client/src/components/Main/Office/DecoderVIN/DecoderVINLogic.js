@@ -5,7 +5,7 @@ import { PostToApi, sanitizeTxt } from "./../../../../AppFunctions"
 export const vinPropses = (vin, setVin, lines, setLines, editErr, setEditErr, lang)=>({
   classes:"vin",
   legend: tr(`VinLegend`,lang),
-  plhol:"VIN decoder",
+  plhol: tr(`VinSearchPlaceHolder`,lang),
   type: `text`,
   val: vin ? sanitizeTxt(vin, `VIN`).sanText : '',
   err: editErr?.carVIN ?? '',

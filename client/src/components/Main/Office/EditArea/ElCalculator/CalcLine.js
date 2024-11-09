@@ -4,7 +4,7 @@ import { ArtInput } from './ArtInput'
 import { ArtNameInput } from './ArtNameInput'
 
 
-export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, SUM, FN, BTN, printMode} }){
+export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, SUM, FN, BTN, printMode, top} }){
 
   const Top = CLA === "TableCellTop"
   const Bottom = CLA === "TableCellBottom"
@@ -20,7 +20,7 @@ export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, S
   const propsesSUM = { name:"SUM", isDisplay:(Top || Bottom || printMode), val:SUM, CLA, FN }
 
   return(
-    <div className="CalcLine flex end stretch">
+    <div className={`CalcLine ${top ? `` : `BorderBottom`} flex end stretch`}>
 
       <div className={`TableNUM ${CLA} flex`}>{ !Bottom && NUM }</div>
 

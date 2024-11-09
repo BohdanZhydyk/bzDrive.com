@@ -1,9 +1,15 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
-import { TimeTo_YYYYMMDD } from "../../../../../AppFunctions"
+import { bzGetEarnings, TimeTo_YYYYMMDD } from "../../../../../AppFunctions"
+import { Earned } from "./Earned"
 
 
-export function WeekTopLine({ props:{tr, user, line, l} }) {
+export function WeekTopLine({ props:{tr, user, line, l, visibleSide, Reducer} }) {
+
+  const docModeBtnTxt = `pokazac dokumenty`
+  const docModes = [`tygodniowo`, `za miesiac`]
+
+  const [earned, setEarned] = useState(false)
 
   const today = TimeTo_YYYYMMDD( Date.now() )
   const isSameDay = (date)=> ( date === today )
@@ -18,20 +24,48 @@ export function WeekTopLine({ props:{tr, user, line, l} }) {
   const monthNames = tr(`MonthNames`,user?.lang)
   const txt = (date)=> `${date.toString().slice(6, 8)} ${monthNames[parseInt(date.toString().slice(4, 6) - 1)]}`
 
-  return(
-    <div className="WeekDocs flex stretch">
+  useEffect( ()=>{
+    setEarned(false)
+    const from = line?.week[0]
+    const to = line?.week[line?.week?.length - 1]
+    const cb = (data)=> setEarned( bzGetEarnings(data) )
+    Reducer( { type:"GET_EARNED", from, to, cb} )
+  }, [line])
 
-      <div className="LeftPannel flex wrap">
-        <div className="DayNameWeekEmpty"></div>
-      </div>
-      
-      <div className="RightPannel flex wrap">
+  // console.log(`earned - ${l}`, earned)
+
+  return(
+    <div className="DocumentLine flex start stretch">
+
       {
-        line?.week.map( (day, d)=>{
-          return( <div className={classes(day, d)} key={`DayNameWeek${l}${d}`}>{ txt(day) }</div> )
-        })
+        (!visibleSide?.mobile || visibleSide?.side) &&
+        <div className="LeftPannel flex wrap">
+          <div className={`DayNameWeekLeft flex ${l === 0 ? `between` : `end`} stretch`}>
+
+            {
+              l === 0 &&
+              <div className="DocMode flex column">
+                <div>{docModeBtnTxt}</div>
+                <div>{docModes[0]}</div>
+              </div>
+            }
+
+            { earned && <Earned props={{earned}}/> }
+
+          </div>
+        </div>
       }
-      </div>
+
+      {
+        (!visibleSide?.mobile || !visibleSide?.side) &&
+        <div className="RightPannel flex wrap">
+        {
+          line?.week.map( (day, d)=>{
+            return( <div className={classes(day, d)} key={`DayNameWeek${l}${d}`}>{ txt(day) }</div> )
+          })
+        }
+        </div>
+      }
 
     </div>
   )

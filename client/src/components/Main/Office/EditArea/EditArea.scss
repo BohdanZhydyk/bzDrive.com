@@ -4,9 +4,9 @@
 }
 
 .EditArea {
-  width:calc(100% - 1vw - 2px);
-  margin:1vw 0;
-  padding:0.5vw;
+  width:calc(100% - 2vw - 2px);
+  margin:1vw;
+  padding:0.5vw 0.5vw 1vw 0.5vw;
   border:1px solid #999;
   border-radius:0.5vw;
   @media print {
@@ -15,15 +15,15 @@
   }
 
   .ElFaults, .ElComments {
-    width:calc(99% - 2px);
-    margin:0 0 1vw 0;
+    width:calc(100% - 2px);
+    margin:1vw 0 0 0;
     border:1px solid #999;
     border-radius:0.5vw;
 
     .FaultsTop, .CommentsTop {
       width:calc(100% - 4vw);
-      min-height:2vw;
-      padding:0.5vw 2vw;
+      min-height:3vw;
+      padding:0 2vw;
       font-size:150%;
       background-color:#111;
       border-radius:0.5vw 0.5vw 0 0;

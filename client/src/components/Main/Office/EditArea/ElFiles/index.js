@@ -45,7 +45,7 @@ function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} })
     }
     const query = {
       updateDocFiles:true,
-      doc:{ ...doc, files:[...files, file] }
+      doc:{ ...doc, files: files ? [...files, file] : [file] }
     }
     PostToApi( '/getOffice', query, (data)=>{
       setSave(true)

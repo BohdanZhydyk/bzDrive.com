@@ -33,23 +33,9 @@ export const topLine = (mode, articles, setSave, setArticles, printMode, lang)=>
   PRV: `${tr(`TablePRV`,lang)}, zł`,
   SUM: `${tr(`TableSUM`,lang)}, zł`,
   BTN: <ActionBtn props={{ name:`plus`, click:()=>PLUS_ART_FIRST(mode, articles, setSave, setArticles) }} />,
-  printMode
+  printMode,
+  top:true
 }]
-
-// export const artLine = (articles, setSave, setArticles, printMode, art, a)=> ({
-//   CLA: `TableCell`,
-//   NUM: `${a + 1}.`,
-//   ART: art.ART,
-//   PRI: SanQuates(art.PRI),
-//   QUA: SanQuantity(art.QUA),
-//   VAT: SanQuantity(art.VAT),
-//   NET: SanQuates(art.NET),
-//   PRV: SanQuates(art.PRV),
-//   SUM: SanQuates(art.SUM),
-//   FN: (name, val)=>CHG_ART(articles, setSave, setArticles, name, val, a),
-//   BTN: <ActionBtn props={{ name:`delete`, click:()=>DEL_ART(articles, setSave, setArticles, a) }} />,
-//   printMode
-// })
 
 export const artLine = (articles, setSave, setArticles, printMode, art, a)=> ({
   CLA: `TableCell`,

@@ -218,16 +218,17 @@ exports.getOffice = (req, res)=>{
         const _id = (!object?.docID || object?.docID === "NewDoc") ? "" : ObjectId(object?.docID)
 
         const docData = {
-          company:  object?.docData?.docCompany,
-          user:     object?.docData?.docUser ?? `trial`,
-          status:   object?.docData?.status,
-          nr:       object?.docData?.nr,
-          car:      object?.docData?.car,
-          client:   object?.docData?.client,
-          seller:   object?.docData?.seller,
-          dealer:   object?.docData?.dealer,
-          articles: object?.docData?.articles,
-          files:    object?.docData?.files
+          company: object?.docData?.docCompany,
+          user: object?.docData?.docUser ?? `trial`,
+          status: object?.docData?.status,
+          nr: object?.docData?.nr,
+          ...(object?.docData?.car != null && object?.docData?.car !== false && { car: object.docData.car }),
+          ...(object?.docData?.client != null && object?.docData?.client !== false && { client: object.docData.client }),
+          ...(object?.docData?.seller != null && object?.docData?.seller !== false && { seller: object.docData.seller }),
+          ...(object?.docData?.dealer != null && object?.docData?.dealer !== false && { dealer: object.docData.dealer }),
+          ...(object?.docData?.articles != null && object?.docData?.articles !== false && { articles: object.docData.articles }),
+          ...(object?.docData?.files != null && object?.docData?.files !== false && { files: object.docData.files }),
+          ...(object?.docData?.soft != null && object?.docData?.soft !== false && { soft: object.docData.soft })
         }
 
         const fromThatMonth = parseInt( `${parseInt(docData?.nr?.from / 100)}00` )
@@ -311,6 +312,104 @@ exports.getOffice = (req, res)=>{
             return
 
           })
+
+        })
+
+      }
+
+      // search documents
+      if(object?.searchDocs){
+
+        const company = object?.company?.shortName
+        const search = object?.search
+
+        const regex = { $regex: search, $options: 'i' }
+        const numberRegex = { $regex: search.replace(/[-\s]/g, '').split('').join('[-\\s]?'), $options: 'i' }
+
+        let query = {
+          $and:[
+            // { "nr.mode":mode },
+            { "company":company },
+            {
+              $or: [
+                { "car.vin": regex },
+                { "car.brand": regex },
+                { "car.model": regex },
+                { "car.numbers": regex },
+                { "client.name": regex },
+                { "client.nip": numberRegex },
+                { "client.contacts.tel": numberRegex },
+                { "dealer.name": regex },
+                { "dealer.nip": numberRegex },
+                { "dealer.contacts.tel": numberRegex },
+                { "seller.name": regex },
+                { "seller.nip": numberRegex },
+                { "seller.contacts.tel": numberRegex }
+              ]
+            }
+          ]
+        }
+        
+        bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (docsData)=>{
+
+          res.send({
+            ...docsData,
+            result: docsData?.result
+              .sort( (a, b)=> parseInt(a?.nr?.sign) - parseInt(b?.nr?.sign) )
+              .sort( (a, b)=> parseInt(a?.nr?.from) - parseInt(b?.nr?.from) )
+          })
+        
+          return
+        
+        })
+
+      }
+
+      // getting earned
+      if(object?.getEarned){
+
+        const company = object?.company?.shortName
+        const from = object?.from
+        const to = object?.to
+        
+        let query = {
+          $and: [
+            { "company": company },
+            { "status": { $ne: "deleted" } },
+            { "articles": { $exists: true, $ne: null, $not: { $size: 0 } } },
+            { $nor: [
+                { "nr.mode": "ZL", "status": "open" },
+                { "nr.mode": "ZL", "status": "repair" }
+              ]
+            },
+            {
+              $or: [
+                {
+                  $and: [
+                    { "nr.mode": { $ne: "FS" } },
+                    { "nr.to": { $gte: from } },
+                    { "nr.to": { $lte: to } }
+                  ]
+                },
+                {
+                  $and: [
+                    { "nr.mode": "FS" },
+                    { "nr.from": { $gte: from } },
+                    { "nr.from": { $lte: to } }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+
+        bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (documentsData)=>{
+
+          res.send({ ...documentsData, result: documentsData?.result.map( el=>
+            ({ mode:el?.nr?.mode, art:el?.articles.map( art=> ({NET:art?.NET, PRV:art?.PRV, SUM:art?.SUM}) ) })
+          ) })
+          
+          return
 
         })
 

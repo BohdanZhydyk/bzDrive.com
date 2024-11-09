@@ -4,15 +4,16 @@ import { Routes, Route } from 'react-router-dom'
 import './Main.scss'
 import SiteIcon from '../All/SiteIcon'
 import Workshop from './Workshop'
-import Store from './Store'
+import Software from './Software'
 import News from './News'
 import Apps from './Apps'
 import Office from './Office'
-import OfficeOld from './OfficeOld'
+import Cleaning from './Cleaning'
 import Statistic from './Statistic'
 import Profile from './Profile'
-import Document from './Document'
 import Connect from './Connect'
+import Document from './Document'
+import SoftPage from './Software/SoftPage'
 
 
 function Main({ props:{nav, blur, BLUR, size} }) {
@@ -29,15 +30,16 @@ function Main({ props:{nav, blur, BLUR, size} }) {
       :
       <Routes>
         <Route path="/"           exact element={<Workshop props={{sub:subNav("/")}}/>} />
-        <Route path="/store/*"          element={<Store props={{sub:subNav("/store")}}/>} />
         <Route path="/news"             element={<News props={{sub:subNav("/news")}}/>} />
+        <Route path="/software/*"       element={<Software props={{sub:subNav("/software")}}/>} />
         <Route path="/apps/*"           element={<Apps props={{sub:subNav("/apps")}}/>} />
         <Route path="/office/*"         element={<Office props={{size, sub:subNav("/office")}}/>} />
-        <Route path="/officeold/*"      element={<OfficeOld props={{size, sub:subNav("/officeold")}}/>} />
+        <Route path="/cleaning/*"       element={<Cleaning props={{size, sub:subNav("/cleaning")}}/>} />
         <Route path="/statistic"        element={<Statistic props={{sub:subNav("/statistic")}}/>} />
         <Route path="/profile"          element={<Profile props={{sub:subNav("/profile")}}/>} />
         <Route path="/connect"          element={<Connect props={{sub:subNav("/connect")}}/>} />
         <Route path="/document/*"       element={<Document />} />
+        <Route path="/softpage/:id"     element={<SoftPage />} />
       </Routes>
     }
 

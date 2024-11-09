@@ -1,4 +1,5 @@
 const fs = require('fs')
+const { generateID } = require('../safe/safe')
 
 exports.uploadFile = (req, res)=>{
   
@@ -24,6 +25,7 @@ exports.uploadFile = (req, res)=>{
       }
 
       res.status(200).send({
+        fileID: generateID(),
         name: fileName,
         size: file?.size,
         mimetype: file?.mimetype

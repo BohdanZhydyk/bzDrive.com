@@ -1,0 +1,23 @@
+
+.CarLine {
+  width:calc(100% - 2vw);
+  min-height:3vw;
+  margin:0 0.5vw;
+  padding:0 0.5vw;
+  border-bottom:1px dashed #555;
+  &:hover {background-color: #1115;}
+
+  .Model { flex:1; }
+  .ECUType { flex:1; }
+  .Programmer { width:12%; }
+  .SWv { width:8%; }
+  .HWv { width:8%; }
+  .Method { width:8%; }
+  .Mod { width:15%; }
+  .Type { width:15%; }
+}
+
+.CarLineTop {
+  background-color: #1119;
+  &:hover {background-color: #1119;}
+}

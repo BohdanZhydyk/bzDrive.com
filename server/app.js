@@ -15,12 +15,9 @@ app.use( bodyParser.urlencoded({ extended: true }) )
 app.use( express.static('public') )
 app.use( '/files', express.static('files') )
 
-// app.use((req, res, next) => {
-//   console.log(`Endpoint: ${req.path}`);
-//   next();
-// });
-
 app.get( '/*', (req, res) => res.sendFile( __dirname + "/public/index.html" ) )
+
+// app.get('/sitemap.xml', (req, res) => { res.sendFile(resolve(__dirname, 'public', 'sitemap.xml')) })
 
 app.use( '/API', Router )
 
