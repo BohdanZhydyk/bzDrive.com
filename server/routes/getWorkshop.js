@@ -51,4 +51,22 @@ exports.getWorkshop = (req, res)=>{
 
   }
 
+  // save navigation
+  if(object?.saveNavigation){
+
+    bzDB( { req, res, col:'bzState', act:"FIND_ONE", query:{id:"navigation"} }, (navData)=>{
+
+      const _id = ObjectId(navData?.result?._id)
+
+      const query = { ...navData.result, nav: object?.nav, _id }
+
+      bzDB( { req, res, col:'bzState', act:"UPDATE_ONE", query }, (newNavData)=>{
+        res.send({ ...newNavData, result: newNavData?.result })
+        return
+      })
+
+    })
+
+  }
+
 }

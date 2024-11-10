@@ -10,11 +10,13 @@ import TagP from "./Tags/TagP"
 import TagUl from "./Tags/TagUl"
 import TagContacts from "./Tags/TagContacts"
 import TagSlider from "./Tags/TagSlider"
+import MenuSettings from "./MenuSettings"
 
 
-function Workshop() {
+function Workshop({props:{ nav, AppReload }}) {
 
   const user = GetUser()
+  const isAdmin = user?.role === "admin"
 
   const adminTxt = `Jesteś administratorem - masz pełną kontrolę nad treścią strony!`
 
@@ -22,13 +24,10 @@ function Workshop() {
   const [editMode, setEditMode] = useState(false)
   const [editingTag, setEditingTag] = useState(false)
 
-  function SAVE_WORKSHOP(){
-    WorkshopReducer({ type:"SAVE_WORKSHOP" }, editingTag, setWorkshop, setEditMode, setEditingTag)
-  }
+  const Reducer = (action)=> WorkshopReducer({action, editingTag, setWorkshop, setEditMode, setEditingTag, AppReload})
 
-  function GET_WORKSHOP(){
-    WorkshopReducer({ type:"GET_WORKSHOP" }, editingTag, setWorkshop, setEditMode, setEditingTag)
-  }
+  function SAVE_WORKSHOP(){ Reducer({ type:"SAVE_WORKSHOP" }) }
+  function GET_WORKSHOP(){ Reducer({ type:"GET_WORKSHOP" }) }
 
   useEffect( ()=>{ !workshop && GET_WORKSHOP() },[])
 
@@ -38,7 +37,7 @@ function Workshop() {
     <div className="Workshop flex column">
 
       {
-        user?.role === "admin" &&
+        isAdmin && workshop &&
         <div className="AdminBtn flex end stretch">
 
           <span className="AdminInfo txtOrg bold flex">{adminTxt}</span>
@@ -74,6 +73,8 @@ function Workshop() {
         }
         </>
       }
+
+      { isAdmin && workshop && editMode && <MenuSettings props={{nav, Reducer}} /> }
 
     </div>
   )

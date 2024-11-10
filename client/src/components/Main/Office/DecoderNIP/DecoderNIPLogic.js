@@ -1,10 +1,8 @@
 import { tr } from "./../../../../AppTranslate"
-import { GetUser, PostToApi, sanitizeTxt } from "./../../../../AppFunctions"
+import { PostToApi, sanitizeTxt } from "./../../../../AppFunctions"
 
 
-const lang = GetUser().lang
-
-export const nipPropses = (nip, setNip, partner, setPartner, editErr, setEditErr)=>({
+export const nipPropses = ({nip, setNip, setPartner, editErr, setEditErr, lang})=>({
   classes:"nip",
   legend: tr(`NipLegend`,lang),
   plhol: tr(`NipSearchPlaceHolder`,lang),

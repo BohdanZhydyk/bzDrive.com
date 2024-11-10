@@ -13,7 +13,7 @@ export function ConpanyInfo({ props:{user, activeCompany, companies, setCompanie
 
   const company = companies?.companiesData[activeCompany]
 
-  const propses = ()=> CompanyProps(lang, activeCompany, companies, setCompanies)
+  const propses = ()=> CompanyProps({lang, company, setCompanies})
 
   const compImg = `https://bzdrive.com/files/dealers/${company?.img ?? `empty.png`}`
 

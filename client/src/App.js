@@ -50,7 +50,7 @@ function App() {
 
         <Header props={{state, blur, BLUR, AppReload}}/>
 
-        <Main props={{nav:state.nav, blur, BLUR, size}}/>
+        <Main props={{nav:state.nav, blur, BLUR, size, AppReload}}/>
 
         <Footer props={{state, blur, BLUR}}/>
 

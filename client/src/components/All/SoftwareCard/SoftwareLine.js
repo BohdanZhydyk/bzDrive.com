@@ -4,7 +4,7 @@ import ActionBtn from '../ActionBtn'
 import { bzBytesCalc } from '../../../AppFunctions'
 
 
-export function SoftwareLine({ props:{sw, soft, link, defaultFileAddr, id, isAdmin, editCard, Reducer} }) {
+export function SoftwareLine({ props:{sw, soft, link, defaultFileAddr, id, isAdmin, editCard, docID, Reducer} }) {
 
   const [del, setDel] = useState(false)
 
@@ -25,9 +25,17 @@ export function SoftwareLine({ props:{sw, soft, link, defaultFileAddr, id, isAdm
   return (
     <div className="SoftwareLine flex" >
 
-      <a className="FileName flex start" href={href} target="_blank" rel="noopener noreferrer">
-        {soft?.name}
-      </a>
+      {
+        (docID && !isAdmin)
+        ?
+        <div className="FileName flex start" >
+          {soft?.name}
+        </div>
+        :
+        <a className="FileName flex start" href={href} target="_blank" rel="noopener noreferrer">
+          {soft?.name}
+        </a>
+      }
 
       { !del && <span className="FileSize flex end">{size}</span> }
 

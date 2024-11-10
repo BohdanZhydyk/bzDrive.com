@@ -8,7 +8,7 @@ import { ConpanyInfo } from "./ConpanyInfo"
 function CompaniesPannel({ props:{user, companies, setCompanies} }){
 
   const activeCompany = companies?.activeCompany
-
+  
   return(
     <div className="CompaniesPannel flex stretch wrap">
       <CompaniesList props={{user, activeCompany, companies, setCompanies}} />

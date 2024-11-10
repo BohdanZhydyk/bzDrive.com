@@ -16,7 +16,7 @@ import Document from './Document'
 import SoftPage from './Software/SoftPage'
 
 
-function Main({ props:{nav, blur, BLUR, size} }) {
+function Main({ props:{nav, blur, BLUR, size, AppReload} }) {
 
   const subNav = (link)=> nav?.filter( (el)=> el.to === link )[0]
 
@@ -29,7 +29,7 @@ function Main({ props:{nav, blur, BLUR, size} }) {
       <div className="DownloadIcon flex"><SiteIcon props={{speed:4}} /></div>
       :
       <Routes>
-        <Route path="/"           exact element={<Workshop props={{sub:subNav("/")}}/>} />
+        <Route path="/"           exact element={<Workshop props={{sub:subNav("/"), nav, AppReload}}/>} />
         <Route path="/news"             element={<News props={{sub:subNav("/news")}}/>} />
         <Route path="/software/*"       element={<Software props={{sub:subNav("/software")}}/>} />
         <Route path="/apps/*"           element={<Apps props={{sub:subNav("/apps")}}/>} />

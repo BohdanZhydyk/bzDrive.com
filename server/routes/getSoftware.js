@@ -1,11 +1,11 @@
 const { MongoClient, ObjectId } = require('mongodb')
 const { bzDB } = require('./bzDB')
-const { generateArticleNr } = require('../safe/safe')
+const { generateArticleNr, PayU } = require('../safe/safe')
 
 const axios = require('axios')
 
 
-exports.getStore = async (req, res)=>{
+exports.getSoftware = async (req, res)=>{
 
   const bzToken = req?.body?.bzToken
   const object = req?.body?.object
@@ -17,7 +17,7 @@ exports.getStore = async (req, res)=>{
   // getting CarCards
   if(object?.getCarCards){
 
-    const { id, lang } = object
+    const { id } = object
 
     if(!id){
       bzDB( { req, res, col:'bzDocuments', act:"FIND", query:{ "soft": { $exists: true, $ne: null } } }, (swData)=>{
@@ -51,59 +51,28 @@ exports.getStore = async (req, res)=>{
       })
     }
     else{
-      bzDB( { req, res, col:'bzPayU', act:"FIND_ONE", query:{ bzToken, softwareId:id } }, (payData)=>{
 
-        const OAUTH_CLIENT_ID = '484712'
-        const OAUTH_CLIENT_SECRET = 'e2099867f6bbe5b65458b822b4935502'
-        const PAYU_URL = 'https://secure.snd.payu.com'
+      bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{ "soft": { $elemMatch: { id } } } }, (swData)=>{
 
-        function resultat(result, pay){
-          return({
-            _id: result?._id,
-            nr: {
-              from: result?.nr?.from,
-              sign: result?.nr?.sign,
-              mode: result?.nr?.mode
+        res.send({
+          ...swData,
+          result: {
+            doc: {
+              _id: swData?.result?._id,
+              from: swData?.result?.nr?.from,
+              sign: swData?.result?.nr?.sign,
+              mode: swData?.result?.nr?.mode
             },
             car: {
-              brand: result?.car?.brand,
-              model: result?.car?.model,
-              engine: result?.car?.engine,
-              vin: result?.car?.vin
+              brand: swData?.result?.car?.brand,
+              model: swData?.result?.car?.model,
+              engine: swData?.result?.car?.engine,
+              vin: swData?.result?.car?.vin
             },
-            soft: result?.soft,
-            pay
-          })
-        }
-
-        // 1. Uzyskaj token dostępu OAuth
-        axios.post(`${PAYU_URL}/pl/standard/user/oauth/authorize`, 
-          `grant_type=client_credentials&client_id=${OAUTH_CLIENT_ID}&client_secret=${OAUTH_CLIENT_SECRET}`, 
-          { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
-        )
-        .then(authResponse => {
-            const accessToken = authResponse.data.access_token
-            const orderId = payData?.result?.orderId
-            return axios.get(`${PAYU_URL}/api/v2_1/orders/${orderId}`, {
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
-              }
-            })
+            soft: swData?.result?.soft.filter( el=> el?.id === id)
+          }
         })
-        .then(response => {
-          bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{ "soft": { $elemMatch: { id } } } }, (swData)=>{
-            res.send({ ...swData, result: resultat(swData?.result, response.data) })
-            return
-          })
-        })
-        .catch(error => {
-          bzDB( { req, res, col:'bzDocuments', act:"FIND_ONE", query:{ "soft": { $elemMatch: { id } } } }, (swData)=>{
-            res.send({ ...swData, result: resultat(swData?.result, error.response?.data || error.message) })
-            return
-          })
-        })
-
+        return
       })
     }
 
@@ -305,9 +274,9 @@ exports.getStore = async (req, res)=>{
 
       const { id, lang, price } = object
 
-      const OAUTH_CLIENT_ID = '484712'
-      const OAUTH_CLIENT_SECRET = 'e2099867f6bbe5b65458b822b4935502'
-      const PAYU_URL = 'https://secure.snd.payu.com'
+      const OAUTH_CLIENT_ID = PayU?.OAUTH_CLIENT_ID
+      const OAUTH_CLIENT_SECRET = PayU?.OAUTH_CLIENT_SECRET
+      const PAYU_URL = PayU?.PAYU_URL
 
       // 1. Uzyskaj token dostępu OAuth
       axios.post(`${PAYU_URL}/pl/standard/user/oauth/authorize`, 

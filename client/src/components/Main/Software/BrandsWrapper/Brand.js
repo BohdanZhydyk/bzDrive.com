@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 
-import { brandIco } from "../StoreSoftwareReducer"
+import { brandIco } from "../SoftwareReducer"
 import ActionBtn from "../../../All/ActionBtn"
 import CarLine from "../CarLine"
 

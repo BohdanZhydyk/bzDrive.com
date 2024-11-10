@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 
 import "./Software.scss"
 import { GetUser } from "../../../AppFunctions"
-import { StoreSoftwareReducer } from "./StoreSoftwareReducer"
+import { SoftwareReducer } from "./SoftwareReducer"
 import BrandsWrapper from "./BrandsWrapper"
 import { LastSoftware } from "./LastSoftware"
 
@@ -31,7 +31,7 @@ function Software() {
     swType: "swType"
   }
 
-  const Reducer = (action)=> StoreSoftwareReducer({action, initialState, setInitialState, setSoftware})
+  const Reducer = (action)=> SoftwareReducer({action, initialState, setInitialState, setSoftware})
 
   useEffect( ()=> { Reducer({type:"GET_CAR_CARDS"}) }, [])
 
@@ -41,7 +41,7 @@ function Software() {
   return (
     <div className="Software flex wrap">
 
-      <BrandsWrapper props={{isSoftware, software, isAdmin, carTop, Reducer}}/>
+      <BrandsWrapper props={{isSoftware, software, carTop, Reducer}}/>
 
       {/* <LastSoftware props={{initialState, carTop}} /> */}
 

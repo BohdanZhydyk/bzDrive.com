@@ -1,7 +1,7 @@
 import { sanitizeTxt } from "./../../../../AppFunctions"
 import { tr } from "../../../../AppTranslate"
 
-export const searchPropses = (lang, searchQuery, setSearchQuery, searchLen, SEARCH, ERASE)=>({
+export const searchPropses = ({lang, searchQuery, setSearchQuery, searchLen, SEARCH, ERASE})=>({
   legend: tr(`DocLegend`,lang),
   plhol: tr(`DocSearchPlaceHolder`,lang),
   type: `text`,

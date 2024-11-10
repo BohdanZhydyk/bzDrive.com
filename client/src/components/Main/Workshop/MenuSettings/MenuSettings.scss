@@ -1,0 +1,49 @@
+
+.MenuSettings {
+  width:100%;
+
+  .MainLink {
+    width:100%;
+
+    .Link {
+      width:calc(60% - 1vw);
+      min-height:3vw;
+      margin:1vw 0.5vw 0 0.5vw;
+      background-color:#1912;
+      
+      .LinkName {width:10vw; padding:0 0.5vw;}
+      .LinkTo {width:15vw; padding:0 0.5vw;}
+      .LinkLvl {width:6vw; padding:0 0.5vw;}
+      .LinkBtns {flex:1; padding:0 0.5vw;}
+    }
+
+    .SubLink {
+      width:calc(60% - 3vw);
+      min-height:3vw;
+      margin:1vw 0.5vw 0 2.5vw;
+      background-color:#fd02;
+      
+      .LinkName {width:10vw; padding:0 0.5vw;}
+      .LinkTo {width:15vw; padding:0 0.5vw;}
+      .LinkLvl {width:6vw; padding:0 0.5vw;}
+      .LinkBtns {flex:1; padding:0 0.5vw;}
+    }
+
+    input, select {
+      width:100%;
+      color:#fff;
+      background-color: transparent;
+      border:none;
+
+      option {
+        color:#000;
+      }
+    }
+  }
+
+  .BtnsPannel {
+    width:calc(60% - 2vw);
+    min-height:3vw;
+    margin:1vw 0.5vw 0 0.5vw;
+  }
+}

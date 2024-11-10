@@ -323,32 +323,39 @@ exports.getOffice = (req, res)=>{
         const company = object?.company?.shortName
         const search = object?.search
 
-        const regex = { $regex: search, $options: 'i' }
-        const numberRegex = { $regex: search.replace(/[-\s]/g, '').split('').join('[-\\s]?'), $options: 'i' }
-
         let query = {
-          $and:[
-            // { "nr.mode":mode },
-            { "company":company },
+          $and: [
+            { "company": company },
             {
-              $or: [
-                { "car.vin": regex },
-                { "car.brand": regex },
-                { "car.model": regex },
-                { "car.numbers": regex },
-                { "client.name": regex },
-                { "client.nip": numberRegex },
-                { "client.contacts.tel": numberRegex },
-                { "dealer.name": regex },
-                { "dealer.nip": numberRegex },
-                { "dealer.contacts.tel": numberRegex },
-                { "seller.name": regex },
-                { "seller.nip": numberRegex },
-                { "seller.contacts.tel": numberRegex }
-              ]
+              $or: search.split(',').map(term => term.trim()).map(term => {
+                const regex = { $regex: term, $options: 'i' }
+                const numberRegex = { $regex: term.replace(/[-\s]/g, '').split('').join('[-\\s]?'), $options: 'i' }
+                return {
+                  $or: [
+                    { "car.vin": regex },
+                    { "car.brand": regex },
+                    { "car.model": regex },
+                    { "car.numbers": regex },
+                    { "car.engine": regex },
+                    { "client.name": regex },
+                    { "client.nip": numberRegex },
+                    { "client.contacts.tel": numberRegex },
+                    { "dealer.name": regex },
+                    { "dealer.nip": numberRegex },
+                    { "dealer.contacts.tel": numberRegex },
+                    { "seller.name": regex },
+                    { "seller.nip": numberRegex },
+                    { "seller.contacts.tel": numberRegex },
+                    { "soft": { $elemMatch: { "id": regex } } },
+                    { "soft": { $elemMatch: { "programmer": regex } } },
+                    { "soft": { $elemMatch: { "ECUType": regex } } }
+                  ]
+                }
+              })
             }
           ]
         }
+
         
         bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (docsData)=>{
 

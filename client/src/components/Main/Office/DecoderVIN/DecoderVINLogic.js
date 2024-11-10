@@ -2,7 +2,7 @@ import { tr } from "./../../../../AppTranslate"
 import { PostToApi, sanitizeTxt } from "./../../../../AppFunctions"
 
 
-export const vinPropses = (vin, setVin, lines, setLines, editErr, setEditErr, lang)=>({
+export const vinPropses = ({vin, setVin, setLines, editErr, setEditErr, lang})=>({
   classes:"vin",
   legend: tr(`VinLegend`,lang),
   plhol: tr(`VinSearchPlaceHolder`,lang),

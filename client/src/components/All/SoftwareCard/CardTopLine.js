@@ -4,7 +4,7 @@ import ActionBtn from '../ActionBtn'
 
 
 export function CardTopLine({
-  props: {sw, printMode, defaultFileAddr, setIsLine, editCard, setEditCard, del, setDel, Reducer}
+  props: {sw, printMode, defaultFileAddr, isAdmin, setIsLine, editCard, setEditCard, del, setDel, docID, Reducer}
 }) {
 
   const progIcon = `https://bzdrive.com/files/ico/Prog ${sw?.programmer}.png`
@@ -44,8 +44,14 @@ export function CardTopLine({
         }
 
         <div className="AdminBtns flex end wrap">
+          {
+            docID && isAdmin &&
+            <a className="flex" href={`/document/${docID}`} target="_blank" rel="noreferrer" >
+              <ActionBtn props={{name:'link', click:()=>{}}} />
+            </a>
+          }
         {
-          !printMode &&
+          !printMode && !docID &&
           <>
             { !del && <ActionBtn props={deletePropses} /> }
             { !editCard && !del && <ActionBtn props={editPropses} /> }

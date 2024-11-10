@@ -1,15 +1,16 @@
 import { PostToApi } from "../../../AppFunctions"
 
 
-export const WorkshopReducer = (action, editingTag, setWorkshop, setEditMode, setEditingText)=>{
+export const WorkshopReducer = ({action, editingTag, setWorkshop, setEditMode, setEditingTag, AppReload})=>{
 
   setWorkshop(prev=>false)
   setEditMode(prev=>false)
-  setEditingText(prev=>false)
+  setEditingTag(prev=>false)
 
   switch (action.type) {
-    case "GET_WORKSHOP":    GET_WORKSHOP();   break;
-    case "SAVE_WORKSHOP":   SAVE_WORKSHOP();  break;
+    case "GET_WORKSHOP":      GET_WORKSHOP();       break
+    case "SAVE_WORKSHOP":     SAVE_WORKSHOP();      break
+    case "SAVE_NAVIGATION":   SAVE_NAVIGATION();    break
     default: break;
   }
 
@@ -21,6 +22,11 @@ export const WorkshopReducer = (action, editingTag, setWorkshop, setEditMode, se
   function SAVE_WORKSHOP(){
     const query = {setWorkshop:true, tag:editingTag}
     PostToApi( '/getWorkshop', query, (data)=> setWorkshop(data?.workshop) )
+  }
+
+  function SAVE_NAVIGATION(){
+    const query = {saveNavigation:true, nav:action?.nav}
+    PostToApi( '/getWorkshop', query, (data)=> AppReload() )
   }
 
 }

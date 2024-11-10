@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import FileUpload from '../FileUpload'
 import { SoftwareLine } from './SoftwareLine'
 
 
-export function SoftwarePannel({ props:{setSoft, sw, s, setSave, link, defaultFileAddr, id, isAdmin, editCard, Reducer} }) {
+export function SoftwarePannel({ props:{setSoft, sw, s, setSave, link, defaultFileAddr, id, isAdmin, editCard, docID, Reducer} }) {
 
   function SET_SOFTWARE_FILES(res){
     setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, files: soft?.files ? [...soft?.files, res?.data] : [res?.data]} ) )
@@ -24,7 +24,7 @@ export function SoftwarePannel({ props:{setSoft, sw, s, setSave, link, defaultFi
           {
             sw.files.map( (soft, n)=>{
               const key = `SoftWareLine${n}`
-              const props = {sw, soft, link, defaultFileAddr, id, isAdmin, editCard, Reducer}
+              const props = {sw, soft, link, defaultFileAddr, id, isAdmin, editCard, docID, Reducer}
               return <SoftwareLine props={props} key={key} />
             })
           }

@@ -15,7 +15,7 @@ import { GroupInfo2 } from './GroupInfo2'
 import { SoftwarePannel } from './SoftwarePannel'
 
 
-function SoftwareCard({ props:{car, setCar, setSoft, sw, s, setSave, printMode, link, defaultFileAddr, isLine, setIsLine} }) {
+function SoftwareCard({ props:{car, setCar, setSoft, sw, s, setSave, printMode, link, defaultFileAddr, isLine, setIsLine, docID} }) {
 
   const user = GetUser()
   const lang = user?.lang
@@ -30,19 +30,19 @@ function SoftwareCard({ props:{car, setCar, setSoft, sw, s, setSave, printMode, 
 
   const {
     brand, model, ECUType, engine, swVersion, hwVersion, vin,
-    programmer, swType, readMethod, mod, price, swPrice
+    programmer, swType, readMethod, mod
   } = SoftPropses({
     tr, lang, car, setCar, setSoft, sw, s, setSave, editErr, setEditErr, programmers, swTypes, readMethods, modTypes
   })
 
   const lines1 = [
-    // {classes:"Brand", props:brand, input:<InputText props={ brand }/> },
-    // {classes:"Model", props:model, input:<InputText props={ model }/> },
-    // {classes:"Engine", props:engine, input:<InputText props={ engine }/> },
-    // {classes:"VIN", props:vin, input:<InputText props={ vin }/> },
+    {classes:"Brand", props:brand, input:<InputText props={ brand }/> },
+    {classes:"Model", props:model, input:<InputText props={ model }/> },
+    {classes:"Engine", props:engine, input:<InputText props={ engine }/> },
+    {classes:"VIN", props:vin, input:<InputText props={ vin }/> },
     {classes:"ECUType", props:ECUType, input:<InputText props={ ECUType }/> },
-    {classes:"SoftwareVersion", props:swVersion, input:<InputText props={ swVersion }/> },
-    {classes:"HardwareVersion", props:hwVersion, input:<InputText props={ hwVersion }/> }
+    {classes:"HardwareVersion", props:hwVersion, input:<InputText props={ hwVersion }/> },
+    {classes:"SoftwareVersion", props:swVersion, input:<InputText props={ swVersion }/> }
   ]
 
   const lines2 = [
@@ -57,7 +57,7 @@ function SoftwareCard({ props:{car, setCar, setSoft, sw, s, setSave, printMode, 
   return (
     <div className="SoftwareCard flex stretch wrap">
 
-      <CardTopLine props={{sw, printMode, defaultFileAddr, setIsLine, editCard, setEditCard, del, setDel, Reducer}}/>
+      <CardTopLine props={{sw, printMode, defaultFileAddr, isAdmin, setIsLine, editCard, setEditCard, del, setDel, docID, Reducer}}/>
 
       <div className="GroupInfo flex column start">
         <Sticker props={{setSoft, sw, s, setSave, link, defaultFileAddr, id, isAdmin, editCard, Reducer}}/>
@@ -67,7 +67,7 @@ function SoftwareCard({ props:{car, setCar, setSoft, sw, s, setSave, printMode, 
 
       <div className="ArticlesPannel flex column start">
 
-        <SoftwarePannel props={{setSoft, sw, s, setSave, link, defaultFileAddr, id, isAdmin, editCard, Reducer}}/>
+        <SoftwarePannel props={{setSoft, sw, s, setSave, link, defaultFileAddr, id, isAdmin, editCard, docID, Reducer}}/>
 
       </div>
       

@@ -27,7 +27,7 @@ function SearchDocs({ props:{company, search, setSearch, searchQuery, setSearchQ
 
       <div className="SearchPannel flex stretch end">
         <div className="SearchInput flex">
-          <InputText props={searchPropses(lang, searchQuery, setSearchQuery, searchLen, SEARCH, ERASE)}/>
+          <InputText props={searchPropses({lang, searchQuery, setSearchQuery, searchLen, SEARCH, ERASE})}/>
         </div>
       </div>
 

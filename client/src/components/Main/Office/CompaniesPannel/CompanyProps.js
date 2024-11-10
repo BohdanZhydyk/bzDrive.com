@@ -2,7 +2,7 @@ import { tr } from "../../../../AppTranslate"
 import { sanitizeTxt } from "../../../../AppFunctions"
 
 
-export const CompanyProps = (lang, company, companies, setCompanies)=>{
+export const CompanyProps = ({lang, company, setCompanies})=>{
 
   return {
     shortName: {

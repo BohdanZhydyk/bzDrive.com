@@ -575,7 +575,17 @@ export const PostToApi = async (link, object, callback)=>{
   }))
   .catch( (err)=>{
     console.error("IP Error:", err)
-    return false
+    return {
+      host: hostname,
+      from: link,
+      ip: false,
+      postal_code: false,
+      country_code: false,
+      country_name: false,
+      region: false,
+      city: false,
+      asn_org: false
+    }
   })
 
   // Send the request to the server with the required data and get response

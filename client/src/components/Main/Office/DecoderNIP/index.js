@@ -67,7 +67,7 @@ function DecoderNIP({ props }){
       }
 
       <div className="NIPinput flex">
-        <InputText props={nipPropses(nip, setNip, partner, setPartner, editErr, setEditErr)}/>
+        <InputText props={nipPropses({nip, setNip, setPartner, editErr, setEditErr, lang})}/>
       </div>
 
       {

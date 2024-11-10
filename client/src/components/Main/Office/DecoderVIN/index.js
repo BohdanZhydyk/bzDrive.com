@@ -41,7 +41,7 @@ function DecoderVIN(){
 
       <div className="VINinputPannel flex end">
         <div className="VINinput flex">
-          <InputText props={vinPropses(vin, setVin, lines, setLines, editErr, setEditErr, lang)}/>
+          <InputText props={vinPropses({vin, setVin, setLines, editErr, setEditErr, lang})}/>
         </div>
       </div>
 

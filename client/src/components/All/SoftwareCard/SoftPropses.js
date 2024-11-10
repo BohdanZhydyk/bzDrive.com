@@ -115,7 +115,7 @@ export const SoftPropses = ({
     val: sw?.swType ?? '',
     err: editErr?.swType ?? '',
     cbVal: (val)=>{
-      setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, swType:sanitizeTxt(val, `default`).sanText} ) )
+      setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, swType: val === "" ? "" : `${soft.swType ? `${soft.swType}, ` : ""}${sanitizeTxt(val, `default`).sanText}`} ) )
       setSave(true)
     },
     cbErr: (val)=> setEditErr( (prev)=> ({...prev, swType:sanitizeTxt(val, `default`).sanErr}))
@@ -128,7 +128,7 @@ export const SoftPropses = ({
     val: sw?.readMethod ?? '',
     err: editErr?.readMethod ?? '',
     cbVal: (val)=>{
-      setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, readMethod:sanitizeTxt(val, `default`).sanText} ) )
+      setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, readMethod: val === "" ? "" : `${soft.readMethod ? `${soft.readMethod}, ` : ""}${sanitizeTxt(val, `default`).sanText}`} ) )
       setSave(true)
     },
     cbErr: (val)=> setEditErr( (prev)=> ({...prev, readMethod:sanitizeTxt(val, `default`).sanErr}))
@@ -141,21 +141,9 @@ export const SoftPropses = ({
     val: sw?.mod ?? '',
     err: editErr?.mod ?? '',
     cbVal: (val)=>{
-      setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, mod:sanitizeTxt(val, `default`).sanText} ) )
+      setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, mod: val === "" ? "" : `${soft.mod ? `${soft.mod}, ` : ""}${sanitizeTxt(val, `default`).sanText}`} ) )
       setSave(true)
     },
     cbErr: (val)=> setEditErr( (prev)=> ({...prev, mod:sanitizeTxt(val, `default`).sanErr}))
-  },
-  price:{
-    classes:"Price",
-    legend: "Price",
-    type: `text`,
-    val: sw?.price ? sanitizeTxt(sw.price, `price`).sanText : '0.00',
-    err: editErr?.price ?? '',
-    cbVal: (val)=>{
-      setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, price:sanitizeTxt(val, `price`).sanText} ) )
-      setSave(true)
-    },
-    cbErr: (val)=> setEditErr( (prev)=> ({...prev, price:sanitizeTxt(val, `price`).sanErr}))
   }
 })

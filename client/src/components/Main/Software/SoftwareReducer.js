@@ -1,10 +1,10 @@
 import { bzDeleteFolder, PostToApi } from "../../../AppFunctions";
 
-export function StoreSoftwareReducer(
-  {action, initialState, setInitialState, setSoftware, soft, setSoft, car, setCar}
+export function SoftwareReducer(
+  {action, initialState, setInitialState, setSoftware, soft, setSoft, car, setCar, doc, setDoc}
 ){
   
-  const { id, lang, brand, folderAddr } = action
+  const { id, brand } = action
 
   switch (action?.type) {
     case "GET_CAR_CARDS":         GET_CAR_CARDS();          break
@@ -12,7 +12,7 @@ export function StoreSoftwareReducer(
     case "GET_CAR_CARD":          GET_CAR_CARD();           break
     // case "CANCEL_EDITING_CARD":   CANCEL_EDITING_CARD();    break
     // case "SAVE_CARD":             SAVE_CARD();              break
-    case "BUY_SOFTWARE":          BUY_SOFTWARE();           break
+    // case "BUY_SOFTWARE":          BUY_SOFTWARE();           break
     default:                                                break
   }
 
@@ -27,7 +27,7 @@ export function StoreSoftwareReducer(
       return brandCounts.sort((a, b) => a.brand.localeCompare(b.brand))
     }
     const query = {getCarCards:true}
-    PostToApi( '/getStore', query, (data)=>{
+    PostToApi( '/getSoftware', query, (data)=>{
       if(data?.length > 0){
         setInitialState( prev=> data )
         setSoftware( prev=> sortByBrands(data) )
@@ -44,10 +44,11 @@ export function StoreSoftwareReducer(
   function GET_CAR_CARD(){
     if(id === "new"){ setSoft( prev=>({}) ) }
     else{
-      const query = {getCarCards:true, id, lang}
-      PostToApi( '/getStore', query, (data)=>{
-        setSoft( prev=> data )
+      const query = {getCarCards:true, id}
+      PostToApi( '/getSoftware', query, (data)=>{
+        setSoft( prev=> data?.soft )
         setCar(prev=> data?.car)
+        setDoc(prev=> data?.doc)
       })
     }
   }
@@ -58,7 +59,7 @@ export function StoreSoftwareReducer(
   //   const isNew = !car?._id
   //   const query = {saveCarCard:true, car}
   //   setCar(null)
-  //   PostToApi( '/getStore', query, (data)=>{
+  //   PostToApi( '/getSoftware', query, (data)=>{
   //     if(isNew){
   //       navigate(`/softpage/${data}`)
   //       setEdit(false)
@@ -74,13 +75,13 @@ export function StoreSoftwareReducer(
   //   })
   // }
 
-  function BUY_SOFTWARE() {
-    const host = window.location.host
-    const query = { buySoftware:true, id, lang, host, price: 100 } // Cena do testów, w groszach
-    PostToApi('/getStore', query, (data)=> {
-      if(data){ window.location.href = data } // Przekierowanie do PayU
-    })
-  }
+  // function BUY_SOFTWARE() {
+  //   const host = window.location.host
+  //   const query = { buySoftware:true, id, lang, host, price: 100 } // Cena do testów, w groszach
+  //   PostToApi('/getSoftware', query, (data)=> {
+  //     if(data){ window.location.href = data } // Przekierowanie do PayU
+  //   })
+  // }
 
 }
 
