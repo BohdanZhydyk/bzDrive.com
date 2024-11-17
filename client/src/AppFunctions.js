@@ -418,25 +418,25 @@ export const bzGetEarnings = (arr)=>{
   }
 
   const DOCS = {
-    ZL: SumArr("ZL", arr),
-    ZU: SumArr("ZU", arr),
-    VA: SumArr("VA", arr),
-    FS: SumArr("FS", arr),
-    FZ: SumArr("FZ", arr),
-    PS: SumArr("PS", arr),
-    PZ: SumArr("PZ", arr),
+    ZL: SumArr("ZL", arr), // Calkowity przychod ze wszystkich wykonanych zlecen
+    ZU: SumArr("ZU", arr), // kwota zaplaconego ZUS
+    VA: SumArr("VA", arr), // kwota zaplaconego w tym miesiacu VAT
+    FS: SumArr("FS", arr), // wszystkie oficjalne faktury sprzedazy
+    FZ: SumArr("FZ", arr), // wszystkie oficjalne faktury zakupu
+    PS: SumArr("PS", arr), // wszystkie oficjalne paragony sprzedazy
+    PZ: SumArr("PZ", arr), // nieudokumentowane zakupy
   }
 
-  const tax = bzCalc("+", DOCS?.ZU?.NET, DOCS?.VA?.NET)
-  const income = bzCalc("+", DOCS?.FS?.NET, DOCS?.PS?.NET)
-  const expense = DOCS?.FZ?.NET
-  const total = bzCalc("-", income, bzCalc("+", tax, expense))
+  const tax = bzCalc("+", DOCS?.ZU?.NET, DOCS?.VA?.NET) // wszystkie podatki 
+  const income = bzCalc("+", DOCS?.FS?.NET, DOCS?.PS?.NET) // przychod oficjalny netto
+  const expense = DOCS?.FZ?.NET // straty oficjalnie netto
+  const total = bzCalc("-", income, bzCalc("+", tax, expense)) // zarobki oficjalnie netto
 
-  const incomeVat = bzCalc("+", DOCS?.FS?.PRV, DOCS?.PS?.PRV)
-  const expenseVat = DOCS?.FZ?.PRV
-  const vat = bzCalc("-", incomeVat, expenseVat)
+  const incomeVat = bzCalc("+", DOCS?.FS?.PRV, DOCS?.PS?.PRV)  // VAT z zarobkow
+  const expenseVat = DOCS?.FZ?.PRV // VAT z strat
+  const vat = bzCalc("-", incomeVat, expenseVat) // sumarnie VAT
 
-  const blackIncome = bzCalc("-", DOCS?.ZL?.SUM, total)
+  const blackIncome = DOCS?.ZL?.SUM
   const blackExpense = DOCS?.PZ?.SUM
   const blackTotal = bzCalc("-", blackIncome, blackExpense)
 
@@ -574,7 +574,7 @@ export const PostToApi = async (link, object, callback)=>{
       //connection_type:asn_number:asn:currency_code:currency_name:success:premium: 
   }))
   .catch( (err)=>{
-    console.error("IP Error:", err)
+    console.error("geoiplookup.io", `IP Error: ${err?.message}`)
     return {
       host: hostname,
       from: link,
@@ -598,7 +598,7 @@ export const PostToApi = async (link, object, callback)=>{
 
       if(GetUser().lang) return GetUser().lang?.toLowerCase()
 
-      const language = Data?.IP?.country_code?.toLowerCase()
+      const language = Data?.IP?.country_code ? Data?.IP?.country_code?.toLowerCase() : "en"
       return(
         Data?.user?.lang
         ? Data.user.lang

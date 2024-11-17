@@ -41,57 +41,61 @@
     }
   }
 
-  .GroupInfo {
-    width:calc((100% / 3) - 1vw);
-    padding:0.5vw;
+  .Groups {
+    width:100%;
 
-    .Sticker {
-      width:calc(100% - 0.5vw - 2px);
-      min-height:10vw;
-      padding:0.25vw;
-      border:1px solid #999;
-      border-radius:0.5vw;
+    .GroupInfo {
+      width:calc((100% / 3) - 1vw);
+      padding:0.5vw;
 
-      .StickerDownload {
-        width:100%;
-        top:0;
-        right:0;
-        padding:0.5vw;
-      }
-
-      .NoSticker {
-        font-size:130%;
-      }
-
-      .StickerLine {
-        width:calc(100% - 4vw);
-        padding:0 1vw;
-        border-bottom:1px dashed #555;
-      }
-
-      .StickerImg {
-        width:100%;
+      .Sticker {
+        width:calc(100% - 0.5vw - 2px);
+        min-height:10vw;
+        padding:0.25vw;
+        border:1px solid #999;
         border-radius:0.5vw;
+  
+        .StickerDownload {
+          width:100%;
+          top:0;
+          right:0;
+          padding:0.5vw;
+        }
+  
+        .NoSticker {
+          font-size:130%;
+        }
+  
+        .StickerLine {
+          width:calc(100% - 4vw);
+          padding:0 1vw;
+          border-bottom:1px dashed #555;
+        }
+  
+        .StickerImg {
+          width:100%;
+          border-radius:0.5vw;
+        }
       }
-    }
-
-    .CardLine {
-      width:100%;
-      min-height:2vw;
-      font-family: 'Courier New', monospace;
-
-      .Description {
-        width:35%;
-      }
-
-      .Value {
-        flex:1;
+  
+      .CardLine {
+        width:100%;
+        min-height:2vw;
+        font-family: 'Courier New', monospace;
+  
+        .Description {
+          width:35%;
+        }
+  
+        .Value {
+          flex:1;
+        }
       }
     }
   }
 
   .ArticlesPannel {
-    width:calc((100% / 3 * 2) - 2vw);
+    width:calc(100% - 2vw);
     padding:0.5vw 1vw;
 
     .SoftwarePannel {
@@ -125,6 +129,10 @@
             width:10%;
           }
         }
+      }
+
+      .UploadBtns {
+        width:100%;
       }
     }
   }

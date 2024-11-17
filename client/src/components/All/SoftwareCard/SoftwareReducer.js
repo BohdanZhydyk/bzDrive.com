@@ -129,7 +129,7 @@ export const programmers = ["Xhorse Multi-Prog", "Alientech Kess V2", "Alientech
 export const swTypes =  ["FULL", "EEPROM", "EPR", "FLASH", "INT-FLASH", "EXT-FLASH", "FLS", "MAPS", "MPC", "BOOT"]
 export const readMethods = ["Bench", "OBD-II", "BDM", "CAN", "K-Line", "Bootmode", "JTAG", "Virtual Read"]
 export const modTypes = [
-  "Original", "Tuning Stage", "Tuning Stage-1", "Tuning Stage-2", "Tuning Stage-3",
+  "Original", "Tuning Stage", "Tuning Stage-1", "Tuning Stage-2", "Tuning Stage-3", "IMMO off",
   "ECO off", "EGR off", "DPF off", "AdBlue off", "KAT off", "DTC off", "Vmax off", "MAF off", "Start/Stop off"
 ]
 

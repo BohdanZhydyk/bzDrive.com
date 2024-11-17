@@ -382,7 +382,7 @@ exports.getOffice = (req, res)=>{
         let query = {
           $and: [
             { "company": company },
-            { "status": { $ne: "deleted" } },
+            { "status": { $ne: "delete" } },
             { "articles": { $exists: true, $ne: null, $not: { $size: 0 } } },
             { $nor: [
                 { "nr.mode": "ZL", "status": "open" },

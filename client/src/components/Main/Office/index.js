@@ -56,15 +56,6 @@ function Office({ props:{size, sub} }) {
     setVisibleSide( prev=> mobile ? {mobile, side:true} : {mobile, side:false} )
   },[mobile])
 
-  // console.log("size",size())
-  // console.log("sub",sub)
-  // console.log("companies",companies)
-  // console.log("company",company)
-  // console.log("docs",docs)
-  // console.log("search",search)
-  // console.log("visibleSide", visibleSide)
-  // console.log("mobile", mobile)
-
   return(
     <div className="Office flex column">
 

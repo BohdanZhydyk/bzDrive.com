@@ -6,7 +6,7 @@ import ActionBtn from "../../../../All/ActionBtn"
 import { SoftwareLine } from "./SoftwareLine"
 import { GetUser } from "../../../../../AppFunctions"
 
-function ElSoft({ props:{user, nr, car, setCar, soft, setSoft, save, setSave, printMode} }){
+function ElSoft({ props:{user, nr, car, setCar, soft, setSoft, setSave, printMode} }){
 
   const isAdmin = GetUser().role === "admin"
 

@@ -75,7 +75,7 @@ function EditArea({ props:{company, l, doc, printMode, EDIT_DOC, Reducer} }) {
   const ElSummaryProps = {nr, setNr, setSave, articles, printMode}
   const ElCommentsProps = {user, car, setCar, setSave, printMode}
   const ElFilesProps = {user, doc, nr, setSave, files, setFiles, printMode}
-  const ElSoftProps = {user, nr, car, setCar, soft, setSoft, save, setSave, printMode}
+  const ElSoftProps = {user, nr, car, setCar, soft, setSoft, setSave, printMode}
   const ElSignaturesProps = {user}
 
   const isFaults = ["ZL"].includes(mode)

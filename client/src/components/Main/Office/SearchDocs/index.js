@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import "./SearchDocs.scss"
 import DocumentLine from "../DocumentLine"
@@ -17,11 +17,11 @@ function SearchDocs({ props:{company, search, setSearch, searchQuery, setSearchQ
 
   const searchLen = search?.length
 
-  function SEARCH(){ Reducer({type:"SEARCH_DOCUMENTS"}) }
   function ERASE(){ setSearch([]); setSearchQuery("") }
+  function SEARCH(){ Reducer({type:"SEARCH_DOCUMENTS"}) }
 
   const searchVisible = visibleSide?.mobile ? {...visibleSide, side:true} : {...visibleSide}
-
+  
   return(
     <div className="SearchDocs flex column">
 

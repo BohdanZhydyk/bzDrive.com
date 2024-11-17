@@ -4,13 +4,16 @@ import ActionBtn from '../ActionBtn'
 
 
 export function CardTopLine({
-  props: {sw, printMode, defaultFileAddr, isAdmin, setIsLine, editCard, setEditCard, del, setDel, docID, Reducer}
+  props: {car, sw, printMode, defaultFileAddr, isAdmin, setIsLine, editCard, setEditCard, del, setDel, docID, Reducer}
 }) {
 
   const progIcon = `https://bzdrive.com/files/ico/Prog ${sw?.programmer}.png`
   const alt = `${sw?.programmer}`
 
-  const title = `${sw?.ECUType?.length ? sw.ECUType :  "ECUType"}`
+  const brand = car?.brand?.length ? car.brand : "brand"
+  const model = car?.model?.length ? car.model : "model"
+  const ECUType = sw?.ECUType?.length ? sw.ECUType :  "ECUType"
+  const title = `${brand} ${model} ${ECUType}`
   
   const editPropses = { name:`edit`, click:()=>{ setEditCard(prev=>!prev) } }
   const deletePropses = { name:"delete", click:()=>setDel(true) }

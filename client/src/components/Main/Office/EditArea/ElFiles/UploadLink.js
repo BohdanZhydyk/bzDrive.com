@@ -4,9 +4,7 @@ import InputText from "../../../../All/InputText"
 import { sanitizeTxt } from "../../../../../AppFunctions"
 
 
-export function UploadLink({ props:{
-  tr, lang, link, setLink, err, setErr, opened, OPEN_AREA, CANCEL_LINK, ADD_LINK
-} }){
+export function UploadLink({ props:{ tr, lang, link, setLink, err, setErr, CANCEL_LINK, ADD_LINK } }){
   
   const isErr = !err || err?.fileAddr
 
@@ -28,40 +26,30 @@ export function UploadLink({ props:{
   }
 
   return(
-    <div className="UploadLink flex column">
+    <div className="UploadLink flex end">
 
-      {
-        !opened &&
-        <div className="AddBtn flex" onClick={OPEN_AREA}>
-          { tr("AddLinkArea",lang) }
+      <div className="FileNameInput">
+        <InputText props={fileNameProps} />
+      </div>
+
+      <div className="FileAddrInput">
+        <InputText props={fileAddrProps} />
+      </div>
+
+      <div className="UploadLinksBtns flex">
+
+        <div className="UploadLinksBtn BtnRed flex" onClick={CANCEL_LINK}>
+          {tr("ImgBtn_cancel",lang)}
         </div>
-      }
 
-      {
-        opened &&
-        <div className="UploadLinkInputs">
-          <InputText props={fileNameProps} />
-          <InputText props={fileAddrProps} />
-        </div>
-      }
-
-      {
-        opened &&
-        <div className="UploadLinksBtns flex">
-
-          <div className="UploadLinksBtn BtnRed flex" onClick={CANCEL_LINK}>
-            {tr("ImgBtn_cancel",lang)}
+        {
+          !isErr &&
+          <div className="UploadLinksBtn BtnGrn flex" onClick={ADD_LINK}>
+            { tr("ImgBtn_upload",lang) }
           </div>
+        }
 
-          {
-            !isErr &&
-            <div className="UploadLinksBtn BtnGrn flex" onClick={ADD_LINK}>
-              { tr("ImgBtn_upload",lang) }
-            </div>
-          }
-
-        </div>
-      }
+      </div>
 
     </div>
   )

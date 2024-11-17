@@ -4,22 +4,27 @@ import ActionBtn from '../ActionBtn'
 import { bzBytesCalc } from '../../../AppFunctions'
 
 
-export function SoftwareLine({ props:{sw, soft, link, defaultFileAddr, id, isAdmin, editCard, docID, Reducer} }) {
+export function SoftwareLine({ props:{sw, software, link, defaultFileAddr, id, role, editCard, docID, Reducer} }) {
 
+  const [more, setMore] = useState(false)
   const [del, setDel] = useState(false)
 
+  const isAdmin = role === "admin"
+  const isGuest = !role || role === "guest"
+
   const swID = sw?.id
-  const fileID = soft?.fileID
-  const fileName = soft?.name
+  const fileID = software?.fileID
+  const fileName = software?.name
   const fileAddr = defaultFileAddr
 
-  const href = `${link}/${defaultFileAddr}/${soft?.name}`
-  const softSize = bzBytesCalc(soft?.size)
+  const href = `${link}/${defaultFileAddr}/${software?.name}`
+  const softSize = bzBytesCalc(software?.size)
   const size = `${softSize?.num} ${softSize?.unit}`
 
   function DELETE_SOFT(){
     Reducer({type:`DELETE_SOFT`, swID, fileID, fileAddr, fileName})
     setDel(prev=>false)
+    setMore(prev=>false)
   }
 
   return (
@@ -29,22 +34,40 @@ export function SoftwareLine({ props:{sw, soft, link, defaultFileAddr, id, isAdm
         (docID && !isAdmin)
         ?
         <div className="FileName flex start" >
-          {soft?.name}
+          {software?.name}
         </div>
         :
         <a className="FileName flex start" href={href} target="_blank" rel="noopener noreferrer">
-          {soft?.name}
+          {software?.name}
         </a>
       }
 
-      { !del && <span className="FileSize flex end">{size}</span> }
+      { !more && <span className="FileSize flex end">{size}</span> }
+
+      {
+        !isGuest && !editCard &&
+        <a className="flex" href={href} download={software?.name} target="_blank" rel="noreferrer">
+          <ActionBtn props={{name:"download", click:()=>{}}} />
+        </a>
+      }
 
       {
         isAdmin && editCard && id !== "new" &&
         <>
-          { !del && <ActionBtn props={{ name: `delete`, click:()=>setDel(prev=>true) }} /> }
-          { del && <ActionBtn props={{ name: `check`, click:DELETE_SOFT }} /> }
-          { del && <ActionBtn props={{ name: `cancel`, click:()=>setDel(prev=>false) }} /> }
+
+          {
+            more && !del &&
+            <a className="flex" href={href} download={software?.name} target="_blank" rel="noreferrer">
+              <ActionBtn props={{name:"download", click:()=>setMore(prev=>false)}} />
+            </a>
+          }
+
+          { more && del && <ActionBtn props={{ name: `check`, click:DELETE_SOFT }} /> }
+          { more && del && <ActionBtn props={{ name: `cancel`, click:()=>setDel(prev=>false) }} /> }
+          { more && !del && <ActionBtn props={{ name: `delete`, click:()=>setDel(prev=>true) }} /> }
+
+          <ActionBtn props={{name:"more", click:()=>setMore(prev=>!prev)}} />
+
         </>
       }
 

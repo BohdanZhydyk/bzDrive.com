@@ -6,18 +6,22 @@ import ActionBtn from './../ActionBtn'
 
 function FileUpload({ props: { defaultFileAddr, defaultFileName, allowedMimeTypes = [], cb } }) {
 
-  const [file, setFile] = useState(null)
-  const [fileName, setFileName] = useState(defaultFileName ?? "")
-  const [fileAddr, setFileAddr] = useState(defaultFileAddr ?? "")
-  const [fileErr, setFileErr] = useState(false)
+  const [file, setFile] = useState( null )
+  const [fileName, setFileName] = useState( "" )
+  const [fileAddr, setFileAddr] = useState( defaultFileAddr ?? "" )
+  const [fileErr, setFileErr] = useState( false )
   
   const fileInputRef = useRef(null)
+
+  function sanitizeFileName(filename){
+    setFileName( prev=> sanitizeTxt(filename, "fileName")?.sanText )
+  }
 
   function CHANGE_FILE(event) {
     const selectedFile = event.target.files[0]
     if (selectedFile) {
       setFile(selectedFile)
-      setFileName(defaultFileName ?? selectedFile.name)
+      defaultFileName ? sanitizeFileName(defaultFileName) : sanitizeFileName(selectedFile.name)
     }
   }
 
@@ -27,7 +31,7 @@ function FileUpload({ props: { defaultFileAddr, defaultFileName, allowedMimeType
     if (file && fileName) {
       bzUploadFile(file, fileAddr, fileName, (res) => {
         if (res?.data?.size) {
-          cb(res)
+          cb(res?.data)
           setFile(null)
           setFileName("")
         }

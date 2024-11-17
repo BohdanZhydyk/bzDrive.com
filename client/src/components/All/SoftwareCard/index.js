@@ -19,8 +19,9 @@ function SoftwareCard({ props:{car, setCar, setSoft, sw, s, setSave, printMode, 
 
   const user = GetUser()
   const lang = user?.lang
-  const isAdmin = user?.role === "admin"
-  
+  const role = user?.role
+  const isAdmin = role === "admin"
+
   const [editCard, setEditCard] = useState(false)
   const [del, setDel] = useState(false)
 
@@ -40,12 +41,12 @@ function SoftwareCard({ props:{car, setCar, setSoft, sw, s, setSave, printMode, 
     {classes:"Model", props:model, input:<InputText props={ model }/> },
     {classes:"Engine", props:engine, input:<InputText props={ engine }/> },
     {classes:"VIN", props:vin, input:<InputText props={ vin }/> },
-    {classes:"ECUType", props:ECUType, input:<InputText props={ ECUType }/> },
-    {classes:"HardwareVersion", props:hwVersion, input:<InputText props={ hwVersion }/> },
-    {classes:"SoftwareVersion", props:swVersion, input:<InputText props={ swVersion }/> }
+    {classes:"ECUType", props:ECUType, input:<InputText props={ ECUType }/> }
   ]
-
+  
   const lines2 = [
+    {classes:"HardwareVersion", props:hwVersion, input:<InputText props={ hwVersion }/> },
+    {classes:"SoftwareVersion", props:swVersion, input:<InputText props={ swVersion }/> },
     {classes:"Programmer", props:programmer, input:<InputSelect props={ programmer }/> },
     {classes:"SoftwareType", props:swType, input:<InputSelect props={ swType }/> },
     {classes:"ReadMethod", props:readMethod, input:<InputSelect props={ readMethod }/> },
@@ -57,17 +58,23 @@ function SoftwareCard({ props:{car, setCar, setSoft, sw, s, setSave, printMode, 
   return (
     <div className="SoftwareCard flex stretch wrap">
 
-      <CardTopLine props={{sw, printMode, defaultFileAddr, isAdmin, setIsLine, editCard, setEditCard, del, setDel, docID, Reducer}}/>
+      <CardTopLine props={{car, sw, printMode, defaultFileAddr, isAdmin, setIsLine, editCard, setEditCard, del, setDel, docID, Reducer}}/>
 
-      <div className="GroupInfo flex column start">
-        <Sticker props={{setSoft, sw, s, setSave, link, defaultFileAddr, id, isAdmin, editCard, Reducer}}/>
-        <GroupInfo1 props={{lines1, editCard}}/>
-        <GroupInfo2 props={{lines2, editCard}}/>
+      <div className="Groups flex stretch wrap">
+        <div className="GroupInfo column start flex">
+          <Sticker props={{setSoft, sw, s, setSave, link, defaultFileAddr, id, isAdmin, editCard, Reducer}}/>
+        </div>
+        <div className="GroupInfo column start flex">
+          <GroupInfo1 props={{lines1, editCard}}/>
+        </div>
+        <div className="GroupInfo column start flex">
+          <GroupInfo2 props={{lines2, editCard}}/>
+        </div>
       </div>
 
       <div className="ArticlesPannel flex column start">
 
-        <SoftwarePannel props={{setSoft, sw, s, setSave, link, defaultFileAddr, id, isAdmin, editCard, docID, Reducer}}/>
+        <SoftwarePannel props={{setSoft, sw, s, setSave, link, defaultFileAddr, id, role, editCard, docID, Reducer}}/>
 
       </div>
       

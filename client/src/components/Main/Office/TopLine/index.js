@@ -26,7 +26,6 @@ function TopLine({ props:{toggle, setToggle} }) {
     name: toggle?.search ? `cancel` : `doc`,
     click: ()=>{
       setToggle(prev=> ({search:!prev.search}))
-      // setSearch( prev=> ({query:{}, docs:[]}) )
     }
   }
 

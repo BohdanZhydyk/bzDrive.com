@@ -1,43 +1,45 @@
 import React, { useState } from "react"
 
-import UploadFile from "../../../../All/UploadFile"
 import { UploadLink } from "./UploadLink"
+import FileUpload from "../../../../All/FileUpload"
+import ActionBtn from "../../../../All/ActionBtn"
 
 
-export function UploadBtns({ props:{tr, formNr, lang, fileAddr, setSave, setFiles, ADD_FILE} }){
+export function UploadBtns({ props:{tr, lang, fileAddr, setSave, setFiles, ADD_FILE} }){
 
   const blankLink = ()=>({fileID: Date.now(), fileAddr: "", fileName: "", fileType: "lnk"})
 
   const [link, setLink] = useState( blankLink() )
+  const [uplLink, setUplLink] = useState( false )
   const [err, setErr] = useState(false)
-  const [opened, setOpened] = useState(false)
-
-  function OPEN_AREA(){ setOpened(prev=>true) }
 
   function ADD_LINK(){
     setFiles( prev=> [...prev, link] )
     setSave(prev=>true)
-    setOpened(prev=>false)
     setErr(prev=>false)
     setLink( prev=>blankLink() )
+    setUplLink(prev=>false)
   }
 
   function CANCEL_LINK(){
-    setOpened(prev=>false)
     setErr(prev=>false)
     setLink( prev=>blankLink() )
+    setUplLink(prev=>false)
   }
 
-  const btnTxt = tr(`AddFileArea`,lang)
-  const fileProps = {btnTxt, formNr, fileAddr, callback: (data)=>ADD_FILE(data)}
-  const uploadLinkProps = {tr, lang, link, setLink, err, setErr, opened, OPEN_AREA, CANCEL_LINK, ADD_LINK}
+  const fileProps = {defaultFileAddr:fileAddr, cb:(data)=>ADD_FILE(data)}
+  const uploadLinkProps = {tr, lang, link, setLink, err, setErr, CANCEL_LINK, ADD_LINK}
 
   return(
-    <div className="UploadBtns flex stretch">
+    <div className="UploadBtns flex stretch end">
 
-      <UploadFile props={fileProps} />
+      <FileUpload props={fileProps} />
 
-      <UploadLink props={uploadLinkProps} />
+      {
+        uplLink
+        ? <UploadLink props={uploadLinkProps} />
+        : <ActionBtn props={{ name: `link`, click:()=>setUplLink(prev=>true) }} />
+      }
 
     </div>
   )

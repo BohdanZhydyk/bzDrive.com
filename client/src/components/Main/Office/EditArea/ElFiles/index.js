@@ -14,7 +14,7 @@ function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} })
   const MM = nr?.from.toString().slice(4, 6)
   const sign = nr?.sign.toString().padStart(4, '0')
   const fileAddr = `files/DOC/${nr?.mode}_${YYYY}_${MM}_${sign}`
-  const formNr = `${YYYY}_${MM}_${sign}`
+  // const formNr = `${YYYY}_${MM}_${sign}`
 
   const DELETE_FILE = (file)=>{
     const fileID = file?.fileID
@@ -73,7 +73,7 @@ function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} })
       
       {
         !printMode &&
-        <UploadBtns props={{tr, formNr, lang, fileAddr, setSave, setFiles, ADD_FILE}} />
+        <UploadBtns props={{tr, lang, fileAddr, setSave, setFiles, ADD_FILE}} />
       }
 
     </div>
