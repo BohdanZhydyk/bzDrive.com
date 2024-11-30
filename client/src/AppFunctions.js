@@ -129,7 +129,8 @@ export const sanitizeTxt = (txt, name = "default")=>{
   // const regExSpecialChar = /[!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/
   const regExSpecialCharacters = /[^a-zA-Z0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?]/g
   const regExExtendedSpecialCharacters = /[^a-zA-Z0-9\s&()+\-_.,żźćńółęąśŻŹĆĄŚĘŁÓŃЀ-ӿ]/g
-  const regExWeb = /^(http(s)?:\/\/|ftp(s)?:\/\/)?([a-zA-Zа-яА-Я0-9-]+\.)+[a-zA-Zа-яА-Я0-9-\/]+(\/[\w- ;,./?%&=]*)?$/
+  const regExWeb = /^(http(s)?:\/\/|ftp(s)?:\/\/)?([a-zA-Zа-яА-Я0-9-]+\.)+[a-zA-Zа-яА-Я0-9-\/]+(\/[\w- ;,./?%&=#]*)?$/
+
   const regExNonDigits = /[^0-9.,]/g
   const regExMultipleDots = /\.{2,}/g
 

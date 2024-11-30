@@ -17,7 +17,7 @@ export function SoftwarePannel({ props:{setSoft, sw, s, setSave, link, defaultFi
     <div className="SoftwarePannel flex column start">
 
       <div className="SoftWareTopLine flex start bold">
-        Pliki
+        Files
       </div>
 
       {

@@ -24,17 +24,14 @@
       min-height:3vw;
     
       .SoftwareElement {
-        width:calc(100% - 2vw);
+        width:calc(100% - 1vw);
         margin:0 0.5vw;
-        padding:0 0.5vw;
-        min-height:3vw;
         border-bottom:1px dashed #555;
-        &:hover {
-          background-color: #1113;
-        }
-
+        
         .SoftwareLine {
           width: 100%;
+          min-height:3vw;
+          &:hover { background-color: #1113; }
   
           .Icon {width:5%;}
           .Prog {width:15%;}

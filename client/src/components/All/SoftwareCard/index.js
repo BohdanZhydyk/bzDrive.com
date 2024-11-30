@@ -8,7 +8,7 @@ import { modTypes, programmers, readMethods, SoftwareReducer, swTypes } from './
 import { SoftPropses } from './SoftPropses'
 import InputText from '../InputText'
 import InputSelect from '../InputSelect'
-import { CardTopLine } from './CardTopLine'
+import CardTopLine from './CardTopLine'
 import { Sticker } from './Sticker'
 import { GroupInfo1 } from './GroupInfo1'
 import { GroupInfo2 } from './GroupInfo2'
@@ -61,15 +61,19 @@ function SoftwareCard({ props:{car, setCar, setSoft, sw, s, setSave, printMode, 
       <CardTopLine props={{car, sw, printMode, defaultFileAddr, isAdmin, setIsLine, editCard, setEditCard, del, setDel, docID, Reducer}}/>
 
       <div className="Groups flex stretch wrap">
+
         <div className="GroupInfo column start flex">
           <Sticker props={{setSoft, sw, s, setSave, link, defaultFileAddr, id, isAdmin, editCard, Reducer}}/>
         </div>
+
         <div className="GroupInfo column start flex">
           <GroupInfo1 props={{lines1, editCard}}/>
         </div>
+
         <div className="GroupInfo column start flex">
           <GroupInfo2 props={{lines2, editCard}}/>
         </div>
+
       </div>
 
       <div className="ArticlesPannel flex column start">

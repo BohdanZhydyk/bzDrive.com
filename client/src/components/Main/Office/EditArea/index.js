@@ -14,7 +14,6 @@ import ElSoft from "./ElSoft"
 import ElSummary from "./ElSummary"
 
 
-// function EditArea({ props:{company, mode, prog, doc, edit, setEdit, printMode, Reducer} }) {
 function EditArea({ props:{company, l, doc, printMode, EDIT_DOC, Reducer} }) {
 
   // const printMode = false

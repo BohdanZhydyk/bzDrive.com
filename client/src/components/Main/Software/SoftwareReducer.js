@@ -35,6 +35,41 @@ export function SoftwareReducer(
     })
   }
 
+  // function GET_CAR_CARDS() {
+  //   function sortByBrands(state) {
+  //     const brandCounts = state.reduce((acc, car) => {
+  //       const brandIndex = acc.findIndex(item => item.brand === car.brand);
+        
+  //       if (brandIndex >= 0) {
+  //         // Jeśli marka istnieje, dodajemy samochód do tej marki
+  //         acc[brandIndex].count += 1;
+  //         // Posortuj modele po dodaniu samochodu
+  //         acc[brandIndex].models = acc[brandIndex].models || [];
+  //         acc[brandIndex].models.push(car.model);
+  //         acc[brandIndex].models.sort(); // Sortowanie modeli wewnątrz marki
+  //       } else {
+  //         // Jeśli marka nie istnieje, tworzysz nową kategorię
+  //         acc.push({ brand: car.brand, count: 1, models: [car.model] });
+  //       }
+  
+  //       return acc;
+  //     }, []);
+  
+  //     // Posortowanie marek
+  //     return brandCounts.sort((a, b) => a.brand.localeCompare(b.brand));
+  //   }
+  
+  //   const query = { getCarCards: true };
+    
+  //   PostToApi('/getSoftware', query, (data) => {
+  //     if (data?.length > 0) {
+  //       setInitialState(prev => data);
+  //       setSoftware(prev => sortByBrands(data));
+  //     }
+  //   });
+  // }
+  
+
   function SELECT_BRAND(){
     const clearEl = (el)=> ( {brand:el?.brand, count:el?.count} )
     const wholeEl = (el)=> ( {...el, cars:initialState.filter(el=> el?.brand === brand)} )

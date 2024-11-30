@@ -10,6 +10,7 @@ import DecoderVIN from "./DecoderVIN"
 import DecoderNIP from "./DecoderNIP"
 import Calendar from "./Calendar"
 import SearchDocs from "./SearchDocs"
+import Finances from "./Finances"
 
 
 function Office({ props:{size, sub} }) {
@@ -20,13 +21,15 @@ function Office({ props:{size, sub} }) {
 
   const [visibleSide, setVisibleSide] = useState({mobile, side:true})
 
-  const [toggle, setToggle] = useState({decoderVIN:false, decoderNIP:false, search:false, settings:false})
+  const [toggle, setToggle] = useState({decoderVIN:false, decoderNIP:false, search:false, settings:false, finances:false})
 
   const [companies, setCompanies] = useState(false)
   const company = companies?.companiesData ? companies?.companiesData[companies?.activeCompany] : false
 
   const [searchQuery, setSearchQuery] = useState({val:"", err:false})
   const [search, setSearch] = useState([])
+  
+  const [finances, setFinances] = useState([])
 
   const [prevWeek, setPrevWeek] = useState(-1)
   const [docs, setDocs] = useState([])
@@ -75,9 +78,11 @@ function Office({ props:{size, sub} }) {
         { toggle?.search && <SearchDocs props={searchDocsProps} /> }
 
         {
-          toggle?.settings
-          ? <CompaniesPannel props={companiesPannelProps} />
-          : <Calendar props={calendarProps} />
+          toggle?.settings 
+            ? <CompaniesPannel props={companiesPannelProps} />
+            : toggle?.finances 
+              ? <Finances props={{ company, finances, setFinances, Reducer }} />
+              : <Calendar props={calendarProps} />
         }
 
       </React.Fragment>

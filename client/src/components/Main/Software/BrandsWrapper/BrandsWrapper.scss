@@ -1,19 +1,28 @@
 
 .BrandsWrapper {
-  width:100%;
-
-  .AddNew {
-    border:1px solid transparent !important;
-  }
+  width:98%;
+  margin:1vw 0 0 0;
 
   .Brand {
     position:relative;
-    width:calc((100% / 7) - 1vw - 2px);
+    width:calc((100% / 5) - 1vw - 2px);
     min-height:3vw;
     margin:0.5vw;
-    border:1px solid #999;
     border-radius:0.5vw;
+    border:1px solid #999;
     &:hover {background-color: #1115;}
+    @media (min-width: 481px) and (max-width: 767px) {
+      width:calc((100% / 4) - 2vw - 2px);
+      min-height:6vw;
+      margin:1vw;
+      border-radius:1vw;
+    }
+    @media (max-width: 481px) {
+      width:calc((100% / 2) - 3vw - 2px);
+      min-height:10vw;
+      margin:1.5vw;
+      border-radius:1vw;
+    }
   }
 
   .CarsWrapper {
@@ -25,9 +34,28 @@
     border-radius:0.5vw;
   }
 
+  .BrandImg {
+    margin:1vw;
+    width:3vw;
+    @media (min-width: 481px) and (max-width: 767px) {
+      width:5vw;
+      margin:1vw;
+    }
+    @media (max-width: 481px) {
+      width:8vw;
+      margin:2vw;
+    }
+  }
+
   .BrandName {
     flex:1;
-    font-size:130%;
+    font-size:200%;
+    @media (min-width: 481px) and (max-width: 767px) {
+      font-size:140%;
+    }
+    @media (max-width: 481px) {
+      font-size:170%;
+    }
   }
 
   .Count {
@@ -35,8 +63,20 @@
     top:-0.25vw;
     right:-0.25vw;
     padding:0 0.75vw;
-    background-color: #171;
     border-radius:0.5vw;
+    background-color: #171;
+    @media (min-width: 481px) and (max-width: 767px) {
+      top:-0.5vw;
+      right:-0.5vw;
+      padding:0 1vw;
+      border-radius:1vw;
+    }
+    @media (max-width: 481px) {
+      top:-1vw;
+      right:-1vw;
+      padding:0 1.5vw;
+      border-radius:1vw;
+    }
   }
 
   .CarLines {

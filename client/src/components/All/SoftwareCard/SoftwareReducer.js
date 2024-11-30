@@ -125,12 +125,13 @@ export function SoftwareReducer(
 
 }
 
-export const programmers = ["Xhorse Multi-Prog", "Alientech Kess V2", "Alientech K-Tag", "BDM 100", "X-Prog", "i-Prog", "CarProg"]
-export const swTypes =  ["FULL", "EEPROM", "EPR", "FLASH", "INT-FLASH", "EXT-FLASH", "FLS", "MAPS", "MPC", "BOOT"]
+export const programmers = ["Xhorse Multi-Prog", "Alientech K-Tag", "Alientech Kess V2", "i-Prog", "CarProg", "AutoTuner", "FoxFlash", "BDM 100", "X-Prog"]
+export const swTypes =  ["FULL", "EPR", "FLS", "MAPS", "MPC", "EEPROM", "INT-EEPROM", "EXT-EEPROM", "FLASH", "INT-FLASH", "EXT-FLASH", "BOOT", "STATUS", "SHADOW"]
 export const readMethods = ["Bench", "OBD-II", "BDM", "CAN", "K-Line", "Bootmode", "JTAG", "Virtual Read"]
 export const modTypes = [
-  "Original", "Tuning Stage", "Tuning Stage-1", "Tuning Stage-2", "Tuning Stage-3", "IMMO off",
-  "ECO off", "EGR off", "DPF off", "AdBlue off", "KAT off", "DTC off", "Vmax off", "MAF off", "Start/Stop off"
+  "Original", "Virgin", "Tuning Stage", "Tuning Stage-1", "Tuning Stage-2", "Tuning Stage-3", "IMMO off",
+  "ECO off", "EGR off", "DPF off", "FAP off", "SCR off", "AdBlue off", "KAT off", "DTC off", "Vmax off",
+  "MAF off", "Start/Stop off", "Flap off", "Limiter ON"
 ]
 
 export function brandIco(brand){ return `https://bzdrive.com/files/CarIcons/${brand?.replace(/[^a-zA-Z]/g, '').toLowerCase()}.svg` }

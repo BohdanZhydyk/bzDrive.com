@@ -17,7 +17,7 @@ export function Sticker({ props:{setSoft, sw, s, setSave, link, defaultFileAddr,
   const src = `${link}/${fileAddr}/${fileName}`
 
   function SET_STICKER(res){
-    setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, ECUsticker: res?.data} ) )
+    setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, ECUsticker: res} ) )
     setSave(true)
   }
 
@@ -37,8 +37,8 @@ export function Sticker({ props:{setSoft, sw, s, setSave, link, defaultFileAddr,
         <React.Fragment>
           <span className="CardLine NoSticker flex bold">{`ECU sticker`}</span>
           <span className="CardLine StickerLine flex start bold">{`ECU: ${sw?.ECUType ?? ""}`}</span>
-          <span className="CardLine StickerLine flex start bold">{`SW: ${sw?.swVersion ?? ""}`}</span>
           <span className="CardLine StickerLine flex start bold">{`HW: ${sw?.hwVersion ?? ""}`}</span>
+          <span className="CardLine StickerLine flex start bold">{`SW: ${sw?.swVersion ?? ""}`}</span>
         </React.Fragment>
       }
 

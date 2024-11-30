@@ -1,20 +1,30 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
+import { bzScroolToDiv } from "../../../../AppFunctions"
 import { brandIco } from "../SoftwareReducer"
 import ActionBtn from "../../../All/ActionBtn"
 import CarLine from "../CarLine"
 
 
-export function Brand({ props:{carTop, item, Reducer} }){
+export function Brand({ props:{carTop, item, i, Reducer} }){
 
-  function SHOW_MODELS(){ Reducer({type:"SELECT_BRAND", brand:item?.brand}) }
+  const [firstLoad, setFirstLoad] = useState(false)
+
+  useEffect(() => { firstLoad && bzScroolToDiv(`ScroolToCarsWrapper${i}`, -1) }, [item?.cars])
+
+  function SHOW_MODELS(){
+    Reducer({type:"SELECT_BRAND", brand:item?.brand})
+    setFirstLoad( prev=> true )
+  }
+
+  const classes = `${!item?.cars ? `Brand` : `CarsWrapper wrap`} flex start ScroolToCarsWrapper${i}`
 
   return(
-    <div className={`${!item?.cars ? `Brand` : `CarsWrapper wrap`} flex start`} onClick={!item?.cars ? SHOW_MODELS : undefined}>
+    <div className={classes} onClick={!item?.cars ? SHOW_MODELS : undefined}>
 
-      { item?.brand && <img className="ImgBtn IcoColor flex" src={brandIco(item?.brand)} alt="SVG" /> }
+      { item?.brand && <img className="BrandImg IcoColor flex" src={brandIco(item?.brand)} alt="SVG" /> }
   
-      <div className="BrandName bold flex start">{item?.brand}</div>
+      <div className="BrandName bold flex start overflow">{item?.brand}</div>
 
       { !item?.cars && <div className="Count flex">{item?.count}</div> }
 
@@ -26,7 +36,11 @@ export function Brand({ props:{carTop, item, Reducer} }){
 
           <CarLine props={{car:carTop}} key={`CarLineTop`}/>
 
-          { item?.cars.map( (car, c)=> <CarLine props={{car}} key={`CarLine${c}${car?.id}`}/> ) }
+          {
+            item?.cars
+            .sort((a, b) => a.model.localeCompare(b.model))
+            .map( (car, c)=> <CarLine props={{car}} key={`CarLine${c}${car?.id}`}/> )
+          }
           
         </div>
       }

@@ -1,20 +1,87 @@
 
 .CarLine {
   width:calc(100% - 2vw);
-  min-height:3vw;
   margin:0 0.5vw;
-  padding:0 0.5vw;
+  padding:0.5vw;
   border-bottom:1px dashed #555;
   &:hover {background-color: #1115;}
+  @media (min-width: 481px) and (max-width: 767px) {
+    width:calc(100% - 3vw);
+    padding:1vw;
+  }
+  @media (max-width: 481px){
+    width:calc(100% - 3vw);
+  }
 
-  .Model { flex:1; }
-  .ECUType { flex:1; }
-  .Programmer { width:12%; }
-  .SWv { width:8%; }
-  .HWv { width:8%; }
-  .Method { width:8%; }
-  .Mod { width:15%; }
-  .Type { width:15%; }
+  .Cell {
+    padding:0.5vw;
+    @media (max-width: 481px){
+      padding:0.5vw 1.5vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .BrandModel {
+    width:15%;
+    @media (min-width: 481px) and (max-width: 767px) {
+      width:100%;
+      font-size:130%;
+    }
+    @media (max-width: 481px){
+      flex:1;
+      font-size:130%;
+    }
+  }
+  .MethodSM {
+    display:none;
+    @media (max-width: 481px){
+      display:flex;
+      width:30%;
+    }
+  }
+  .Lines {
+    width:78%;
+    @media (min-width: 481px) and (max-width: 767px) { width:90%; }
+    @media (max-width: 481px){ width:100%; }
+
+    .ECU {
+      width:calc(100% - 1vw);
+      padding:0 0.5vw;
+      border-bottom:1px dashed #333;
+  
+      .ECUType { flex:1; }
+      .HWv {
+        width:35%;
+        @media (max-width: 481px){ width:30%; }
+      }
+      .SWv {
+        width:35%;
+        @media (max-width: 481px){ width:30%; }
+      }
+    }
+    .Prog {
+      width:calc(100% - 1vw);
+      padding:0 0.5vw;
+  
+      .Programmer { flex:1; }
+      .Mod {
+        width:35%;
+        @media (max-width: 481px){ width:30%; }
+      }
+      .Type {
+        width:35%;
+        @media (max-width: 481px){ width:30%; }
+      }
+    }
+  }
+  .Method {
+    flex:1;
+    @media (max-width: 481px){
+      display:none;
+    }
+  }
 }
 
 .CarLineTop {

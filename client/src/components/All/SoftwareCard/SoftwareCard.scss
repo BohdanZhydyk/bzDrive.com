@@ -12,27 +12,63 @@
       flex:1;
 
       .IcoProgrammer {
-        width:4vw;
-        height:4vw;
+        width:6vw;
+        min-height:6vw;
         margin:0 2vw 0 0;
-        padding:0.5vw;
         font-size:1vw;
         border:1px solid #999;
         border-radius:0.5vw;
+        @media (min-width: 481px) and (max-width: 767px) {
+          width:10vw;
+          min-height:10vw;
+          border-radius:1vw;
+        }
+        @media (max-width: 481px) {
+          width:16vw;
+          min-height:16vw;
+          border-radius:1vw;
+        }
 
         img {
-          width:3vw;
-          height:3vw;
+          width:5vw;
+          height:5vw;
+          @media (min-width: 481px) and (max-width: 767px) {
+            width:9vw;
+            height:9vw;
+          }
+          @media (max-width: 481px) {
+            width:14vw;
+            height:14vw;
+          }
+        }
+      }
+
+      .TitleTxt {
+        flex:1;
+
+        span {
+          margin:0 0.5vw;
+          @media (max-width: 767px) {
+            width:calc(100% - 1vw);
+          }
         }
       }
     }
 
     .IDsection {
       width:15%;
+      font-size:50%;
+      @media (min-width: 481px) and (max-width: 767px) {
+        width:20%;
+        font-size:40%;
+      }
+      @media (max-width: 481px) {
+        width:25%;
+        font-size:30%;
+      }
       
       .CardID {
         width:100%;
-        font-size:50%;
       }
 
       .AdminBtns {
@@ -47,13 +83,31 @@
     .GroupInfo {
       width:calc((100% / 3) - 1vw);
       padding:0.5vw;
+      @media (min-width: 481px) and (max-width: 767px) {
+        width:calc(90% - 4vw);
+        padding:2vw;
+      }
+      @media (max-width: 481px) {
+        width:calc(90% - 4vw);
+        padding:2vw;
+      }
 
       .Sticker {
         width:calc(100% - 0.5vw - 2px);
         min-height:10vw;
-        padding:0.25vw;
+        padding:0.5vw;
         border:1px solid #999;
         border-radius:0.5vw;
+        @media (min-width: 481px) and (max-width: 767px) {
+          width:calc(75% - 0.5vw - 2px);
+          padding:1vw;
+          border-radius:1vw;
+        }
+        @media (max-width: 481px) {
+          width:calc(80% - 0.5vw - 2px);
+          padding:1vw;
+          border-radius:1vw;
+        }
   
         .StickerDownload {
           width:100%;
@@ -80,8 +134,10 @@
   
       .CardLine {
         width:100%;
-        min-height:2vw;
+        min-height:2.5vw;
         font-family: 'Courier New', monospace;
+        @media (min-width: 481px) and (max-width: 767px) { min-height:4vw; }
+        @media (max-width: 481px) { min-height:5vw; }
   
         .Description {
           width:35%;
@@ -117,16 +173,25 @@
         .SoftwareLine {
           width:calc(100% - 0.5vw);
           padding:0 0.25vw;
-          min-height:2vw;
+          min-height:3vw;
           border-bottom:1px dashed #555;
+          @media (min-width: 481px) and (max-width: 767px) { min-height:6vw; }
+          @media (max-width: 481px) { min-height:10vw; }
   
           .FileName {
             flex:1;
+            margin:0 2vw 0 0;
             &:hover {color:#fd0;}
+            @media (max-width: 767px) {
+              margin:0 3vw 0 0;
+            }
           }
   
           .FileSize {
             width:10%;
+            @media (max-width: 767px) {
+              width:15%;
+            }
           }
         }
       }

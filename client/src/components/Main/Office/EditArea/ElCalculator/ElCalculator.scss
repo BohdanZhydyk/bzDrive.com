@@ -60,6 +60,29 @@
         width:65%;
         @media (max-width: 767px) {min-height:5vw; width:100%; border-bottom:1px dashed #444;}
         @media print {width:65%; border:none;}
+
+        .VATbtns {
+          width:100%;
+
+          .CalcFuelBtn {
+            width:25%;
+            min-height:2.5vw;
+            margin:0.5vw 0;
+            border-radius:0.5vw;
+            background-color: #1713;
+            &:hover {background-color: #1715;}
+            @media (min-width: 481px) and (max-width: 767px) {
+              width:35%;
+              min-height:3.5vw;
+              border-radius:1vw;
+            }
+            @media (max-width: 481px) {
+              width:50%;
+              min-height:5vw;
+              border-radius:1vw;
+            }
+          }
+        }
   
         .TableART {width:100%; text-align:center;}
       }

@@ -12,6 +12,11 @@ function TopLine({ props:{toggle, setToggle} }) {
 
   const navLineData = window.location.pathname?.split("/").slice(1,3)
 
+  const financesBtnProps = {
+    name: toggle?.finances ? `cancel` : `fin`,
+    click: ()=>{ setToggle(prev=> ({finances:!prev.finances})) }
+  }
+
   const vinDecoderBtnProps = {
     name: toggle?.decoderVIN ? `cancel` : `vin`,
     click: ()=>{ setToggle(prev=> ({decoderVIN:!prev.decoderVIN})) }
@@ -56,6 +61,7 @@ function TopLine({ props:{toggle, setToggle} }) {
       </div>
 
       <div className="BtnsPannel flex end">
+        <ActionBtn props={financesBtnProps} />
         <ActionBtn props={vinDecoderBtnProps} />
         <ActionBtn props={nipDecoderBtnProps} />
         <ActionBtn props={searchBtnProps} />

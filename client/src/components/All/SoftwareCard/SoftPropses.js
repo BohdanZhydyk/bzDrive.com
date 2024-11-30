@@ -102,7 +102,7 @@ export const SoftPropses = ({
     val: sw?.programmer ?? '',
     err: editErr?.programmer ?? '',
     cbVal: (val)=>{
-      setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, programmer:sanitizeTxt(val, `default`).sanText} ) )
+      setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, programmer: val === "" ? "" : `${soft.programmer ? `${soft.programmer}, ` : ""}${sanitizeTxt(val, `default`).sanText}`} ) )
       setSave(true)
     },
     cbErr: (val)=> setEditErr( (prev)=> ({...prev, programmer:sanitizeTxt(val, `default`).sanErr}))

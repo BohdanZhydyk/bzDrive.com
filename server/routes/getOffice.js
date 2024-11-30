@@ -14,6 +14,45 @@ exports.getOffice = (req, res)=>{
     return ({ _id:"NewDoc", nr:{mode:"", from:nowToYYYYMMDD, to:nowToYYYYMMDD, sign:""} })
   }
 
+  function GET_FINANCES(company, taxYear){
+
+    const isPrevTaxYearQuery = {company, "date.year":taxYear-1}
+    bzDB( { req, res, col:'bzFinances', act:"FIND", query:isPrevTaxYearQuery }, (PrevTaxYearData)=>{
+
+      const isPrevTaxYear = PrevTaxYearData?.result?.length > 0
+
+      const taxYearQuery = {company, "date.year":taxYear}
+      bzDB( { req, res, col:'bzFinances', act:"FIND", query:taxYearQuery }, (financesData)=>{
+
+        const YYYY = unixToDateTimeConverter().year
+        const monthCount = YYYY === `${taxYear}` ? parseInt(unixToDateTimeConverter().month) : 12
+
+        let finances = []
+
+        for (let month = monthCount; month > 0; month--) {
+
+          const emptyMonth = { "company": company, "date": { year: taxYear, month } }
+          const finEl = financesData?.result.filter( mo=> mo?.date?.month === month)
+
+          finances.push( finEl?.length > 0 ? finEl[0] : emptyMonth )
+
+        }
+
+        const taxYearArr = finances?.filter( month=> month?.date?.year === taxYear )
+
+        res.send({
+          ...financesData,
+          result: {taxYearArr, isPrevTaxYear}
+        })
+
+        return
+
+      })
+
+    })
+
+  }
+
   bzDB( { req, res, col:'bzTokens', act:"FIND_ONE", query:{bzToken} }, (userData)=>{
 
     const login = userData?.result?.user?.login
@@ -232,12 +271,13 @@ exports.getOffice = (req, res)=>{
         }
 
         const fromThatMonth = parseInt( `${parseInt(docData?.nr?.from / 100)}00` )
+        const toThatMonth = parseInt( `${parseInt(docData?.nr?.from / 100)}31` )
 
         const lastSignQuery = {
-          $and:[
+          $and: [
             { "company": docData?.company },
             { "nr.mode": docData?.nr?.mode },
-            { "nr.from": { $gte:fromThatMonth } }
+            { "nr.from": { $gte: fromThatMonth, $lte: toThatMonth } }
           ]
         }
 
@@ -412,14 +452,108 @@ exports.getOffice = (req, res)=>{
 
         bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (documentsData)=>{
 
-          res.send({ ...documentsData, result: documentsData?.result.map( el=>
-            ({ mode:el?.nr?.mode, art:el?.articles.map( art=> ({NET:art?.NET, PRV:art?.PRV, SUM:art?.SUM}) ) })
-          ) })
+          function articlesMap(articles){
+            return articles.map( art=> ({NET:art?.NET, PRV:art?.PRV, SUM:art?.SUM}) )
+          }
+          function resultMap(result){
+            return result.map( el=> ({ mode: el?.nr?.mode, art: el?.articles?.length > 0 ? articlesMap( el?.articles ) : el?.articles }) )
+          }
+          res.send({
+            ...documentsData,
+            result: documentsData?.result?.length > 0 ? resultMap(documentsData?.result) : documentsData?.result
+          })
           
           return
 
         })
 
+      }
+
+      // getting information about finances
+      if(object?.getFinances){
+        const company = object?.query?.companyName
+        const taxYear = object?.query?.taxYear
+        GET_FINANCES(company, taxYear)
+      }
+
+      // save month in finances
+      if(object?.saveFinMonth){
+
+        const company = object?.query?.companyName
+        const taxYear = object?.query?.taxYear
+        const month = object?.query?.month
+        const date = month?.date
+
+        const query = {company, date}
+
+        bzDB( { req, res, col:'bzFinances', act:"FIND_ONE", query }, (financesData)=>{
+
+          const result = financesData?.result
+          const month = object?.query?.month
+          const _id = ObjectId(result?._id)
+          
+          const act = result ? "UPDATE_ONE" : "INSERT_ONE"
+          const query = result ? {...result, ...month, _id} : {company, ...month}
+
+          bzDB( { req, res, col:'bzFinances', act, query }, (updatedFinData)=>{
+            GET_FINANCES(company, taxYear)
+          })
+
+        })
+
+      }
+
+      // getting information about documents
+      if(object?.getFinDocs){
+
+        const company = object?.company
+
+        const date = object?.date
+
+        const to = {
+          $gte: parseInt(`${date?.year}${date?.month.toString().padStart(2, '0')}00`),
+          $lte: parseInt(`${date?.year}${date?.month.toString().padStart(2, '0')}31`)
+        }
+        const from = {
+          $gte: parseInt(`${date?.year}${date?.month.toString().padStart(2, '0')}00`),
+          $lte: parseInt(`${date?.year}${date?.month.toString().padStart(2, '0')}31`)
+        }
+
+        const query = {
+          $or: [
+              { $and:[{"company":company}, { "nr.mode":"ZU" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"VA" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"FS" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"FZ" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"PS" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"PZ" }, {"nr.from":from}] },
+              { $and:[{"company":company}, { "nr.mode":"ZL" }, {"nr.to":to}, {"status":"close"}] }
+          ]
+        }
+
+        bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (documentsData)=>{
+
+          function SORT(mode){
+            const RES = documentsData?.result
+            return RES?.filter(el=> el?.nr?.mode === mode)?.sort((a, b)=> a?.nr?.from - b?.nr?.from)
+          }
+
+          res.send({
+            ...documentsData,
+            result: [
+              ...SORT("ZU"),
+              ...SORT("VA"),
+              ...SORT("FS"),
+              ...SORT("PS"),
+              ...SORT("FZ"),
+              ...SORT("PZ"),
+              ...SORT("ZL")
+            ]
+          })
+
+          return
+
+        })
       }
 
     })

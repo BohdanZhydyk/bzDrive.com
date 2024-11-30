@@ -2,9 +2,12 @@ import React from 'react'
 
 import { ArtInput } from './ArtInput'
 import { ArtNameInput } from './ArtNameInput'
+import { bzCalc } from '../../../../../AppFunctions'
 
 
-export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, SUM, FN, BTN, printMode, top} }){
+export function CalcLine({ props:{
+  TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, SUM, FN, BTN, printMode, top, setArticles, setSave
+} }){
 
   const Top = CLA === "TableCellTop"
   const Bottom = CLA === "TableCellBottom"
@@ -19,6 +22,23 @@ export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, S
   const propsesPRV = { name:"PRV", isDisplay:(Top || Bottom || printMode), val:PRV, CLA, FN }
   const propsesSUM = { name:"SUM", isDisplay:(Top || Bottom || printMode), val:SUM, CLA, FN }
 
+  function CALC_FUEL_COSTS(){
+    setArticles( prev=>
+      prev?.length > 0
+      ? prev.map( art =>{
+        const brutto = art?.SUM
+        const netto = bzCalc("/", brutto, "1.23")
+        const vat = bzCalc("-", brutto, netto)
+        const vatDeducted = bzCalc("*", vat, "0.50")
+        const totalCost = bzCalc("+", netto, vatDeducted)
+        const deductibleCost = bzCalc("*", totalCost, "0.75")
+        return {...art, PRI:netto, VAT:"0", NET:deductibleCost, PRV:vatDeducted }
+      })
+      : prev
+    )
+    setSave( prev=> true )
+  }
+
   return(
     <div className={`CalcLine ${top ? `` : `BorderBottom`} flex end stretch`}>
 
@@ -26,11 +46,20 @@ export function CalcLine({ props:{TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, S
 
       <div className="CellsBetween flex end wrap stretch">
 
-        {
-          !Bottom && <div className='CellsOne flex stretch'>
-            <ArtNameInput props={propsesART} />
-          </div>
-        }
+        <div className='CellsOne flex stretch'>
+
+          { !Bottom && <ArtNameInput props={propsesART} /> }
+
+          {
+            Bottom && !printMode &&
+            <div className="VATbtns flex start">
+              <div className="CalcFuelBtn flex" onClick={()=>CALC_FUEL_COSTS()}>
+                {`Obliczyć koszty paliwa`}
+              </div>
+            </div>
+          }
+
+        </div>
 
         <div className='CellsTwo flex end stretch'>
 

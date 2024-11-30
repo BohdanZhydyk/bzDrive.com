@@ -33,11 +33,11 @@ export function SoftwareLine({ props:{sw, software, link, defaultFileAddr, id, r
       {
         (docID && !isAdmin)
         ?
-        <div className="FileName flex start" >
+        <div className="FileName flex start overflow" >
           {software?.name}
         </div>
         :
-        <a className="FileName flex start" href={href} target="_blank" rel="noopener noreferrer">
+        <a className="FileName flex start overflow" href={href} target="_blank" rel="noopener noreferrer">
           {software?.name}
         </a>
       }
