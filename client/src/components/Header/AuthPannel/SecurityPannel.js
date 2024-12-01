@@ -63,12 +63,6 @@ export function SecurityPannel({ props:{lang, act, formErr, propses, CHG_ACT, SU
         }
       </div>
 
-      <div className="Link flex">
-        <a href="/privacy" target="_blank">
-          {tr(`PrivacyBtn`,lang)}
-        </a>
-      </div>
-
       <div className="Description flex start">
         <p>{ txt[act[0]] }</p>
       </div>

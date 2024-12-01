@@ -9,12 +9,16 @@ import Footer from './components/Footer'
 
 import { useResizeDetector } from 'react-resize-detector'
 import { GetUser } from './AppFunctions'
+import CookiesPannel from './components/All/CookiesPannel'
 
 function App() {
 
   const user = GetUser()
+  const isLogined = user?.login
 
   const [state, setState] = useState(false)
+
+  const [isCookiesPannel, setIsCookiesPannel] = useState(true)
 
   const [blur, setBlur] = useState(false)
   const BLUR = (pannelMode)=> setBlur(prev=> prev ? false : pannelMode)
@@ -53,6 +57,8 @@ function App() {
         <Main props={{nav:state.nav, blur, BLUR, size, AppReload}}/>
 
         <Footer props={{state, blur, BLUR}}/>
+
+        { !blur && state && isCookiesPannel && !isLogined && <CookiesPannel props={{setIsCookiesPannel}} /> }
 
       </BrowserRouter>
 

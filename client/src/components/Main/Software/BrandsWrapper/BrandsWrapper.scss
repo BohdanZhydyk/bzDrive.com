@@ -1,7 +1,7 @@
 
 .BrandsWrapper {
   width:98%;
-  margin:1vw 0 0 0;
+  margin:1vw 0;
 
   .Brand {
     position:relative;
@@ -10,7 +10,11 @@
     margin:0.5vw;
     border-radius:0.5vw;
     border:1px solid #999;
-    &:hover {background-color: #1115;}
+    background-color: #f601;
+    &:hover {
+      background-color: #1912;
+      border-color:#191;
+    }
     @media (min-width: 481px) and (max-width: 767px) {
       width:calc((100% / 4) - 2vw - 2px);
       min-height:6vw;

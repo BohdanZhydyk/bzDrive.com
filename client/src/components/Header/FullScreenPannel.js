@@ -6,11 +6,17 @@ import AuthPanel from "./AuthPannel"
 import NavPannel from "./NavPannel"
 
 
+import { tr } from "../../AppTranslate"
+import { AuthReducer } from "./AuthPannel/AuthReducer"
+
+
 export function FullScreenPannel({ props:{info, nav, blur, BLUR, AppReload} }) {
 
   const user = GetUser()
-  const lang = GetUser().lang
+  const lang = user.lang
+  const login = user.login
   const languages = ["en", "ua", "pl"]
+  const icoLogOut = `https://bzdrive.com/files/ico/icoLogOut.png`
 
   const icoLng = (lang)=> `https://bzdrive.com/files/ico/lng/lng${lang}.png`
 
@@ -18,6 +24,8 @@ export function FullScreenPannel({ props:{info, nav, blur, BLUR, AppReload} }) {
     SetUser( {...user, lang} )
     BLUR()
   }
+
+  const LOGOUT = ()=> AuthReducer( { type:"LOGOUT", act:"logout" }, false, false, AppReload )
 
   return (
     <div className="FullScreenPannel">
@@ -50,7 +58,25 @@ export function FullScreenPannel({ props:{info, nav, blur, BLUR, AppReload} }) {
 
           { blur === "nav" && <NavPannel props={{info, nav, BLUR, burger:true}}/> }
 
-        </div>
+          <div className="AuthBottomPannel flex stretch end wrap">
+
+            <div className="CookiesLink flex bold">
+              <a href="/cookies" target="_blank" rel="noreferrer">
+                {tr(`PrivacyBtn`,lang)}
+              </a>
+            </div>
+
+            {
+              login &&
+              <div className="Logout flex end" onClick={ ()=>LOGOUT() }>
+                <span className="txtRed flex">{tr(`LogOutBtn`,lang)}</span>
+                <img className="ImgBtnSmall" src={icoLogOut} alt="logout" />
+              </div>
+            }
+
+            </div>
+
+          </div>
       }
 
     </div>

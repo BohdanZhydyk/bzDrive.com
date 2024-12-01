@@ -2,10 +2,7 @@
 .Software {
   position:relative;
   width:100%;
-  padding:1vw 0 2vw 0;
-  @media (max-width: 767px) {
-    padding:2vw 0 4vw 0;
-  }
+  flex:1;
 
   .SoftInfo {
     position:absolute;
@@ -74,7 +71,7 @@
 
   .LastSoftware {
     width:100%;
-    margin:2vw 0 0 0;
+    margin:2vw 0 2vw 0;
 
     .LastSoftTitle {
       width:calc(95% - 2vw);
@@ -112,5 +109,15 @@
 
   .IcoColor {
     filter: invert(100%);
+  }
+  
+  .Pattern {
+    position:absolute;
+    width:100%;
+    min-height:100%;
+    opacity:0.025;
+    background-image: url('https://bzdrive.com/files/workshop/boardPattern.jpg');
+    background-repeat: repeat;
+    z-index:-1;
   }
 }

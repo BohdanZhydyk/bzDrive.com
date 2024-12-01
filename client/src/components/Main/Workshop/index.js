@@ -36,6 +36,8 @@ function Workshop({props:{ nav, AppReload }}) {
   return(
     <div className="Workshop flex column">
 
+      <div className="Pattern flex"></div>
+
       {
         isAdmin && workshop &&
         <div className="AdminBtn flex end stretch">

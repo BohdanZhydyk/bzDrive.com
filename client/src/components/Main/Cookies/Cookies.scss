@@ -1,0 +1,74 @@
+
+.Cookies {
+  position:relative;
+  width:100%;
+  flex:1;
+
+  .Title {
+    width:100%;
+    margin:1vw 0 0 0;
+    font-size:150%;
+  }
+  
+  .Paragraph {
+    width:100%;
+    margin:1vw 0 0 0;
+    text-indent: 2vw;
+    text-align:justify;
+  }
+
+  .Actualization {
+    width:100%;
+    font-size:80%;
+    margin:0.5vw 0;
+  }
+
+  .Theme {
+    width:calc(100% - 2vw);
+    margin:2vw 1vw 0 1vw;
+    font-size:110%;
+  }
+
+  .Company {
+    width:100%;
+    margin:1vw 0;
+
+    .CompanyLine {
+      width:90%;
+
+      .CompanyLineTitle {
+        width:10%;
+      }
+      .CompanyLineValue {
+        flex:1;
+      }
+    }
+  }
+
+  .LiWrapper {
+    width:95%;
+
+    .UL {
+      width:100%;
+    }
+    .Li {
+      width:calc(100% - 2vw);
+      margin:0 1vw;
+    }
+  }
+
+  .Email, .Link {
+    width:calc(100% - 6vw);
+    margin:1vw 3vw;
+  }
+  
+  .Pattern {
+    position:absolute;
+    width:100%;
+    min-height:100%;
+    opacity:0.025;
+    background-image: url('https://bzdrive.com/files/workshop/boardPattern.jpg');
+    background-repeat: repeat;
+    z-index:-1;
+  }
+}

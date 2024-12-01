@@ -69,7 +69,7 @@ function TagP({ props:{el, nr, user, setWorkshop, editMode, editingTag, setEditi
       {
         !edit
         ?
-        <div className="PWrapper flex">
+        <div className="PWrapper flex stretch">
 
           {
             el?.body?.startImg &&

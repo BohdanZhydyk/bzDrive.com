@@ -48,22 +48,24 @@ function Software() {
 
   return (
     <div className="Software flex wrap" onClick={()=> isInfo && CLOSE_INFO()}>
+      
+      <div className="Pattern flex"></div>
 
-    {
-      !software
-      ?
-      <div className="DownloadIcon flex"><SiteIcon props={{speed:4}} /></div>
-      :
-      <>
+      {
+        !software
+        ?
+        <div className="DownloadIcon flex"><SiteIcon props={{speed:4}} /></div>
+        :
+        <>
 
-        { isInfo && <SoftInfo props={{lang, CLOSE_INFO}}/> }
+          { !isAdmin && isInfo && <SoftInfo props={{lang, CLOSE_INFO}}/> }
 
-        <BrandsWrapper props={{isSoftware, software, carTop, Reducer}}/>
+          <BrandsWrapper props={{isSoftware, software, carTop, Reducer}}/>
 
-        <LastSoftware props={{initialState, carTop, lang}} />
+          <LastSoftware props={{initialState, carTop, lang}} />
 
-      </>
-    }
+        </>
+      }
 
     </div>
   )

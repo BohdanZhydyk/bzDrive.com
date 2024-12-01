@@ -1,7 +1,9 @@
 
 .Workshop {
+  position:relative;
   width:100%;
-  margin:0.25vw 0 2vw 0;
+  flex:1;
+  margin:0;
 
   .AdminBtn {
     position:sticky;
@@ -37,7 +39,18 @@
       border-bottom:1px dashed #f60;
     }
   }
+
   .Border {
     width:100%;
+  }
+  
+  .Pattern {
+    position:absolute;
+    width:100%;
+    min-height:100%;
+    opacity:0.025;
+    background-image: url('https://bzdrive.com/files/workshop/boardPattern.jpg');
+    background-repeat: repeat;
+    z-index:-1;
   }
 }

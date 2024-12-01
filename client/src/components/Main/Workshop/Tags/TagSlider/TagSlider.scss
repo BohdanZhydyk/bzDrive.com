@@ -1,7 +1,8 @@
 
 .TagSlider {
   position:relative;
-  width:100%;
+  width:calc(100% - 1vw);
+  margin:0.5vw;
 
   .Slider{
     width:100%;

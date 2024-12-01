@@ -1,5 +1,6 @@
 
 .AuthPanel {
+  position:relative;
   width:100%;
   margin:1vw 0;
 
@@ -79,18 +80,6 @@
         background-color: #7115;
       }
     }
-      
-    .Link {
-      width:45%;
-      margin:0.5vw 0 0 0;
-  
-      a {
-        color: #007bff;
-        text-decoration: none;
-        
-        &:hover {text-decoration: underline;}
-      }
-    }
 
     .Description {
       width:calc(90% - 2vw - 2px);
@@ -103,24 +92,6 @@
         text-indent:1vw;
         text-align:justify;
       }
-    }
-  }
-
-  .Logout {
-    width:10%;
-    position:fixed;
-    bottom:1vw;
-    right:2vw;
-    padding: 0.5vw 1vw;
-    border: 1px solid #f00;
-    border-radius: 0.5vw;
-    background-color:#311;
-    cursor: pointer;
-    @media (min-width: 481px) and (max-width: 767px) {width:20%;}
-    @media (max-width: 481px) {width:40%;}
-    
-    &:hover {
-      background-color: #f003;
     }
   }
 }

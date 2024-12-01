@@ -3,7 +3,6 @@ import React, { useState } from "react"
 import './AuthPannel.scss'
 import { GetUser } from "../../../AppFunctions"
 import { AuthReducer } from "./AuthReducer"
-import { tr } from "../../../AppTranslate"
 import { AuthProps } from "./AuthProps"
 import { UserInfo } from "./UserInfo"
 import { SecurityPannel } from "./SecurityPannel"
@@ -14,7 +13,6 @@ function AuthPanel({ props:{AppReload} }) {
   const user = GetUser()
   const lang = user.lang
   const login = user.login
-  const icoLogOut = `https://bzdrive.com/files/ico/icoLogOut.png`
 
   const [formData, setFormData] = useState({})
   const [formErr, setFormErr] = useState({})
@@ -35,7 +33,6 @@ function AuthPanel({ props:{AppReload} }) {
   }
 
   const SUBMIT = ()=> AuthReducer( { type:"SUBMIT", act:act[0], formData }, setFormErr, CHG_ACT, AppReload )
-  const LOGOUT = ()=> AuthReducer( { type:"LOGOUT", act:"logout" }, setFormErr, CHG_ACT, AppReload )
 
   return (
     <div className="AuthPanel flex column">
@@ -44,14 +41,6 @@ function AuthPanel({ props:{AppReload} }) {
         login
         ? <UserInfo props={{user}}/>
         : <SecurityPannel props={{lang, act, formErr, propses, CHG_ACT, SUBMIT}}/>
-      }
-
-      {
-        login &&
-        <div className="Logout flex between" onClick={ ()=>LOGOUT() }>
-          <span className="txtRed">{tr(`LogOutBtn`,lang)}</span>
-          <img className="ImgBtnSmall" src={icoLogOut} alt="logout" />
-        </div>
       }
             
     </div>

@@ -1,0 +1,86 @@
+
+.Page404 {
+  position:relative;
+  width:100%;
+  flex:1;
+
+  .SiteIconImg {
+    width:20vw;
+    height:20vw;
+    margin:2vw;
+    @media (min-width: 481px) and (max-width: 767px) {
+      width:30vw;
+      height:30vw;
+      margin:2vw;
+    }
+    @media (max-width: 481px) {
+      width:40vw;
+      height:40vw;
+      margin:3vw;
+    }
+  }
+
+  .Page404Content {
+    width:70%;
+    padding:4vw 0;
+
+    .Warning {
+      font-size: 250%;
+      color:#f60;
+      @media (min-width: 481px) and (max-width: 767px) {
+        font-size: 200%;
+      }
+      @media (max-width: 481px) {
+        font-size: 150%;
+      }
+    }
+
+    p {
+      width:50%;
+      text-indent:2vw;
+      text-align:justify;
+      @media (min-width: 481px) and (max-width: 767px) {
+        width:80%;
+        text-indent:4vw;
+      }
+      @media (max-width: 481px) {
+        width:90%;
+        text-indent:6vw;
+      }
+    }
+
+    .ReturnHomeButton {
+      width:50%;
+      min-height:3vw;
+      margin:1vw 0 0 0;
+      border-radius:0.5vw;
+      font-size:150%;
+      background-color: #171;
+      &:hover {
+        background-color: #191;
+      }
+      @media (min-width: 481px) and (max-width: 767px) {
+        width:80%;
+        min-height:6vw;
+        margin:3vw 0 0 0;
+        border-radius:1vw;
+      }
+      @media (max-width: 481px) {
+        width:90%;
+        min-height:10vw;
+        margin:3vw 0 0 0;
+        border-radius:1vw;
+      }
+    }
+  }
+  
+  .Pattern {
+    position:absolute;
+    width:100%;
+    min-height:100%;
+    opacity:0.025;
+    background-image: url('https://bzdrive.com/files/workshop/boardPattern.jpg');
+    background-repeat: repeat;
+    z-index:-1;
+  }
+}

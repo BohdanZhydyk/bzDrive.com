@@ -13,7 +13,9 @@ import Statistic from './Statistic'
 import Profile from './Profile'
 import Connect from './Connect'
 import Document from './Document'
+import Cookies from './Cookies'
 import SoftPage from './Software/SoftPage'
+import Page404 from './Page404'
 
 
 function Main({ props:{nav, blur, BLUR, size, AppReload} }) {
@@ -39,7 +41,9 @@ function Main({ props:{nav, blur, BLUR, size, AppReload} }) {
         <Route path="/profile"          element={<Profile props={{sub:subNav("/profile")}}/>} />
         <Route path="/connect"          element={<Connect props={{sub:subNav("/connect")}}/>} />
         <Route path="/document/*"       element={<Document />} />
+        <Route path="/cookies"          element={<Cookies />} />
         <Route path="/softpage/:id"     element={<SoftPage />} />
+        <Route path="/*"                element={<Page404 />} />
       </Routes>
     }
 

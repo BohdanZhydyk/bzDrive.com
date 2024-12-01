@@ -3,7 +3,7 @@
   width:calc(100% - 2vw);
   margin:0 0.5vw;
   padding:0.5vw;
-  border-bottom:1px dashed #555;
+  border-bottom:1px dashed #999;
   &:hover {background-color: #1115;}
   @media (min-width: 481px) and (max-width: 767px) {
     width:calc(100% - 3vw);
@@ -49,7 +49,7 @@
     .ECU {
       width:calc(100% - 1vw);
       padding:0 0.5vw;
-      border-bottom:1px dashed #333;
+      border-bottom:1px dashed #555;
   
       .ECUType { flex:1; }
       .HWv {
@@ -64,6 +64,7 @@
     .Prog {
       width:calc(100% - 1vw);
       padding:0 0.5vw;
+      @media (max-width: 767px){ display:none; }
   
       .Programmer { flex:1; }
       .Mod {
@@ -85,6 +86,6 @@
 }
 
 .CarLineTop {
-  background-color: #1119;
-  &:hover {background-color: #1119;}
+  background-color: #111c;
+  &:hover {background-color: #111e;}
 }
