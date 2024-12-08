@@ -1,0 +1,121 @@
+
+.Cleaning {
+  width:100%;
+  padding:1vw 0 2vw 0;
+
+  .WeekPannelTopLine {
+    width:100%;
+
+    .DayOfWeekNamesTop {
+      width:5%;
+      min-height:3vw;
+    }
+
+    .WeekLinesTop {
+      width:40%;
+      min-height:3vw;
+    }
+  }
+
+  .WeekPannel {
+    width:100%;
+
+    .DayOfWeekNames {
+      width:5%;
+
+      .DayOfWeekName {
+        width:100%;
+        height:4vw;
+        margin:0.25vw 0 0 0;
+        border:1px solid #999;
+        border-radius:0.5vw;
+      }
+    }
+
+    .WeekLines {
+      // position:relative;
+      width:40%;
+
+      .WeekTopLine {
+        width:100%;
+        min-height:3vw;
+      }
+
+      .WeekLine {
+        width:100%;
+        height:calc(4vw + 2px);
+        margin:0.25vw 0 0 0;
+
+        .JobElement {
+          flex:1;
+          min-height:4vw;
+          padding:0 0.5vw;
+          margin:0 0 0 0.25vw;
+          border:1px solid #999;
+          border-radius:0.5vw;
+
+          .CellTimePrice {
+            width:100%;
+
+            .CellTime {
+              flex:1;
+              color:#fd0;
+            }
+            .CellPrice {
+              flex:1;
+              color:#f60;
+            }
+          }
+          .CellName {
+            width:100%;
+          }
+        }
+      }
+
+      .DocumentArea {
+        width:calc(100% - 0.25vw - 2px);
+        margin:0.25vw 0 0 0.25vw;
+        backGround-color:#222;
+        border:1px solid #f60;
+        border-radius:0.5vw;
+
+        .DocTop {
+          width:calc(100% - 1vw);
+          margin:0.25vw;
+          padding:0.25vw;
+          border-bottom:1px solid #555;
+
+          .DocID {
+            flex:1;
+            color:#999;
+          }
+        }
+
+        .DocLine {
+          width:100%;
+          margin:0.5vw 0 0 0;
+
+          .InputDate {width:50%;}
+          .InputTimeFrom {width:25%;}
+          .InputTimeTo {width:25%;}
+          .InputNIP {width:50%;}
+          .InputTel {width:50%;}
+          .InputWWW {width:50%;}
+          .InputEmail {width:50%;}
+          .InputShortName {width:100%;}
+          .InputName {width:100%;}
+          .InputZIP {width:15%;}
+          .InputTown {width:30%;}
+          .InputStreet {width:45%;}
+          .InputNr {width:10%;}
+          .InputTasks {width:100%;}
+          .InputPrice {width:20%;}
+        }
+
+        .ContactImgs {
+          width:100%;
+        }
+      }
+    }
+  }
+}

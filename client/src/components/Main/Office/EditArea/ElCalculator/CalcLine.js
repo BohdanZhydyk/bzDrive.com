@@ -6,7 +6,7 @@ import { bzCalc } from '../../../../../AppFunctions'
 
 
 export function CalcLine({ props:{
-  TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, SUM, FN, BTN, printMode, top, setArticles, setSave
+  TOT, CLA, NUM, ART, PRI, QUA, VAT, NET, PRV, SUM, FN, BTN, printMode, top, setArticles, setSave, mode
 } }){
 
   const Top = CLA === "TableCellTop"
@@ -51,7 +51,7 @@ export function CalcLine({ props:{
           { !Bottom && <ArtNameInput props={propsesART} /> }
 
           {
-            Bottom && !printMode &&
+            Bottom && !printMode && (mode === "FZ") &&
             <div className="VATbtns flex start">
               <div className="CalcFuelBtn flex" onClick={()=>CALC_FUEL_COSTS()}>
                 {`Obliczyć koszty paliwa`}

@@ -8,13 +8,20 @@ import Main from './components/Main'
 import Footer from './components/Footer'
 
 import { useResizeDetector } from 'react-resize-detector'
-import { GetUser } from './AppFunctions'
+import { GetCookie, GetUser, SetCookie } from './AppFunctions'
 import CookiesPannel from './components/All/CookiesPannel'
 
 function App() {
 
   const user = GetUser()
   const isLogined = user?.login
+
+  const coockieStatus = GetCookie()
+
+  function CLOSE_COOCKIES_PANNEL(){
+    setIsCookiesPannel(false)
+    SetCookie()
+  }
 
   const [state, setState] = useState(false)
 
@@ -58,7 +65,7 @@ function App() {
 
         <Footer props={{state, blur, BLUR}}/>
 
-        { !blur && state && isCookiesPannel && !isLogined && <CookiesPannel props={{setIsCookiesPannel}} /> }
+        { !blur && state && isCookiesPannel && !coockieStatus && !isLogined && <CookiesPannel props={{CLOSE_COOCKIES_PANNEL}} /> }
 
       </BrowserRouter>
 

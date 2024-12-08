@@ -56,7 +56,7 @@ function Workshop({props:{ nav, AppReload }}) {
         ?
         <div className="DownloadIcon flex"><SiteIcon props={{speed:4}} /></div>
         :
-        <>
+        <React.Fragment>
         {
           workshop.map( (el, nr)=>{
 
@@ -73,7 +73,7 @@ function Workshop({props:{ nav, AppReload }}) {
             }
           })
         }
-        </>
+        </React.Fragment>
       }
 
       { isAdmin && workshop && editMode && <MenuSettings props={{nav, Reducer}} /> }

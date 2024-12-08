@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from "react"
 
 import "./Connect.scss"
 import { Scrollbars } from 'react-custom-scrollbars-2'
-import { GetUser, PostToApi } from "../../../AppFunctions"
+import { GetUser, PostToApi } from "../../../../AppFunctions"
 import { MessageArea } from "./MessageArea"
 import { ChatInputLine } from "./ChatInputLine"
 
 
-function Connect({ props:{} }){
+function Connect(){
 
   const user = GetUser()
 
@@ -21,35 +21,35 @@ function Connect({ props:{} }){
   
   const ConnectReducer = (action, callback)=>{
 
-    switch (action.type) {
-      case "GET_MESSAGES":    GET_MESSAGES();   break;
-      case "ADD_MESSAGE":     ADD_MESSAGE();    break;
-      default: break;
-    }
+    // switch (action.type) {
+    //   case "GET_MESSAGES":    GET_MESSAGES();   break;
+    //   case "ADD_MESSAGE":     ADD_MESSAGE();    break;
+    //   default: break;
+    // }
   
-    function SUBSCRIBE(){
-      PostToApi( '/getConnect', {Subscribe:true}, (data)=>{
-        setMsgs(prev=> data)
-        SUBSCRIBE()
-        if(scrollbarsRef.current){ scrollbarsRef.current.scrollToBottom() }
-      })
-    }
+    // function SUBSCRIBE(){
+    //   PostToApi( '/getConnect', {Subscribe:true}, (data)=>{
+    //     setMsgs(prev=> data)
+    //     SUBSCRIBE()
+    //     if(scrollbarsRef.current){ scrollbarsRef.current.scrollToBottom() }
+    //   })
+    // }
   
-    function GET_MESSAGES(){
-      PostToApi( '/getConnect', {GetMessages:true}, (data)=>{
-        setMsgs(prev=> data)
-        SUBSCRIBE()
-        if(scrollbarsRef.current){ scrollbarsRef.current.scrollToBottom() }
-      })
-    }
+    // function GET_MESSAGES(){
+    //   PostToApi( '/getConnect', {GetMessages:true}, (data)=>{
+    //     setMsgs(prev=> data)
+    //     SUBSCRIBE()
+    //     if(scrollbarsRef.current){ scrollbarsRef.current.scrollToBottom() }
+    //   })
+    // }
   
-    function ADD_MESSAGE(){
-      PostToApi( '/getConnect', {AddMessage:action?.val}, (data)=>{
-        setMsgs(prev=> data)
-        SUBSCRIBE()
-        if(scrollbarsRef.current){ scrollbarsRef.current.scrollToBottom() }
-      })
-    }
+    // function ADD_MESSAGE(){
+    //   PostToApi( '/getConnect', {AddMessage:action?.val}, (data)=>{
+    //     setMsgs(prev=> data)
+    //     SUBSCRIBE()
+    //     if(scrollbarsRef.current){ scrollbarsRef.current.scrollToBottom() }
+    //   })
+    // }
   
   }
 

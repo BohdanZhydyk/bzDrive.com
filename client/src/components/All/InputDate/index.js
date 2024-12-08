@@ -10,7 +10,6 @@ function InputDate({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal,
 
   const [color, setColor] = useState( emptyValue ? "Trs" : "Wht" )
 
-  // const dateForDiv = (date)=> `${date.slice(6,8)}.${date.slice(4,6)}.${date.slice(0,4)}`
   const dateForInput = (date)=> `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`
   const defaultValue = TimeTo_YYYYMMDD( Date.now() ).toString()
   const inputValue = dateForInput( emptyValue ? defaultValue : val.toString() )

@@ -3,7 +3,7 @@ import React from 'react'
 
 export function Title({ props: {car, sw} }) {
 
-  const progIcons = sw.programmer.split(',').map(p => `https://bzdrive.com/files/ico/Prog ${p.trim()}.png`)
+  const progIcons = sw.programmer && sw.programmer.split(',').map(p => `https://bzdrive.com/files/ico/Prog ${p.trim()}.png`)
 
   const brand = car?.brand?.length ? car.brand : "brand"
   const model = car?.model?.length ? car.model : "model"

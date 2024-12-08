@@ -560,7 +560,7 @@ export const PostToApi = async (link, object, callback)=>{
   const API = localHost ? localLink : domainLink
 
   // Get the IP data for the current user and add it to the request
-  const IP = await axios.get('https://json.geoiplookup.io')
+  const IP = await axios.get('https://json.geoiplookup.io', { timeout: 5000 })
   .then( (res)=> ({
       host:         hostname,
       from:         link,

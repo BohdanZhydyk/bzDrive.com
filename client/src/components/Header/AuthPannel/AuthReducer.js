@@ -1,4 +1,4 @@
-import { PostToApi, RemToken } from "../../../AppFunctions"
+import { PostToApi, RemCookie, RemToken } from "../../../AppFunctions"
 import { tr } from "../../../AppTranslate"
 import { GetUser, SetUser, RemUser } from "../../../AppFunctions";
 
@@ -52,6 +52,7 @@ export const AuthReducer = (action, setFormErr, CHG_ACT, AppReload)=>{
 
     RemUser()
     RemToken()
+    RemCookie()
     AppReload()
 
   }

@@ -10,6 +10,7 @@ export const tr = (txt, lang)=>{
     Nav_BZFILES:{en:"bzFiles", ua:"bzФайли", pl:"bzPliki"},
     Nav_SEABATTLE:{en:"Sea Battle", ua:"Морський бій", pl:"Morski bój"},
     Nav_OFFICE:{en:"Office", ua:"Офіс", pl:"Biuro"},
+    Nav_OFFICENEW:{en:"OfficeNew", ua:"ОфісNew", pl:"BiuroNew"},
     Nav_CLEANING:{en:"Cleaning", ua:"Cleaning", pl:"Cleaning"},
     Nav_FI:{en:"Accounting", ua:"Бухгалтерія", pl:"Księgowość"},
     Nav_ZL:{en:"Orders", ua:"Замовлення", pl:"Zlecenia"},
@@ -300,6 +301,21 @@ export const tr = (txt, lang)=>{
     MoreBtn:{en:"See details...", ua:"Дивитися деталі...", pl:"Zobacz szczegóły..."},
     SelBtn_NEW:{en:"New document", ua:"Новий документ", pl:"Nowy document"},
     SelBtn_SORT:{en:"Document filter", ua:"Фільтр документів", pl:"Filtr dokumentów"},
+    Coockies_Txt1: {
+      en: "Our website uses cookies to improve functionality and the quality of the services provided.",
+      ua: "Наш веб-сайт використовує файли cookie для покращення функціональності та якості наданих послуг.",
+      pl: "Nasza strona internetowa wykorzystuje pliki cookie w celu poprawy funkcjonalności i jakości świadczonych usług."
+    },
+    Coockies_Txt2: {
+      en: "By using the site or closing this panel, you accept our",
+      ua: "Використовуючи сайт або закриваючи цю панель, ви приймаєте нашу",
+      pl: "Korzystając z witryny lub zamykając ten panel, akceptujesz naszą"
+    },
+    Coockies_Txt3: {
+      en: "Privacy Policy",
+      ua: "Політику конфіденційності",
+      pl: "Politykę prywatności"
+    }
   }
 
   return translations[txt] ? translations[txt][lang] : <span className="txtRed">-</span>

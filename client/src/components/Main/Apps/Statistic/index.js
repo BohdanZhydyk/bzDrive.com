@@ -1,7 +1,7 @@
 import React from "react"
 
 
-function Statistic({ props:{} }) {
+function Statistic() {
   return(
     <div className="flex column">
 

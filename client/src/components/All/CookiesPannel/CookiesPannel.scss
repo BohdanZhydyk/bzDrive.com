@@ -1,34 +1,37 @@
 
 .CookiesPannel {
-  position:sticky;
+  position:fixed;
   bottom:0.5vw;
   width:80%;
-  padding:1vw 0;
   margin:0 10%;
   border-radius:0.5vw;
-  background-color: #f609;
-  box-shadow: 0 0 0.5vw 0.5vw #999;
+  backGround-color:#111e;
+  box-shadow: 0 0 0.5vw 0.5vw #f60;
   @media (min-width: 481px) and (max-width: 767px) {
     bottom:1vw;
     width:96%;
     margin:0 2%;
     border-radius:1vw;
-    box-shadow: 0 0 1vw 1vw #999;
+    box-shadow: 0 0 1vw 1vw #f60;
   }
   @media (max-width: 481px) {
+    bottom:1vw;
+    width:96%;
+    margin:0 2%;
+    border-radius:1vw;
+    box-shadow: 0 0 1vw 1vw #f60;
   }
 
   .CookiesText {
-    width:80%;
+    width:calc(80% - 2vw);
     padding:1vw;
-    backGround-color:#111d;
     border-radius:0.5vw;
     @media (min-width: 481px) and (max-width: 767px) {
-      width:80%;
+      width:calc(80% - 2vw);
       border-radius:1vw;
     }
     @media (max-width: 481px) {
-      width:70%;
+      width:calc(70% - 2vw);
       border-radius:1vw;
     }
   }
@@ -37,5 +40,12 @@
     position:absolute;
     top:0.5vw;
     right:0.5vw;
+  }
+
+  .Paragraph {
+    width:100%;
+    margin:0.25vw 0;
+    text-indent:2vw;
+    text-align:start;
   }
 }

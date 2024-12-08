@@ -32,7 +32,7 @@ function ElCalculator({ props:{user, mode, articles, setArticles, setSave, print
       <div className="CalculatorPannelBottom bold flex">
       {
         bottomLine(mode, articles, setSave, setArticles, printMode, lang).map( (article, a)=>{
-          return <CalcLine props={{...article, setArticles, setSave}} key={`CalcLineTop${a}`} />
+          return <CalcLine props={{...article, setArticles, setSave, mode}} key={`CalcLineTop${a}`} />
         })
       }
       </div>
