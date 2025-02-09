@@ -61,7 +61,7 @@ export const SoftTr = (txt, lang)=>{
     swType: {
       en: "SW Type",
       ua: "Тип SW",
-      pl: "Ryp SW",
+      pl: "Typ SW",
     },
     loadMore: {
       en: "Load more",

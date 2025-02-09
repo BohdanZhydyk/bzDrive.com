@@ -7,8 +7,8 @@ function InputText({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal,
 
   const onChange = (e) => {
     const sendVal = (e?.target?.value ?? '')
-    cbVal(sendVal)
-    cbErr(sendVal)
+    cbVal && cbVal(sendVal)
+    cbErr && cbErr(sendVal)
   }
 
   return (

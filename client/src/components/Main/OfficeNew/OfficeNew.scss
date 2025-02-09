@@ -1,4 +1,100 @@
 
-.bzOffice {
+.OfficeNew {
+  position:relative;
   width:100%;
+  margin:0.5vw 0 2vw 0;
+
+  .OfficeTopLine {
+    width:100%;
+
+    .ActiveCompanyPannel {
+      width:30%;
+
+      .ActiveCompanyName {
+        flex:1;
+        font-size:140%;
+      }
+    }
+  }
+
+  .SettingsPannel {
+    width:100%;
+
+    .CompaniesPannel {
+      width:100%;
+
+      .CompaniesList {
+        width:calc(50% - 1vw);
+        margin:0 0.5vw;
+
+        .MyCompany {
+          width:100%;
+          margin:0.5vw 0 0 0;
+          padding:0.25vw 0;
+          border:1px solid #999;
+        }
+
+        .ActiveCompany {
+          border-color:#f60;
+        }
+
+        .NewCompanyBtn {
+          width:100%;
+          margin:0.5vw 0 0 0;
+        }
+      }
+
+      .CompanyPannel {
+        width:calc(50% - 1vw - 2px);
+        margin:0.5vw;
+        padding:0.5vw 0;
+        border:1px solid #999;
+  
+        .CompanyLineTop {
+          width:100%;
+          margin:0.5vw 0;
+        }
+        
+        .CompanyLine {
+          width:100%;
+  
+          .CompanyNameShort { flex:1; }
+          .InputNIP { width:20%; }
+          .InputREGON { width:20%;}
+          .InputKRS { width:20%; }
+  
+          .CompanyNameFull { flex:1; }
+          .BusinessType { width:30%; }
+          
+          .InputZIP { width:15%; }
+          .InputTown { width:30%; }
+          .InputStreet { flex:1; }
+          .InputNr { width:10%; }
+          
+          .InputTel { width:20%; }
+          .InputWWW { flex:1; }
+          .InputEmail { flex:1; }
+  
+          .InputAcc { flex:1; }
+          .InputAccZUS { flex:1; }
+          .InputAccVAT { flex:1; }
+        }
+  
+        .CompanyPersonel {
+          width:100%;
+  
+          .CompanyPersonelLine {
+            width:100%;
+  
+            .Title { width:100%; }
+            .Value {
+              width:100%;
+  
+              .Person { margin:0 0.25vw; }
+            }
+          }
+        }
+      }
+    }
+  }
 }

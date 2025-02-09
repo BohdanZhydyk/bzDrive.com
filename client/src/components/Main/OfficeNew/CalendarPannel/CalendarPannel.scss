@@ -1,0 +1,169 @@
+
+.CalendarPannel {
+  width:100%;
+  margin:1vw 0 0 0;
+
+  .CalendarTopLines, .WeekSection, .WeekDocuments, .CalendarBottomLines {
+    width:100%;
+  }
+
+  .CalendarLine {
+    width:100%;
+
+    .CalendarLineLeftSide {
+      width:calc(70% - 0.5vw - 1px);
+      min-height:2.5vw;
+      border-right:1px solid #999;
+      padding:0 0.25vw;
+
+      .DocModes {
+        position:relative;
+        width:calc(60% - 2vw - 2px);
+        min-height:2.5vw;
+        margin:0 0 0 2vw;
+        padding:0 2vw 0 0;
+        background-color:#1911;
+        border:1px solid #191;
+        border-radius:0.5vw 0 0 0.5vw;
+        transition: background-color 0.5s ease, transform 0.5s ease, border-radius 0.5s ease, padding 0.5s ease, margin 0.5s ease;
+
+        .DownloadBarWrapper {
+          position:absolute;
+          width:calc(100% - 2vw - 2px);
+
+          .DoenloadBar {
+            min-height:2.5vw;
+            backGround-color:#1913;
+          }
+        }
+
+        .DocModeBtn {
+          width:calc(100%/7 - 1vw - 2px);
+          margin:0 0.5vw;
+          min-height:2vw;
+          border:1px solid transparent;
+        }
+
+        .NewDocBtnHover {
+          &:hover {
+            background-color:#f603;
+          }
+        }
+
+        .FilterDocBtnHover {
+          &:hover {
+            background-color:#1913;
+          }
+        }
+
+        .FilterDocBtnActive {
+          font-weight:bold;
+          border-left:1px solid transparent;
+          border-right:1px solid transparent;
+          border-top:1px solid transparent;
+          border-bottom:1px solid rgb(21, 255, 0);
+          border-radius:0 0 0.5vw 0.5vw;
+          background-image:linear-gradient(transparent, #1918);
+          transition: background-image 0.5s ease, transform 0.5s ease, border-radius 0.5s ease, border 0.5s ease, font-weight 0.5s ease;
+        }
+      }
+      .ToNewDocBtn {
+        margin:0 2vw 0 0;
+        padding:0 0 0 2vw;
+        background-color:#f601;
+        border:1px solid #f60;
+        border-radius:0 0.5vw 0.5vw 0;
+        transition: background-color 0.5s ease, transform 0.5s ease, border-radius 0.5s ease, padding 0.5s ease, margin 0.5s ease;
+      }
+
+      .NewDocBtn, .FilterDocBtn {
+        width:calc(20% - 2px);
+        min-height:2.5vw;
+        border-radius:0.5vw;
+      }
+
+      .NewDocBtn {
+        background-color:#f60;
+        border:1px solid #f60;
+      }
+      .NewDocBtnActive {
+        border-radius:0.5vw 0 0 0.5vw;
+      }
+      .FilterDocBtn {
+        background-color:#191;
+        border:1px solid #191;
+      }
+      .FilterDocBtnActive {
+        border-radius:0 0.5vw 0.5vw 0;
+      }
+    }
+
+    .CalendarLineRightSide {
+      width:calc(30% - 0.5vw );
+      min-height:2.5vw;
+      margin:0 0.25vw;
+
+      .DayName {
+        flex:1;
+        min-height:1.5vw;
+        margin:1px;
+        border:1px solid #999;
+      }
+      .DayDate {
+        flex:1;
+        min-height:2.5vw;
+        margin:1px;
+        border:1px solid #999;
+      }
+      .SameMonth {opacity:0.4;}
+      .HolyDay {background-color:#f002;}
+      .Today {
+        background-color:#f60;
+        border-color:#fff;
+        &:hover {
+          cursor:pointer;
+          background-image:linear-gradient(0deg, #1111, #1115 40% 60%, #1111);
+        }
+      }
+    }
+
+    .DocumentBody {
+      flex:1;
+      min-height:3vw;
+      margin:0.5vw 0 0 0;
+
+      .DocCell {
+        position:relative;
+        min-height:3vw;
+        padding:0 0.25vw;
+
+        .StatusLine {
+          position:absolute;
+          left:0;
+          width:100%;
+          min-height:0.1vw;
+        }
+        .RepairBtn {
+          position:absolute;
+          top:0;
+          right:0;
+          width:1vw;
+          height:1vw;
+        }
+      }
+
+      .DocNr {width:15%;}
+      .DocName {flex:1;}
+      .DocContact {width:15%;}
+      .DocSum {width:10%;}
+      .DocWidth {flex:1;}
+    }
+
+    .DocBefore, .DocAfter {
+      min-height:calc(3vw - 2px);
+      border-top:1px solid #333;
+      border-bottom:1px solid #333;
+      margin:0.25vw 0 0 0;
+    }
+  }
+}

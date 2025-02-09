@@ -53,10 +53,10 @@ export function YYYYMMDD_ToLastDayOfMonth(date) {
   return parseInt(`${year}${month}${lastDay}`, 10)
 }
 export function DocNameNormalize(nr){
-  const mode = nr?.mode
-  const year = nr?.from.toString().slice(0, 4)
-  const month = nr?.from.toString().slice(4, 6)
-  const sign = nr?.sign.toString().padStart(4, '0')
+  const mode = nr?.mode ?? "mode"
+  const year = nr?.from ? nr?.from.toString().slice(0, 4) : "----"
+  const month = nr?.from ? nr?.from.toString().slice(4, 6) : "--"
+  const sign = nr?.sign ? nr?.sign.toString().padStart(4, '0') : "----"
   return `${mode}/${year}/${month}/${sign}`
 }
 
@@ -140,9 +140,11 @@ export const sanitizeTxt = (txt, name = "default")=>{
     case "pass":              return sanitizePassword(txt)
     case "verify":            return sanitizePassword(txt)
     case "CompanyNameShort":  return sanitizeCompanyNameShort(txt)
+    case "CompanyNameFull":   return sanitizeCompanyNameFull(txt)
     case "CompanyName":       return sanitizeCompanyName(txt)
     case "VIN":               return sanitizeVIN(txt)
     case "NIP":               return sanitizeNIP(txt)
+    case "REGON":             return sanitizeREGON(txt)
     case "ZIP":               return sanitizeZIP(txt)
     case "town":              return sanitizeTown(txt)
     case "StreetName":        return sanitizeStreetName(txt)
@@ -193,6 +195,14 @@ export const sanitizeTxt = (txt, name = "default")=>{
     if(sanText.length < min) sanErr = tr('Err_1', lang)
     return { sanText, sanErr }
   }
+  function sanitizeCompanyNameFull(txt) {
+    const min = 1
+    const max = 256
+    let sanErr = false
+    let sanText = txt ? txt.replace(regExExtendedSpecialCharacters, '').slice(0, max) : ''
+    if(sanText.length < min) sanErr = tr('Err_1', lang)
+    return { sanText, sanErr }
+  }
   function sanitizeCompanyName(txt) {
     const min = 1
     const max = 256
@@ -223,6 +233,22 @@ export const sanitizeTxt = (txt, name = "default")=>{
     let sanText = txt ? txt.replace(/[^0-9-]/g, '').trim().slice(0, max) : ''
     if(sanText.length < max) sanErr = tr('Err_11', lang)
     sanText = formatNIP(sanText)
+    return { sanText, sanErr }
+  }
+  function sanitizeREGON(txt) {
+    const max = 13
+    let sanErr = false
+    function formatREGON(nip) {
+      const formattedNIP = nip.replace(/-/g, '').slice(0, 10)
+      return [
+        formattedNIP.slice(0, 3),
+        formattedNIP.slice(3, 6),
+        formattedNIP.slice(6, 9)
+      ].filter(s => s).join('-')
+    }
+    let sanText = txt ? txt.replace(/[^0-9-]/g, '').trim().slice(0, max) : ''
+    if(sanText.length < max) sanErr = tr('Err_11', lang)
+    sanText = formatREGON(sanText)
     return { sanText, sanErr }
   }
   function sanitizeZIP(txt) {
@@ -560,7 +586,7 @@ export const PostToApi = async (link, object, callback)=>{
   const API = localHost ? localLink : domainLink
 
   // Get the IP data for the current user and add it to the request
-  const IP = await axios.get('https://json.geoiplookup.io', { timeout: 5000 })
+  const IP = await axios.get('https://json.geoiplookup.io', { timeout: 1000 })
   .then( (res)=> ({
       host:         hostname,
       from:         link,
@@ -623,7 +649,7 @@ export const PostToApi = async (link, object, callback)=>{
     if(localHost) console.log(`resData_${link}`, Data?.result)
 
     // Log any errors from the server response
-    const errorsData = Data?.errors || []
+    const errorsData = Array.isArray(Data?.errors) ? Data.errors : []
     errorsData.forEach( (err) => console.error("errors", err) )
 
   })

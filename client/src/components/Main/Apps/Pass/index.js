@@ -15,7 +15,7 @@ function Pass(){
   const newLine = {userName:"", login:"", pass:"", encrypted:true}
   const newPass = {siteName:"", link:"", info:"", siteData:[newLine]}
 
-  const [pass, setPass] = useState([])
+  const [pass, setPass] = useState( [] )
 
   const [sorted, setSorted] = useState(pass)
 
@@ -96,7 +96,7 @@ function Pass(){
     <div className="Pass flex column">
 
     {
-      (pass?.length < 1) && user?.role
+      !pass && user?.role
       ?
       <div className="DownloadIcon flex"><SiteIcon props={{speed:4}} /></div>
       :

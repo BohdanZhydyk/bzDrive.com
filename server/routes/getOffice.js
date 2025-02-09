@@ -56,7 +56,7 @@ exports.getOffice = (req, res)=>{
   bzDB( { req, res, col:'bzTokens', act:"FIND_ONE", query:{bzToken} }, (userData)=>{
 
     const login = userData?.result?.user?.login
-    const query = { $or:[{"director":login},{"personnel.accountants":login},{"personnel.workers":login}] }
+    const query = { $or:[{"personnel.directors.login":login},{"personnel.accountants.login":login},{"personnel.workers.login":login}] }
 
     bzDB( { req, res, col:'companies', act:"FIND", query }, (compData)=>{
 
@@ -82,16 +82,10 @@ exports.getOffice = (req, res)=>{
         }
 
         const comp = compData?.result
-        const userDirector = comp?.filter(d => d?.director === login)
-        const userNotDirector = comp?.filter(d => d?.director !== login)
+        const companiesUserDirector = comp?.filter( company => company?.personnel?.directors?.some(d => d?.login === login) )
+        const companiesUserNotDirector = comp?.filter( company => !company?.personnel?.directors?.some(d => d?.login === login) )
 
-        const sortedData = userDirector?.sort((a, b) => {
-          if (a?.director > b?.director) return 1
-          if (a?.director < b?.director) return -1
-          return 0
-        })
-
-        const companiesData = sortedData?.concat(userNotDirector)
+        const companiesData = [...companiesUserDirector, ...companiesUserNotDirector]
 
         res.send({ ...compData, result: {userLogin:login, activeCompany:0, companiesData} })
         return

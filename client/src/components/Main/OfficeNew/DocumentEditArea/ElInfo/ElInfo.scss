@@ -1,0 +1,76 @@
+
+.ElInfo {
+  width:calc(100% - 0.5vw);
+  margin:0 0.25vw;
+
+  .InfoPannel {
+    width:calc(50% - 0.5vw - 2px);
+    margin:1vw 0 0 0;
+    border:1px solid #999;
+    border-radius:0.5vw;
+    @media (max-width: 767px) {width:calc(100% - 0.5vw - 2px);}
+    @media print {width:calc(50% - 0.5vw - 2px);}
+
+    .InfoPannelTop {
+      width:calc(100% - 4vw);
+      min-height:3vw;
+      padding:0 2vw;
+      font-size:150%;
+      background-color:#111;
+      border-radius:0.5vw 0.5vw 0 0;
+      @media print {background-color:#ddd;}
+    }
+
+    .InputsPannel {
+      width:98%;
+      padding:0.5vw 0;
+
+      .Input_brand {width:40%;}
+      .Input_model {width:40%;}
+      .Input_numbers {width:20%;}
+      .Input_vin {width:50%;}
+      .Input_engine {width:50%;}
+      .Input_prod {width:30%;}
+      .Input_fuel {width:70%;}
+      .Input_odo {width:30%;}
+      .Input_agree {width:70%;}
+      .Input_name {width:100%;}
+      .Input_nip {width:40%;}
+      .Input_account {width:60%;}
+      .Input_zip {width:20%;}
+      .Input_town {width:25%;}
+      .Input_street {width:40%;}
+      .Input_nr {width:15%;}
+      .Input_tel {width:20%;}
+      .Input_www {width:40%;}
+      .Input_email {width:40%;}
+
+      .InfoPrintPannel {
+        width:100%;
+          
+        .InfoLine {
+          width:100%;
+          margin:0 0 0.5vw 0;
+          border-bottom:1px dashed #999;
+
+          .InfoLineTitle {
+            width:calc(100% - 2vw);
+            padding:0 1vw;
+            font-size:70%;
+            color:#999;
+            @media print {color:#222 !important;}
+          }
+
+          .InfoLineVal {
+            width:calc(100% - 1vw);
+            min-height:1.2vw;
+            padding:0.5vw;
+            @media (min-width: 481px) and (max-width: 767px) {min-height:2.5vw;}
+            @media (max-width: 481px) {min-height:4vw;}
+            @media print {min-height:1.2vw;}
+          }
+        }
+      }
+    }
+  }
+}

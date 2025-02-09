@@ -20,8 +20,8 @@ function InputDate({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal,
     const value = e?.target?.value
     const sendVal = parseInt( value ? value.split("-").join("") : "" )
     setColor("Wht")
-    cbVal(sendVal)
-    cbErr(sendVal)
+    cbVal && cbVal(sendVal)
+    cbErr && cbErr(sendVal)
   }
 
   return (

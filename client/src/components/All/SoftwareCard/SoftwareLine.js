@@ -45,7 +45,7 @@ export function SoftwareLine({ props:{sw, software, link, defaultFileAddr, id, r
       { !more && <span className="FileSize flex end">{size}</span> }
 
       {
-        !isGuest && !editCard &&
+        isAdmin && !editCard &&
         <a className="flex" href={href} download={software?.name} target="_blank" rel="noreferrer">
           <ActionBtn props={{name:"download", click:()=>{}}} />
         </a>
