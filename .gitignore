@@ -1,29 +1,36 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/server/node_modules
-/client/node_modules
+/server/node_modules/
+/client/node_modules/
 
+# VS Code settings (niepotrzebne w repozytorium)
+.vscode/
+/server/.vscode/
+/client/.vscode/
+
+# PnP files
 /server/.pnp
 /client/.pnp
-
 /server/.pnp.js
 /client/.pnp.js
 
+# Ignored folders
 /server/safe/
 /server/public/
-/serverMail/vars.php
+serverMail/vars.php
 
+# Testing
+/server/coverage/
+/client/coverage/
 
-# testing
-/server/coverage
-/client/coverage
+# Production build
+/server/build/
+/client/build/
+/server/dist/
+/client/dist/
 
-# production
-/server/build
-/client/build
-
-# misc
+# Misc
 .DS_Store
 .env.local
 .env.development.local
