@@ -274,6 +274,7 @@ export const tr = (txt, lang)=>{
     InfoPannelBuyer:{en:"Buyer", ua:"Покупець", pl:"Nabywca"},
     InfoPannelPayer:{en:"Payer", ua:"Платник", pl:"Płatnik"},
     TasksTop:{en: "Description and scope of tasks", ua: "Опис та обсяг завдань", pl: "Opis i zakres zadań"},
+    FaultsTop:{en: "Description and scope of tasks", ua: "Опис та обсяг завдань", pl: "Opis i zakres zadań"},
     CommentsTop:{en:"Comment", ua:"Коментар", pl:"Komentarz"},
     FilesTop:{en:"Files", ua:"Файли", pl:"Pliki"},
     SoftTop:{en:"Software", ua:"Програмне забезпечення", pl:"Oprogramowanie"},

@@ -70,7 +70,7 @@ export function CalcLine({ props:{
           { !Bottom && <ArtInput props={propsesQUA} /> }
 
           { !Bottom && <ArtInput props={propsesVAT} /> }
-
+{/* TODO : VAT - 23, 8, 7, 0, ZW, NP */}
           <ArtInput props={propsesNET} />
 
           <ArtInput props={propsesPRV} />

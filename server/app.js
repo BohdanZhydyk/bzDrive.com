@@ -29,3 +29,6 @@ app.listen(PORT, () => {
   const txt2 = `${DT?.year}/${DT?.month}/${DT?.day}-${DT?.hour}:${DT?.min}:${DT?.sec}`
   console.log(`${txt1} - ${txt2}`)
 })
+
+// TODO 1 moderate severity vulnerability
+// TODO (node:9528) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.

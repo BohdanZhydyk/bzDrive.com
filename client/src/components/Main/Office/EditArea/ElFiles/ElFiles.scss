@@ -1,0 +1,82 @@
+
+.ElFiles {
+  width:100%;
+  margin:1vw 0 0 0;
+  border:1px solid #999;
+  border-radius:0.5vw;
+  @media print {display:none !important;}
+
+  .ElFilesTop {
+    width:calc(100% - 4vw);
+    min-height:3vw;
+    padding:0 2vw;
+    font-size:150%;
+    background-color:#111;
+    border-radius:0.5vw 0.5vw 0 0;
+  }
+
+  .FileLine {
+    position: relative;
+    width:99%;
+    min-height:3vw;
+    border-bottom:1px solid #444;
+    &:hover {background-color:#1115;}
+
+    .FileName {
+      &:hover {color:#fd0;}
+    }
+    .FileAct {
+      flex:1;
+
+      .FileSize {
+        width:4vw;
+        font-size:80%;
+        margin:0 0 0 0.5vw;
+        @media (min-width: 481px) and (max-width: 767px) {width:8vw;}
+        @media (max-width: 481px) {width:13vw;}
+
+        .num {width:65%;}
+        .unit {width:35%;}
+      }
+    }
+  }
+
+  .UploadBtns {
+    width:calc(100% - 2vw);
+    padding:0.5vw 1vw;
+    @media (min-width: 481px) and (max-width: 767px) {width:calc(80% - 2vw)}
+    @media (max-width: 481px) {width:calc(100% - 2vw)}
+
+    .UploadLink {
+      width:calc(90% - 1vw - 2px);
+      padding:0 0.5vw 0.5vw 0.5vw;
+      border:1px dashed #171;
+      border-radius:0.5vw;
+      &:hover {
+        border-color:#191;
+        background-color:#1711;
+      }
+
+      .FileNameInput {
+        width:30%;
+      }
+
+      .FileAddrInput {
+        width:50%;
+      }
+
+      .UploadLinksBtns {
+        width:20%;
+        margin:1vw 0 0 0;
+
+        .UploadLinksBtn {
+          flex:1;
+          min-height:2.5vw;
+          margin:0.25vw;
+          @media (min-width: 481px) and (max-width: 767px) {min-height:5vw;}
+          @media (max-width: 481px) {min-height:7vw;}
+        }
+      }
+    }
+  }
+}

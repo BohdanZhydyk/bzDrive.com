@@ -11,9 +11,9 @@ export function Contacts({ props:{contacts} }) {
         let key = `ContEl${el.key}${n}`
 
         return(
-          <div className="ContBtn flex" key={key}>
-            <a href={el.val} target="_blank" rel="noreferrer"><img className="ImgBtn" src={src} alt={el.key} /></a>
-          </div>
+          <a className="ContBtn flex" href={el.val} target="_blank" rel="noreferrer" key={key}>
+            <img className="ImgBtn" src={src} alt={el.key} />
+          </a>
         )
 
       })

@@ -32,41 +32,84 @@ export function Right({ props:{edit, contacts, el, nr, user, setWorkshop, setEdi
     }
   }
 
+  const icons = [
+    {
+      "key": "youtube",
+      "val": "https://www.youtube.com/@bzDrive_TV"
+    },
+    {
+      "key": "tiktok",
+      "val": "https://www.tiktok.com/@bzdrivetv"
+    },
+    {
+      "key": "fb",
+      "val": "https://www.facebook.com/groups/2981929642022162"
+    },
+    {
+      "key": "in",
+      "val": "https://www.linkedin.com/in/bohdan-zhydyk/"
+    },
+    {
+      "key": "fixly",
+      "val": "https://fixly.pl/profil/remfhnil"
+    },
+    {
+      "key": "git",
+      "val": "https://github.com/BohdanZhydyk"
+    }
+  ]
+
   return(
     <div className="el-R flex column start">
-    {
-      contacts.map( (contact, c)=>{
 
-        const link = `${contact?.content?.link[0]}${contact?.content?.link[1]}`
-        const key = `Contact${nr}${c}`
-        const txt = `${tr(`Link_${contact?.element}`, user?.lang)}:`
+      {
+        contacts.map( (contact, c)=>{
 
-        return(
-          <div className="Contact" key={key}>
-          {
-            !edit
-            ?
-            <div className="ContactLine">
-              <div className="ContactName">{txt}</div>
-              <a className="Content flex between stretch" href={link} target="_blank" rel="noreferrer">
+          const link = `${contact?.content?.link[0]}${contact?.content?.link[1]}`
+          const key = `Contact${nr}${c}`
+          const txt = `${tr(`Link_${contact?.element}`, user?.lang)}:`
 
-                <img className="ImgBtn" src={contact?.img} alt={contact?.element} />
+          return(
+            <div className="Contact" key={key}>
+            {
+              !edit
+              ?
+              <div className="ContactLine">
+                <div className="ContactName">{txt}</div>
+                <a className="Content flex between stretch" href={link} target="_blank" rel="noreferrer">
 
-                <div className="InfoTxt flex end">
-                  {contact?.content?.link[contact?.content?.show]}
-                </div>
+                  <img className="ImgBtn" src={contact?.img} alt={contact?.element} />
 
+                  <div className="InfoTxt flex end">
+                    {contact?.content?.link[contact?.content?.show]}
+                  </div>
+
+                </a>
+              </div>
+              :
+              <div className="ContactLine">
+                <InputText props={inputPropses(contact)} key={`EditTagContacts${nr}${c}`} />
+              </div>
+            }
+            </div>
+          )
+        })
+      }
+
+      <div className="ContactImages flex wrap">
+        {
+          icons?.map( (icon, i)=>{
+            const imgLink = `https://bzdrive.com/files/ico/contacts/${icon?.key}.png`
+            const key = `ContactImg${icon?.key}${i}`
+            return(
+              <a className="ContactImg flex" href={icon?.val} target="_blank" rel="noreferrer" key={key}>
+                <img className="flex" src={imgLink} alt={icon?.key} />
               </a>
-            </div>
-            :
-            <div className="ContactLine">
-              <InputText props={inputPropses(contact)} key={`EditTagContacts${nr}${c}`} />
-            </div>
-          }
-          </div>
-        )
-      })
-    }
+            )
+          })
+        }
+      </div>
+
     </div>
   )
 }

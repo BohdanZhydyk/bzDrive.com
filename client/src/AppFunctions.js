@@ -584,9 +584,11 @@ export const PostToApi = async (link, object, callback)=>{
   const hostname = window.location.hostname
   const localHost = hostname === 'localhost'
   const API = localHost ? localLink : domainLink
+  const savedUser = GetUser()
+  const savedIP = savedUser?.IP
 
   // Get the IP data for the current user and add it to the request
-  const IP = await axios.get('https://json.geoiplookup.io', { timeout: 1000 })
+  const IP = savedIP || await axios.get('https://json.geoiplookup.io', { timeout: 1000 })
   .then( (res)=> ({
       host:         hostname,
       from:         link,
@@ -636,11 +638,14 @@ export const PostToApi = async (link, object, callback)=>{
     
     // Set the token and user data in local storage
     SetToken(Data?.bzToken)
-    SetUser(
-      Data?.user === "RELOAD_APP"
-      ? { ...Data?.user, lang: setLanguage(), reload:true }
-      : { ...Data?.user, lang: setLanguage() }
-    )
+    SetUser({
+      ...savedUser,
+      ...( !savedIP && IP.ip ? { IP } : {} ),
+      ...( Data?.user === "RELOAD_APP"
+          ? { ...Data?.user, lang: setLanguage(), reload: true }
+          : { ...Data?.user, lang: setLanguage() }
+      )
+    })
 
     // Run the callback function with the response data (if provided)
     if(typeof callback === "function") callback(Data?.result)

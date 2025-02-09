@@ -74,3 +74,5 @@ function App() {
 }
 
 export default App
+
+// TODO: 8 vulnerabilities (2 moderate, 6 high)

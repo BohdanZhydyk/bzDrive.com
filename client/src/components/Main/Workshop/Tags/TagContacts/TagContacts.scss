@@ -67,5 +67,23 @@
         }
       }
     }
+
+    .ContactImages {
+      width:100%;
+
+      .ContactImg {
+        width:50%;
+
+        img {
+          margin:2vw 3vw;
+          width:30%;
+          transition: all 0.3s ease-in-out;
+          &:hover{
+            margin:1vw 2vw;
+            width:calc(30% + 2vw);
+          }
+        }
+      }
+    }
   }
 }

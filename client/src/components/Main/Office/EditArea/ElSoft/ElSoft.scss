@@ -1,0 +1,47 @@
+
+.ElSoft {
+  width:calc(100% - 2px);
+  margin:1vw 0 0 0;
+  border:1px solid #999;
+  border-radius:0.5vw;
+  @media print {display:none !important;}
+
+  .ElSoftTop {
+    width:calc(100% - 4vw);
+    min-height:3vw;
+    padding:0 2vw;
+    font-size:150%;
+    background-color:#111;
+    border-radius:0.5vw 0.5vw 0 0;
+  }
+
+  .ElSoftBody {
+    width:100%;
+    padding-bottom:0.5vw;
+
+    .SoftwareLines {
+      width:100%;
+      min-height:3vw;
+    
+      .SoftwareElement {
+        width:calc(100% - 1vw);
+        margin:0 0.5vw;
+        border-bottom:1px dashed #555;
+        
+        .SoftwareLine {
+          width: 100%;
+          min-height:3vw;
+          &:hover { background-color: #1113; }
+  
+          .Icon {width:5%;}
+          .Prog {width:15%;}
+          .Type {width:15%;}
+          .Method {width:10%;}
+          .SwType {width:15%;}
+          .Mod {width:25%;}
+          .LineID {flex:1;}
+        }
+      }
+    }
+  }
+}

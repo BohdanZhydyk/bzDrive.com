@@ -1,0 +1,45 @@
+
+.DecoderVIN {
+  width:100%;
+  margin-top:0.5vw;
+  padding-bottom:0.5vw;
+
+  .VINinputPannel {
+    width:100%;
+
+    .VINinput {
+      width:30%;
+      @media (max-width: 767px) {width:100%;}
+    }
+  }
+
+  .VINlines {
+    width:100%;
+
+    .VINline {
+      width:100%;
+
+      .LineName {
+        width:10%;
+        padding:1vw 1vw 0 1vw;
+        @media (max-width: 767px) {width:15%;}
+      }
+      .BrandInput {
+        width:20%;
+        @media (max-width: 767px) {width:40%;}
+      }
+      .ModelInput {
+        width:20%;
+        @media (max-width: 767px) {width:40%;}
+      }
+      .ProdInput {
+        width:10%;
+        @media (max-width: 767px) {width:20%;}
+      }
+      .EngineInput {
+        width:30%;
+        @media (max-width: 767px) {width:80%;}
+      }
+    }
+  }
+}

@@ -74,8 +74,10 @@ export function SanQuates(val) {
 
 export function SanQuantity(val) {
   if(val === ""){val = "0"}
-  const regex = /[^0-9]/g
-  const sanitized = val.replace(regex, "")
+  // const regex = /[^0-9]/g
+  const regex = /[^0-9ZWNPM]/gi
+  // const sanitized = val.replace(regex, "")
+  const sanitized = val.replace(regex, "").toUpperCase()
   return sanitized
 }
 
