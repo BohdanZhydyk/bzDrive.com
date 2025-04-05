@@ -8,7 +8,7 @@ import Main from './components/Main'
 import Footer from './components/Footer'
 
 import { useResizeDetector } from 'react-resize-detector'
-import { GetCookie, GetUser, SetCookie } from './AppFunctions'
+import { GetCookie, GetUser, SetCookie, SetUser } from './AppFunctions'
 import CookiesPannel from './components/All/CookiesPannel'
 
 function App() {
@@ -38,7 +38,12 @@ function App() {
 
   useEffect( ()=>{ !state && AppReducer( { type:"GET_STATE" }, state, setState ) }, [])
 
-  useEffect( ()=>{ user?.reload && AppReload() }, [user])
+  useEffect( ()=>{
+    if(user?.reload){
+      SetUser({ ...user, reload:false })
+      AppReload()
+    }
+  }, [user])
 
   const { width, height, ref } = useResizeDetector()
 

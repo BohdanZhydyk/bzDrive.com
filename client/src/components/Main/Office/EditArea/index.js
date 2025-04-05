@@ -22,7 +22,7 @@ function EditArea({ props:{company, l, doc, printMode, EDIT_DOC, Reducer} }) {
 
   const user = GetUser()
 
-  const person = doc?.dealer?.personnel?.directors[0]?.person ?? ""
+  const person = doc?.dealer?.personnel?.directors?.[0]?.person ?? ""
 
   function setStates(el){
     return ({

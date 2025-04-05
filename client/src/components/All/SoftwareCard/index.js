@@ -36,11 +36,13 @@ function SoftwareCard({ props:{car, setCar, setSoft, sw, s, setSave, printMode, 
     tr, lang, car, setCar, setSoft, sw, s, setSave, editErr, setEditErr, programmers, swTypes, readMethods, modTypes
   })
 
+  const maskVIN = (vin) => isAdmin ? vin : {...vin, val:vin?.val?.slice(0, -6) + '✱✱✱✱✱✱'}
+
   const lines1 = [
     {classes:"Brand", props:brand, input:<InputText props={ brand }/> },
     {classes:"Model", props:model, input:<InputText props={ model }/> },
     {classes:"Engine", props:engine, input:<InputText props={ engine }/> },
-    {classes:"VIN", props:vin, input:<InputText props={ vin }/> },
+    {classes:"VIN", props:maskVIN(vin), input:<InputText props={ vin }/> },
     {classes:"ECUType", props:ECUType, input:<InputText props={ ECUType }/> }
   ]
   

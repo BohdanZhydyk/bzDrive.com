@@ -8,7 +8,7 @@ import { CalcLine } from './CalcLine'
 function ElCalculator({ props:{user, mode, articles, setArticles, setSave, printMode} }){
 
   if(!articles){ articles = [emptyArticle(mode)] }
-console.log(articles)
+
   const lang = user?.lang
 
   return(
