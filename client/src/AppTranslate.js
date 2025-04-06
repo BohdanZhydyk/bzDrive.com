@@ -4,7 +4,7 @@ export const tr = (txt, lang)=>{
   const translations = {
     Nav_WORKSHOP: {en: "Workshop", ua:"Майстерня", pl:"Warsztat"},
     Nav_NEWS: {en: "News", ua:"Новини", pl:"Aktualności"},
-    Nav_BZSOFTWARE:{en:"Software", ua:"Програми", pl:"Programy"},
+    Nav_BZTUNE:{en:"bzTune", ua:"bzTune", pl:"bzTune"},
     Nav_APPS: {en: "Apps", ua:"Додатки", pl:"Aplikacje"},
     Nav_BZPASS:{en:"bzPasswords", ua:"bzПаролі", pl:"bzHasła"},
     Nav_BZFILES:{en:"bzFiles", ua:"bzФайли", pl:"bzPliki"},

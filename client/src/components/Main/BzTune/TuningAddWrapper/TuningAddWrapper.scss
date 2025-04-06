@@ -1,0 +1,84 @@
+
+.TuningAddWrapper {
+  width:100%;
+
+  .ServicesPannel {
+    width:100%;
+
+    .Serv {
+      width:calc(100% / 4 - 2px - 2vw);
+      margin:0.5vw;
+      padding:0.5vw;
+      background-color: #1119;
+      border-radius: 0.5vw;
+      &:hover {
+        border:1px solid #fd0;
+      }
+      @media (max-width: 767px){
+        width:calc(100% / 2 - 2px - 4vw);
+        margin:1vw;
+        padding:1vw;
+        border-radius: 1vw;
+      }
+  
+      .ServImage {
+        width:calc(25% - 1vw);
+        margin:0.5vw;
+        @media (max-width: 767px){ width:calc(30% - 1vw); }
+      }
+  
+      .ServTxt {
+        width:calc(75% - 1vw);
+        margin:0.5vw;
+        font-size: 150%;
+        @media (max-width: 767px){ width:calc(70% - 1vw); }
+      }
+  
+      .ServDesc {
+        width:calc(100% - 1vw);
+        margin:0.5vw;
+        padding:0.5vw 0 0 0;
+        border-top:1px dashed #fff9;
+      }
+
+      .ServMoreBtn {
+        width:5%;
+        @media (max-width: 767px){
+          width:8%;
+        }
+      }
+    }
+
+    .BorderOrg {
+      border:1px solid #f60;
+    }
+
+    .BorderGrn {
+      border:1px solid #171;
+    }
+  }
+
+  .MorePannel {
+    width:calc(100% - 2px - 2vw);
+    margin:0.5vw;
+    padding:0.5vw;
+    background-color: #1119;
+    border:1px solid #171;
+    border-radius:0.5vw;
+    @media (max-width: 767px){
+      width:calc(100% - 2px - 6vw);
+      margin:1vw;
+      padding:2vw;
+      border-radius: 1vw;
+    }
+
+    .MorePannelTopBtns {
+      width:100%;
+    }
+
+    p {
+      width:100%;
+      text-indent: 2vw;
+    }
+  }
+}

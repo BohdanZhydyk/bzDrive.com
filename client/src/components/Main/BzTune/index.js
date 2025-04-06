@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react"
 
-import "./Software.scss"
+import "./BzTune.scss"
 import { GetUser } from "../../../AppFunctions"
 import { SoftwareReducer } from "./SoftwareReducer"
 import SiteIcon from "../../All/SiteIcon"
 import { SoftInfo } from "./SoftInfo"
+import TuningAddWrapper from "./TuningAddWrapper"
 import BrandsWrapper from "./BrandsWrapper"
 import { LastSoftware } from "./LastSoftware"
 import { SoftTr } from "./SoftwareTranslate"
 
 
-function Software() {
+function BzTune() {
 
   const user = GetUser()
   const lang = user?.lang
@@ -47,7 +48,7 @@ function Software() {
   // console.log("software",software)
 
   return (
-    <div className="Software flex wrap" onClick={()=> isInfo && CLOSE_INFO()}>
+    <div className="BzTune flex wrap" onClick={()=> isInfo && CLOSE_INFO()}>
       
       <div className="Pattern flex"></div>
 
@@ -60,6 +61,8 @@ function Software() {
 
           { !isAdmin && isInfo && <SoftInfo props={{lang, CLOSE_INFO}}/> }
 
+          <TuningAddWrapper props={{lang}}/>
+
           <BrandsWrapper props={{isSoftware, software, carTop, Reducer}}/>
 
           <LastSoftware props={{initialState, carTop, lang}} />
@@ -71,4 +74,4 @@ function Software() {
   )
 }
 
-export default Software
+export default BzTune

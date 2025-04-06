@@ -4,14 +4,14 @@ import { Routes, Route } from 'react-router-dom'
 import './Main.scss'
 import SiteIcon from '../All/SiteIcon'
 import Workshop from './Workshop'
-import Software from './Software'
+import BzTune from './BzTune'
 import OfficeNew from './OfficeNew'
 import Office from './Office'
 import Apps from './Apps'
 import Profile from './Profile'
 import Document from './Document'
 import Cookies from './Cookies'
-import SoftPage from './Software/SoftPage'
+import SoftPage from './BzTune/SoftPage'
 import Page404 from './Page404'
 
 
@@ -30,7 +30,7 @@ function Main({ props:{nav, blur, BLUR, size, AppReload} }) {
       <Routes>
 
         <Route path="/"           exact element={<Workshop props={{sub:subNav("/"), nav, AppReload}}/>} />
-        <Route path="/software/*"       element={<Software props={{sub:subNav("/software")}}/>} />
+        <Route path="/tune/*"           element={<BzTune props={{sub:subNav("/tune")}}/>} />
         <Route path="/officenew/*"      element={<OfficeNew props={{size, sub:subNav("/bzoffice")}}/>} />
         <Route path="/office/*"         element={<Office props={{size, sub:subNav("/office")}}/>} />
         <Route path="/apps/*"           element={<Apps props={{sub:subNav("/apps")}}/>} />

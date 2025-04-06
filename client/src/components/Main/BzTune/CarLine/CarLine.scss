@@ -26,7 +26,7 @@
   .BrandModel {
     width:15%;
     @media (min-width: 481px) and (max-width: 767px) {
-      width:100%;
+      width:25%;
       font-size:130%;
     }
     @media (max-width: 481px){
@@ -42,23 +42,24 @@
     }
   }
   .Lines {
-    width:78%;
-    @media (min-width: 481px) and (max-width: 767px) { width:90%; }
+    width:77%;
+    @media (min-width: 481px) and (max-width: 767px) { width:60%; }
     @media (max-width: 481px){ width:100%; }
 
     .ECU {
       width:calc(100% - 1vw);
       padding:0 0.5vw;
       border-bottom:1px dashed #555;
+      @media (max-width: 767px) { border:none; }
   
       .ECUType { flex:1; }
       .HWv {
-        width:35%;
-        @media (max-width: 481px){ width:30%; }
+        width:30%;
+        @media (max-width: 481px){ width:25%; }
       }
       .SWv {
-        width:35%;
-        @media (max-width: 481px){ width:30%; }
+        width:30%;
+        @media (max-width: 481px){ width:25%; }
       }
     }
     .Prog {
@@ -68,11 +69,11 @@
   
       .Programmer { flex:1; }
       .Mod {
-        width:35%;
+        width:30%;
         @media (max-width: 481px){ width:30%; }
       }
       .Type {
-        width:35%;
+        width:30%;
         @media (max-width: 481px){ width:30%; }
       }
     }

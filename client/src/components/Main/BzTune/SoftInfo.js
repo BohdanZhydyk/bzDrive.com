@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 
-import { SoftTr } from "./SoftwareTranslate"
 import ActionBtn from "../../All/ActionBtn"
+import { SoftTr } from "./SoftwareTranslate"
 
 
 export function SoftInfo({ props: { lang, CLOSE_INFO } }) {
