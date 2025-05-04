@@ -3,7 +3,7 @@ import React from "react"
 import './InputText.scss'
 
 
-function InputText({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal, cbErr} }) {
+function InputText({ props:{legend, type, plhol, autoComplete, val, err, isImg, imgAct, cbVal, cbErr} }) {
 
   const onChange = (e) => {
     const sendVal = (e?.target?.value ?? '')
@@ -24,7 +24,7 @@ function InputText({ props:{legend, type, plhol, val, err, isImg, imgAct, cbVal,
         type={type}
         placeholder={plhol}
         onChange={onChange}
-        autoComplete="off"
+        autoComplete={autoComplete ?? "off"}
         onKeyUp={ (e)=> ((e.key === "Enter") && isImg) && imgAct() }
       />
 

@@ -35,7 +35,7 @@ function TuningAddWrapper({ props:{lang} }){
           return(
             <div className={`Serv Border${isActive ? `Grn` : `Org`} flex wrap`} onClick={MORE_CLICK} key={key}>
               <img className="ServImage flex" src={link} alt="ServImg" />
-              <div className="ServTxt bold flex">{txt}</div>
+              <div className="ServTxt bold flex start">{txt}</div>
               <div className="ServDesc flex">{desc}</div>
               <img className="ServMoreBtn flex" src={isActive ? lessBtn : moreBtn} alt="moreBtn" />
             </div>

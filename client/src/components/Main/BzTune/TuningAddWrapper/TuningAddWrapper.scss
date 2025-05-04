@@ -25,6 +25,7 @@
         width:calc(25% - 1vw);
         margin:0.5vw;
         @media (max-width: 767px){ width:calc(30% - 1vw); }
+        @media (max-width: 481px) { width:calc(30% - 1vw); }
       }
   
       .ServTxt {
@@ -32,6 +33,11 @@
         margin:0.5vw;
         font-size: 150%;
         @media (max-width: 767px){ width:calc(70% - 1vw); }
+        @media (max-width: 481px) {
+          width:calc(100% - 1vw);
+          text-align:center;
+          min-height:18vw;
+        }
       }
   
       .ServDesc {
@@ -39,6 +45,7 @@
         margin:0.5vw;
         padding:0.5vw 0 0 0;
         border-top:1px dashed #fff9;
+        @media (max-width: 481px) { min-height:15vw; }
       }
 
       .ServMoreBtn {

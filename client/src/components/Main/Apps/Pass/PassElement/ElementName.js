@@ -1,7 +1,7 @@
 import React from "react"
 
 
-export function ElementName({ props:{edit, el, i, OPEN_CLOSE}}){
+export function ElementName({ props:{edit, element, i, OPEN_CLOSE}}){
 
   const newEl = (i === 0)
 
@@ -10,12 +10,12 @@ export function ElementName({ props:{edit, el, i, OPEN_CLOSE}}){
   const imgLink = !newEl && [
     `https://t0.gstatic.com/faviconV2`,
     `?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL`,
-    `&url=${el.link}`,
+    `&url=${element?.link}`,
     `&size=32`
   ].join('')
 
   return(
-    <div className={PassElCl} onClick={OPEN_CLOSE} title={el?.info}>
+    <div className={PassElCl} onClick={OPEN_CLOSE} title={element?.info}>
       <div className="PassName flex">
         {
           !newEl &&
@@ -23,7 +23,7 @@ export function ElementName({ props:{edit, el, i, OPEN_CLOSE}}){
             <img className="ImgBtn flex" src={imgLink} alt="siteIcon" />
           </span>
         }
-        <span className="SiteName flex">{!newEl ? el?.siteName : "add new"}</span>
+        <span className="SiteName flex">{!newEl ? element?.siteName : "add new"}</span>
       </div>
     </div>
   )

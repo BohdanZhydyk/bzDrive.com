@@ -4,24 +4,23 @@ import { ElementName } from "./ElementName"
 import { PassData } from "./PassData"
 
 
-function PassElement({ props:{user, el, i, newLine, groupsForInput, SAVE_PASS, SHOW_PASS}}){
-
-  const [edit, setEdit] = useState(false)
+function PassElement({ props:{user, el, i, newLine, groupsForInput, Reducer}}){
 
   const [save, setSave] = useState(false)
 
   const [element, setElement] = useState(false)
 
+  const id = el?._id
+  const edit = element?.edit
+
   const OPEN_CLOSE = ()=>{
-    const hiddenPass = (line)=> ({userName:line?.userName, login:line?.login})
-    setElement( (i === 0) ? el : {...el, siteData:el?.siteData.map( (line)=> hiddenPass(line) )} )
-    setEdit(prev=> !prev)
+    Reducer({type:"OPEN_CLOSE", id})
     setSave(false)
   }
 
   const SAVE_ELEMENT = ()=>{
     OPEN_CLOSE()
-    SAVE_PASS(element)
+    Reducer({type:"SAVE_PASS", element})
   }
 
   const ADD_LINE = ()=>{
@@ -35,20 +34,20 @@ function PassElement({ props:{user, el, i, newLine, groupsForInput, SAVE_PASS, S
   }
 
   const passDataProps = {
-    el, i, groupsForInput, element, setElement, save, setSave, SAVE_ELEMENT,
-    OPEN_CLOSE, SHOW_PASS, DELETE_LINE, ADD_LINE
+    id, i, groupsForInput, element, setElement, save, setSave, SAVE_ELEMENT,
+    OPEN_CLOSE, DELETE_LINE, ADD_LINE, Reducer
   }
 
-  useEffect( ()=>{ setElement(el) },[el])
+  useEffect( ()=>{ setElement( prev=> el ) },[el])
 
-  // edit && console.log("element", element)
+  // element?.edit && console.log("element", element)
 
   return(
     <>
 
-      <ElementName props={{edit, el, i, OPEN_CLOSE}}/>
+      <ElementName props={{edit, element, i, OPEN_CLOSE}}/>
 
-      { edit && <PassData props={passDataProps}/> }
+      { element?.edit && <PassData props={passDataProps}/> }
 
     </>
   )

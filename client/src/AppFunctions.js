@@ -605,15 +605,8 @@ export const PostToApi = async (link, object, callback)=>{
   .catch( (err)=>{
     console.error("geoiplookup.io", `IP Error: ${err?.message}`)
     return {
-      host: hostname,
-      from: link,
-      ip: false,
-      postal_code: false,
-      country_code: false,
-      country_name: false,
-      region: false,
-      city: false,
-      asn_org: false
+      host: hostname, from: link,
+      ip: false, postal_code: false, country_code: false, country_name: false, region: false, city: false, asn_org: false
     }
   })
 
@@ -622,30 +615,27 @@ export const PostToApi = async (link, object, callback)=>{
 
     const Data = resData.data
 
-    // Set the user language based on the IP country code if not already set
-    const setLanguage = ()=>{
-
-      if(GetUser().lang) return GetUser().lang?.toLowerCase()
-
-      const language = Data?.IP?.country_code ? Data?.IP?.country_code?.toLowerCase() : "en"
-      return(
-        Data?.user?.lang
-        ? Data.user.lang
-        : ["en", "ua", "pl"].includes(language) ? language : "en"
-      )
-
+    const setLanguage = () => {
+      // If the language is stored in cookies/localStorage – use it
+      const userLang = GetUser()?.lang
+      if (typeof userLang === "string" && userLang.length === 2) return userLang.toLowerCase()
+      // If not, try to determine the language based on IP country code
+      const ipLang = Data?.IP?.country_code?.toLowerCase()
+      const validLang = ["en", "ua", "pl"].includes(ipLang) ? ipLang : "en"
+      // If user exists as an object and has a language set – use it
+      const langFromUser = (typeof Data?.user === "object" && Data.user?.lang) ? Data.user.lang.toLowerCase() : null
+      // Priority order: user.lang → IP country → default "en"
+      return langFromUser || validLang
     }
     
-    // Set the token and user data in local storage
+    const lang = setLanguage()
+    
+    // Set the token in local storage
     SetToken(Data?.bzToken)
-    SetUser({
-      ...savedUser,
-      ...( !savedIP && IP.ip ? { IP } : {} ),
-      ...( Data?.user === "RELOAD_APP"
-          ? { ...Data?.user, lang: setLanguage(), reload: true }
-          : { ...Data?.user, lang: setLanguage() }
-      )
-    })
+    // Set the user data in local storage
+    const { login, role, email, sex, ava, reload, ...cleanUser } = savedUser
+    const reloadedUser = Data?.user === "RELOAD_APP" ? { lang, reload: true } : { ...Data.user, lang }
+    SetUser( Data?.user === false ? { ...cleanUser, IP, lang } : { ...savedUser, IP, ...reloadedUser } )
 
     // Run the callback function with the response data (if provided)
     if(typeof callback === "function") callback(Data?.result)

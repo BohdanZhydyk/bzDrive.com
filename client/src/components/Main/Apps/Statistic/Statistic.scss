@@ -1,0 +1,90 @@
+
+.Statistic {
+  width:100%;
+  margin:1rem 0;
+
+  .StatRange {
+    font-size: 130%;
+    margin:0 0 0.5rem 0;
+  }
+
+  .StatTable {
+    width:100%;
+
+    .StatLine {
+      width:calc(100% - 1rem);
+
+      .TopLine {
+        min-height:3rem;
+        padding:0 0.5rem;
+        margin:0.25rem 0 0 0;
+        background-color: #1115;
+        border:1px solid #1115;
+        border-radius:0.5rem;
+      }
+      .Cell {
+        min-height:3rem;
+        padding:0 0.5rem;
+        margin:0.25rem 0 0 0;
+        border:1px solid #999;
+        border-radius:0.5rem;
+      }
+      .LineNr {
+        width:3%;
+        position:relative;
+        .Nr {
+          position:absolute;
+          top:0.25rem;
+          left:0.5rem;
+        }
+        .Count {
+          position:absolute;
+          bottom:0;
+          right:0;
+          font-size:80%;
+          padding:0 0.25rem;
+          border-radius:0.25rem 0.25rem 0.5rem 0.25rem;
+          &.low { background-color: #171 }
+          &.mid { background-color: #f60 }
+          &.high { background-color: #e00 }
+        }
+      }
+      .LineUser {width:10%;}
+      .LineIP {width:10%;}
+      .LineCity {width:10%;}
+      .LineCountry {width:15%;}
+      .LineASN {flex:1;}
+      .LineDate {width:5%;}
+      .LineTime {width:4%;}
+      .LineDelete {width:4%;}
+    }
+  }
+
+  .StatControls {
+    width:100%;
+
+    .StatControlBtn {
+      width:20%;
+      min-height:2.5rem;
+      margin:1rem;
+      // border:1px solid #999;
+      border-radius:0.5rem;
+      &.OnlyDay {
+        background-color: #05a;
+        &:hover { background-color: #07a; }
+      }
+      &.PlusDay {
+        background-color: #171;
+        &:hover {background-color: #191;}
+      }
+      &.PlusWeek {
+        background-color: #f60;
+        &:hover {background-color: #f80;}
+      }
+      &.PlusMonth {
+        background-color: #e00;
+        &:hover {background-color: #e20;}
+      }
+    }
+  }
+}

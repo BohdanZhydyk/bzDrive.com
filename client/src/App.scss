@@ -51,6 +51,11 @@ body {
     white-space: nowrap; /* Zapobiegaj zawijaniu tekstu */
   }
 
+  .breakWord {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
   .Radius {
     border-radius:0.5vw;
     @media (min-width: 481px) and (max-width: 767px){border-radius:0.75vw;}

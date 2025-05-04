@@ -3,7 +3,7 @@ import InputText from "../../../All/InputText"
 import { searchProps } from "./PassElement/passProps"
 
 
-export function UserArea({ props:{user, pass, actGroup, groups, SORT_PASS, ACT_GROUP_CHG}}){
+export function UserArea({ props:{user, pass, actGroup, groups, Reducer}}){
 
   const att = [
     `Nie jesteś zalogowany, więc wszystkie wprowadzone przez Ciebie dane będą widoczne do momentu ponownego uruchomienia aplikacji.`,
@@ -40,7 +40,7 @@ export function UserArea({ props:{user, pass, actGroup, groups, SORT_PASS, ACT_G
         </div>
 
         <div className="Search flex end">
-          <InputText props={ searchProps(txt, setTxt, SORT_PASS) }/>
+          <InputText props={ searchProps(txt, setTxt, Reducer) }/>
         </div>
 
         <div className="Groups flex end wrap">
@@ -48,7 +48,7 @@ export function UserArea({ props:{user, pass, actGroup, groups, SORT_PASS, ACT_G
           groups.map( (group, g)=>{
             const classes = `Group ${group === actGroup ? `ActGroup` : ``} flex`
             const key = `GroupNr${g}`
-            return <span className={classes} onClick={ ()=> ACT_GROUP_CHG(group) } key={key}>{group}</span>
+            return <span className={classes} onClick={ ()=> Reducer({type:"ACT_GROUP_CHG", group}) } key={key}>{group}</span>
           })
         }
         </div>

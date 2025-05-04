@@ -5,7 +5,7 @@ import ActionBtn from "../../../../All/ActionBtn"
 import { userNameProps, loginProps, encryptedPassProps, cryptedPassProps } from "./passProps"
 
 
-export function PassLines({ props:{el, i, element, setElement, setSave, SHOW_PASS, DELETE_LINE}}){
+export function PassLines({ props:{id, i, element, setElement, setSave, DELETE_LINE, Reducer}}){
   return(
     <div className="PassLines flex column">
     {
@@ -37,8 +37,8 @@ export function PassLines({ props:{el, i, element, setElement, setSave, SHOW_PAS
             <div className="LineBtns flex end">
               {
                 !line?.encrypted
-                ? <ActionBtn props={{name:"show", click:()=>SHOW_PASS(el?._id, l, true)}} />
-                : <ActionBtn props={{name:"hide", click:()=>SHOW_PASS(el?._id, l, false)}} />
+                ? <ActionBtn props={{ name:"show", click:()=>Reducer({type:"SHOW_PASS", id, l, encrypted:true}) }} />
+                : <ActionBtn props={{name:"hide", click:()=>Reducer({type:"SHOW_PASS", id, l, encrypted:false}) }} />
               }
               <ActionBtn props={{name:"delete", click:()=>DELETE_LINE(l)}} />
             </div>

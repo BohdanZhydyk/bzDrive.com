@@ -14,21 +14,38 @@ exports.getPass = (req, res)=>{
 
     // get passwords
     if(object?.getPass){
-
       bzDB( { req, res, col:'bzPass', act:"FIND", query:{user:login} }, (getPassData)=>{
         res.send({
           ...getPassData,
-          result: getPassData?.result?.map(el=> ({
-            ...el,
-            siteData: el?.siteData?.map( pass=>({
-              userName: pass?.userName,
-              login: pass?.login,
-            }))
+          result: getPassData?.result?.map(el => ({
+            _id: el._id,
+            user: el.user,
+            siteName: el.siteName,
+            link: el.link,
+            group: el.group
           }))
         })
         return
       })
+    }
 
+    // get password element
+    if(object?.getPassElement){
+      const _id = ObjectId(object?.query?._id)
+      bzDB( { req, res, col:'bzPass', act:"FIND_ONE", query:_id }, (getPassData)=>{
+        const el = getPassData?.result
+        res.send({
+          ...getPassData,
+          result: {
+            info: el?.info,
+            siteData: el?.siteData?.map(pass => ({
+              userName: pass?.userName,
+              login: pass?.login
+            }))
+          }
+        })
+        return
+      })
     }
 
     // show password
@@ -49,15 +66,19 @@ exports.getPass = (req, res)=>{
     }
 
     // save password
-    if(object?.savePass){
+    if (object?.savePass) {
 
-      const _id = ObjectId(object?.query?._id)
-
-      bzDB( { req, res, col:'bzPass', act:"FIND_ONE", query:_id }, (passData)=>{
+      const isNew = object?.query?._id === "new"
+    
+      const _id = !isNew ? ObjectId(object?.query?._id) : undefined
+    
+      const findQuery = !isNew ? _id : { siteName: "____fake___never_found___" } // nie znajdzie nic
+    
+      bzDB({ req, res, col: 'bzPass', act: "FIND_ONE", query: findQuery }, (passData) => {
 
         const pass = {
           user: object?.query?.user ?? login,
-          group: object?.query?.group,
+          group: object?.query?.group ?? "",
           siteName: object?.query?.siteName,
           link: object?.query?.link,
           info: object?.query?.info,

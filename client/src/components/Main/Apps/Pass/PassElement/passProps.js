@@ -52,6 +52,7 @@ export const userNameProps = (line, l, setElement, setSave)=>({
 export const loginProps = (line, l, setElement, setSave)=>({
   legend: `login`,
   type: `text`,
+  autoComplete: "new-username",
   val: line?.login ? sanitizeTxt(line.login, `default`).sanText : '',
   cbVal: (val)=>{
     setElement( (prev)=> ({
@@ -68,6 +69,7 @@ export const loginProps = (line, l, setElement, setSave)=>({
 export const encryptedPassProps = (line, l, setElement, setSave)=>({
   legend: `cryptedData`,
   type: `text`,
+  autoComplete: "new-password",
   val: line?.pass ? sanitizeTxt(line.pass, `default`).sanText : '',
   cbVal: (val)=>{
     setElement( (prev)=> ({
@@ -84,18 +86,19 @@ export const encryptedPassProps = (line, l, setElement, setSave)=>({
 export const cryptedPassProps = ()=>({
   legend: `cryptedData`,
   type: `password`,
+  autoComplete: "new-password",
   val: `**********`,
   cbVal: ()=>{},
   cbErr: ()=>{}
 })
 
-export const searchProps = (txt, setTxt, SORT_PASS)=>({
+export const searchProps = (txt, setTxt, Reducer)=>({
   legend: `siteName includes`,
   type: `text`,
   val: txt ? sanitizeTxt(txt, `default`).sanText : '',
   cbVal: (val)=>{
     setTxt( sanitizeTxt(val, `default`).sanText )
-    SORT_PASS( sanitizeTxt(val, `default`).sanText )
+    Reducer({ type:"SEARCH_PASS", txt:sanitizeTxt(val, `default`).sanText })
   },
   cbErr: ()=>{}
 })

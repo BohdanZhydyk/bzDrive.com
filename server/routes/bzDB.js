@@ -4,7 +4,7 @@ const { url, dbName, generateToken } = require('./../safe/safe')
 const { unixToDateTimeConverter } = require('./../functions')
 
 
-exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callback )=>{
+exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0, pipeline }, callback )=>{
   // req,       request
   // res,       response
   // col,       name of db collection
@@ -12,6 +12,7 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
   // query,     query of search
   // sort       sort of search
   // lim        limit of results
+  // pipeline
   // callback   callback function
 
   let bzToken = req?.body?.bzToken ? req.body.bzToken : generateToken()
@@ -34,10 +35,13 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
         Statistic(bzToken, IP, user)
       }
   
-      if(!ChekTokenData){ Done(bzToken, IP, user); return; }
+      if(!ChekTokenData){
+        Done(bzToken, IP, user)
+        return
+      }
 
       // if the token is older than "tokenLifetime", generate a new one
-      const tokenLifetime = (3600000 * 24)
+      const tokenLifetime = (3600000 * 24) // 1 day
       const isOlder = (Date.now() - ChekTokenData?.time) > tokenLifetime
       if(isOlder){
         Done( generateToken(), IP, "RELOAD_APP" )
@@ -64,6 +68,7 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
         case "UPDATE_ONE":    UPDATE_ONE();   break
         case "DELETE_ONE":    DELETE_ONE();   break
         case "DELETE_MANY":   DELETE_MANY();  break
+        case "AGGREGATE":     AGGREGATE();    break
         default: break
       }
       
@@ -88,6 +93,9 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0 }, callba
       }
       function DELETE_MANY(){
         client.db(dbName).collection(col).deleteMany( query, (e,r)=> CB(e,r) )
+      }
+      function AGGREGATE() {
+        client.db(dbName).collection(col).aggregate(pipeline).toArray((e, r) => CB(e, r))
       }
 
     }

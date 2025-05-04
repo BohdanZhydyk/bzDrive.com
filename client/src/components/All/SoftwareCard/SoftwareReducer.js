@@ -125,13 +125,20 @@ export function SoftwareReducer(
 
 }
 
-export const programmers = ["Xhorse Multi-Prog", "Alientech K-Tag", "Alientech Kess V2", "i-Prog", "CarProg", "AutoTuner", "FoxFlash", "BDM 100", "X-Prog"]
-export const swTypes =  ["FULL", "EPR", "FLS", "MAPS", "MPC", "EEPROM", "INT-EEPROM", "EXT-EEPROM", "FLASH", "INT-FLASH", "EXT-FLASH", "BOOT", "STATUS", "SHADOW"]
-export const readMethods = ["Bench", "OBD-II", "BDM", "CAN", "K-Line", "Bootmode", "JTAG", "Virtual Read"]
+export const programmers = [
+  "Xhorse Multi-Prog", "Alientech K-Tag", "Alientech Kess V2", "i-Prog", "CarProg", "AutoTuner", "FoxFlash", "BDM 100", "X-Prog"
+]
+export const swTypes =  [
+  "FULL", "EPR", "FLS", "MPC", "MAPS", "MICRO", "EEPROM", "FLASH", "INT-EEPROM", "EXT-EEPROM",
+  "INT-FLASH", "EXT-FLASH", "BOOT", "STATUS", "SHADOW", "OTP", "Serial-EEPROM", "MCU-Data"
+]
+export const readMethods = [
+  "OBD-II", "Bench", "Boot", "BDM", "JTAG", "VR", "CAN", "K-Line"
+]
 export const modTypes = [
-  "Original", "Virgin", "Tuning Stage", "Tuning Stage-1", "Tuning Stage-2", "Tuning Stage-3", "IMMO off",
-  "ECO off", "EGR off", "DPF off", "FAP off", "SCR off", "AdBlue off", "KAT off", "DTC off", "Vmax off",
-  "MAF off", "Start/Stop off", "Flap off", "Limiter ON"
+  "Original", "Virgin", "Tuning Stage", "Tuning Stage-1", "Tuning Stage-2", "Tuning Stage-3", "IMMO-off",
+  "ECO-off", "EGR-off", "DPF-off", "FAP-off", "SCR-off", "AdBlue-off", "KAT-off", "Lambda-off", "DTC-off",
+  "Vmax-off", "MAF-off", "Start/Stop-off", "Flaps-off", "Limiter-on", "Limiter-off", "Opt_EU"
 ]
 
 export function brandIco(brand){ return `https://bzdrive.com/files/CarIcons/${brand?.replace(/[^a-zA-Z]/g, '').toLowerCase()}.svg` }

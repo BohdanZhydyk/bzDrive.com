@@ -11,8 +11,8 @@ import { siteNameProps, linkProps, infoProps, groupsProps } from "./passProps"
 
 export function PassData({
   props:{
-    el, i, groupsForInput, element, setElement, save, setSave, SAVE_ELEMENT,
-    OPEN_CLOSE, SHOW_PASS, DELETE_LINE, ADD_LINE
+    id, i, groupsForInput, element, setElement, save, setSave, SAVE_ELEMENT,
+    OPEN_CLOSE, DELETE_LINE, ADD_LINE, Reducer
   }
 }){
   
@@ -41,7 +41,7 @@ export function PassData({
         <TextArea props={ infoProps(element, setElement, setSave) } />
       </div>
 
-      <PassLines props={{el, i, element, setElement, setSave, SHOW_PASS, DELETE_LINE}}/>
+      <PassLines props={{id, i, element, setElement, setSave, DELETE_LINE, Reducer}}/>
 
       <div className="AddNewPass flex end">
         <ActionBtn props={{name:"plus", click:ADD_LINE}} />
