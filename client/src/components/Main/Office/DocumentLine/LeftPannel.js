@@ -40,9 +40,16 @@ export function LeftPannel({ props:{doc, color, checkImg, carIco, title, repairS
         </div>
 
         {
-          ["PZ","PS","FZ","ZU","VA"].includes(doc?.nr?.mode) &&
+          ["PZ","FZ","ZU","VA"].includes(doc?.nr?.mode) &&
           <div className="DocClientName DocCell flex start" style={cellStyles()} onClick={EDIT_DOC}>
             <span>{sellerName}</span>
+          </div>
+        }
+
+        {
+          ["PS"].includes(doc?.nr?.mode) &&
+          <div className="DocClientName DocCell flex start" style={cellStyles()} onClick={EDIT_DOC}>
+            <span>{clientName}</span>
           </div>
         }
 

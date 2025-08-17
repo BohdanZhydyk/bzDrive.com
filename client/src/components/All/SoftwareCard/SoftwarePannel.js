@@ -1,14 +1,26 @@
 import React from 'react'
 
-import FileUpload from '../FileUpload'
+import FilesUpload from '../FilesUpload'
 import { SoftwareLine } from './SoftwareLine'
 
 
 export function SoftwarePannel({ props:{setSoft, sw, s, setSave, link, defaultFileAddr, id, role, editCard, docID, Reducer} }) {
 
   function SET_SOFTWARE_FILES(res){
-    setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, files: soft?.files ? [...soft?.files, res] : [res]} ) )
+    setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, files: soft?.files ? [...soft?.files, ...res] : res} ) )
     setSave(true)
+  }
+
+  function moveSoftware(fromIndex, toIndex){
+    if (fromIndex === toIndex) return;
+    setSoft(prev => prev.map((soft, i) => {
+      if (i !== s) return soft;
+      const newFiles = [...soft.files];
+      const [movedItem] = newFiles.splice(fromIndex, 1);
+      newFiles.splice(toIndex, 0, movedItem);
+      return {...soft, files: newFiles};
+    }));
+    setSave(true);
   }
 
   const isAdmin = role === "admin"
@@ -26,7 +38,7 @@ export function SoftwarePannel({ props:{setSoft, sw, s, setSave, link, defaultFi
           {
             sw.files.map( (software, n)=>{
               const key = `SoftWareLine${n}`
-              const props = {sw, software, link, defaultFileAddr, id, role, editCard, docID, Reducer}
+              const props = {sw, software, link, defaultFileAddr, id, role, editCard, docID, n, moveSoftware, Reducer}
               return <SoftwareLine props={props} key={key} />
             })
           }
@@ -36,7 +48,7 @@ export function SoftwarePannel({ props:{setSoft, sw, s, setSave, link, defaultFi
       <div className="UploadBtns flex stretch end">
       {
         isAdmin && editCard && id !== "new" &&
-        <FileUpload props={{defaultFileAddr, cb:SET_SOFTWARE_FILES}} />
+        <FilesUpload props={{defaultFileAddr, multiple:true, cb:SET_SOFTWARE_FILES}} />
       }
       </div>
       

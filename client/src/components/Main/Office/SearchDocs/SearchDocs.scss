@@ -7,6 +7,15 @@
   .SearchPannel {
     width:100%;
 
+    .SearchText {
+      flex:1;
+      margin:1vw 0 0 1vw;
+
+      .txtYlw{
+        margin:0 0 0 1vw;
+      }
+    }
+
     .SearchInput {
       width:30%;
     }

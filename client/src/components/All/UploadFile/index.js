@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import "./UploadFile.scss"
 import { tr } from '../../../AppTranslate'
 import { GetUser, sanitizeTxt } from '../../../AppFunctions'
-import { bzUploadFile } from '../../../AppFunctions'
+import { bzUploadFile} from '../../../AppFunctions'
 
 
 const UploadFile = ({ props:{btnTxt, formNr, fileAddr, uniqueName, warning, accept, multiple, callback} })=>{

@@ -73,6 +73,10 @@
       width:calc(95% - 2vw);
       margin:1vw;
       font-size:130%;
+
+      .SearchInput {
+        width:30%;
+      }
     }
 
     .LoadMore{

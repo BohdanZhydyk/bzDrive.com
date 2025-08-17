@@ -1,13 +1,16 @@
-import React, { useEffect } from "react"
+import React, { useState } from "react"
 
 import "./SearchDocs.scss"
+import { tr } from "../../../../AppTranslate"
+import { GetUser } from "../../../../AppFunctions"
 import DocumentLine from "../DocumentLine"
 import InputText from "../../../All/InputText"
 import { searchPropses } from "./searchProps"
-import { GetUser } from "../../../../AppFunctions"
 
 
 function SearchDocs({ props:{company, search, setSearch, searchQuery, setSearchQuery, visibleSide, Reducer} }) {
+
+  const [searchRef, setSearchRef] = useState("") 
 
   const l = "search"
   const line = {week:[], docs:search}
@@ -16,9 +19,20 @@ function SearchDocs({ props:{company, search, setSearch, searchQuery, setSearchQ
   const lang = GetUser()?.lang
 
   const searchLen = search?.length
+  const searchQueryLen = searchQuery?.val?.length
+  const isChanged = (searchQuery?.val ?? "") !== searchRef
 
-  function ERASE(){ setSearch([]); setSearchQuery("") }
-  function SEARCH(){ Reducer({type:"SEARCH_DOCUMENTS"}) }
+  function getIconAndAction(searchQueryLen, searchLen) {
+    function NOOP(){}
+    function SEARCH(){ Reducer({type:"SEARCH_DOCUMENTS"}); setSearchRef((searchQuery?.val ?? "").trim()) }
+    function ERASE(){ setSearch([]); setSearchQuery({val:"", err:""}); setSearchRef("") }
+    if (!isChanged && searchLen > 0) return { isImg: "Erase", imgAct: ERASE }
+    if (searchQueryLen === 0) return { isImg: "Search", imgAct: NOOP }
+    if (searchQueryLen > 1) return { isImg: "Search", imgAct: SEARCH }
+    return { isImg: "Erase", imgAct: ERASE }
+  }
+
+  const { isImg, imgAct } = getIconAndAction(searchQueryLen, searchLen)
 
   const searchVisible = visibleSide?.mobile ? {...visibleSide, side:true} : {...visibleSide}
   
@@ -26,9 +40,19 @@ function SearchDocs({ props:{company, search, setSearch, searchQuery, setSearchQ
     <div className="SearchDocs flex column">
 
       <div className="SearchPannel flex stretch end">
+
+        {
+          searchLen > 0 &&
+          <div className="SearchText flex start">
+            <span>{tr(`SearchText`,lang)}</span>
+            <span className="txtYlw bold">{`(${searchLen})`}</span>
+          </div>
+        }
+
         <div className="SearchInput flex">
-          <InputText props={searchPropses({lang, searchQuery, setSearchQuery, searchLen, SEARCH, ERASE})}/>
+          <InputText props={searchPropses({lang, searchQuery, setSearchQuery, isImg, imgAct})}/>
         </div>
+
       </div>
 
       {

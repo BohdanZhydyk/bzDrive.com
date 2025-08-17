@@ -12,11 +12,6 @@ function Document(){
   const currentPath = window.location.pathname.split("/")
   const docID = currentPath[currentPath.length - 1]
 
-  const componentRef = useRef()
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current
-  })
-
   const [doc, setDoc] = useState(false)
 
   const printMode = true
@@ -24,8 +19,15 @@ function Document(){
   const year = doc?.nr?.from.toString().slice(0, 4)
   const month = doc?.nr?.from.toString().slice(4, 6)
   const sign = doc?.nr?.sign.toString().padStart(4, '0')
+  const title = doc?.nr ? `bzDrive/${mode}/${year}/${month}/${sign}` : ''
 
-  document.title = doc?.nr ? `bzDrive.com/${mode}/${year}/${month}/${sign}` : ''
+  document.title = title
+
+  const componentRef = useRef()
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: title
+  })
 
   const [edit, setEdit] = useState(false)
 

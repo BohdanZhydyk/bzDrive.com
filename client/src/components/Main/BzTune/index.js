@@ -18,10 +18,10 @@ function BzTune() {
   const isAdmin = user?.role === "admin"
 
   const [initialState, setInitialState] = useState([])
-
   const [software, setSoftware] = useState(false)
-
   const [isInfo, setIsInfo] = useState(true)
+  const [searchQuery, setSearchQuery] = useState({val:"", err:false})
+  const [search, setSearch] = useState([])
 
   const isSoftware = ( (initialState?.length > 0) && software )
 
@@ -40,7 +40,7 @@ function BzTune() {
 
   function CLOSE_INFO(){ setIsInfo(prev => false) }
 
-  const Reducer = (action)=> SoftwareReducer({action, initialState, setInitialState, setSoftware})
+  const Reducer = (action)=> SoftwareReducer({action, initialState, setInitialState, setSoftware, searchQuery, setSearch})
 
   useEffect( ()=> { Reducer({type:"GET_CAR_CARDS"}) }, [])
 
@@ -65,7 +65,7 @@ function BzTune() {
 
           <BrandsWrapper props={{isSoftware, software, carTop, Reducer}}/>
 
-          <LastSoftware props={{initialState, carTop, lang}} />
+          <LastSoftware props={{initialState, carTop, lang, search, setSearch, searchQuery, setSearchQuery, Reducer}} />
 
         </>
       }

@@ -5,7 +5,7 @@ import './Main.scss'
 import SiteIcon from '../All/SiteIcon'
 import Workshop from './Workshop'
 import BzTune from './BzTune'
-import OfficeNew from './OfficeNew'
+// import OfficeNew from './OfficeNew'
 import Office from './Office'
 import Apps from './Apps'
 import Profile from './Profile'
@@ -31,8 +31,8 @@ function Main({ props:{nav, blur, BLUR, size, AppReload} }) {
 
         <Route path="/"           exact element={<Workshop props={{sub:subNav("/"), nav, AppReload}}/>} />
         <Route path="/tune/*"           element={<BzTune props={{sub:subNav("/tune")}}/>} />
-        <Route path="/officenew/*"      element={<OfficeNew props={{size, sub:subNav("/bzoffice")}}/>} />
         <Route path="/office/*"         element={<Office props={{size, sub:subNav("/office")}}/>} />
+        {/* <Route path="/officenew/*"      element={<OfficeNew props={{size, sub:subNav("/bzoffice")}}/>} /> */}
         <Route path="/apps/*"           element={<Apps props={{sub:subNav("/apps")}}/>} />
         <Route path="/profile"          element={<Profile props={{sub:subNav("/profile")}}/>} />
 

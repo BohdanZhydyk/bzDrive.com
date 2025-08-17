@@ -4,7 +4,7 @@ import ActionBtn from '../ActionBtn'
 import { bzBytesCalc } from '../../../AppFunctions'
 
 
-export function SoftwareLine({ props:{sw, software, link, defaultFileAddr, id, role, editCard, docID, Reducer} }) {
+export function SoftwareLine({ props:{sw, software, link, defaultFileAddr, id, role, editCard, docID, n, moveSoftware, Reducer} }) {
 
   const [more, setMore] = useState(false)
   const [del, setDel] = useState(false)
@@ -27,8 +27,24 @@ export function SoftwareLine({ props:{sw, software, link, defaultFileAddr, id, r
     setMore(prev=>false)
   }
 
+  function handleDragStart(e){
+    e.dataTransfer.setData('text/plain', n)
+    e.dataTransfer.effectAllowed = 'move'
+  }
+
+  function handleDragOver(e){
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+  }
+
+  function handleDrop(e){
+    e.preventDefault()
+    const fromIndex = parseInt(e.dataTransfer.getData('text/plain'), 10)
+    if (fromIndex !== n) moveSoftware(fromIndex, n)
+  }
+
   return (
-    <div className="SoftwareLine flex" >
+      <div className="SoftwareLine flex" draggable={isAdmin && editCard} onDragStart={handleDragStart} onDragOver={handleDragOver} onDrop={handleDrop} >
 
       {
         (docID && !isAdmin)

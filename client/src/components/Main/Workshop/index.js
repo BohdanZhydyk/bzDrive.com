@@ -9,6 +9,7 @@ import TagH from "./Tags/TagH"
 import TagP from "./Tags/TagP"
 import TagUl from "./Tags/TagUl"
 import TagContacts from "./Tags/TagContacts"
+import TagYoutube from "./Tags/TagYoutube"
 import TagSlider from "./Tags/TagSlider"
 import MenuSettings from "./MenuSettings"
 import TuningAddWrapper from "../BzTune/TuningAddWrapper"
@@ -63,7 +64,7 @@ function Workshop({props:{ nav, AppReload }}) {
 
             const key = `TagKey${el?.id}${nr}`
             const lang = user?.lang
-            const props = {el, nr, user, setWorkshop, editMode, editingTag, setEditingTag}
+            const props = {el, nr, user, setWorkshop, editMode, editingTag, setEditingTag, Reducer}
 
             switch (el?.tag) {
               case "h":         return <TagH              props={props}     key={key} />
@@ -71,6 +72,7 @@ function Workshop({props:{ nav, AppReload }}) {
               case "ul":        return <TagUl             props={props}     key={key} />
               case "tune":      return <TuningAddWrapper  props={{ lang }}  key={key} />
               case "contacts":  return <TagContacts       props={props}     key={key} />
+              case "youtube":   return <TagYoutube        props={props}     key={key} />
               case "slider":    return <TagSlider         props={props}     key={key} />
               default:          return <div key={key}></div>
             }

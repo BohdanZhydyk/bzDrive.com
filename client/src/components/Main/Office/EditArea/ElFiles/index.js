@@ -35,21 +35,24 @@ function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} })
     })
   }
 
-  const ADD_FILE = (data)=>{
-    const file = {
-      fileID: data?.fileID ?? Date.now(),
+  const ADD_FILES = (filesList) => {
+
+    const newFilesList = filesList.map(d => ({
+      fileID: d.fileID ?? Date.now(),
       fileAddr,
-      fileName:data.name,
-      fileSize:data.size,
-      fileType:data.mimetype
-    }
+      fileName: d.name,
+      fileSize: d.size,
+      fileType: d.mimetype,
+    }))
+  
     const query = {
-      updateDocFiles:true,
-      doc:{ ...doc, files: files ? [...files, file] : [file] }
+      updateDocFiles: true,
+      doc: { ...doc, files: files ? [...files, ...newFilesList] : newFilesList }
     }
-    PostToApi( '/getOffice', query, (data)=>{
+  
+    PostToApi('/getOffice', query, (data) => {
       setSave(true)
-      data?.files && setFiles(data.files)
+      if (data?.files) setFiles(data.files)
     })
   }
 
@@ -73,7 +76,7 @@ function ElFiles({ props:{user, doc, nr, setSave, files, setFiles, printMode} })
       
       {
         !printMode &&
-        <UploadBtns props={{tr, lang, fileAddr, setSave, setFiles, ADD_FILE}} />
+        <UploadBtns props={{tr, lang, fileAddr, setSave, setFiles, ADD_FILES}} />
       }
 
     </div>

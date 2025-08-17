@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import FileUpload from '../FileUpload'
+import FilesUpload from '../FilesUpload'
 import ActionBtn from '../ActionBtn'
 
 
@@ -17,7 +17,7 @@ export function Sticker({ props:{setSoft, sw, s, setSave, link, defaultFileAddr,
   const src = `${link}/${fileAddr}/${fileName}`
 
   function SET_STICKER(res){
-    setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : {...soft, ECUsticker: res} ) )
+    setSoft( (prev)=> prev.map( (soft, i)=> i !== s ? soft : { ...soft, ECUsticker: res ? res[0] : {} } ) )
     setSave(true)
   }
 
@@ -48,7 +48,7 @@ export function Sticker({ props:{setSoft, sw, s, setSave, link, defaultFileAddr,
           {
             !fileName
             ?
-            <FileUpload props={{ defaultFileAddr, defaultFileName, allowedMimeTypes, cb:SET_STICKER}} />
+            <FilesUpload props={{ defaultFileAddr, defaultFileName, allowedMimeTypes, multiple:false, cb:SET_STICKER}} />
             :
             <>
               { !del && <ActionBtn props={{ name: `delete`, click:()=>setDel(prev=>true) }} /> }

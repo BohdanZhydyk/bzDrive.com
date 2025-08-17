@@ -1,6 +1,6 @@
 const { MongoClient, ObjectId } = require('mongodb')
 
-const { url, dbName, generateToken } = require('./../safe/safe')
+const { url, dbName, tokenLifetime, generateToken } = require('./../safe/safe')
 const { unixToDateTimeConverter } = require('./../functions')
 
 
@@ -41,7 +41,6 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0, pipeline
       }
 
       // if the token is older than "tokenLifetime", generate a new one
-      const tokenLifetime = (3600000 * 24) // 1 day
       const isOlder = (Date.now() - ChekTokenData?.time) > tokenLifetime
       if(isOlder){
         Done( generateToken(), IP, "RELOAD_APP" )
@@ -110,11 +109,68 @@ exports.bzDB = ( { req, res, col, act, query, sort = {_id:-1}, lim = 0, pipeline
     }
 
     function Statistic(bzToken, IP, user){
+
+      if(IP?.host === "localhost") return
+    
+      const unix = Date.now()
+      const db = client.db(dbName)
+      const path = IP?.from || ''
+      const login = user?.login || '__anonymous__'
+      const ip = IP?.ip || '__unknown_ip__'
+
+      
+      // 1. Zapis do starej kolekcji
       let date = { unix: Date.now(), dateTime: unixToDateTimeConverter() }
-      client.db(dbName)
-        .collection('bzStatistic')
-        .insertOne( {user:user.login, IP, date, bzToken}, (errors, result)=>{
-          errors && ERR(bzToken, IP, user, errors)
+      db.collection('bzStatisticOld').insertOne({ user: login, IP, date, bzToken }, (errors) => {
+        if (errors) ERR(bzToken, IP, user, errors)
+      })
+
+      db.collection('bzStatistic').findOne({ 'IP.ip':ip }, (err, existing)=>{
+        if(err) return ERR(bzToken, IP, user, err)
+    
+        if(!existing) {
+          db.collection('bzStatistic').insertOne({
+            IP, logins:[{ user:login, lastUnix:unix, links:[{ path, count:1 }] }]
+          }, (e)=> e && ERR(bzToken, IP, user, e) )
+        }
+        else {
+          const loginIndex = existing.logins.findIndex(l => l.user === login)
+          if(loginIndex === -1){
+            db.collection('bzStatistic').updateOne(
+              { 'IP.ip':ip },
+              { $push:{ logins:{ user:login, lastUnix:unix, links:[{ path, count:1 }] } } },
+              (e) => e && ERR(bzToken, IP, user, e)
+            )
+          }
+          else{
+            const linkIndex = existing.logins[loginIndex].links.findIndex(l => l.path === path)
+    
+            if(linkIndex === -1){
+              db.collection('bzStatistic').updateOne(
+                { 'IP.ip':ip, [`logins.${loginIndex}.user`]: login },
+                {
+                  $set: { [`logins.${loginIndex}.lastUnix`]: unix },
+                  $push: { [`logins.${loginIndex}.links`]: { path, count:1 } }
+                },
+                (e) => e && ERR(bzToken, IP, user, e)
+              )
+            }
+            else{
+              db.collection('bzStatistic').updateOne(
+                {
+                  'IP.ip':ip,
+                  [`logins.${loginIndex}.user`]:login,
+                  [`logins.${loginIndex}.links.${linkIndex}.path`]:path
+                },
+                {
+                  $set: { [`logins.${loginIndex}.lastUnix`]:unix },
+                  $inc: { [`logins.${loginIndex}.links.${linkIndex}.count`]:1 }
+                },
+                (e) => e && ERR(bzToken, IP, user, e)
+              )
+            }
+          }
+        }
       })
     }
 

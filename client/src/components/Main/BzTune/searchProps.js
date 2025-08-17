@@ -1,9 +1,9 @@
-import { sanitizeTxt } from "./../../../../AppFunctions"
-import { tr } from "../../../../AppTranslate"
+import { sanitizeTxt } from "../../../AppFunctions"
+import { SoftTr } from "./SoftwareTranslate"
 
 export const searchPropses = ({lang, searchQuery, setSearchQuery, isImg, imgAct})=>({
-  legend: tr(`DocLegend`,lang),
-  plhol: tr(`DocSearchPlaceHolder`,lang),
+  legend: SoftTr(`SearchLegend`,lang),
+  plhol: SoftTr(`SwSearchPlaceHolder`,lang),
   type: `text`,
   val: searchQuery?.val ? sanitizeTxt(searchQuery?.val, `default`).sanText : '',
   err: searchQuery?.err ?? '',

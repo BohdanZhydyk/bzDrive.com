@@ -15,11 +15,15 @@ export const SetUser    = (user)=> cookies.set( 'bzUser', JSON.stringify(user) )
 export const SetCookie  = ()=> cookies.set('bzCookie', true)
 
 // time functions
-export function TimeToObject(time){
-  const year = new Date(time).getFullYear().toString().padStart(4, '0')
-  const month = (new Date(time).getMonth() + 1).toString().padStart(2, '0')
-  const day = new Date(time).getDate().toString().padStart(2, '0')
-  return {year, month, day}
+export function TimeToObject(time) {
+  const date = new Date(time)
+  const year = date.getFullYear().toString().padStart(4, '0')
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0')
+  const hour = date.getHours().toString().padStart(2, '0')
+  const min = date.getMinutes().toString().padStart(2, '0')
+  const sec = date.getSeconds().toString().padStart(2, '0')
+  return { year, month, day, hour, min, sec }
 }
 export function TimeTo_YYYYMMDD(time){
   const year = new Date(time).getFullYear().toString().padStart(4, '0')
@@ -219,10 +223,16 @@ export const sanitizeTxt = (txt, name = "default")=>{
     return { sanText, sanErr }
   }
   function sanitizeNIP(txt) {
-    const max = 13
+    const raw = txt ? txt.toUpperCase() : ""
+    const letters = raw.slice(0, 2).replace(/[^A-Z]/g, '')
+    const digits = raw.replace(/[^0-9]/g, '').slice(0, 10)
+    const isTwoLetters = letters?.length === 2
+    const isEU = (/[A-Z]/).test(raw[0])
+    const max = isEU ? 12 : 13
+    let sanText = isEU ? (letters + digits) : digits
     let sanErr = false
     function formatNIP(nip) {
-      const formattedNIP = nip.replace(/-/g, '').slice(0, 10)
+      const formattedNIP = nip.slice(0, 10)
       return [
         formattedNIP.slice(0, 3),
         formattedNIP.slice(3, 6),
@@ -230,9 +240,8 @@ export const sanitizeTxt = (txt, name = "default")=>{
         formattedNIP.slice(8),
       ].filter(s => s).join('-')
     }
-    let sanText = txt ? txt.replace(/[^0-9-]/g, '').trim().slice(0, max) : ''
-    if(sanText.length < max) sanErr = tr('Err_11', lang)
-    sanText = formatNIP(sanText)
+    sanText = isEU ? (isTwoLetters ? (letters + digits) : letters).slice(0, max) : formatNIP(sanText)
+    if(sanText.length < max - 1) sanErr = tr('Err_11', lang)
     return { sanText, sanErr }
   }
   function sanitizeREGON(txt) {
@@ -280,21 +289,21 @@ export const sanitizeTxt = (txt, name = "default")=>{
     let sanErr = false
     let sanText = txt ? txt.replace(regExExtendedSpecialCharacters, '').slice(0, max) : ''
     function formatStreetName(name) {
-      if(lang === "ua"){
-        if(
-          !name.startsWith("вул. ") &&
-          !name.startsWith("пл. ") &&
-          !name.startsWith("пр. ") &&
-          name?.length > 4
-        ){ return "вул. " + name }
-      }
-      if(lang === "pl"){
-        if(
-          !name.startsWith("ul. ") &&
-          !name.startsWith("al. ") &&
-          name?.length > 3
-        ){ return "ul. " + name }
-      }
+      // if(lang === "ua"){
+      //   if(
+      //     !name.startsWith("вул. ") &&
+      //     !name.startsWith("пл. ") &&
+      //     !name.startsWith("пр. ") &&
+      //     name?.length > 4
+      //   ){ return "вул. " + name }
+      // }
+      // if(lang === "pl"){
+      //   if(
+      //     !name.startsWith("ul. ") &&
+      //     !name.startsWith("al. ") &&
+      //     name?.length > 3
+      //   ){ return "ul. " + name }
+      // }
       return name
     }
     if(sanText.length < min) sanErr = tr('Err_1', lang)
@@ -387,6 +396,7 @@ export const sanitizeTxt = (txt, name = "default")=>{
 }
 
 export const bzUploadFile = (file, fileAddr, fileName, cb)=>{
+  // wykorzystywany w TagSlider
 
   const formData = new FormData()
 
@@ -402,6 +412,23 @@ export const bzUploadFile = (file, fileAddr, fileName, cb)=>{
   
   axios.post( link, formData, config ).then( (res)=> cb(res) )
 
+}
+
+export const bzUploadFiles = (fileAddr, files, cb)=>{
+
+  const formData = new FormData()
+
+  files.forEach(({ file, name }) => { formData.append( 'files', new File([file], name, { type: file.type }) ) })
+  formData.append('fileAddr', fileAddr)
+
+  const config = { headers: {'content-type': 'multipart/form-data'} }
+
+  let link = 'https://bzdrive.com/API/uploadFiles'
+  // let link = 'http://localhost:2000/API/uploadFiles'
+  // let link = process.env.NODE_ENV === "development" ? 'http://localhost:2000/API/uploadFile' : 'https://bzdrive.com/API/uploadFile'
+
+  axios.post(link, formData, config).then(res => cb(res))
+  
 }
 
 export const bzDeleteFile = (fileAddr, fileName, cb)=>{

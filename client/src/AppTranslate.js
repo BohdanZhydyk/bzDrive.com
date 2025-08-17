@@ -297,6 +297,7 @@ export const tr = (txt, lang)=>{
     TableSeller:{en:"Seller", ua:"Продавець", pl:"Sprzedawca"},
     TableBuyer:{en:"Buyer", ua:"Покупець", pl:"Nabywca"},
     TableQuantity:{en:"Available qty", ua:"Доступна к-сть", pl:"Dostępna ilość"},
+    SearchText:{en:"Documents found:", ua:"Знайдено документів:", pl:"Znaleziono dokumentów:"},
     NewTranslate:{en:"", ua:"", pl:""},
     AddFileArea:{en:"Add file...", ua:"Додати файл...", pl:"Dodać plik..."},
     AddLinkArea:{en:"Add link...", ua:"Додати посилання...", pl:"Dodać skrót..."},

@@ -106,6 +106,76 @@ exports.getSoftware = async (req, res)=>{
     })
   }
 
+  // search software
+  if(object?.searchSoftware){
+    
+    const search = object?.search
+
+    let query = {
+      $and: [
+        { "soft": { $exists: true, $ne: null } },
+        {
+          $or: search.split(/[,\s]+/).map(term => term.trim()).map(term => {
+            const normalizeTerm = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l').replace(/Ł/g, 'L')
+            term = normalizeTerm(term.trim())
+            const regex = { $regex: term, $options: 'i' }
+            const numberRegex = { $regex: term.replace(/[-\s]/g, '').split('').join('[-\\s]?'), $options: 'i' }
+            return {
+              $or: [
+                { "car.brand": regex },
+                { "car.model": regex },
+                { "car.engine": regex },
+                { "files": { $elemMatch: { "fileName": regex } } },
+                { "soft": { $elemMatch: { "id": regex } } },
+                { "soft": { $elemMatch: { "ECUType": regex } } },
+                { "soft": { $elemMatch: { "hwVersion": regex } } },
+                { "soft": { $elemMatch: { "swVersion": regex } } },
+                { "soft": { $elemMatch: { "programmer": regex } } },
+                { "soft": { $elemMatch: { "ECUType": regex } } }
+              ]
+            }
+          })
+        }
+      ]
+    }
+    
+    bzDB( { req, res, col:'bzDocuments', act:"FIND", query }, (swData)=>{
+
+      const result = swData?.result.map( el=>{
+        const car = {
+          docID: el?._id,
+          brand: el?.car?.brand,
+          model: el?.car?.model,
+          engine: el?.car?.engine,
+          vin: el?.car?.vin
+        }
+        return el?.soft.map(sw => ({
+          ...car,
+          ...{
+            id: sw?.id,
+            ECUType: sw?.ECUType,
+            swVersion: sw?.swVersion,
+            hwVersion: sw?.hwVersion,
+            programmer: sw?.programmer,
+            mod: sw?.mod,
+            readMethod: sw?.readMethod,
+            swType: sw?.swType
+          }
+        }))
+      })
+
+      res.send({
+        ...swData,
+        result: result.flat()
+          .sort((a, b) => String(a.docID).localeCompare(String(b.docID)))
+      })
+    
+      return
+    
+    })
+
+  }
+
   bzDB( { req, res, col:'bzTokens', act:"FIND_ONE", query:{bzToken} }, (userData)=>{
 
     const user = userData?.result?.user

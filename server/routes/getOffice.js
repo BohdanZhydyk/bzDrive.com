@@ -361,7 +361,9 @@ exports.getOffice = (req, res)=>{
           $and: [
             { "company": company },
             {
-              $or: search.split(',').map(term => term.trim()).map(term => {
+              $or: search.split(/[,\s]+/).map(term => term.trim()).map(term => {
+                const normalizeTerm = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l').replace(/Ł/g, 'L')
+                term = normalizeTerm(term.trim())
                 const regex = { $regex: term, $options: 'i' }
                 const numberRegex = { $regex: term.replace(/[-\s]/g, '').split('').join('[-\\s]?'), $options: 'i' }
                 return {
@@ -371,6 +373,7 @@ exports.getOffice = (req, res)=>{
                     { "car.model": regex },
                     { "car.numbers": regex },
                     { "car.engine": regex },
+                    { "car.faults": regex },
                     { "client.name": regex },
                     { "client.nip": numberRegex },
                     { "client.contacts.tel": numberRegex },
@@ -380,6 +383,8 @@ exports.getOffice = (req, res)=>{
                     { "seller.name": regex },
                     { "seller.nip": numberRegex },
                     { "seller.contacts.tel": numberRegex },
+                    { "files": { $elemMatch: { "fileName": regex } } },
+                    { "articles": { $elemMatch: { "ART": regex } } },
                     { "soft": { $elemMatch: { "id": regex } } },
                     { "soft": { $elemMatch: { "programmer": regex } } },
                     { "soft": { $elemMatch: { "ECUType": regex } } }

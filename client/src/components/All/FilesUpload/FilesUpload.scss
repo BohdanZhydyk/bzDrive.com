@@ -1,0 +1,41 @@
+
+.FilesUpload {
+  flex:1;
+
+  .FileInputHidden {
+    display: none;
+  }
+
+  .FileError {
+    width:100%;
+  }
+
+  .FileInputsWrapper {
+    width:100%;
+
+    .FileNameInput {
+      width:calc(100% - 1vw);
+      min-height:1.5vw;
+      padding:0.5vw;
+      margin:0 0.5vw 0.25vw 0.5vw;
+      font-size:100%;
+      background-color:transparent;
+      color:#fff;
+      border:1px solid #999;
+      border-radius:0.5vw;
+    }
+  }
+
+  .UploadBtn {
+    padding: 8px 12px;
+    background-color: #171;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+      background-color: #191;
+    }
+
+  }
+}

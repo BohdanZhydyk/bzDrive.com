@@ -1,7 +1,10 @@
 import { bzDeleteFolder, PostToApi } from "../../../AppFunctions";
 
 export function SoftwareReducer(
-  {action, initialState, setInitialState, setSoftware, soft, setSoft, car, setCar, doc, setDoc}
+  {
+    action, initialState, setInitialState, setSoftware, soft, setSoft, car, setCar, doc, setDoc,
+    searchQuery, setSearchQuery, search, setSearch
+  }
 ){
   
   const { id, brand } = action
@@ -10,6 +13,7 @@ export function SoftwareReducer(
     case "GET_CAR_CARDS":         GET_CAR_CARDS();          break
     case "SELECT_BRAND":          SELECT_BRAND();           break
     case "GET_CAR_CARD":          GET_CAR_CARD();           break
+    case "SEARCH_SOFTWARE":       SEARCH_SOFTWARE();        break
     // case "CANCEL_EDITING_CARD":   CANCEL_EDITING_CARD();    break
     // case "SAVE_CARD":             SAVE_CARD();              break
     // case "BUY_SOFTWARE":          BUY_SOFTWARE();           break
@@ -33,42 +37,7 @@ export function SoftwareReducer(
         setSoftware( prev=> sortByBrands(data) )
       }
     })
-  }
-
-  // function GET_CAR_CARDS() {
-  //   function sortByBrands(state) {
-  //     const brandCounts = state.reduce((acc, car) => {
-  //       const brandIndex = acc.findIndex(item => item.brand === car.brand);
-        
-  //       if (brandIndex >= 0) {
-  //         // Jeśli marka istnieje, dodajemy samochód do tej marki
-  //         acc[brandIndex].count += 1;
-  //         // Posortuj modele po dodaniu samochodu
-  //         acc[brandIndex].models = acc[brandIndex].models || [];
-  //         acc[brandIndex].models.push(car.model);
-  //         acc[brandIndex].models.sort(); // Sortowanie modeli wewnątrz marki
-  //       } else {
-  //         // Jeśli marka nie istnieje, tworzysz nową kategorię
-  //         acc.push({ brand: car.brand, count: 1, models: [car.model] });
-  //       }
-  
-  //       return acc;
-  //     }, []);
-  
-  //     // Posortowanie marek
-  //     return brandCounts.sort((a, b) => a.brand.localeCompare(b.brand));
-  //   }
-  
-  //   const query = { getCarCards: true };
-    
-  //   PostToApi('/getSoftware', query, (data) => {
-  //     if (data?.length > 0) {
-  //       setInitialState(prev => data);
-  //       setSoftware(prev => sortByBrands(data));
-  //     }
-  //   });
-  // }
-  
+  }  
 
   function SELECT_BRAND(){
     const clearEl = (el)=> ( {brand:el?.brand, count:el?.count} )
@@ -86,6 +55,16 @@ export function SoftwareReducer(
         setDoc(prev=> data?.doc)
       })
     }
+  }
+
+  function SEARCH_SOFTWARE(){
+    // setDocSelectDlBar(true)
+    const query = {searchSoftware:true, search:searchQuery?.val}
+    searchQuery?.val?.length > 1 &&
+    PostToApi( '/getSoftware', query, (data)=>{
+      setSearch( prev=> data)
+      // setDocSelectDlBar(false)
+    })
   }
 
   // function CANCEL_EDITING_CARD(){ setEdit(prev=>!prev) }

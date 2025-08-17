@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 
 import { UploadLink } from "./UploadLink"
-import FileUpload from "../../../../All/FileUpload"
+import FilesUpload from "../../../../All/FilesUpload"
 import ActionBtn from "../../../../All/ActionBtn"
 
 
-export function UploadBtns({ props:{tr, lang, fileAddr, setSave, setFiles, ADD_FILE} }){
+export function UploadBtns({ props:{tr, lang, fileAddr, setSave, setFiles, ADD_FILES} }){
 
   const blankLink = ()=>({fileID: Date.now(), fileAddr: "", fileName: "", fileType: "lnk"})
 
@@ -27,13 +27,13 @@ export function UploadBtns({ props:{tr, lang, fileAddr, setSave, setFiles, ADD_F
     setUplLink(prev=>false)
   }
 
-  const fileProps = {defaultFileAddr:fileAddr, cb:(data)=>ADD_FILE(data)}
+  const fileProps = {defaultFileAddr:fileAddr, multiple:true, cb:(data)=>ADD_FILES(data)}
   const uploadLinkProps = {tr, lang, link, setLink, err, setErr, CANCEL_LINK, ADD_LINK}
 
   return(
     <div className="UploadBtns flex stretch end">
 
-      <FileUpload props={fileProps} />
+      <FilesUpload props={fileProps} />
 
       {
         uplLink

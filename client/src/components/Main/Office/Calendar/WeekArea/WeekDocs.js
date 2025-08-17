@@ -10,7 +10,7 @@ export function WeekDocs({ props:{company, line, l, visibleSide, Reducer} }) {
     
     {
       line?.docs.map( (doc, n)=>{
-        return <DocumentLine props={{company, line, l, doc, n, visibleSide, Reducer}} key={`docs${n}`}/>
+        return <DocumentLine props={{company, line, l, doc, n, visibleSide, Reducer}} key={doc._id} />
       })
     }
 

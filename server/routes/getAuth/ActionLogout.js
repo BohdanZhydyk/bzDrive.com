@@ -1,15 +1,14 @@
 const { bzDB } = require("../bzDB")
+const { tokenLifetime } = require("../../safe/safe")
 
 
 exports.ActionLogout = (req, res)=>{
 
   const bzToken = req?.body?.bzToken
   const lang = req?.body?.IP?.country_code ? req?.body?.IP?.country_code?.toLowerCase() : "en"
-  const login = req?.body?.object?.login
-  const tokenLifetime = (3600000 * 24)
   const query = {
     $or:[
-      { "user.login":login },
+      { bzToken },
       { "time":{$lt:(Date.now() - tokenLifetime)} }
     ]
   }

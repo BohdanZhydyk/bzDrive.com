@@ -126,7 +126,7 @@ export function SoftwareReducer(
 }
 
 export const programmers = [
-  "Xhorse Multi-Prog", "Alientech K-Tag", "Alientech Kess V2", "i-Prog", "CarProg", "AutoTuner", "FoxFlash", "BDM 100", "X-Prog"
+  "KT200II", "Xhorse Multi-Prog", "Alientech K-Tag", "Alientech Kess V2", "i-Prog", "CarProg", "AutoTuner", "FoxFlash", "BDM 100", "X-Prog"
 ]
 export const swTypes =  [
   "FULL", "EPR", "FLS", "MPC", "MAPS", "MICRO", "EEPROM", "FLASH", "INT-EEPROM", "EXT-EEPROM",

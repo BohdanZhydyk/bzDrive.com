@@ -42,13 +42,13 @@ export function WeekTopLine({ props:{tr, user, line, l, visibleSide, Reducer} })
         <div className="LeftPannel flex wrap">
           <div className={`DayNameWeekLeft flex ${l === 0 ? `between` : `end`} stretch`}>
 
-            {
+            {/* {
               l === 0 &&
               <div className="DocMode flex column">
                 <div>{docModeBtnTxt}</div>
                 <div>{docModes[0]}</div>
               </div>
-            }
+            } */}
 
             { earned && <Earned props={{earned}}/> }
 

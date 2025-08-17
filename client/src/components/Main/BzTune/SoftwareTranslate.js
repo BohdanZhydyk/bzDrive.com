@@ -194,7 +194,10 @@ export const SoftTr = (txt, lang)=>{
       en: "Load more",
       ua: "Показати більше",
       pl: "Pokaż więcej",
-    }   
+    },
+    SearchText:{en:"Documents found:", ua:"Знайдено документів:", pl:"Znaleziono dokumentów:"},
+    SearchLegend:{en:"SW", ua:"SW", pl:"SW"},
+    SwSearchPlaceHolder:{en:"SW Search", ua:"Пошук SW", pl:"Wyszukiwarka SW"}
   }
 
   return translations[txt] ? translations[txt][lang] : <span className="txtRed">-</span>
